@@ -6,6 +6,8 @@ import android.os.Bundle;
 /**
  * Commit text #1 for rebase.
  * Commit text #2 for rebase.
+ * Commit text #3 for rebase.
+ * Commit text #4 for rebase.
  */
 public class MainActivity extends AppCompatActivity {
 
