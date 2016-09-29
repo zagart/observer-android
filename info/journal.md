@@ -29,4 +29,14 @@
 			</li>
 		</ul>
 	</li>
+	<li>
+		<ul>
+			<h4>30.09.2016</h4>
+			<li>
+				Assets - it is arbitrary files which includes into project. Main difference from
+				the resource files is that Android do not include this files into resource system.
+				That allows to get raw data.
+			</li>
+		</ul>
+	</li>
 </ul>
