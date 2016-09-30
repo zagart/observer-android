@@ -47,7 +47,7 @@
 				    - that Maps API, don't think that is what i actually need. I keep on search).			
 				Now I'm going to find out it. Also Android Studio has similar sample but reference to
 				repository is dead.
-				
+				That's it - <a href="https://github.com/android/platform_development/tree/master/samples/ApiDemos">ApiDemos</a>.				
 			</li>
 		</ul>
 	</li>
