@@ -5,7 +5,7 @@
 			<h4>29.09.2016</h4>
 			<li>
 				AVD configured and first app run executed. 
-				Read information about Android-developer workflow basics. 
+				Read information about Android-developer workflow basics.
 			</li>
 			<li>
 				Read information about mipmap - it is laucher icon, which is have 
@@ -36,6 +36,9 @@
 				Assets - it is arbitrary files which includes into project. Main difference from
 				the resource files is that Android do not include this files into resource system.
 				That allows to get raw data.
+			</li>
+			<li>
+				PermissionRequest sample was loaded and runned.
 			</li>
 		</ul>
 	</li>
