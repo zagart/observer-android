@@ -43,9 +43,11 @@
 			<li>
 				AVD already has pre-installed Api-Demos application. I've found reference to
 				google sample but seems it something different from what i need 
-				(<a href="https://github.com/googlemaps/android-samples/tree/master/ApiDemos">link</a>).			
+				(<a href="https://github.com/googlemaps/android-samples/tree/master/ApiDemos">link</a> 
+				    - that Maps API, don't think that is what i actually need. I keep on search).			
 				Now I'm going to find out it. Also Android Studio has similar sample but reference to
 				repository is dead.
+				
 			</li>
 		</ul>
 	</li>
