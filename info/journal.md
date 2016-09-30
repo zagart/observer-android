@@ -49,6 +49,9 @@
 				repository is dead.
 				That's it - <a href="https://github.com/android/platform_development/tree/master/samples/ApiDemos">ApiDemos</a>.				
 			</li>
+			<li>
+				Taked a look at Android Monitor. I found out how to find nessesary process and analyse it.
+			</li>
 		</ul>
 	</li>
 </ul>
