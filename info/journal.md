@@ -54,4 +54,14 @@
 			</li>
 		</ul>
 	</li>
+	<li>
+		<ul>
+			<h4>01.10.2016</h4>
+			<li>
+				Read information at <a href="developer.android.com">developer.android.com<a/> about Views and
+				Layouts. Now i am training at coding xml-layouts and i am going to build simple UI-application
+				just to take view about Android makeup. 
+			</li>
+		</ul>
+	</li>
 </ul>
