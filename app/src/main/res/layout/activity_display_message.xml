@@ -9,4 +9,10 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="by.grodno.zagart.observer.observerandroid.DisplayMessageActivity">
+    <Button
+        android:id="@+id/redirect_button"
+        android:text="redirect"
+        android:onClick="redirectToMain"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 </RelativeLayout>
