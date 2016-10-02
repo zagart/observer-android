@@ -7,24 +7,58 @@ import android.view.View;
 import android.widget.EditText;
 
 /**
- * Commit text #1 for rebase.
- * Commit text #2 for rebase.
- * Commit text #3 for rebase.
- * Commit text #4 for rebase.
+ * Main activity of the application.
  */
 public class MainActivity extends AppCompatActivity {
 
     public static final String EXTRA_MESSAGE = "Extra message!";
+    private EditText editText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        editText = (EditText) findViewById(R.id.edit_message);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        //do something when activity is obscured
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        //do something when activity had focus
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        //do something like releasing resources and saving current progress
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        //if activity require some features be turned on - this is place for them
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        //actually do not required, because by default it calls method onStart()
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        //usually all job already done in method OnStop() but it's still last chance to release resources
     }
 
     public void sendMessage(View view) {
         Intent intent = new Intent(this, DisplayMessageActivity.class);
-        EditText editText = (EditText) findViewById(R.id.edit_message);
         String message = editText.getText().toString();
         intent.putExtra(EXTRA_MESSAGE, message);
         startActivity(intent);
