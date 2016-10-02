@@ -62,6 +62,11 @@
 				Layouts. Now i am training at coding xml-layouts and i am going to build simple UI-application
 				just to take view about Android makeup. 
 			</li>
+			<li>
+				Learned and documented at paper theory about Views, Activities, Intents and life cycle of Activity.
+				Also made simple application which demonstrates work of methods that correspond to the same items 
+				of Activity life cycle.
+			</li>
 		</ul>
 	</li>
 </ul>
