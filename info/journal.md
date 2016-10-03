@@ -74,4 +74,36 @@
 			</li>
 		</ul>
 	</li>
+	<li>
+		<ul>
+			<h4>03.10.2016</h4>
+			<li>
+				Learned and documented at paper theory about Fragments, their life cycle, Services, their types and
+				ways to implement.
+			</li>
+			<li>
+				Saving and restoring instance of activity happens at methods onSaveInstanceState and onRestoreInstanceState
+				accordingly.
+			</li>
+			<li>
+				Flags which can be added to Intents describe content of concrete Intent object and behavior
+				this object may invoke. There are two main types of attributes (action, data) and four secondary
+				types (category, type, component, extras). Each type has his own flags.
+			</li>
+			<li>
+				Services can be of two types: started and bound. Started services run without limitation in time
+				and bound services exist while exists dependent object (client in term of bound services).
+				Bound services may be implemented in three ways: threw IBinder, Messenger or AIDL. IBinder use
+				when service and it's invoker exist at same process. Messenger use in IPC (interprocess connection).
+				Messenger is implementation of AIDL so in most cases better to use Messenger.
+			</li>
+			<li>
+				By default Service implementations lie at thread where they have been called. Using services in that way
+				may make negative influence on main operations of applications. But Service has child that
+				runs at new separate thread - IntentService. Foreground service it is service which is
+				required to user and is not candidate to kill when low on memory. Foreground  service must provide
+				notification in status bar while he is active.
+			</li>
+		</ul>
+	</li>
 </ul>
