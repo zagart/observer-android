@@ -1,16 +1,15 @@
 package by.grodno.zagart.observer.observerandroid;
 
-import android.app.Service;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import by.grodno.zagart.observer.observerandroid.services.BoundService;
@@ -30,34 +29,34 @@ public class MainActivity extends AppCompatActivity {
     public static final String STOP = " stop ";
     public static final String START = " start ";
     public static final String RESTART = " restart ";
-    public static final String NEVER_BE_SEEN = " never be seen ";
-    private EditText editText;
-    private String message;
-    private String status;
+    public static final String ON_DESTROY = " never be seen ";
+    public static final String EMPTY = "";
+    private String message = EMPTY;
+    private String status = EMPTY;
     private BoundService service = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        status = CREATE;
+        ActionBar supportActionBar = getSupportActionBar();
+        supportActionBar.hide();
+        status += CREATE;
         setContentView(R.layout.activity_main);
-        editText = (EditText) findViewById(R.id.edit_message);
     }
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
-        status += ON_SAVE_STATE;
         super.onSaveInstanceState(outState);
+        status += ON_SAVE_STATE;
     }
 
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
-        status += ON_RESTORE_STATE;
         super.onRestoreInstanceState(savedInstanceState);
+        status += ON_RESTORE_STATE;
     }
 
     public void sendMessage(View view) {
-        message = editText.getText().toString();
         Intent serviceIntent = new Intent(this, StartedService.class);
         serviceIntent.putExtra(EXTRA_MESSAGE, message);
         startService(serviceIntent);
@@ -68,21 +67,21 @@ public class MainActivity extends AppCompatActivity {
         if (service != null) {
             output += "(Service bound)";
         }
-        Toast.makeText(this, output, Toast.LENGTH_LONG).show();
+        Toast.makeText(this, output, Toast.LENGTH_SHORT).show();
     }
 
     @Override
     protected void onPause() {
+        super.onPause();
         status += PAUSE;
         //do something when activity is obscured
-        super.onPause();
     }
 
     @Override
     protected void onResume() {
+        super.onResume();
         status += RESUME;
         //do something when activity had focus
-        super.onResume();
     }
 
     @Override
@@ -102,16 +101,16 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onRestart() {
+        super.onRestart();
         status += RESTART;
         //actually do not required, because by default it calls method onStart()
-        super.onRestart();
     }
 
     @Override
     protected void onDestroy() {
-        status += NEVER_BE_SEEN;
-        //usually all job already done in method OnStop() but it's still last chance to release resources
         super.onDestroy();
+        status += ON_DESTROY;
+        //usually all job already done in method OnStop() but it's still last chance to release resources
     }
 
     private ServiceConnection connection = new ServiceConnection() {
