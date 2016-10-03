@@ -26,6 +26,7 @@ public class TestService extends IntentService {
         newIntent.putExtra(MainActivity.EXTRA_MESSAGE, message);
         newIntent.addFlags(FLAG_ACTIVITY_NEW_TASK);
         startActivity(newIntent);
+        stopSelf();
     }
 
 }
