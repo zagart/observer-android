@@ -7,12 +7,25 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import by.grodno.zagart.observer.observerandroid.services.TestService;
+
+import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
+
 /**
  * Main activity of the application.
  */
 public class MainActivity extends AppCompatActivity {
 
     public static final String EXTRA_MESSAGE = "Extra message!";
+    public static final String CREATE = " create ";
+    public static final String ON_SAVE_STATE = " onSaveState ";
+    public static final String ON_RESTORE_STATE = " onRestoreState ";
+    public static final String PAUSE = " pause ";
+    public static final String RESUME = " resume ";
+    public static final String STOP = " stop ";
+    public static final String START = " start ";
+    public static final String RESTART = " restart ";
+    public static final String NEVER_BE_SEEN = " never be seen ";
     private EditText editText;
     private String message;
     private String status;
@@ -21,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        status = " create ";
+        status = CREATE;
         setContentView(R.layout.activity_main);
         editText = (EditText) findViewById(R.id.edit_message);
         textViewStatus = ((TextView) findViewById(R.id.activity_status));
@@ -29,64 +42,64 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
-        status += " onSaveState ";
+        status += ON_SAVE_STATE;
         super.onSaveInstanceState(outState);
     }
 
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
-        status += " onRestoreState ";
+        status += ON_RESTORE_STATE;
         super.onRestoreInstanceState(savedInstanceState);
     }
 
     public void sendMessage(View view) {
-        Intent intent = new Intent(this, DisplayMessageActivity.class);
         message = editText.getText().toString();
-        intent.putExtra(EXTRA_MESSAGE, message + status);
-        startActivity(intent);
+        Intent serviceIntent = new Intent(this, TestService.class);
+        serviceIntent.putExtra(EXTRA_MESSAGE, message + status);
+        startService(serviceIntent);
     }
 
     @Override
     protected void onPause() {
-        super.onPause();
-        status += " pause ";
+        status += PAUSE;
         //do something when activity is obscured
+        super.onPause();
     }
 
     @Override
     protected void onResume() {
-        super.onResume();
-        status += " resume ";
+        status += RESUME;
         textViewStatus.setText(status);
         //do something when activity had focus
+        super.onResume();
     }
 
     @Override
     protected void onStop() {
-        super.onStop();
-        status += " stop ";
+        status += STOP;
         //do something like releasing resources and saving current progress
+        super.onStop();
     }
 
     @Override
     protected void onStart() {
-        super.onStart();
-        status += " start ";
+        status += START;
         //if activity require some features be turned on - this is place for them
+        super.onStart();
     }
 
     @Override
     protected void onRestart() {
-        super.onRestart();
-        status += " restart ";
+        status += RESTART;
         //actually do not required, because by default it calls method onStart()
+        super.onRestart();
     }
 
     @Override
     protected void onDestroy() {
-        super.onDestroy();
-        status += " never be seen ";
+        status += NEVER_BE_SEEN;
         //usually all job already done in method OnStop() but it's still last chance to release resources
+        super.onDestroy();
     }
 
 

@@ -20,6 +20,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".DisplayMessageActivity"></activity>
+        <service android:name=".services.TestService"
+            android:exported="false"/>
     </application>
 
 </manifest>
