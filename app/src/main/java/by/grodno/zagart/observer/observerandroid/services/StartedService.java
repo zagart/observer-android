@@ -2,7 +2,6 @@ package by.grodno.zagart.observer.observerandroid.services;
 
 import android.app.IntentService;
 import android.content.Intent;
-import android.os.Bundle;
 
 import by.grodno.zagart.observer.observerandroid.DisplayMessageActivity;
 import by.grodno.zagart.observer.observerandroid.MainActivity;
@@ -10,13 +9,13 @@ import by.grodno.zagart.observer.observerandroid.MainActivity;
 import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
 
 /**
- * Created by ZAGART on 03.10.2016.
+ * Started service example.
  */
 
-public class TestService extends IntentService {
+public class StartedService extends IntentService {
 
-    public TestService() {
-        super("TestService");
+    public StartedService() {
+        super("StartedService");
     }
 
     @Override

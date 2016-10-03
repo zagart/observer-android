@@ -1,15 +1,20 @@
 package by.grodno.zagart.observer.observerandroid;
 
+import android.app.Service;
+import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import by.grodno.zagart.observer.observerandroid.services.TestService;
-
-import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
+import by.grodno.zagart.observer.observerandroid.services.BoundService;
+import by.grodno.zagart.observer.observerandroid.services.StartedService;
 
 /**
  * Main activity of the application.
@@ -29,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
     private EditText editText;
     private String message;
     private String status;
-    private TextView textViewStatus;
+    private BoundService service = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,7 +42,6 @@ public class MainActivity extends AppCompatActivity {
         status = CREATE;
         setContentView(R.layout.activity_main);
         editText = (EditText) findViewById(R.id.edit_message);
-        textViewStatus = ((TextView) findViewById(R.id.activity_status));
     }
 
     @Override
@@ -54,9 +58,17 @@ public class MainActivity extends AppCompatActivity {
 
     public void sendMessage(View view) {
         message = editText.getText().toString();
-        Intent serviceIntent = new Intent(this, TestService.class);
-        serviceIntent.putExtra(EXTRA_MESSAGE, message + status);
+        Intent serviceIntent = new Intent(this, StartedService.class);
+        serviceIntent.putExtra(EXTRA_MESSAGE, message);
         startService(serviceIntent);
+    }
+
+    public void showToast(View view) {
+        String output = status;
+        if (service != null) {
+            output += "(Service bound)";
+        }
+        Toast.makeText(this, output, Toast.LENGTH_LONG).show();
     }
 
     @Override
@@ -69,23 +81,23 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         status += RESUME;
-        textViewStatus.setText(status);
         //do something when activity had focus
         super.onResume();
     }
 
     @Override
     protected void onStop() {
-        status += STOP;
-        //do something like releasing resources and saving current progress
         super.onStop();
+        status += STOP;
+        unbindService(connection);
     }
 
     @Override
     protected void onStart() {
-        status += START;
-        //if activity require some features be turned on - this is place for them
         super.onStart();
+        status += START;
+        Intent intent = new Intent(this, BoundService.class);
+        bindService(intent, connection, Context.BIND_AUTO_CREATE);
     }
 
     @Override
@@ -102,6 +114,17 @@ public class MainActivity extends AppCompatActivity {
         super.onDestroy();
     }
 
+    private ServiceConnection connection = new ServiceConnection() {
+        @Override
+        public void onServiceConnected(ComponentName name, IBinder service) {
+            BoundService.LocalBinder binder = ((BoundService.LocalBinder) service);
+            MainActivity.this.service = binder.getService();
+        }
 
+        @Override
+        public void onServiceDisconnected(ComponentName name) {
+
+        }
+    };
 
 }
