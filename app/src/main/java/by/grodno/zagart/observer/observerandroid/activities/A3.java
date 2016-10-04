@@ -4,13 +4,14 @@ import android.os.Bundle;
 
 import by.grodno.zagart.observer.observerandroid.MainActivity;
 
-public class A1 extends A {
+public class A3 extends A {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setNextActivity(A2.class);
-        setPreviousActivity(MainActivity.class);
+        setNextActivity(A4.class);
+        setPreviousActivity(A2.class);
+
     }
 
 }

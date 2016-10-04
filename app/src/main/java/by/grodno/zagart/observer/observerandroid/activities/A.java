@@ -1,7 +1,9 @@
 package by.grodno.zagart.observer.observerandroid.activities;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Gravity;
@@ -11,7 +13,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import java.util.ArrayList;
+import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 
 /**
  * Abstract activity class.
@@ -19,90 +21,165 @@ import java.util.ArrayList;
 
 public abstract class A extends AppCompatActivity {
 
-    public static final String PROGRESS = "progress";
-    public static final String NEXT = "Next";
-    public static final String ACTIVITY_CREATED = "Activity created.";
+    public static final boolean YES = true;
+    public static final boolean NO = false;
+    public static final String STRING_YES = "Yes";
+    public static final String STRING_NO = "No";
+    public static final String STRING_ANSWERS = "Answers";
+    public static final String STRING_NEXT = "Next";
 
-    protected ArrayList<String> progress = new ArrayList<>();
-    protected TextView progressView = null;
-    protected Class nextActivity = null;
-    protected String name = "";
+    protected Bundle answers = new Bundle();
+    private TextView answerView = null;
+    private Class nextActivity = null;
+    private Class previousActivity = null;
+    private String name = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.name = A.this.getClass().getSimpleName();
-        if (savedInstanceState != null) {
-            this.progress = savedInstanceState.getStringArrayList(PROGRESS);
-        }
-        addProgress(ACTIVITY_CREATED);
-        LinearLayout layout = buildContentView();
-        setContentView(layout);
+        this.answers = restoreAnswers(this, savedInstanceState);
+        setContentView(buildContentView());
     }
 
-    protected LinearLayout buildContentView() {
-        ViewGroup.LayoutParams params = new ActionBar.LayoutParams(
-                ViewGroup.LayoutParams.MATCH_PARENT,
-                ViewGroup.LayoutParams.MATCH_PARENT
-        );
+    private static Bundle restoreAnswers(Activity activity,
+                                      Bundle savedInstanceState) {
+        Bundle answers = new Bundle();
+        if (activity.getIntent().getExtras() != null) {
+            answers = activity.getIntent().getExtras().getBundle(STRING_ANSWERS);
+        }
+        if (savedInstanceState != null) {
+            answers = savedInstanceState.getBundle(STRING_ANSWERS);
+        }
+        return answers;
+    }
 
-        progressView = new TextView(this);
-        progressView.setLayoutParams(params);
-        refreshTextViewer();
-        progressView.setTextSize(20);
+    private LinearLayout buildContentView() {
+        answerView = new TextView(this);
+        answerView.setLayoutParams(getLayoutParams(MATCH_PARENT, MATCH_PARENT));
+        refreshAnswerView();
+        answerView.setTextSize(20);
 
-        Button nextButton = new Button(this);
-        nextButton.setText(NEXT);
-        nextButton.setTextSize(40);
+        Button nextButton = createButton(STRING_NEXT);
         nextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                A.this.createNextActivity();
+                A.this.startActivity(A.this.nextActivity);
+            }
+        });
+
+        Button buttonYes = createButton(STRING_YES);
+        buttonYes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                A.this.acceptAnswer(YES);
+            }
+        });
+
+        Button buttonNo = createButton(STRING_NO);
+        buttonNo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                A.this.acceptAnswer(NO);
             }
         });
 
         LinearLayout layout =  new LinearLayout(this);
+        configureLayout(getLayoutParams(
+                MATCH_PARENT,
+                MATCH_PARENT),
+                nextButton,
+                buttonYes,
+                buttonNo,
+                layout
+        );
+        return layout;
+    }
+
+    @NonNull
+    protected ViewGroup.LayoutParams getLayoutParams(int width, int height) {
+        return new ActionBar.LayoutParams(width, height);
+    }
+
+    private void configureLayout(ViewGroup.LayoutParams params,
+                                 Button nextButton,
+                                 Button buttonYes,
+                                 Button buttonNo,
+                                 LinearLayout layout) {
         layout.setLayoutParams(params);
         layout.setOrientation(LinearLayout.VERTICAL);
         layout.setGravity(Gravity.BOTTOM);
         layout.addView(nextButton);
-        layout.addView(progressView);
-        return layout;
+        layout.addView(buttonYes);
+        layout.addView(buttonNo);
+        layout.addView(answerView);
     }
 
-    private void refreshTextViewer() {
-        StringBuilder progress = new StringBuilder();
-        for (String step : this.progress) {
-            progress.append(step);
-        }
-        progressView.setText(progress);
+    protected Button createButton(String name) {
+        Button button = new Button(this);
+        button.setText(name);
+        button.setTextSize(40);
+        return button;
     }
-    protected void createNextActivity() {
+
+    protected TextView createTextView(String text, int textSize, int minWidth) {
+        TextView textView = new TextView(this);
+        textView.setText(text);
+        textView.setTextSize(textSize);
+        textView.setMinWidth(minWidth);
+        return textView;
+    }
+
+    private void refreshAnswerView() {
+        if (this.answers.containsKey(this.name)) {
+            if (this.answers.getBoolean(this.name)) {
+                this.answerView.setText(String.format("%s : %s", this.name, STRING_YES));
+            } else {
+                this.answerView.setText(String.format("%s : %s", this.name, STRING_NO));
+            }
+        }
+    }
+
+    private void startActivity(Class activity) {
         if (nextActivity != null) {
-            Intent intent = new Intent(this, nextActivity);
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            Intent intent = new Intent(this, activity);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+            intent.putExtra(STRING_ANSWERS, this.answers);
             startActivity(intent);
         }
+    }
+
+    private void acceptAnswer(boolean answer) {
+        if (answers.containsKey(name)) {
+            answers.remove(name);
+        }
+        answers.putBoolean(name, answer);
+        refreshAnswerView();
     }
 
     protected void setNextActivity(Class nextActivity) {
         this.nextActivity = nextActivity;
     }
 
+    protected void setPreviousActivity(Class previousActivity) {
+        this.previousActivity = previousActivity;
+    }
+
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
-        this.progress = savedInstanceState.getStringArrayList(PROGRESS);
+        this.answers = savedInstanceState.getBundle(STRING_ANSWERS);
     }
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putStringArrayList(PROGRESS, this.progress);
+        outState.putBundle(STRING_ANSWERS, this.answers);
     }
 
-    protected void addProgress(String progress) {
-        this.progress.add(String.format("%s: %s\n", this.name, progress));
+    @Override
+    public void onBackPressed() {
+        startActivity(previousActivity);
     }
 
 }

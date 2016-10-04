@@ -23,7 +23,6 @@ public class MainActivity extends AppCompatActivity {
 
     public void start(View view) {
         Intent intent = new Intent(this, A1.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
     }
 
