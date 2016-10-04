@@ -126,4 +126,19 @@
 			</li>
 		</ul>
 	</li>
+	<li>
+		<ul>
+			<h4>05.10.2016</h4>
+			<li>
+				There are four launch modes:
+				<dl>
+					<dt>standart</dt><dd>New instance instantiated for every activity in current task.</dd>	
+					<dt>singleTop</dt>New or existing instance instantiated in current task.<dd></dd>
+					<dt>newTask</dt><dd>Instance instantiated in new task.</dd>
+					<dt>newInstance</dt><dd>New instantiated creates in new task.</dd>
+				</dl>
+			</li>
+
+		</ul>
+	</li>
 </ul>
