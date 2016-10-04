@@ -12,7 +12,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Abstract activity class.
@@ -40,8 +39,6 @@ public abstract class A extends AppCompatActivity {
         LinearLayout layout = buildContentView();
         setContentView(layout);
     }
-
-
 
     protected LinearLayout buildContentView() {
         ViewGroup.LayoutParams params = new ActionBar.LayoutParams(
@@ -80,7 +77,6 @@ public abstract class A extends AppCompatActivity {
         }
         progressView.setText(progress);
     }
-
     protected void createNextActivity() {
         if (nextActivity != null) {
             Intent intent = new Intent(this, nextActivity);
@@ -103,10 +99,6 @@ public abstract class A extends AppCompatActivity {
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putStringArrayList(PROGRESS, this.progress);
-    }
-
-    public List<String> getProgress() {
-        return progress;
     }
 
     protected void addProgress(String progress) {
