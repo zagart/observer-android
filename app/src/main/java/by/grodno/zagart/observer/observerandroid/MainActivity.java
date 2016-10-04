@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import by.grodno.zagart.observer.observerandroid.activities.A1;
 import by.grodno.zagart.observer.observerandroid.services.BoundService;
 import by.grodno.zagart.observer.observerandroid.services.StartedService;
 
@@ -31,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
     public static final String RESTART = " restart ";
     public static final String ON_DESTROY = " never be seen ";
     public static final String EMPTY = "";
+    public static final String STATUS = "status";
     private String message = EMPTY;
     private String status = EMPTY;
     private BoundService service = null;
@@ -48,18 +50,20 @@ public class MainActivity extends AppCompatActivity {
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         status += ON_SAVE_STATE;
+        outState.putString(STATUS, status);
     }
 
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
+        status = savedInstanceState.getString(STATUS);
         status += ON_RESTORE_STATE;
     }
 
-    public void sendMessage(View view) {
-        Intent serviceIntent = new Intent(this, StartedService.class);
-        serviceIntent.putExtra(EXTRA_MESSAGE, message);
-        startService(serviceIntent);
+    public void nextActivity(View view) {
+        Intent intent = new Intent(this, A1.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
     }
 
     public void showToast(View view) {
