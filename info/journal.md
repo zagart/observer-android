@@ -105,5 +105,23 @@
 				notification in status bar while he is active.
 			</li>
 		</ul>
+		<ul>
+			<h4>04.10.2016</h4>
+			<li>
+				Work was finished  under task with saving activities state. There were the little problem and the big 
+				problem. Little problem is that Android destroys activity when user press button Back. And method
+				onSaveInstanceState() do not work in that case so i solved this problem  with overriding behavior of 
+				back button. And the big problem - i almost haven't good skills in makeup. I work on it now.
+			</li>
+			<li>
+				Task is a group of activities that have same application area. Back stack (stack) is just a way
+				how activities lie in task.
+			</li>
+			<li>
+				So I found that launch mode of activity is a way activity start or, if to be concrete, way of starting 
+				activity when it's position in back stack defined by four modes. Each of modes can be called by adding 
+				flag to intent.
+			</li>
+		</ul>
 	</li>
 </ul>
