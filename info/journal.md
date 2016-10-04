@@ -105,6 +105,8 @@
 				notification in status bar while he is active.
 			</li>
 		</ul>
+	</li>
+	<li>
 		<ul>
 			<h4>04.10.2016</h4>
 			<li>
