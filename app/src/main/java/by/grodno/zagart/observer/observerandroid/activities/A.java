@@ -14,6 +14,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
+import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
 
 /**
  * Abstract activity class.
@@ -27,6 +28,10 @@ public abstract class A extends AppCompatActivity {
     public static final String STRING_NO = "No";
     public static final String STRING_ANSWERS = "Answers";
     public static final String STRING_NEXT = "Next";
+    public static final int ANSWER_TEXT_SIZE = 20;
+    public static final int NEXT_TEXT_SIZE = 30;
+    public static final int RESULT_TEXT_SIZE = 60;
+    public static final int ANSWER_MIN_WIDTH = 50;
 
     protected Bundle answers = new Bundle();
     private TextView answerView = null;
@@ -37,6 +42,7 @@ public abstract class A extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        (getSupportActionBar()).hide();
         this.name = A.this.getClass().getSimpleName();
         this.answers = restoreAnswers(this, savedInstanceState);
         setContentView(buildContentView());
@@ -55,12 +61,11 @@ public abstract class A extends AppCompatActivity {
     }
 
     private LinearLayout buildContentView() {
-        answerView = new TextView(this);
-        answerView.setLayoutParams(getLayoutParams(MATCH_PARENT, MATCH_PARENT));
+        answerView = createTextView("", RESULT_TEXT_SIZE, ANSWER_MIN_WIDTH);
+        answerView.setLayoutParams(getLayoutParams(MATCH_PARENT, WRAP_CONTENT));
         refreshAnswerView();
-        answerView.setTextSize(20);
 
-        Button nextButton = createButton(STRING_NEXT);
+        Button nextButton = createButton(STRING_NEXT, NEXT_TEXT_SIZE);
         nextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -68,7 +73,7 @@ public abstract class A extends AppCompatActivity {
             }
         });
 
-        Button buttonYes = createButton(STRING_YES);
+        Button buttonYes = createButton(STRING_YES, ANSWER_TEXT_SIZE);
         buttonYes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -76,7 +81,7 @@ public abstract class A extends AppCompatActivity {
             }
         });
 
-        Button buttonNo = createButton(STRING_NO);
+        Button buttonNo = createButton(STRING_NO, ANSWER_TEXT_SIZE);
         buttonNo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -84,16 +89,25 @@ public abstract class A extends AppCompatActivity {
             }
         });
 
-        LinearLayout layout =  new LinearLayout(this);
-        configureLayout(getLayoutParams(
-                MATCH_PARENT,
-                MATCH_PARENT),
+        LinearLayout footer = configureFooterLayout(
                 nextButton,
                 buttonYes,
-                buttonNo,
-                layout
+                buttonNo
         );
+
+        LinearLayout layout = configureRootLayout(footer);
         return layout;
+    }
+
+    private LinearLayout configureFooterLayout(Button nextButton, Button buttonYes, Button buttonNo) {
+        LinearLayout footer = new LinearLayout(this);
+        footer.setOrientation(LinearLayout.HORIZONTAL);
+        footer.setLayoutParams(getLayoutParams(MATCH_PARENT, MATCH_PARENT));
+        footer.setGravity(Gravity.BOTTOM);
+        footer.addView(buttonNo);
+        footer.addView(nextButton);
+        footer.addView(buttonYes);
+        return footer;
     }
 
     @NonNull
@@ -101,24 +115,21 @@ public abstract class A extends AppCompatActivity {
         return new ActionBar.LayoutParams(width, height);
     }
 
-    private void configureLayout(ViewGroup.LayoutParams params,
-                                 Button nextButton,
-                                 Button buttonYes,
-                                 Button buttonNo,
-                                 LinearLayout layout) {
-        layout.setLayoutParams(params);
+    private LinearLayout configureRootLayout(LinearLayout footer) {
+        LinearLayout layout = new LinearLayout(this);
+        layout.setLayoutParams(getLayoutParams(MATCH_PARENT, MATCH_PARENT));
         layout.setOrientation(LinearLayout.VERTICAL);
-        layout.setGravity(Gravity.BOTTOM);
-        layout.addView(nextButton);
-        layout.addView(buttonYes);
-        layout.addView(buttonNo);
+        layout.setHorizontalGravity(Gravity.CENTER_HORIZONTAL);
+        layout.setGravity(Gravity.TOP);
         layout.addView(answerView);
+        layout.addView(footer);
+        return layout;
     }
 
-    protected Button createButton(String name) {
+    protected Button createButton(String name, int textSize) {
         Button button = new Button(this);
         button.setText(name);
-        button.setTextSize(40);
+        button.setTextSize(textSize);
         return button;
     }
 
@@ -144,6 +155,7 @@ public abstract class A extends AppCompatActivity {
         if (nextActivity != null) {
             Intent intent = new Intent(this, activity);
             intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
             intent.putExtra(STRING_ANSWERS, this.answers);
             startActivity(intent);
         }
