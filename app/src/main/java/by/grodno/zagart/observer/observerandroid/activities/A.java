@@ -151,11 +151,18 @@ public abstract class A extends AppCompatActivity {
         }
     }
 
+
     private void startActivity(Class activity) {
         if (nextActivity != null) {
             Intent intent = new Intent(this, activity);
             intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
             intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+            /**
+             * Launch mode single top - in difference with standart launch mode,
+             * every new starting activity won't create new instance if there
+             * is already exists one.
+             */
+            intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
             intent.putExtra(STRING_ANSWERS, this.answers);
             startActivity(intent);
         }
@@ -175,6 +182,17 @@ public abstract class A extends AppCompatActivity {
 
     protected void setPreviousActivity(Class previousActivity) {
         this.previousActivity = previousActivity;
+    }
+
+    /**
+     * This event becomes available when launch mode is single top.
+     *
+     * @param intent
+     */
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        this.answers = restoreAnswers(this, intent.getBundleExtra(STRING_ANSWERS));
     }
 
     @Override

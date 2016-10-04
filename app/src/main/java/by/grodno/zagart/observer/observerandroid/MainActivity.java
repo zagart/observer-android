@@ -16,13 +16,16 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ActionBar supportActionBar = getSupportActionBar();
-        supportActionBar.hide();
+        (getSupportActionBar()).hide();
         setContentView(R.layout.activity_main);
     }
 
     public void start(View view) {
         Intent intent = new Intent(this, A1.class);
+        /**
+         * Launch mode new task. Started activity will run in new task now.
+         */
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
     }
 
