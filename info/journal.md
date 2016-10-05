@@ -138,7 +138,10 @@
 					<dt>newInstance</dt><dd>New instantiated creates in new task.</dd>
 				</dl>
 			</li>
-
+			<li>
+				VK official app .apk was dowloaded and was recompiled. I study the structure of the project to 
+				create a static page. 
+			</li>
 		</ul>
 	</li>
 </ul>
