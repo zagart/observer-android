@@ -1,67 +1,90 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@android:color/white"
-    tools:context=".MusicActivity">
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:tools="http://schemas.android.com/tools"
+             style="@style/RootLayout"
+             tools:context=".MusicActivity">
+
     <LinearLayout
         android:id="@+id/music_header"
-        android:orientation="horizontal"
-        android:layout_height="wrap_content"
-        android:layout_width="match_parent"
-        android:minHeight="@dimen/title_min_height"
-        android:background="@color/colorPrimary">
+        style="@style/InnerLayout.Header"
+        >
+
         <Button
-            android:clickable="false"
             android:id="@+id/side_menu"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:contentDescription="@string/image"
-            android:drawableLeft="@drawable/ic_ab_menu"
-            style="@style/Base.Widget.AppCompat.Button.Borderless"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/my_music"
-            android:textColor="@android:color/white"
-            android:textSize="@dimen/title_font_size"/>
-        <Button
+            style="@style/IconButton"
+            android:drawableStart="@drawable/ic_ab_menu"/>
+
+        <LinearLayout
             android:id="@+id/music_category"
-            android:clickable="false"
+            style="@style/InnerLayout"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@android:color/white"
-            android:contentDescription="@string/image"
-            android:drawableLeft="@drawable/ic_toolbar_spinner_arrow"
-            style="@style/Base.Widget.AppCompat.Button.Borderless"/>
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                style="@style/InnerView"
+                android:text="@string/my_music"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/title_font_size"/>
+
+            <Button
+                style="@style/IconButton"
+                android:drawableStart="@drawable/ic_toolbar_spinner_arrow"
+                android:textColor="@android:color/white"/>
+        </LinearLayout>
+
         <Button
             android:id="@+id/music_search"
-            android:clickable="false"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:textColor="@android:color/white"
-            android:contentDescription="@string/image"
-            android:drawableRight="@drawable/ic_menu_search"
-            style="@style/Base.Widget.AppCompat.Button.Borderless"/>
+            style="@style/IconButton"
+            android:drawableEnd="@drawable/ic_menu_search"/>
     </LinearLayout>
+
     <LinearLayout
-        android:id="@+id/article"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginTop="@dimen/layout_vertical_margin">
+        android:id="@+id/shuffle_all"
+        style="@style/InnerLayout.ShuffleAll"
+        >
+
         <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:drawableLeft="@drawable/ic_shuffle_24dp"
-            style="@style/Base.Widget.AppCompat.Button.Borderless.Colored"/>
+            style="@style/IconButton"
+            android:drawableStart="@drawable/ic_shuffle_24dp"
+            />
+
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/InnerView"
             android:text="@string/shuffle_all"
             android:textColor="@color/colorPrimary"
             android:textSize="@dimen/text_font_size"/>
     </LinearLayout>
+
+    <FrameLayout
+        android:id="@+id/music_list"
+        style="@style/InnerLayout.MusicContainer"
+        >
+
+        <FrameLayout
+            android:id="@+id/song_1"
+            style="@style/InnerLayout.Song">
+
+            <LinearLayout
+                style="@style/InnerLayout"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/InnerView.SongName"
+                    android:text="@string/on_my_own"
+                    />
+
+                <TextView
+                    style="@style/InnerView.AuthorName"
+                    android:text="@string/ashes_remain"
+                    />
+            </LinearLayout>
+
+            <TextView
+                style="@style/InnerView.SongDuration"
+                android:text="@string/_2_53"
+                />
+        </FrameLayout>
+
+    </FrameLayout>
 </FrameLayout>

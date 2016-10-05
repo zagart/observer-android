@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">VK</string>
+    <string name="app_name">VKopy</string>
     <string name="title_activity_login">Sign in</string>
 
     <!-- Strings related to login -->
@@ -96,4 +96,7 @@
     <string name="image">image</string>
     <string name="search">search</string>
     <string name="shuffle_all">Shuffle all</string>
+    <string name="on_my_own">On My Own</string>
+    <string name="ashes_remain">Ashes Remain</string>
+    <string name="_2_53">2:53</string>
 </resources>
