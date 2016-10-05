@@ -8,7 +8,6 @@ public class A2 extends A {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setNextActivity(A3.class);
-        setPreviousActivity(A1.class);
     }
 
 }

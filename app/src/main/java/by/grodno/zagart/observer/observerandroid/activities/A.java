@@ -1,20 +1,18 @@
 package by.grodno.zagart.observer.observerandroid.activities;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Gravity;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
-import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
+import static by.grodno.zagart.observer.observerandroid.util.AnswersUtil.restoreAnswers;
+import static by.grodno.zagart.observer.observerandroid.util.MakeupUtil.createButton;
+import static by.grodno.zagart.observer.observerandroid.util.MakeupUtil.createTextView;
 
 /**
  * Abstract activity class.
@@ -36,36 +34,35 @@ public abstract class A extends AppCompatActivity {
     protected Bundle answers = new Bundle();
     private TextView answerView = null;
     private Class nextActivity = null;
-    private Class previousActivity = null;
+    /*
+     * Launch mode single top - in difference with standart launch mode,
+     * every new starting activity won't create new instance if there
+     * is already exists one.
+     */
+    private int defaultFlag = Intent.FLAG_ACTIVITY_SINGLE_TOP;
     private String name = "";
+
+    public void setDefaultFlag(int defaultFlag) {
+        this.defaultFlag = defaultFlag;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        (getSupportActionBar()).hide();
+        final ActionBar supportActionBar = getSupportActionBar();
+        if (supportActionBar != null) {
+            supportActionBar.hide();
+        }
         this.name = A.this.getClass().getSimpleName();
         this.answers = restoreAnswers(this, savedInstanceState);
         setContentView(buildContentView());
     }
 
-    private static Bundle restoreAnswers(Activity activity,
-                                      Bundle savedInstanceState) {
-        Bundle answers = new Bundle();
-        if (activity.getIntent().getExtras() != null) {
-            answers = activity.getIntent().getExtras().getBundle(STRING_ANSWERS);
-        }
-        if (savedInstanceState != null) {
-            answers = savedInstanceState.getBundle(STRING_ANSWERS);
-        }
-        return answers;
-    }
 
     private LinearLayout buildContentView() {
-        answerView = createTextView("", RESULT_TEXT_SIZE, ANSWER_MIN_WIDTH);
-        answerView.setLayoutParams(getLayoutParams(MATCH_PARENT, WRAP_CONTENT));
-        refreshAnswerView();
+        answerView = createTextView("", RESULT_TEXT_SIZE, ANSWER_MIN_WIDTH, this);
 
-        Button nextButton = createButton(STRING_NEXT, NEXT_TEXT_SIZE);
+        Button nextButton = createButton(STRING_NEXT, NEXT_TEXT_SIZE, this);
         nextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -73,7 +70,7 @@ public abstract class A extends AppCompatActivity {
             }
         });
 
-        Button buttonYes = createButton(STRING_YES, ANSWER_TEXT_SIZE);
+        Button buttonYes = createButton(STRING_YES, ANSWER_TEXT_SIZE, this);
         buttonYes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -81,7 +78,7 @@ public abstract class A extends AppCompatActivity {
             }
         });
 
-        Button buttonNo = createButton(STRING_NO, ANSWER_TEXT_SIZE);
+        Button buttonNo = createButton(STRING_NO, ANSWER_TEXT_SIZE, this);
         buttonNo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -94,15 +91,31 @@ public abstract class A extends AppCompatActivity {
                 buttonYes,
                 buttonNo
         );
+        return configureRootLayout(footer);
+    }
 
-        LinearLayout layout = configureRootLayout(footer);
-        return layout;
+    private void startActivity(Class activity) {
+        if (nextActivity != null) {
+            Intent intent = new Intent(this, activity);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+            intent.addFlags(this.defaultFlag);
+            intent.putExtra(STRING_ANSWERS, this.answers);
+            startActivity(intent);
+        }
+    }
+
+    private void acceptAnswer(boolean answer) {
+        if (answers.containsKey(name)) {
+            answers.remove(name);
+        }
+        answers.putBoolean(name, answer);
+        getIntent().putExtra(STRING_ANSWERS, answers);
+        refreshAnswerView();
     }
 
     private LinearLayout configureFooterLayout(Button nextButton, Button buttonYes, Button buttonNo) {
         LinearLayout footer = new LinearLayout(this);
         footer.setOrientation(LinearLayout.HORIZONTAL);
-        footer.setLayoutParams(getLayoutParams(MATCH_PARENT, MATCH_PARENT));
         footer.setGravity(Gravity.BOTTOM);
         footer.addView(buttonNo);
         footer.addView(nextButton);
@@ -110,35 +123,14 @@ public abstract class A extends AppCompatActivity {
         return footer;
     }
 
-    @NonNull
-    protected ViewGroup.LayoutParams getLayoutParams(int width, int height) {
-        return new ActionBar.LayoutParams(width, height);
-    }
-
     private LinearLayout configureRootLayout(LinearLayout footer) {
         LinearLayout layout = new LinearLayout(this);
-        layout.setLayoutParams(getLayoutParams(MATCH_PARENT, MATCH_PARENT));
         layout.setOrientation(LinearLayout.VERTICAL);
         layout.setHorizontalGravity(Gravity.CENTER_HORIZONTAL);
         layout.setGravity(Gravity.TOP);
         layout.addView(answerView);
         layout.addView(footer);
         return layout;
-    }
-
-    protected Button createButton(String name, int textSize) {
-        Button button = new Button(this);
-        button.setText(name);
-        button.setTextSize(textSize);
-        return button;
-    }
-
-    protected TextView createTextView(String text, int textSize, int minWidth) {
-        TextView textView = new TextView(this);
-        textView.setText(text);
-        textView.setTextSize(textSize);
-        textView.setMinWidth(minWidth);
-        return textView;
     }
 
     private void refreshAnswerView() {
@@ -151,65 +143,39 @@ public abstract class A extends AppCompatActivity {
         }
     }
 
-
-    private void startActivity(Class activity) {
-        if (nextActivity != null) {
-            Intent intent = new Intent(this, activity);
-            intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-            intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
-            /**
-             * Launch mode single top - in difference with standart launch mode,
-             * every new starting activity won't create new instance if there
-             * is already exists one.
-             */
-            intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-            intent.putExtra(STRING_ANSWERS, this.answers);
-            startActivity(intent);
-        }
-    }
-
-    private void acceptAnswer(boolean answer) {
-        if (answers.containsKey(name)) {
-            answers.remove(name);
-        }
-        answers.putBoolean(name, answer);
-        refreshAnswerView();
-    }
-
-    protected void setNextActivity(Class nextActivity) {
-        this.nextActivity = nextActivity;
-    }
-
-    protected void setPreviousActivity(Class previousActivity) {
-        this.previousActivity = previousActivity;
-    }
-
-    /**
-     * This event becomes available when launch mode is single top.
-     *
-     * @param intent
-     */
-    @Override
-    protected void onNewIntent(Intent intent) {
-        super.onNewIntent(intent);
-        this.answers = restoreAnswers(this, intent.getBundleExtra(STRING_ANSWERS));
-    }
-
-    @Override
-    protected void onRestoreInstanceState(Bundle savedInstanceState) {
-        super.onRestoreInstanceState(savedInstanceState);
-        this.answers = savedInstanceState.getBundle(STRING_ANSWERS);
-    }
-
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putBundle(STRING_ANSWERS, this.answers);
     }
 
+    protected void setNextActivity(Class nextActivity) {
+        this.nextActivity = nextActivity;
+    }
+
     @Override
-    public void onBackPressed() {
-        startActivity(previousActivity);
+    protected void onPause() {
+        super.onPause();
+        this.getIntent().putExtra(A.STRING_ANSWERS, this.answers);
+    }
+
+    /**
+     * This event becomes available when launch mode is single top.
+     *
+     * @param intent saved instance state
+     */
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        this.answers = restoreAnswers(this, intent.getBundleExtra(STRING_ANSWERS));
+        refreshAnswerView();
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        this.answers = savedInstanceState.getBundle(STRING_ANSWERS);
+        refreshAnswerView();
     }
 
 }

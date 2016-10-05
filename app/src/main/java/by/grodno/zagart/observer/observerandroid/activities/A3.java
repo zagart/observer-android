@@ -10,8 +10,6 @@ public class A3 extends A {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setNextActivity(A4.class);
-        setPreviousActivity(A2.class);
-
     }
 
 }
