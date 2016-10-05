@@ -90,7 +90,10 @@
     <string name="title_activity_fullscreen">FullscreenActivity</string>
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
-    <string name="music_category">Music</string>
+    <string name="my_music">My music</string>
     <string name="open_music">Open music</string>
     <string name="hello_world">Hello world!</string>
+    <string name="image">image</string>
+    <string name="search">search</string>
+    <string name="shuffle_all">Shuffle all</string>
 </resources>

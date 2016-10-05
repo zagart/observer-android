@@ -4,5 +4,64 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@android:color/white"
     tools:context=".MusicActivity">
+    <LinearLayout
+        android:id="@+id/music_header"
+        android:orientation="horizontal"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:minHeight="@dimen/title_min_height"
+        android:background="@color/colorPrimary">
+        <Button
+            android:clickable="false"
+            android:id="@+id/side_menu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/image"
+            android:drawableLeft="@drawable/ic_ab_menu"
+            style="@style/Base.Widget.AppCompat.Button.Borderless"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/my_music"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/title_font_size"/>
+        <Button
+            android:id="@+id/music_category"
+            android:clickable="false"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/white"
+            android:contentDescription="@string/image"
+            android:drawableLeft="@drawable/ic_toolbar_spinner_arrow"
+            style="@style/Base.Widget.AppCompat.Button.Borderless"/>
+        <Button
+            android:id="@+id/music_search"
+            android:clickable="false"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:textColor="@android:color/white"
+            android:contentDescription="@string/image"
+            android:drawableRight="@drawable/ic_menu_search"
+            style="@style/Base.Widget.AppCompat.Button.Borderless"/>
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/article"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="@dimen/layout_vertical_margin">
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/ic_shuffle_24dp"
+            style="@style/Base.Widget.AppCompat.Button.Borderless.Colored"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/shuffle_all"
+            android:textColor="@color/colorPrimary"
+            android:textSize="@dimen/text_font_size"/>
+    </LinearLayout>
 </FrameLayout>

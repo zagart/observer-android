@@ -3,4 +3,8 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="main_buttons_text_size">30sp</dimen>
+    <dimen name="title_font_size">22sp</dimen>
+    <dimen name="title_min_height">60dp</dimen>
+    <dimen name="text_font_size">20sp</dimen>
+    <dimen name="layout_vertical_margin">70dp</dimen>
 </resources>
