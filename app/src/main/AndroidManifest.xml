@@ -19,9 +19,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".DisplayMessageActivity"></activity>
-        <service android:name=".services.StartedService"
-            android:exported="false"/>
     </application>
 
 </manifest>
