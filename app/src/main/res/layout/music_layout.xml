@@ -7,11 +7,13 @@
     <LinearLayout
         android:id="@+id/music_header"
         style="@style/InnerLayout.Header"
+        android:paddingStart="@dimen/header_start_padding"
         >
 
         <Button
             android:id="@+id/side_menu"
             style="@style/IconButton"
+            android:layout_width="@dimen/side_menu_width"
             android:drawableStart="@drawable/ic_ab_menu"/>
 
         <LinearLayout

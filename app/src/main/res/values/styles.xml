@@ -31,6 +31,7 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:paddingStart">@dimen/no_padding</item>
         <item name="android:paddingEnd">@dimen/no_padding</item>
+        <item name="android:gravity">center_vertical</item>
     </style>
 
     <style name="InnerView">
@@ -41,7 +42,7 @@
     <style name="IconButton" parent="Base.Widget.AppCompat.Button.Borderless">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:background">@android:color/transparent</item>
+        <item name="android:background">@android:color/holo_red_light</item>
         <item name="android:contentDescription">@string/image</item>
         <item name="android:layout_margin">@dimen/icon_margin</item>
     </style>
@@ -76,7 +77,6 @@
     </style>
 
     <style name="InnerLayout.Header">
-        <item name="android:minHeight">@dimen/title_min_height</item>
         <item name="android:orientation">horizontal</item>
         <item name="android:background">@color/colorPrimary</item>
     </style>
