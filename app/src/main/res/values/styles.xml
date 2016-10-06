@@ -31,7 +31,7 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:paddingStart">@dimen/no_padding</item>
         <item name="android:paddingEnd">@dimen/no_padding</item>
-        <item name="android:gravity">center_vertical</item>
+        <item name="android:gravity">start|center_vertical</item>
     </style>
 
     <style name="InnerView">
@@ -42,7 +42,7 @@
     <style name="IconButton" parent="Base.Widget.AppCompat.Button.Borderless">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:background">@android:color/holo_red_light</item>
+        <item name="android:background">@android:color/transparent</item>
         <item name="android:contentDescription">@string/image</item>
         <item name="android:layout_margin">@dimen/icon_margin</item>
     </style>
@@ -86,6 +86,28 @@
         <item name="android:layout_marginStart">@dimen/default_margin</item>
         <item name="android:layout_marginEnd">@dimen/default_margin</item>
         <item name="android:layout_marginBottom">@dimen/default_margin</item>
+    </style>
+
+    <style name="IconButton.Search">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:drawableEnd">@drawable/ic_menu_search</item>
+    </style>
+
+    <style name="IconButton.Arrow">
+        <item name="android:layout_width">@dimen/category_arrow_width</item>
+        <item name="android:drawableEnd">@drawable/ic_toolbar_spinner_arrow</item>
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+
+    <style name="IconButton.Menu">
+        <item name="android:layout_width">@dimen/side_menu_width</item>
+        <item name="android:drawableStart">@drawable/ic_ab_menu</item>
+    </style>
+
+    <style name="InnerLayout.MusicCategory">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:orientation">horizontal</item>
     </style>
 
 </resources>

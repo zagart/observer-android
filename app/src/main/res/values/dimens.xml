@@ -17,4 +17,6 @@
     <dimen name="default_margin">16dp</dimen>
     <dimen name="icon_margin">4dp</dimen>
     <dimen name="side_menu_width">63dp</dimen>
+    <dimen name="category_arrow_width">22dp</dimen>
+    <dimen name="search_icon_width">44dp</dimen>
 </resources>

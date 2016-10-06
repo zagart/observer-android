@@ -12,16 +12,13 @@
 
         <Button
             android:id="@+id/side_menu"
-            style="@style/IconButton"
-            android:layout_width="@dimen/side_menu_width"
-            android:drawableStart="@drawable/ic_ab_menu"/>
+            style="@style/IconButton.Menu"
+            />
 
         <LinearLayout
             android:id="@+id/music_category"
-            style="@style/InnerLayout"
-            android:layout_width="wrap_content"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
+            style="@style/InnerLayout.MusicCategory"
+            >
 
             <TextView
                 style="@style/InnerView"
@@ -30,15 +27,14 @@
                 android:textSize="@dimen/title_font_size"/>
 
             <Button
-                style="@style/IconButton"
-                android:drawableStart="@drawable/ic_toolbar_spinner_arrow"
-                android:textColor="@android:color/white"/>
+                style="@style/IconButton.Arrow"
+                />
         </LinearLayout>
 
         <Button
             android:id="@+id/music_search"
-            style="@style/IconButton"
-            android:drawableEnd="@drawable/ic_menu_search"/>
+            style="@style/IconButton.Search"
+            />
     </LinearLayout>
 
     <LinearLayout
