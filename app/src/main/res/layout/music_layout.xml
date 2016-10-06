@@ -43,46 +43,202 @@
         >
 
         <Button
-            style="@style/IconButton"
-            android:drawableStart="@drawable/ic_shuffle_24dp"
+            style="@style/IconButton.ShuffleIcon"
             />
 
         <TextView
-            style="@style/InnerView"
+            style="@style/InnerView.ShuffleText"
             android:text="@string/shuffle_all"
-            android:textColor="@color/colorPrimary"
-            android:textSize="@dimen/text_font_size"/>
+            />
     </LinearLayout>
 
-    <FrameLayout
-        android:id="@+id/music_list"
-        style="@style/InnerLayout.MusicContainer"
-        >
+    <TextView
+        style="@style/BorderLine"/>
 
-        <FrameLayout
-            android:id="@+id/song_1"
-            style="@style/InnerLayout.Song">
+    <ScrollView
+        style="@style/MusicContainerScroller">
 
-            <LinearLayout
-                style="@style/InnerLayout"
-                android:orientation="vertical">
+        <LinearLayout
+            android:id="@+id/music_container"
+            style="@style/InnerLayout.MusicContainer"
+            >
+
+            <FrameLayout
+                android:id="@+id/song_1"
+                style="@style/InnerLayout.SongRow">
+
+                <LinearLayout
+                    style="@style/InnerLayout"
+                    android:orientation="vertical">
+
+                    <TextView
+                        style="@style/InnerView.SongName"
+                        android:text="@string/on_my_own"
+                        />
+
+                    <TextView
+                        style="@style/InnerView.AuthorName"
+                        android:text="@string/ashes_remain"
+                        />
+                </LinearLayout>
 
                 <TextView
-                    style="@style/InnerView.SongName"
-                    android:text="@string/on_my_own"
+                    style="@style/InnerView.SongDuration"
+                    android:text="@string/_2_53"
                     />
+            </FrameLayout>
+
+            <FrameLayout
+                android:id="@+id/song_2"
+                style="@style/InnerLayout.SongRow">
+
+                <LinearLayout
+                    style="@style/InnerLayout"
+                    android:orientation="vertical">
+
+
+                    <TextView
+                        style="@style/InnerView.SongName"
+                        android:text="@string/undo"
+                        />
+
+                    <TextView
+                        style="@style/InnerView.AuthorName"
+                        android:text="@string/sanna_nielsen"
+                        />
+                </LinearLayout>
 
                 <TextView
-                    style="@style/InnerView.AuthorName"
-                    android:text="@string/ashes_remain"
+                    style="@style/InnerView.SongDuration"
+                    android:text="@string/_3_04"
                     />
-            </LinearLayout>
+            </FrameLayout>
 
-            <TextView
-                style="@style/InnerView.SongDuration"
-                android:text="@string/_2_53"
-                />
-        </FrameLayout>
+            <FrameLayout
+                android:id="@+id/song_3"
+                style="@style/InnerLayout.SongRow">
 
-    </FrameLayout>
+                <LinearLayout
+                    style="@style/InnerLayout"
+                    android:orientation="vertical">
+
+                    <TextView
+                        style="@style/InnerView.SongName"
+                        android:text="@string/woman_like_a_man"
+                        />
+
+                    <TextView
+                        style="@style/InnerView.AuthorName"
+                        android:text="@string/damien_rice"
+                        />
+                </LinearLayout>
+
+                <TextView
+                    style="@style/InnerView.SongDuration"
+                    android:text="@string/_4_47"
+                    />
+            </FrameLayout>
+
+            <FrameLayout
+                android:id="@+id/song_4"
+                style="@style/InnerLayout.SongRow">
+
+                <LinearLayout
+                    style="@style/InnerLayout"
+                    android:orientation="vertical">
+
+                    <TextView
+                        style="@style/InnerView.SongName"
+                        android:text="@string/say_it"
+                        />
+
+                    <TextView
+                        style="@style/InnerView.AuthorName"
+                        android:text="@string/blue_october"
+                        />
+                </LinearLayout>
+
+                <TextView
+                    style="@style/InnerView.SongDuration"
+                    android:text="@string/_3_35"
+                    />
+            </FrameLayout>
+
+            <FrameLayout
+                android:id="@+id/song_5"
+                style="@style/InnerLayout.SongRow">
+
+                <LinearLayout
+                    style="@style/InnerLayout"
+                    android:orientation="vertical">
+
+                    <TextView
+                        style="@style/InnerView.SongName"
+                        android:text="@string/someone_and_noone"
+                        />
+
+                    <TextView
+                        style="@style/InnerView.AuthorName"
+                        android:text="@string/dakooka"
+                        />
+                </LinearLayout>
+
+                <TextView
+                    style="@style/InnerView.SongDuration"
+                    android:text="@string/_3_44"
+                    />
+            </FrameLayout>
+
+            <FrameLayout
+                android:id="@+id/song_6"
+                style="@style/InnerLayout.SongRow">
+
+                <LinearLayout
+                    style="@style/InnerLayout"
+                    android:orientation="vertical">
+
+                    <TextView
+                        style="@style/InnerView.SongName"
+                        android:text="@string/get_free_ft_amber_what_so_not_remix"
+                        />
+
+                    <TextView
+                        style="@style/InnerView.AuthorName"
+                        android:text="@string/major_lazer"
+                        />
+                </LinearLayout>
+
+                <TextView
+                    style="@style/InnerView.SongDuration"
+                    android:text="@string/_4_24"
+                    />
+            </FrameLayout>
+
+            <FrameLayout
+                android:id="@+id/song_7"
+                style="@style/InnerLayout.SongRow">
+
+                <LinearLayout
+                    style="@style/InnerLayout"
+                    android:orientation="vertical">
+
+                    <TextView
+                        style="@style/InnerView.SongName"
+                        android:text="@string/suki_suki"
+                        />
+
+                    <TextView
+                        style="@style/InnerView.AuthorName"
+                        android:text="@string/gutter_brothers"
+                        />
+                </LinearLayout>
+
+                <TextView
+                    style="@style/InnerView.SongDuration"
+                    android:text="@string/_3_51"
+                    />
+            </FrameLayout>
+
+        </LinearLayout>
+    </ScrollView>
 </FrameLayout>

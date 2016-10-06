@@ -21,6 +21,7 @@
     </style>
 
     <style name="RootLayout">
+        <item name="android:background">@android:color/white</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">match_parent</item>
         <item name="android:padding">@dimen/no_padding</item>
@@ -66,12 +67,14 @@
         <item name="android:textSize">@dimen/music_duration_size</item>
     </style>
 
-    <style name="InnerLayout.Song">
+    <style name="InnerLayout.SongRow">
         <item name="android:gravity">center_vertical</item>
+        <item name="android:layout_marginBottom">@dimen/song_row_bottom_margin</item>
     </style>
 
     <style name="InnerLayout.ShuffleAll">
         <item name="android:layout_marginTop">@dimen/layout_vertical_margin</item>
+        <item name="android:layout_height">@dimen/shuffle_height</item>
         <item name="android:gravity">center_vertical</item>
         <item name="android:orientation">horizontal</item>
     </style>
@@ -82,7 +85,7 @@
     </style>
 
     <style name="InnerLayout.MusicContainer">
-        <item name="android:layout_marginTop">140dp</item>
+        <item name="android:orientation">vertical</item>
         <item name="android:layout_marginStart">@dimen/default_margin</item>
         <item name="android:layout_marginEnd">@dimen/default_margin</item>
         <item name="android:layout_marginBottom">@dimen/default_margin</item>
@@ -108,6 +111,29 @@
         <item name="android:layout_width">wrap_content</item>
         <item name="android:gravity">center_vertical</item>
         <item name="android:orientation">horizontal</item>
+    </style>
+
+    <style name="InnerView.ShuffleText">
+        <item name="android:textColor">@color/colorPrimary</item>
+        <item name="android:textSize">@dimen/shuffle_font_size</item>
+    </style>
+
+    <style name="IconButton.ShuffleIcon">
+        <item name="android:layout_width">@dimen/default_icon_width</item>
+        <item name="android:drawableStart">@drawable/ic_shuffle_24dp</item>
+    </style>
+
+    <style name="BorderLine">
+        <item name="android:background">@android:color/darker_gray</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">0.5dp</item>
+        <item name="android:layout_marginTop">120dp</item>
+    </style>
+
+    <style name="MusicContainerScroller">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">@dimen/song_container_margin</item>
     </style>
 
 </resources>
