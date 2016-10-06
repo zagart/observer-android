@@ -20,4 +20,19 @@
         <item name="android:background">@color/black_overlay</item>
     </style>
 
+    <style name="MessageWindow">
+        <item name="android:textSize">@dimen/message_text_size</item>
+        <item name="android:gravity">center</item>
+        <item name="android:background">@color/black_overlay</item>
+    </style>
+
+    <style name="ButtonNo">
+        <item name="android:layout_alignParentBottom">true</item>
+    </style>
+
+    <style name="ButtonYes">
+        <item name="android:layout_alignParentBottom">true</item>
+        <item name="android:layout_alignParentEnd">true</item>
+    </style>
+
 </resources>
