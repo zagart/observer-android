@@ -20,19 +20,37 @@
         <item name="android:background">@color/black_overlay</item>
     </style>
 
-    <style name="MessageWindow">
+    <style name="AMessageWindow">
         <item name="android:textSize">@dimen/message_text_size</item>
         <item name="android:gravity">center</item>
         <item name="android:background">@color/black_overlay</item>
     </style>
 
-    <style name="ButtonNo">
+    <style name="AButtonNo">
         <item name="android:layout_alignParentBottom">true</item>
     </style>
 
-    <style name="ButtonYes">
+    <style name="AButtonYes">
+        <item name="android:onClick">onClickYes</item>
         <item name="android:layout_alignParentBottom">true</item>
         <item name="android:layout_alignParentEnd">true</item>
+    </style>
+
+    <style name="ATitle">
+        <item name="android:textSize">@dimen/title_text_size</item>
+        <item name="android:gravity">center</item>
+        <item name="android:background">#BAD</item>
+    </style>
+
+    <style name="ARootLayout">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="AReplayStatus">
+        <item name="android:gravity">center</item>
+        <item name="android:background">@color/colorPrimary</item>
+        <item name="android:textSize">@dimen/status_text_size</item>
     </style>
 
 </resources>

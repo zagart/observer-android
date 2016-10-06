@@ -3,4 +3,6 @@
     <string name="no">No</string>
     <string name="yes">Yes</string>
     <string name="default_activity_message">A lot of text to agree or not.</string>
+    <string name="layout_name">A</string>
+    <string name="reply_status">unknown</string>
 </resources>

@@ -6,29 +6,49 @@
              android:orientation="vertical">
 
     <android.support.percent.PercentRelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        style="@style/ARootLayout">
 
         <TextView
-            style="@style/MessageWindow"
+            style="@style/ATitle"
+            android:text="@string/layout_name"
+            app:layout_heightPercent="10%"
+            app:layout_marginLeftPercent="20%"
+            app:layout_marginTopPercent="5%"
+            app:layout_widthPercent="60%"/>
+
+        <TextView
+            style="@style/AMessageWindow"
             android:text="@string/default_activity_message"
-            app:layout_aspectRatio="100%"
+            app:layout_heightPercent="50%"
             app:layout_marginLeftPercent="10%"
-            app:layout_marginTopPercent="10%"
+            app:layout_marginTopPercent="20%"
             app:layout_widthPercent="80%"/>
 
         <Button
             android:id="@+id/btn_no"
+            style="@style/AButtonNo"
+            android:onClick="onClickNo"
             android:text="@string/no"
             app:layout_heightPercent="10%"
-            app:layout_widthPercent="40%"
-            style="@style/ButtonNo"/>
+            app:layout_widthPercent="40%"/>
 
         <Button
             android:id="@+id/btn_yes"
+            style="@style/AButtonYes"
+            android:onClick="onClickYes"
             android:text="@string/yes"
             app:layout_heightPercent="10%"
+            app:layout_widthPercent="40%"/>
+
+        <TextView
+            android:id="@+id/reply_status"
+            android:text="@string/reply_status"
+            app:layout_heightPercent="10%"
+            app:layout_marginLeftPercent="30%"
+            app:layout_marginTopPercent="75%"
             app:layout_widthPercent="40%"
-            style="@style/ButtonYes"/>
+            style="@style/AReplayStatus"/>
+
     </android.support.percent.PercentRelativeLayout>
+
 </FrameLayout>
