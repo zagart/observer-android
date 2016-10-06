@@ -12,6 +12,8 @@ import by.grodno.zagart.observer.observerandroid.activities.A1;
  */
 public class ZeroActivity extends AppCompatActivity {
 
+    public static final String PREF_FILE = "MyAgreementsFile";
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
