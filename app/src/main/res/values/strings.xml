@@ -6,4 +6,7 @@
     <string name="layout_name">A</string>
     <string name="reply_status">unknown</string>
     <string name="string_next">Next</string>
+    <string name="main_container_text">
+        Container grants access to features depending on accepted agreements.
+    </string>
 </resources>

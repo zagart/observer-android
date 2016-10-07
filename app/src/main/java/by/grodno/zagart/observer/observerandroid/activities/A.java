@@ -1,7 +1,6 @@
 package by.grodno.zagart.observer.observerandroid.activities;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
@@ -10,11 +9,12 @@ import android.view.View;
 import android.widget.TextView;
 
 import by.grodno.zagart.observer.observerandroid.R;
-import by.grodno.zagart.observer.observerandroid.ZeroActivity;
 
 import static android.content.Intent.FLAG_ACTIVITY_SINGLE_TOP;
 import static android.graphics.Color.GREEN;
 import static android.graphics.Color.RED;
+import static by.grodno.zagart.observer.observerandroid.utils.SharedPreferencesUtil.persistValue;
+import static by.grodno.zagart.observer.observerandroid.utils.SharedPreferencesUtil.retrieveValue;
 
 /**
  * Abstract class represents transitional activities.
@@ -34,8 +34,13 @@ abstract public class A extends AppCompatActivity {
             bar.hide();
         }
         setContentView(R.layout.default_activity);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
         showTitle();
-        retrieveReplay();
+        updateReplay();
     }
 
     private void showTitle() {
@@ -43,44 +48,32 @@ abstract public class A extends AppCompatActivity {
         title.setText(getClass().getSimpleName());
     }
 
-    private void retrieveReplay() {
-        SharedPreferences replies = getSharedPreferences(ZeroActivity.PREF_FILE, MODE_PRIVATE);
-        activityReply = replies.getString(getClass().getSimpleName(), null);
+    private void updateReplay() {
+        activityReply = (String) retrieveValue(this, getClass().getSimpleName(), String.class);
         if (YES.equals(activityReply)) {
-            refreshReplay(GREEN);
+            refreshReplayTextView(GREEN);
         }
         if (NO.equals(activityReply)) {
-            refreshReplay(RED);
+            refreshReplayTextView(RED);
         }
     }
 
-    private void refreshReplay(int color) {
+    private void refreshReplayTextView(int color) {
         final TextView replyStatus = (TextView) findViewById(R.id.reply_status);
         replyStatus.setText(activityReply);
         replyStatus.setBackgroundColor(color);
     }
 
-    @Override
-    protected void onStop() {
-        super.onStop();
-        persistReply();
-    }
-
-    private void persistReply() {
-        SharedPreferences replies = getSharedPreferences(ZeroActivity.PREF_FILE, MODE_PRIVATE);
-        SharedPreferences.Editor editor = replies.edit();
-        editor.putString(getClass().getSimpleName(), activityReply);
-        editor.apply();
-    }
-
     public void onClickYes(View view) {
         activityReply = YES;
-        refreshReplay(GREEN);
+        persistValue(this, getClass().getSimpleName(), activityReply);
+        refreshReplayTextView(GREEN);
     }
 
     public void onClickNo(View view) {
         activityReply = NO;
-        refreshReplay(RED);
+        persistValue(this, getClass().getSimpleName(), activityReply);
+        refreshReplayTextView(RED);
     }
 
     public void onClickNext(View view) {
