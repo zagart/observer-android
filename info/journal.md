@@ -144,4 +144,28 @@
 			</li>
 		</ul>
 	</li>
+	<li>
+		<ul>
+			<h4>06.10.2016</h4>
+			<li>
+				Theory about layouts(FrameLayout, LinearLayout, their Percent implementations and others) and styles 
+				has been read and has been used on practice while coding VK static layout. 
+			</li>
+			<li>
+				HW with creating static layout finished.
+			</li>
+		</ul>
+	</li>
+
+	<li>
+		<ul>
+			<h4>07.10.2016</h4>
+			<li>
+				+Shared Preferences theory. Started work at Zero Activity HW.
+			</li>
+			<li>
+				Zero Activity HW with usage Shared Preferences done.
+			</li>
+		</ul>
+	</li>
 </ul>
