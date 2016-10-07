@@ -23,8 +23,8 @@ abstract public class A extends AppCompatActivity {
 
     public static final String YES = "agreed";
     public static final String NO = "not agreed";
-    protected Class nextActivity = this.getClass();
-    protected String activityReply = null;
+    protected Class mNextActivity = this.getClass();
+    protected String mActivityReply = null;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -49,41 +49,41 @@ abstract public class A extends AppCompatActivity {
     }
 
     private void updateReplay() {
-        activityReply = (String) retrieveValue(this, getClass().getSimpleName(), String.class);
-        if (YES.equals(activityReply)) {
+        mActivityReply = (String) retrieveValue(this, getClass().getSimpleName(), String.class);
+        if (YES.equals(mActivityReply)) {
             refreshReplayTextView(GREEN);
         }
-        if (NO.equals(activityReply)) {
+        if (NO.equals(mActivityReply)) {
             refreshReplayTextView(RED);
         }
     }
 
     private void refreshReplayTextView(int color) {
         final TextView replyStatus = (TextView) findViewById(R.id.reply_status);
-        replyStatus.setText(activityReply);
+        replyStatus.setText(mActivityReply);
         replyStatus.setBackgroundColor(color);
     }
 
     public void onClickYes(View view) {
-        activityReply = YES;
-        persistValue(this, getClass().getSimpleName(), activityReply);
+        mActivityReply = YES;
+        persistValue(this, getClass().getSimpleName(), mActivityReply);
         refreshReplayTextView(GREEN);
     }
 
     public void onClickNo(View view) {
-        activityReply = NO;
-        persistValue(this, getClass().getSimpleName(), activityReply);
+        mActivityReply = NO;
+        persistValue(this, getClass().getSimpleName(), mActivityReply);
         refreshReplayTextView(RED);
     }
 
     public void onClickNext(View view) {
-        if (activityReply != null) {
+        if (mActivityReply != null) {
             openNextActivity(FLAG_ACTIVITY_SINGLE_TOP);
         }
     }
 
     protected void openNextActivity(int flags) {
-        final Intent intent = new Intent(this, nextActivity);
+        final Intent intent = new Intent(this, mNextActivity);
         intent.addFlags(flags);
         startActivity(intent);
     }

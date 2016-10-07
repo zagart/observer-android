@@ -18,7 +18,7 @@ public class A3 extends A {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        nextActivity = MainActivity.class;
+        mNextActivity = MainActivity.class;
     }
 
     @Override
@@ -27,7 +27,7 @@ public class A3 extends A {
         SharedPreferences.Editor editor = replies.edit();
         editor.clear();
         editor.apply();
-        activityReply = null;
+        mActivityReply = null;
         super.openNextActivity(FLAG_ACTIVITY_CLEAR_TASK | FLAG_ACTIVITY_NEW_TASK);
     }
 

@@ -11,7 +11,7 @@ public class A2 extends A {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        nextActivity = A3.class;
+        mNextActivity = A3.class;
     }
 
 }
