@@ -5,4 +5,5 @@
     <string name="default_activity_message">A lot of text to agree or not.</string>
     <string name="layout_name">A</string>
     <string name="reply_status">unknown</string>
+    <string name="string_next">Next</string>
 </resources>

@@ -9,6 +9,7 @@
         style="@style/ARootLayout">
 
         <TextView
+            android:id="@+id/title_name"
             style="@style/ATitle"
             android:text="@string/layout_name"
             app:layout_heightPercent="10%"
@@ -24,13 +25,33 @@
             app:layout_marginTopPercent="20%"
             app:layout_widthPercent="80%"/>
 
+        <TextView
+            android:id="@+id/reply_status"
+            style="@style/AReplayStatus"
+            android:text="@string/reply_status"
+            app:layout_heightPercent="10%"
+            app:layout_marginLeftPercent="30%"
+            app:layout_marginTopPercent="75%"
+            app:layout_widthPercent="40%"/>
+
         <Button
             android:id="@+id/btn_no"
             style="@style/AButtonNo"
             android:onClick="onClickNo"
             android:text="@string/no"
             app:layout_heightPercent="10%"
-            app:layout_widthPercent="40%"/>
+            app:layout_widthPercent="30%"/>
+
+
+        <Button
+            android:id="@+id/next"
+            style="@style/AButtonNext"
+            android:onClick="onClickNext"
+            android:text="@string/string_next"
+            app:layout_heightPercent="10%"
+            app:layout_marginLeftPercent="30%"
+            app:layout_widthPercent="40%"
+            />
 
         <Button
             android:id="@+id/btn_yes"
@@ -38,16 +59,8 @@
             android:onClick="onClickYes"
             android:text="@string/yes"
             app:layout_heightPercent="10%"
-            app:layout_widthPercent="40%"/>
+            app:layout_widthPercent="30%"/>
 
-        <TextView
-            android:id="@+id/reply_status"
-            android:text="@string/reply_status"
-            app:layout_heightPercent="10%"
-            app:layout_marginLeftPercent="30%"
-            app:layout_marginTopPercent="75%"
-            app:layout_widthPercent="40%"
-            style="@style/AReplayStatus"/>
 
     </android.support.percent.PercentRelativeLayout>
 

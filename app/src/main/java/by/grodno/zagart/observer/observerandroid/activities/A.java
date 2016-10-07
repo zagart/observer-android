@@ -1,5 +1,6 @@
 package by.grodno.zagart.observer.observerandroid.activities;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -11,6 +12,7 @@ import android.widget.TextView;
 import by.grodno.zagart.observer.observerandroid.R;
 import by.grodno.zagart.observer.observerandroid.ZeroActivity;
 
+import static android.content.Intent.FLAG_ACTIVITY_SINGLE_TOP;
 import static android.graphics.Color.GREEN;
 import static android.graphics.Color.RED;
 
@@ -21,7 +23,8 @@ abstract public class A extends AppCompatActivity {
 
     public static final String YES = "agreed";
     public static final String NO = "not agreed";
-    private String activityReply = null;
+    protected Class nextActivity = this.getClass();
+    protected String activityReply = null;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -30,8 +33,31 @@ abstract public class A extends AppCompatActivity {
         if (bar != null) {
             bar.hide();
         }
-        retrieveReplay();
         setContentView(R.layout.default_activity);
+        showTitle();
+        retrieveReplay();
+    }
+
+    private void showTitle() {
+        final TextView title = (TextView) findViewById(R.id.title_name);
+        title.setText(getClass().getSimpleName());
+    }
+
+    private void retrieveReplay() {
+        SharedPreferences replies = getSharedPreferences(ZeroActivity.PREF_FILE, MODE_PRIVATE);
+        activityReply = replies.getString(getClass().getSimpleName(), null);
+        if (YES.equals(activityReply)) {
+            refreshReplay(GREEN);
+        }
+        if (NO.equals(activityReply)) {
+            refreshReplay(RED);
+        }
+    }
+
+    private void refreshReplay(int color) {
+        final TextView replyStatus = (TextView) findViewById(R.id.reply_status);
+        replyStatus.setText(activityReply);
+        replyStatus.setBackgroundColor(color);
     }
 
     @Override
@@ -41,31 +67,32 @@ abstract public class A extends AppCompatActivity {
     }
 
     private void persistReply() {
-        SharedPreferences answers = getSharedPreferences(ZeroActivity.PREF_FILE, MODE_PRIVATE);
-        SharedPreferences.Editor editor = answers.edit();
+        SharedPreferences replies = getSharedPreferences(ZeroActivity.PREF_FILE, MODE_PRIVATE);
+        SharedPreferences.Editor editor = replies.edit();
         editor.putString(getClass().getSimpleName(), activityReply);
         editor.apply();
     }
 
-    private void retrieveReplay() {
-        SharedPreferences replies = getSharedPreferences(ZeroActivity.PREF_FILE, MODE_PRIVATE);
-        activityReply = replies.getString(getClass().getSimpleName(), null);
-    }
-
     public void onClickYes(View view) {
         activityReply = YES;
-        refreshAnswer(GREEN);
+        refreshReplay(GREEN);
     }
 
     public void onClickNo(View view) {
         activityReply = NO;
-        refreshAnswer(RED);
+        refreshReplay(RED);
     }
 
-    private void refreshAnswer(int color) {
-        final TextView replyStatus = (TextView) findViewById(R.id.reply_status);
-        replyStatus.setText(activityReply);
-        replyStatus.setBackgroundColor(color);
+    public void onClickNext(View view) {
+        if (activityReply != null) {
+            openNextActivity(FLAG_ACTIVITY_SINGLE_TOP);
+        }
+    }
+
+    protected void openNextActivity(int flags) {
+        final Intent intent = new Intent(this, nextActivity);
+        intent.addFlags(flags);
+        startActivity(intent);
     }
 
 }

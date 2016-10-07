@@ -16,6 +16,8 @@
         </activity>
         <activity android:name=".MainActivity"/>
         <activity android:name=".activities.A1"/>
+        <activity android:name=".activities.A2"/>
+        <activity android:name=".activities.A3"/>
     </application>
 
 </manifest>
