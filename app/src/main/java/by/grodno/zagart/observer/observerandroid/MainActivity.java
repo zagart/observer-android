@@ -8,7 +8,6 @@ import android.view.View;
 import static by.grodno.zagart.observer.observerandroid.utils.SharedPreferencesUtil.clearPersistedValues;
 import static by.grodno.zagart.observer.observerandroid.utils.SharedPreferencesUtil.persistValue;
 
-
 /**
  * Main activity.
  */
