@@ -25,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void onClickReject(View view) {
         clearPersistedValues(this);
+        persistValue(this, TRUSTED_USER, false);
         finish();
     }
 
