@@ -24,18 +24,6 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-    productFlavors {
-        demo {
-            applicationId "by.grodno.zagart.observer.observerandroid.demo";
-            versionName "1.0-demo";
-            minSdkVersion 17
-        }
-        full {
-            applicationId "by.grodno.zagart.observer.observerandroid.full";
-            versionName "1.0-full";
-            minSdkVersion 19
-        }
-    }
 }
 
 dependencies {
@@ -47,6 +35,7 @@ dependencies {
     compile 'com.android.support:design:24.2.1'
     compile 'com.android.support:support-v4:24.2.1'
     compile 'com.android.support:support-vector-drawable:24.2.1'
-    compile 'com.android.support:percent:24.0.0'
+    compile 'com.android.support:percent:24.2.1'
     testCompile 'junit:junit:4.12'
+    testCompile 'org.mockito:mockito-core:1.10.19'
 }

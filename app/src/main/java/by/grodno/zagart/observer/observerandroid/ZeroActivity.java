@@ -1,5 +1,4 @@
 package by.grodno.zagart.observer.observerandroid;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -27,5 +26,4 @@ public class ZeroActivity extends AppCompatActivity {
         intent.addFlags(FLAG_ACTIVITY_CLEAR_TASK | FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
     }
-
 }

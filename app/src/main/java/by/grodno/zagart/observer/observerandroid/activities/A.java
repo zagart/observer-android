@@ -1,5 +1,4 @@
 package by.grodno.zagart.observer.observerandroid.activities;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -87,5 +86,4 @@ abstract public class A extends AppCompatActivity {
         intent.addFlags(flags);
         startActivity(intent);
     }
-
 }
