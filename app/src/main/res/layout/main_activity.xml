@@ -22,8 +22,7 @@
 
         <by.grodno.zagart.observer.observerandroid.classes.HappyButton
             style="@style/Button.Happy"
-            android:onClick="onHappyClick"
-            android:text="I'M HAPPY :)"/>
+            android:onClick="onHappyClick"/>
     </LinearLayout>
 
     <Button

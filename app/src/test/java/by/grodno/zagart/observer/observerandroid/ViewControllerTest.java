@@ -9,7 +9,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 import java.util.Date;
 
-import by.grodno.zagart.observer.observerandroid.classes.ViewController;
+import by.grodno.zagart.observer.observerandroid.classes.HappinessFactory;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.when;
@@ -23,22 +23,22 @@ public class ViewControllerTest {
     Date date;
     @Mock
     View view;
-    private ViewController<View> mViewController;
+    private HappinessFactory<View> mViewController;
 
     @Before
     public void init() {
-        mViewController = new ViewController<>(view, date);
+        mViewController = new HappinessFactory<>(view, date);
     }
 
     @Test
     public void viewController_isViewVisible_true() {
         when(date.getTime()).thenReturn(ODD_TIME);
-        assertEquals(true, mViewController.isViewVisible());
+        assertEquals(true, mViewController.isHappyTime());
     }
 
     @Test
     public void viewController_isViewVisible_false() {
         when(date.getTime()).thenReturn(EVEN_TIME);
-        assertEquals(false, mViewController.isViewVisible());
+        assertEquals(false, mViewController.isHappyTime());
     }
 }
