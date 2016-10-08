@@ -168,4 +168,17 @@
 			</li>
 		</ul>
 	</li>
+	<li>
+		<ul>
+			<h4>08.10.2016</h4>
+			<li>
+				Today i spent whole day to work on Happiness-application :)
+			</li>
+			<li>
+				As result of today's long work, i've learned something about interaction of
+				Activity ans Intent. Also I got some view about what is that mysterios and abstract
+				class - Context.
+			</li>
+		</ul>
+	</li>
 </ul>
