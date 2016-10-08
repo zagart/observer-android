@@ -2,6 +2,7 @@ package by.grodno.zagart.observer.observerandroid;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
@@ -28,11 +29,15 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        final ActionBar bar = getSupportActionBar();
+        if (bar != null) {
+            bar.hide();
+        }
         persistValue(this, TRUSTED_USER, true);
         setContentView(R.layout.main_activity);
     }
 
-    public void onHappyClick(View view) {
+    public void onHelpClick(View view) {
         Intent intent = new Intent(this, SadActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
         startActivity(intent);

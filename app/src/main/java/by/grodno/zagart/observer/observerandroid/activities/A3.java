@@ -3,6 +3,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 
 import by.grodno.zagart.observer.observerandroid.MainActivity;
+import by.grodno.zagart.observer.observerandroid.R;
 
 import static android.content.Intent.FLAG_ACTIVITY_CLEAR_TASK;
 import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
@@ -16,6 +17,7 @@ public class A3 extends A {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mNextActivity = MainActivity.class;
+        mMessageTextView.setText(R.string.question_3);
     }
 
     @Override

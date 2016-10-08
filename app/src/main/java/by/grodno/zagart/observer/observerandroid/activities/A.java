@@ -16,14 +16,34 @@ import static by.grodno.zagart.observer.observerandroid.utils.SharedPreferencesU
 import static by.grodno.zagart.observer.observerandroid.utils.SharedPreferencesUtil.retrieveValue;
 
 /**
- * Abstract class represents transitional activities.
+ * Abstract class represents transitiona
+ * l activities.
  */
 abstract public class A extends AppCompatActivity {
 
     public static final String YES = "agreed";
     public static final String NO = "not agreed";
-    protected Class mNextActivity = this.getClass();
     protected String mActivityReply = null;
+    protected Class mNextActivity = this.getClass();
+    protected TextView mMessageTextView = null;
+
+    public void onClickNext(View view) {
+        if (mActivityReply != null) {
+            openNextActivity(FLAG_ACTIVITY_SINGLE_TOP);
+        }
+    }
+
+    public void onClickNo(View view) {
+        mActivityReply = NO;
+        persistValue(this, getClass().getSimpleName(), mActivityReply);
+        refreshReplayTextView(RED);
+    }
+
+    public void onClickYes(View view) {
+        mActivityReply = YES;
+        persistValue(this, getClass().getSimpleName(), mActivityReply);
+        refreshReplayTextView(GREEN);
+    }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -33,6 +53,7 @@ abstract public class A extends AppCompatActivity {
             bar.hide();
         }
         setContentView(R.layout.default_activity);
+        mMessageTextView = (TextView) findViewById(R.id.message_window);
     }
 
     @Override
@@ -40,6 +61,18 @@ abstract public class A extends AppCompatActivity {
         super.onStart();
         showTitle();
         updateReplay();
+    }
+
+    protected void openNextActivity(int flags) {
+        final Intent intent = new Intent(this, mNextActivity);
+        intent.addFlags(flags);
+        startActivity(intent);
+    }
+
+    private void refreshReplayTextView(int color) {
+        final TextView replyStatus = (TextView) findViewById(R.id.reply_status);
+        replyStatus.setText(mActivityReply);
+        replyStatus.setBackgroundColor(color);
     }
 
     private void showTitle() {
@@ -55,35 +88,5 @@ abstract public class A extends AppCompatActivity {
         if (NO.equals(mActivityReply)) {
             refreshReplayTextView(RED);
         }
-    }
-
-    private void refreshReplayTextView(int color) {
-        final TextView replyStatus = (TextView) findViewById(R.id.reply_status);
-        replyStatus.setText(mActivityReply);
-        replyStatus.setBackgroundColor(color);
-    }
-
-    public void onClickYes(View view) {
-        mActivityReply = YES;
-        persistValue(this, getClass().getSimpleName(), mActivityReply);
-        refreshReplayTextView(GREEN);
-    }
-
-    public void onClickNo(View view) {
-        mActivityReply = NO;
-        persistValue(this, getClass().getSimpleName(), mActivityReply);
-        refreshReplayTextView(RED);
-    }
-
-    public void onClickNext(View view) {
-        if (mActivityReply != null) {
-            openNextActivity(FLAG_ACTIVITY_SINGLE_TOP);
-        }
-    }
-
-    protected void openNextActivity(int flags) {
-        final Intent intent = new Intent(this, mNextActivity);
-        intent.addFlags(flags);
-        startActivity(intent);
     }
 }

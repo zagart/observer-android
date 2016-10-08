@@ -17,8 +17,8 @@
         app:layout_widthPercent="60%"/>
 
     <TextView
+        android:id="@+id/message_window"
         style="@style/AMessageWindow"
-        android:text="@string/default_activity_message"
         app:layout_heightPercent="50%"
         app:layout_marginTopPercent="20%"
         app:layout_widthPercent="80%"/>

@@ -3,12 +3,18 @@
     <string name="no">No</string>
     <string name="yes">Yes</string>
     <string name="default_activity_message">A lot of text to agree or not.</string>
+    <string name="question_1">Do you think this world has enough of kindness and responsibility?</string>
+    <string name="question_2">Do you brave human?</string>
+    <string name="question_3">Do you ever wanted to made something great to change your life?</string>
     <string name="layout_name">A</string>
     <string name="reply_status">unknown</string>
     <string name="string_next">Next</string>
-    <string name="reject_button_text">Reject all and exit</string>
-    <string name="exit">Exit</string>
+    <string name="reject_button_text">Reject all and run away</string>
+    <string name="exit">Run away</string>
+    <string name="help_me">"HELP HIM!"</string>
     <string name="main_container_text">
-        Container grants access to features depending on accepted agreements.
+        A lot of sadness is waiting for you on other side!
+        Do you able to withstand it? Let\'s go!
+        Release prisoner and defeat sadness!
     </string>
 </resources>

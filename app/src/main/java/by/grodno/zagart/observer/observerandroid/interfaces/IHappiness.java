@@ -7,6 +7,6 @@ import android.view.View;
  */
 public interface IHappiness {
 
-    String HAPPINESS = "I'm happy! :)";
+    String HAPPINESS_MESSAGE = "Catch!";
     View shareHappiness(Context context);
 }

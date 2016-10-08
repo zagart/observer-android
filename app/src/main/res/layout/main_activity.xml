@@ -8,22 +8,10 @@
         android:id="@+id/main_container"
         style="@style/MainMessage"
         android:text="@string/main_container_text"
-        app:layout_heightPercent="30%"
+        app:layout_heightPercent="60%"
         app:layout_marginStartPercent="5%"
         app:layout_marginTopPercent="5%"
         app:layout_widthPercent="90%"/>
-
-    <LinearLayout
-        android:id="@+id/actions_container"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_marginTopPercent="40%">
-
-        <by.grodno.zagart.observer.observerandroid.classes.HappyButton
-            style="@style/Button.Happy"
-            android:onClick="onHappyClick"/>
-    </LinearLayout>
 
     <Button
         android:id="@+id/btn_reject"
@@ -31,6 +19,15 @@
         android:onClick="onClickReject"
         app:layout_heightPercent="10%"
         app:layout_widthPercent="30%"/>
+
+    <Button
+        style="@style/Button.Help"
+        app:layout_widthPercent="40%"
+        app:layout_heightPercent="10%"
+        app:layout_marginBottomPercent="1%"
+        android:layout_alignParentBottom="true"
+        android:layout_centerInParent="true"
+        android:onClick="onHelpClick"/>
 
     <Button
         android:id="@+id/btn_exit"

@@ -12,7 +12,7 @@ import static by.grodno.zagart.observer.observerandroid.utils.MoodUtil.getSadLin
  */
 public class SadActivity extends AppCompatActivity {
 
-    public static final int HAPPINESS_DEGREE = 10;
+    public static final int HAPPINESS_DEGREE = 5;
     public static final String TITLE = "So sad...";
     private LinearLayout mSadRootLayout;
 
