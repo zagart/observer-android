@@ -18,6 +18,7 @@
         <activity android:name=".activities.A1"/>
         <activity android:name=".activities.A2"/>
         <activity android:name=".activities.A3"/>
+        <activity android:name=".SadActivity"/>
     </application>
 
 </manifest>

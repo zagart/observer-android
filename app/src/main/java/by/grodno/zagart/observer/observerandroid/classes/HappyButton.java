@@ -1,36 +1,33 @@
 package by.grodno.zagart.observer.observerandroid.classes;
+import android.annotation.TargetApi;
 import android.content.Context;
+import android.util.AttributeSet;
 import android.widget.Button;
 
-import java.util.Date;
-
-import by.grodno.zagart.observer.observerandroid.interfaces.Clock;
-
 /**
- * Button class for testing.
+ * Happy button. Whole class just for it. Isn't that happiness?
  */
-public class HappyButton extends Button implements Clock {
-
-    private Date mDate = new Date();
+public class HappyButton extends Button {
 
     public HappyButton(Context context) {
         super(context);
     }
 
-    public HappyButton(Context context, Date date) {
-        super(context);
-        mDate = date;
+    public HappyButton(Context context, AttributeSet attrs) {
+        super(context, attrs);
     }
 
-    public boolean isVisible() {
-        if (getTime() % 2 == 0) {
-            return true;
-        }
-        return false;
+    public HappyButton(Context context, AttributeSet attrs, int defStyleAttr) {
+        super(context, attrs, defStyleAttr);
+    }
+
+    @TargetApi(21)
+    public HappyButton(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+        super(context, attrs, defStyleAttr, defStyleRes);
     }
 
     @Override
-    public long getTime() {
-        return mDate.getTime();
+    public CharSequence getAccessibilityClassName() {
+        return super.getAccessibilityClassName();
     }
 }

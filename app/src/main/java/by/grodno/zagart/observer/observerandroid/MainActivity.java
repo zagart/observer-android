@@ -1,4 +1,5 @@
 package by.grodno.zagart.observer.observerandroid;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -14,11 +15,8 @@ public class MainActivity extends AppCompatActivity {
 
     public static final String TRUSTED_USER = "Trusted user";
 
-    @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        persistValue(this, TRUSTED_USER, true);
-        setContentView(R.layout.main_activity);
+    public void onClickExit(View view) {
+        finish();
     }
 
     public void onClickReject(View view) {
@@ -27,7 +25,16 @@ public class MainActivity extends AppCompatActivity {
         finish();
     }
 
-    public void onClickExit(View view) {
-        finish();
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        persistValue(this, TRUSTED_USER, true);
+        setContentView(R.layout.main_activity);
+    }
+
+    public void onHappyClick(View view) {
+        Intent intent = new Intent(this, SadActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        startActivity(intent);
     }
 }
