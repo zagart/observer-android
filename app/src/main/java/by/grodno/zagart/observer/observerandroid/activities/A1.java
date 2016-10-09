@@ -1,7 +1,6 @@
 package by.grodno.zagart.observer.observerandroid.activities;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.widget.TextView;
 
 import by.grodno.zagart.observer.observerandroid.R;
 

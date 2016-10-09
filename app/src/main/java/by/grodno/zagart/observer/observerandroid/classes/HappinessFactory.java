@@ -30,16 +30,6 @@ public class HappinessFactory<Type extends TextView> implements IClock, IHappine
     }
 
     /**
-     * That way we know how much happiness left!
-     *
-     * @param activity Activity for retrieving intent
-     * @return Happiness counter
-     */
-    public static int happinessRemaining(Activity activity) {
-        return activity.getIntent().getIntExtra(HAPPINESS_COUNTER, 0);
-    }
-
-    /**
      * Method changes happiness remained and save it in views' intent.
      *
      * @param context Context to retrieve intent
@@ -48,6 +38,16 @@ public class HappinessFactory<Type extends TextView> implements IClock, IHappine
         final Activity activity = (Activity) context;
         final Intent intent = activity.getIntent();
         intent.putExtra(HAPPINESS_COUNTER, intent.getIntExtra(HAPPINESS_COUNTER, 0) + value);
+    }
+
+    /**
+     * That way we know how much happiness left!
+     *
+     * @param activity Activity for retrieving intent
+     * @return Happiness counter
+     */
+    public static int happinessRemaining(Activity activity) {
+        return activity.getIntent().getIntExtra(HAPPINESS_COUNTER, 0);
     }
 
     /**
@@ -97,7 +97,7 @@ public class HappinessFactory<Type extends TextView> implements IClock, IHappine
      *
      * @param view View with updated visibility
      */
-    public void resetVisibility(View view) {
+    private void resetVisibility(View view) {
         if (!isHappyTime()) {
             view.setVisibility(View.INVISIBLE);
         } else {

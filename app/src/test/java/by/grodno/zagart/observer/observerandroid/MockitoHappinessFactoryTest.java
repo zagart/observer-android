@@ -20,7 +20,7 @@ import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
-public class HappinessFactoryTest {
+public class MockitoHappinessFactoryTest {
 
     private static final long EVEN_TIME = 13L;
     private static final long ODD_TIME = 100500L;

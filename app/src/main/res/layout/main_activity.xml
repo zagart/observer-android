@@ -21,6 +21,7 @@
         app:layout_widthPercent="30%"/>
 
     <Button
+        android:id="@+id/btn_help"
         style="@style/Button.Help"
         app:layout_widthPercent="40%"
         app:layout_heightPercent="10%"
