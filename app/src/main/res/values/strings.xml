@@ -11,10 +11,16 @@
     <string name="string_next">Next</string>
     <string name="reject_button_text">Reject all and run away</string>
     <string name="exit">Run away</string>
-    <string name="help_me">"HELP HIM!"</string>
+    <string name="help_me">"HELP!"</string>
     <string name="main_container_text">
         A lot of sadness is waiting for you on other side!
         Do you able to withstand it? Let\'s go!
         Release prisoned activity from sadness and dark and deliver happiness for it!
+    </string>
+    <string name="happy_end_title">Happy end!</string>
+    <string name="happy_end_message">
+        Congratulations! You saved that little activity from living in infinite sadness
+        and you brought her a lot of happiness.
+        Keep on do good deeds! Good luck!
     </string>
 </resources>

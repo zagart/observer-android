@@ -95,4 +95,16 @@
         <item name="android:text">@string/help_me</item>
         <item name="android:textSize">@dimen/help_text_size</item>
     </style>
+
+    <style name="HappyEnd">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:gravity">center|top</item>
+    </style>
+
+    <style name="HappyEnd.Title">
+        <item name="android:gravity">center</item>
+        <item name="android:textSize">@dimen/title_happy_end</item>
+        <item name="android:textColor">@color/colorPrimaryDark</item>
+    </style>
 </resources>

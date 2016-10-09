@@ -1,4 +1,5 @@
 package by.grodno.zagart.observer.observerandroid;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -19,10 +20,7 @@ public class SadActivity extends AppCompatActivity {
     private RelativeLayout mSadRootLayout;
 
     public boolean isSadnessDefeated() {
-        if (HappinessFactory.happinessRemaining(this) > 0) {
-            return false;
-        }
-        return true;
+        return !(HappinessFactory.happinessRemaining(this) > 0);
     }
 
     @Override
@@ -32,5 +30,6 @@ public class SadActivity extends AppCompatActivity {
         mSadRootLayout = getSadRelativeLayout(this);
         addHappinessToSadLayout(mSadRootLayout, HAPPINESS_DEGREE, this);
         setContentView(mSadRootLayout);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_NOSENSOR);
     }
 }

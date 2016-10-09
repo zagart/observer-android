@@ -1,24 +1,25 @@
 package by.grodno.zagart.observer.observerandroid.utils;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
-import android.graphics.Point;
 import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewManager;
-import android.view.Window;
 import android.widget.RelativeLayout;
 
 import java.util.Date;
 import java.util.Random;
 
+import by.grodno.zagart.observer.observerandroid.HappyEndActivity;
 import by.grodno.zagart.observer.observerandroid.SadActivity;
 import by.grodno.zagart.observer.observerandroid.classes.HappinessFactory;
 import by.grodno.zagart.observer.observerandroid.classes.HappyButton;
 
+import static android.content.Intent.FLAG_ACTIVITY_CLEAR_TASK;
+import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
 import static by.grodno.zagart.observer.observerandroid.classes.HappinessFactory.HAPPY_VIEW_SIZE;
 
 /**
@@ -26,7 +27,13 @@ import static by.grodno.zagart.observer.observerandroid.classes.HappinessFactory
  */
 public class MoodUtil {
 
+    /*
+    Good solution is bind values for randomize to screen real parameters, but it is
+    require time to sort out, but I haven't that time now. So I just hardcoded it.
+     */
+    private static final int HEIGHT_FOR_RANDOM = 1300;
     private static final int SAD_BACKGROUND = Color.rgb(0, 51, 102);
+    private static final int WIDTH_FOR_RANDOM = 900;
 
     /**
      * Method adds happiness to sad layout! :)
@@ -65,17 +72,16 @@ public class MoodUtil {
      *
      * @param view View for relocating
      */
-    public static void newHappyPosition(View view) {
+    private static void newHappyPosition(View view) {
         final Random random = new Random();
-        AppCompatActivity activity = (AppCompatActivity) view.getContext();
-        Point point = new Point();
-        view.getLayoutParams();
+        int width = WIDTH_FOR_RANDOM;
+        int height = HEIGHT_FOR_RANDOM;
         final ViewGroup.MarginLayoutParams p = (ViewGroup.MarginLayoutParams) view.getLayoutParams();
         p.setMargins(
-                random.nextInt(point.y - HAPPY_VIEW_SIZE * 4),
-                random.nextInt(point.y - HAPPY_VIEW_SIZE * 5),
-                random.nextInt(1),
-                random.nextInt(1)
+                Math.abs(random.nextInt(width)) - HAPPY_VIEW_SIZE,
+                Math.abs(random.nextInt(height)) - HAPPY_VIEW_SIZE,
+                1,
+                1
         );
         view.requestLayout();
     }
@@ -107,7 +113,9 @@ public class MoodUtil {
                         ((ViewManager) view.getParent()).removeView(view);
                         SadActivity activity = (SadActivity) context;
                         if (activity.isSadnessDefeated()) {
-                            activity.finish();
+                            Intent intent = new Intent(activity, HappyEndActivity.class);
+                            intent.addFlags(FLAG_ACTIVITY_CLEAR_TASK | FLAG_ACTIVITY_NEW_TASK);
+                            activity.startActivity(intent);
                         }
                     }
                 }

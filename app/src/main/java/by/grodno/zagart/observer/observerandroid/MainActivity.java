@@ -1,5 +1,6 @@
 package by.grodno.zagart.observer.observerandroid;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
@@ -35,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
         }
         persistValue(this, TRUSTED_USER, true);
         setContentView(R.layout.main_activity);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_NOSENSOR);
     }
 
     public void onHelpClick(View view) {

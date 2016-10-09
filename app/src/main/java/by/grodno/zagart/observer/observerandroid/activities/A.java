@@ -1,5 +1,6 @@
 package by.grodno.zagart.observer.observerandroid.activities;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
@@ -24,8 +25,8 @@ abstract public class A extends AppCompatActivity {
     public static final String YES = "agreed";
     public static final String NO = "not agreed";
     protected String mActivityReply = null;
-    protected Class mNextActivity = this.getClass();
     protected TextView mMessageTextView = null;
+    protected Class mNextActivity = this.getClass();
 
     public void onClickNext(View view) {
         if (mActivityReply != null) {
@@ -53,6 +54,7 @@ abstract public class A extends AppCompatActivity {
             bar.hide();
         }
         setContentView(R.layout.default_activity);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_NOSENSOR);
         mMessageTextView = (TextView) findViewById(R.id.message_window);
     }
 
