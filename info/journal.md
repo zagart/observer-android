@@ -181,4 +181,15 @@
 			</li>
 		</ul>
 	</li>
+	<li>
+		<ul>
+			<h4>09.10.2016</h4>
+			<li>
+				Happiness got its first logic ending! :)
+			</li>
+			<li>
+				Unit tests have been written using Mockito and instrumental tests have been written using Espresso.
+			</li>
+		</ul>
+	</li>
 </ul>
