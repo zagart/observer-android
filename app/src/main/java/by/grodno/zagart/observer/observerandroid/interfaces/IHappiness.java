@@ -8,5 +8,5 @@ import android.view.View;
 public interface IHappiness {
 
     String HAPPINESS_MESSAGE = "Catch!";
-    View shareHappiness(Context context);
+    View produceHappiness(Context context);
 }
