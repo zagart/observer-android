@@ -1,19 +1,24 @@
-#   HW: Zero Activity (SharedPreferences)
+#   HW: Testing Frameworks and not only
 <ol> 
   <li>
     <h4>Screenshots</h4>
-      <a href="http://piccy.info/view3/10366902/25113b2489e1481d1eff6ce80753a0f3/" target="_blank"><img src="http://i.piccy.info/i9/7e2b79e898e1f0291a6f2598cc7168dc/1475837373/11563/1074801/Screenshot_1475836228_500.jpg" alt="Piccy.info - Free Image Hosting" border="0" /></a><a href="http://i.piccy.info/a3c/2016-10-07-10-49/i9-10366902/281x500-r" target="_blank"><img src="http://i.piccy.info/a3/2016-10-07-10-49/i9-10366902/281x500-r/i.gif" alt="" border="0" /></a>
-      <a href="http://piccy.info/view3/10366903/e4fe735a22d2efce24f84d3f4a98ebd5/" target="_blank"><img src="http://i.piccy.info/i9/63e774b6a07186f819db465478761006/1475837408/11622/1074801/Screenshot_1475836232_500.jpg" alt="Piccy.info - Free Image Hosting" border="0" /></a><a href="http://i.piccy.info/a3c/2016-10-07-10-50/i9-10366903/281x500-r" target="_blank"><img src="http://i.piccy.info/a3/2016-10-07-10-50/i9-10366903/281x500-r/i.gif" alt="" border="0" /></a>
-      <a href="http://piccy.info/view3/10366906/a4217bf0a5c3dd0576f2cdf3f8c7b562/" target="_blank"><img src="http://i.piccy.info/i9/300a1887067ce1140bb0fe94a7706b7c/1475837443/10292/1074801/Screenshot_1475836244_500.jpg" alt="Piccy.info - Free Image Hosting" border="0" /></a><a href="http://i.piccy.info/a3c/2016-10-07-10-50/i9-10366906/281x500-r" target="_blank"><img src="http://i.piccy.info/a3/2016-10-07-10-50/i9-10366906/281x500-r/i.gif" alt="" border="0" /></a>
+<a href="http://piccy.info/view3/10376677/4b9281b53345fa178d3136f1a762bcab/" target="_blank"><img src="http://i.piccy.info/i9/71c5efe926a905dac544b6f1d7ebf0e8/1476063128/13002/1074801/Screenshot_1476061195_500.jpg" alt="Piccy.info - Free Image Hosting" border="0" /></a><a href="http://i.piccy.info/a3c/2016-10-10-01-32/i9-10376677/281x500-r" target="_blank"><img src="http://i.piccy.info/a3/2016-10-10-01-32/i9-10376677/281x500-r/i.gif" alt="" border="0" /></a>
+<a href="http://piccy.info/view3/10376678/812644b805aafcca55d9d0674f3509a9/" target="_blank"><img src="http://i.piccy.info/i9/5a627bc2fa95b0cc00b4a381abf28d9d/1476063162/22686/1074801/Screenshot_1476062328_500.jpg" alt="Piccy.info - Free Image Hosting" border="0" /></a><a href="http://i.piccy.info/a3c/2016-10-10-01-32/i9-10376678/281x500-r" target="_blank"><img src="http://i.piccy.info/a3/2016-10-10-01-32/i9-10376678/281x500-r/i.gif" alt="" border="0" /></a>
+<a href="http://piccy.info/view3/10376681/00e8c237be08cab58a79169192f1fc1b/" target="_blank"><img src="http://i.piccy.info/i9/1c5a7a483e54ffe1541e0a6756c245ff/1476063195/23092/1074801/Screenshot_1476063065_500.jpg" alt="Piccy.info - Free Image Hosting" border="0" /></a><a href="http://i.piccy.info/a3c/2016-10-10-01-33/i9-10376681/281x500-r" target="_blank"><img src="http://i.piccy.info/a3/2016-10-10-01-33/i9-10376681/281x500-r/i.gif" alt="" border="0" /></a>
   </li>
   <li>
     <h4>Application description</h4>
       <p>
-        Appliction use Shared Preferences to persist it's data. You need to accept or not agreements 
-        and depending on that at main activity you'll get access to corresponding features (it's legend). 
-        Actually, there is no logic for separating users by access level. You need just leave your answer 
-        at every page to get access to main activity.
+        Appliction use Shared References HW (<a href="https://github.com/zagart/observer-android/blob/hw05102016sharedpref/README.md">README.md</a>) as base, but have unique story and several UI additions. Compile it, 
+        run it and be happy!
       </p>
+      <p>
+        It seemed like a good idea for me to do something like this. Idea appeared suddenly and it has grew with every 
+        new line of code. And funny comments from code pointed just for me got their UI.
+      </p>
+      <p>
+        I think someone maybe have found it funny :)
+     </p>
   </li>
   <li>
     <h4>How it works</h4>
@@ -22,14 +27,24 @@
         <li>If info exists then you'll go to the main activity.</li>
         <li>You can agree or not with agreement with click on buttons YES/NO and go to the next agreements by pressing NEXT.</li>
         <li>You can't pass further until status of your answer marked as "unknown", but you still can return and change previous answers.</li>
-        <li>At main activity you can just exit appliction or additionally reject all you agreements by pressing EXIT/REJECT ALL AND EXIT.</li>
+        <li>At main activity you can just exit appliction or additionally reject all you agreements by pressing RUN AWAY/
+          REJECT ALL AND RUN AWAY. Or you can complete little task of happiness by pressing HELP!
+         </li>
       </ul>
   </li>
   <li>
     <h4>Known issues</h4>
-    <p>
-     Not found yet.
-    </p>
+     <p>
+       Application absolutely do not adapted for rotating, so I just turned off this opportunity. Just because I do not have enough
+       time to correct it now. This also applied to low quantity of features.
+     </p>
+     <p>
+       Object-oriented model wasn't deeply thought. Methods in classes added as needed. 
+       As result, classes may have malformed structure.
+     </p>
+     <p>
+      The rest of problems commented right in code.
+     </p>
   </li>
 </ol>
 
