@@ -13,8 +13,8 @@ import android.widget.RelativeLayout;
 import java.util.Date;
 import java.util.Random;
 
-import by.grodno.zagart.observer.observerandroid.HappyEndActivity;
-import by.grodno.zagart.observer.observerandroid.SadActivity;
+import by.grodno.zagart.observer.observerandroid.activities.HappyEndActivity;
+import by.grodno.zagart.observer.observerandroid.activities.SadActivity;
 import by.grodno.zagart.observer.observerandroid.classes.HappinessFactory;
 import by.grodno.zagart.observer.observerandroid.classes.HappyButton;
 

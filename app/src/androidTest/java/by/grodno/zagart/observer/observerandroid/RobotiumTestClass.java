@@ -4,6 +4,9 @@ import android.test.ActivityInstrumentationTestCase2;
 import com.robotium.solo.Solo;
 import com.robotium.solo.Timeout;
 
+import by.grodno.zagart.observer.observerandroid.activities.MainActivity;
+import by.grodno.zagart.observer.observerandroid.activities.ZeroActivity;
+
 public class RobotiumTestClass extends ActivityInstrumentationTestCase2<ZeroActivity> {
 
     private Solo solo;
@@ -25,7 +28,7 @@ public class RobotiumTestClass extends ActivityInstrumentationTestCase2<ZeroActi
     }
 
     public void testRun() {
-        solo.waitForActivity(by.grodno.zagart.observer.observerandroid.ZeroActivity.class, 2000);
+        solo.waitForActivity(ZeroActivity.class, 2000);
         assertTrue(
                 "by.grodno.zagart.observer.observerandroid.activities.A1 is not found!",
                 solo.waitForActivity(by.grodno.zagart.observer.observerandroid.activities.A1.class)
@@ -50,8 +53,8 @@ public class RobotiumTestClass extends ActivityInstrumentationTestCase2<ZeroActi
         solo.clickOnView(solo.getView(by.grodno.zagart.observer.observerandroid.R.id.btn_yes));
         solo.clickOnView(solo.getView(by.grodno.zagart.observer.observerandroid.R.id.next));
         assertTrue(
-                "by.grodno.zagart.observer.observerandroid.MainActivity is not found!",
-                solo.waitForActivity(by.grodno.zagart.observer.observerandroid.MainActivity.class)
+                "by.grodno.zagart.observer.observerandroid.activities.MainActivity is not found!",
+                solo.waitForActivity(MainActivity.class)
         );
         solo.clickOnView(solo.getView(by.grodno.zagart.observer.observerandroid.R.id.btn_exit));
     }

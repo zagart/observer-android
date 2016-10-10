@@ -10,6 +10,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import by.grodno.zagart.observer.observerandroid.activities.ZeroActivity;
 import by.grodno.zagart.observer.observerandroid.utils.SharedPreferencesUtil;
 
 import static android.support.test.espresso.Espresso.onView;

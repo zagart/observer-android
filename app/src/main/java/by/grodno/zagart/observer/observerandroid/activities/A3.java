@@ -2,7 +2,6 @@ package by.grodno.zagart.observer.observerandroid.activities;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 
-import by.grodno.zagart.observer.observerandroid.MainActivity;
 import by.grodno.zagart.observer.observerandroid.R;
 
 import static android.content.Intent.FLAG_ACTIVITY_CLEAR_TASK;

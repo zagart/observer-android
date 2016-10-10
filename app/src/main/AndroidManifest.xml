@@ -8,18 +8,18 @@
         android:icon="@mipmap/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ZeroActivity">
+        <activity android:name=".activities.ZeroActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity"/>
+        <activity android:name=".activities.MainActivity"/>
         <activity android:name=".activities.A1"/>
         <activity android:name=".activities.A2"/>
         <activity android:name=".activities.A3"/>
-        <activity android:name=".SadActivity"/>
-        <activity android:name=".HappyEndActivity"/>
+        <activity android:name=".activities.SadActivity"/>
+        <activity android:name=".activities.HappyEndActivity"/>
     </application>
 
 </manifest>

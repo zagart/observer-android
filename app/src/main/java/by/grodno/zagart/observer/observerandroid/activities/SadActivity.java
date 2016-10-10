@@ -1,4 +1,4 @@
-package by.grodno.zagart.observer.observerandroid;
+package by.grodno.zagart.observer.observerandroid.activities;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import by.grodno.zagart.observer.observerandroid.R;
 import by.grodno.zagart.observer.observerandroid.classes.HappinessFactory;
 
 import static by.grodno.zagart.observer.observerandroid.utils.MoodUtil.addHappinessToSadLayout;

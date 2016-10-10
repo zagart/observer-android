@@ -7,6 +7,9 @@ import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
 
+import by.grodno.zagart.observer.observerandroid.activities.MainActivity;
+import by.grodno.zagart.observer.observerandroid.activities.SadActivity;
+
 import static org.junit.Assert.assertEquals;
 import static org.robolectric.Shadows.shadowOf;
 
