@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Observer Android</string>
+    <string name="app_name">Observer</string>
     <string name="title_activity_login">Sign in</string>
 
     <!-- Strings related to login -->
@@ -91,4 +91,8 @@
     <string name="title_activity_fullscreen">FullscreenActivity</string>
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
+    <string name="edit_message">Enter a message</string>
+    <string name="button_previous">Test</string>
+    <string name="button_next">Start</string>
+    <string name="button_menu">Menu</string>
 </resources>
