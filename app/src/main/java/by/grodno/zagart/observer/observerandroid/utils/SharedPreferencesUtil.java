@@ -1,5 +1,4 @@
 package by.grodno.zagart.observer.observerandroid.utils;
-
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 
@@ -10,7 +9,7 @@ import static android.content.Context.MODE_PRIVATE;
  */
 public class SharedPreferencesUtil {
 
-    public static final String PREF_FILE = "MyAgreementsFile";
+    public static final String PREF_FILE = "SharedFile";
 
     public static void clearPersistedValues(AppCompatActivity activity) {
         final SharedPreferences.Editor editor = getSharedPreferencesEditor(activity);
@@ -43,5 +42,4 @@ public class SharedPreferencesUtil {
         }
         return null;
     }
-
 }
