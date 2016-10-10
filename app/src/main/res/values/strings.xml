@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Observer</string>
+    <string name="configuration">Настройки</string>
+    <string name="exit">Выход</string>
+    <string name="log_in">Войти</string>
 </resources>

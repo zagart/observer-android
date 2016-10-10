@@ -2,4 +2,21 @@
 <resources>
 
     <style name="ObserverDefault" parent="Theme.AppCompat"></style>
+
+    <style name="Main">
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_width">match_parent</item>
+    </style>
+
+    <style name="Main.Menu">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_gravity">bottom</item>
+        <item name="android:orientation">vertical</item>
+    </style>
+
+    <style name="Main.Button">
+        <item name="android:textSize">@dimen/default_button_text_size</item>
+        <item name="android:layout_height">@dimen/default_button_height</item>
+    </style>
+
 </resources>
