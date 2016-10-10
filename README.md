@@ -42,6 +42,9 @@
        Object-oriented model wasn't deeply thought. Methods in classes added as needed. 
        As result, classes may have malformed structure.
      </p>
+     <p>
+      The rest of problems commented right in code.
+     </p>
   </li>
 </ol>
 
