@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.percent.PercentRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                               xmlns:app="http://schemas.android.com/apk/res-auto"
+                                               style="@style/HappyEnd"
+    android:onClick="showCongratulations">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:scaleType="centerCrop"
+        android:src="@drawable/happy_end"
+        />
+
+    <TextView
+        style="@style/HappyEnd.Title"
+        android:text="@string/happy_end_title"
+        app:layout_heightPercent="15%"
+        app:layout_marginTopPercent="10%"
+        app:layout_marginLeftPercent="15%"
+        app:layout_widthPercent="70%"/>
+</android.support.percent.PercentRelativeLayout>

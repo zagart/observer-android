@@ -1,5 +1,4 @@
 <resources>
-
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your theme here. -->
@@ -64,9 +63,9 @@
 
     <style name="MainMessage">
         <item name="android:gravity">center</item>
-        <item name="android:layout_centerInParent">true</item>
+        <item name="android:textSize">@dimen/main_message_text_size</item>
+        <item name="android:layout_alignParentTop">true</item>
     </style>
-
 
     <style name="MainButton">
         <item name="android:layout_width">wrap_content</item>
@@ -84,4 +83,28 @@
         <item name="android:layout_alignParentEnd">true</item>
     </style>
 
+    <style name="Button">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_gravity">center</item>
+    </style>
+
+    <style name="Button.Help">
+        <item name="android:background">@color/light_green</item>
+        <item name="android:padding">@dimen/button_padding</item>
+        <item name="android:text">@string/help_me</item>
+        <item name="android:textSize">@dimen/help_text_size</item>
+    </style>
+
+    <style name="HappyEnd">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:gravity">center|top</item>
+    </style>
+
+    <style name="HappyEnd.Title">
+        <item name="android:gravity">center</item>
+        <item name="android:textSize">@dimen/title_happy_end</item>
+        <item name="android:textColor">@color/colorPrimaryDark</item>
+    </style>
 </resources>

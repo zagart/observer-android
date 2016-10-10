@@ -8,7 +8,9 @@
         android:id="@+id/main_container"
         style="@style/MainMessage"
         android:text="@string/main_container_text"
-        app:layout_heightPercent="30%"
+        app:layout_heightPercent="60%"
+        app:layout_marginStartPercent="5%"
+        app:layout_marginTopPercent="5%"
         app:layout_widthPercent="90%"/>
 
     <Button
@@ -18,11 +20,22 @@
         app:layout_heightPercent="10%"
         app:layout_widthPercent="30%"/>
 
+    <by.grodno.zagart.observer.observerandroid.classes.HappyButton
+        android:id="@+id/btn_help"
+        style="@style/Button.Help"
+        android:layout_alignParentBottom="true"
+        android:layout_centerInParent="true"
+        android:onClick="onHelpClick"
+        app:leftIcon="@drawable/ic_mood_black_24dp"
+        app:rightIcon="@drawable/ic_mood_black_24dp"
+        app:layout_heightPercent="10%"
+        app:layout_marginBottomPercent="1%"
+        app:layout_widthPercent="40%"/>
+
     <Button
         android:id="@+id/btn_exit"
         style="@style/MainButton.Exit"
         android:onClick="onClickExit"
         app:layout_heightPercent="10%"
         app:layout_widthPercent="30%"/>
-
 </android.support.percent.PercentRelativeLayout>

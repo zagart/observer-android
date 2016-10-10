@@ -11,7 +11,7 @@ android {
     buildToolsVersion "24.0.2"
     defaultConfig {
         applicationId "by.grodno.zagart.observer.observerandroid"
-        minSdkVersion 17
+        minSdkVersion 19
         targetSdkVersion 24
         versionCode 1
         versionName "1.0"
@@ -24,29 +24,31 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-    productFlavors {
-        demo {
-            applicationId "by.grodno.zagart.observer.observerandroid.demo";
-            versionName "1.0-demo";
-            minSdkVersion 17
-        }
-        full {
-            applicationId "by.grodno.zagart.observer.observerandroid.full";
-            versionName "1.0-full";
-            minSdkVersion 19
-        }
+    testOptions {
+        unitTests.returnDefaultValues = true
     }
 }
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
-    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
-        exclude group: 'com.android.support', module: 'support-annotations'
-    })
     compile 'com.android.support:appcompat-v7:24.2.1'
     compile 'com.android.support:design:24.2.1'
     compile 'com.android.support:support-v4:24.2.1'
     compile 'com.android.support:support-vector-drawable:24.2.1'
-    compile 'com.android.support:percent:24.0.0'
+    compile 'com.android.support:percent:24.2.1'
+
     testCompile 'junit:junit:4.12'
+    testCompile 'org.mockito:mockito-core:1.10.19'
+    testCompile "org.robolectric:robolectric:3.1.2"
+
+    androidTestCompile 'com.android.support:support-annotations:24.2.1'
+    androidTestCompile 'com.android.support.test:runner:0.5'
+    androidTestCompile 'com.android.support.test:rules:0.5'
+    androidTestCompile 'org.hamcrest:hamcrest-library:1.3'
+    androidTestCompile 'com.android.support.test.espresso:espresso-core:2.2.2'
+    androidTestCompile 'com.android.support.test.uiautomator:uiautomator-v18:2.1.2'
+}
+
+dependencies{
+    androidTestCompile 'com.jayway.android.robotium:robotium-solo:5.6.2'
 }
