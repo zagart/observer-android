@@ -15,7 +15,7 @@ import static org.robolectric.Shadows.shadowOf;
  */
 @RunWith(RobolectricTestRunner.class)
 @Config(constants = BuildConfig.class, sdk = 24)
-public class RobotiumMainActivityTest {
+public class RobolectricMainActivityTest {
 
     @Test
     public void clickingHelp_shouldRunSadActivity() {
