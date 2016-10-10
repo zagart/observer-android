@@ -11,7 +11,7 @@ android {
     buildToolsVersion "24.0.2"
     defaultConfig {
         applicationId "by.grodno.zagart.observer.observerandroid"
-        minSdkVersion 15
+        minSdkVersion 17
         targetSdkVersion 24
         versionCode 1
         versionName "1.0"
@@ -28,7 +28,7 @@ android {
         demo {
             applicationId "by.grodno.zagart.observer.observerandroid.demo";
             versionName "1.0-demo";
-            minSdkVersion 15
+            minSdkVersion 17
         }
         full {
             applicationId "by.grodno.zagart.observer.observerandroid.full";
@@ -47,5 +47,6 @@ dependencies {
     compile 'com.android.support:design:24.2.1'
     compile 'com.android.support:support-v4:24.2.1'
     compile 'com.android.support:support-vector-drawable:24.2.1'
+    compile 'com.android.support:percent:24.0.0'
     testCompile 'junit:junit:4.12'
 }
