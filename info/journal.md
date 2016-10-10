@@ -192,4 +192,12 @@
 			</li>
 		</ul>
 	</li>
+	<li>
+		<ul>
+			<h4>10.10.2016</h4>
+			<li>
+				Today I worked at custom xml-attributes for classes.
+			</li>
+		</ul>
+	</li>
 </ul>
