@@ -200,4 +200,13 @@
 			</li>
 		</ul>
 	</li>
+	<li>
+		<ul>
+			<h4>11.10.2016</h4>
+			<li>
+				SparseArray replaces Java Map implementations. Usually it works slower than Map, but very
+				efficient uses memory.
+			</li>
+		</ul>
+	</li>
 </ul>
