@@ -20,7 +20,6 @@ public class MainActivity extends AppCompatActivity {
 
     public void onClickReject(View view) {
         clearPersistedValues(this);
-        persistBooleanValue(this, TRUSTED_USER, false);
         finish();
     }
 
