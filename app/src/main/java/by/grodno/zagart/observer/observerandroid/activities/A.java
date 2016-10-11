@@ -1,5 +1,4 @@
 package by.grodno.zagart.observer.observerandroid.activities;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -13,8 +12,8 @@ import by.grodno.zagart.observer.observerandroid.R;
 import static android.content.Intent.FLAG_ACTIVITY_SINGLE_TOP;
 import static android.graphics.Color.GREEN;
 import static android.graphics.Color.RED;
-import static by.grodno.zagart.observer.observerandroid.utils.SharedPreferencesUtil.persistValue;
-import static by.grodno.zagart.observer.observerandroid.utils.SharedPreferencesUtil.retrieveValue;
+import static by.grodno.zagart.observer.observerandroid.utils.SharedPreferencesUtil.persistStringValue;
+import static by.grodno.zagart.observer.observerandroid.utils.SharedPreferencesUtil.retrieveStringValue;
 
 /**
  * Abstract class represents transitional activities.
@@ -23,8 +22,26 @@ abstract public class A extends AppCompatActivity {
 
     public static final String YES = "agreed";
     public static final String NO = "not agreed";
-    protected Class mNextActivity = this.getClass();
     protected String mActivityReply = null;
+    private Class mNextActivity = this.getClass();
+
+    public void onClickNext(View view) {
+        if (mActivityReply != null) {
+            openNextActivity(FLAG_ACTIVITY_SINGLE_TOP);
+        }
+    }
+
+    public void onClickNo(View view) {
+        mActivityReply = NO;
+        persistStringValue(this, getClass().getSimpleName(), mActivityReply);
+        refreshReplayTextView(RED);
+    }
+
+    public void onClickYes(View view) {
+        mActivityReply = YES;
+        persistStringValue(this, getClass().getSimpleName(), mActivityReply);
+        refreshReplayTextView(GREEN);
+    }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -43,19 +60,10 @@ abstract public class A extends AppCompatActivity {
         updateReplay();
     }
 
-    private void showTitle() {
-        final TextView title = (TextView) findViewById(R.id.title_name);
-        title.setText(getClass().getSimpleName());
-    }
-
-    private void updateReplay() {
-        mActivityReply = (String) retrieveValue(this, getClass().getSimpleName(), String.class);
-        if (YES.equals(mActivityReply)) {
-            refreshReplayTextView(GREEN);
-        }
-        if (NO.equals(mActivityReply)) {
-            refreshReplayTextView(RED);
-        }
+    protected void openNextActivity(int flags) {
+        final Intent intent = new Intent(this, mNextActivity);
+        intent.addFlags(flags);
+        startActivity(intent);
     }
 
     private void refreshReplayTextView(int color) {
@@ -64,28 +72,22 @@ abstract public class A extends AppCompatActivity {
         replyStatus.setBackgroundColor(color);
     }
 
-    public void onClickYes(View view) {
-        mActivityReply = YES;
-        persistValue(this, getClass().getSimpleName(), mActivityReply);
-        refreshReplayTextView(GREEN);
+    public void setNextActivity(final Class nextActivity) {
+        mNextActivity = nextActivity;
     }
 
-    public void onClickNo(View view) {
-        mActivityReply = NO;
-        persistValue(this, getClass().getSimpleName(), mActivityReply);
-        refreshReplayTextView(RED);
+    private void showTitle() {
+        final TextView title = (TextView) findViewById(R.id.title_name);
+        title.setText(getClass().getSimpleName());
     }
 
-    public void onClickNext(View view) {
-        if (mActivityReply != null) {
-            openNextActivity(FLAG_ACTIVITY_SINGLE_TOP);
+    private void updateReplay() {
+        mActivityReply = retrieveStringValue(this, getClass().getSimpleName());
+        if (YES.equals(mActivityReply)) {
+            refreshReplayTextView(GREEN);
+        }
+        if (NO.equals(mActivityReply)) {
+            refreshReplayTextView(RED);
         }
     }
-
-    protected void openNextActivity(int flags) {
-        final Intent intent = new Intent(this, mNextActivity);
-        intent.addFlags(flags);
-        startActivity(intent);
-    }
-
 }

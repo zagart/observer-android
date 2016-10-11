@@ -1,5 +1,4 @@
 package by.grodno.zagart.observer.observerandroid;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -9,7 +8,7 @@ import by.grodno.zagart.observer.observerandroid.activities.A1;
 
 import static android.content.Intent.FLAG_ACTIVITY_CLEAR_TASK;
 import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
-import static by.grodno.zagart.observer.observerandroid.utils.SharedPreferencesUtil.retrieveValue;
+import static by.grodno.zagart.observer.observerandroid.utils.SharedPreferencesUtil.retrieveBooleanValue;
 
 /**
  * Activity without UI that runs at startup.
@@ -20,12 +19,11 @@ public class ZeroActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Class target = A1.class;
-        if ((boolean) retrieveValue(this, MainActivity.TRUSTED_USER, Boolean.class)) {
+        if (retrieveBooleanValue(this, MainActivity.TRUSTED_USER)) {
             target = MainActivity.class;
         }
         final Intent intent = new Intent(this, target);
         intent.addFlags(FLAG_ACTIVITY_CLEAR_TASK | FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
     }
-
 }

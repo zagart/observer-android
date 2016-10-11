@@ -1,5 +1,4 @@
 package by.grodno.zagart.observer.observerandroid.activities;
-
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 
@@ -16,12 +15,16 @@ public class A3 extends A {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mNextActivity = MainActivity.class;
+        setNextActivity(MainActivity.class);
+    }
+
+    @Override
+    public void setNextActivity(final Class nextActivity) {
+        super.setNextActivity(nextActivity);
     }
 
     @Override
     protected void openNextActivity(int flags) {
-        mActivityReply = null;
         super.openNextActivity(FLAG_ACTIVITY_CLEAR_TASK | FLAG_ACTIVITY_NEW_TASK);
     }
 }
