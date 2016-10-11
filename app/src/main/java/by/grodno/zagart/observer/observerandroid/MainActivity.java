@@ -29,6 +29,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onLoginClick(View view) {
-        new EndpointsAsyncTask().execute(new Pair<Context, String>(this, " Failed-to-login!"));
+        new EndpointsAsyncTask().execute(
+                new Pair<Context, String>(this,  getString(R.string.main_message_to_backend))
+        );
     }
 }
