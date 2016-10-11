@@ -1,8 +1,7 @@
 package by.grodno.zagart.observer.observerandroid.utils;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
-
-import static android.content.Context.MODE_PRIVATE;
 
 /**
  * Utility class with methods for persisting activity's data as Shared References.
@@ -18,7 +17,7 @@ public class SharedPreferencesUtil {
     }
 
     private static SharedPreferences.Editor getSharedPreferencesEditor(AppCompatActivity activity) {
-        SharedPreferences replies = activity.getSharedPreferences(PREF_FILE, MODE_PRIVATE);
+        SharedPreferences replies = activity.getSharedPreferences(PREF_FILE, Context.MODE_PRIVATE);
         return replies.edit();
     }
 
@@ -35,10 +34,10 @@ public class SharedPreferencesUtil {
     }
 
     public static Boolean retrieveBooleanValue(AppCompatActivity activity, String name) {
-        return activity.getSharedPreferences(PREF_FILE, MODE_PRIVATE).getBoolean(name, false);
+        return activity.getSharedPreferences(PREF_FILE, Context.MODE_PRIVATE).getBoolean(name, false);
     }
 
     public static String retrieveStringValue(AppCompatActivity activity, String name) {
-        return activity.getSharedPreferences(PREF_FILE, MODE_PRIVATE).getString(name, null);
+        return activity.getSharedPreferences(PREF_FILE, Context.MODE_PRIVATE).getString(name, null);
     }
 }

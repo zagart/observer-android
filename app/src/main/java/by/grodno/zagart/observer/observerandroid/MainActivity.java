@@ -4,7 +4,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
-import static by.grodno.zagart.observer.observerandroid.utils.SharedPreferencesUtil.clearPersistedValues;
+import by.grodno.zagart.observer.observerandroid.utils.SharedPreferencesUtil;
 
 /**
  * Main activity.
@@ -18,7 +18,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onClickReject(View view) {
-        clearPersistedValues(this);
+        SharedPreferencesUtil.clearPersistedValues(this);
         finish();
     }
 

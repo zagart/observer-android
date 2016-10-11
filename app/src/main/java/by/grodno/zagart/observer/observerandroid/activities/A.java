@@ -1,5 +1,6 @@
 package by.grodno.zagart.observer.observerandroid.activities;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
@@ -8,12 +9,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import by.grodno.zagart.observer.observerandroid.R;
-
-import static android.content.Intent.FLAG_ACTIVITY_SINGLE_TOP;
-import static android.graphics.Color.GREEN;
-import static android.graphics.Color.RED;
-import static by.grodno.zagart.observer.observerandroid.utils.SharedPreferencesUtil.persistStringValue;
-import static by.grodno.zagart.observer.observerandroid.utils.SharedPreferencesUtil.retrieveStringValue;
+import by.grodno.zagart.observer.observerandroid.utils.SharedPreferencesUtil;
 
 /**
  * Abstract class represents transitional activities.
@@ -27,20 +23,20 @@ abstract public class A extends AppCompatActivity {
 
     public void onClickNext(View view) {
         if (mActivityReply != null) {
-            openNextActivity(FLAG_ACTIVITY_SINGLE_TOP);
+            openNextActivity(Intent.FLAG_ACTIVITY_SINGLE_TOP);
         }
     }
 
     public void onClickNo(View view) {
         mActivityReply = NO;
-        persistStringValue(this, getClass().getSimpleName(), mActivityReply);
-        refreshReplayTextView(RED);
+        SharedPreferencesUtil.persistStringValue(this, getClass().getSimpleName(), mActivityReply);
+        refreshReplayTextView(Color.RED);
     }
 
     public void onClickYes(View view) {
         mActivityReply = YES;
-        persistStringValue(this, getClass().getSimpleName(), mActivityReply);
-        refreshReplayTextView(GREEN);
+        SharedPreferencesUtil.persistStringValue(this, getClass().getSimpleName(), mActivityReply);
+        refreshReplayTextView(Color.GREEN);
     }
 
     @Override
@@ -82,12 +78,12 @@ abstract public class A extends AppCompatActivity {
     }
 
     private void updateReplay() {
-        mActivityReply = retrieveStringValue(this, getClass().getSimpleName());
+        mActivityReply = SharedPreferencesUtil.retrieveStringValue(this, getClass().getSimpleName());
         if (YES.equals(mActivityReply)) {
-            refreshReplayTextView(GREEN);
+            refreshReplayTextView(Color.GREEN);
         }
         if (NO.equals(mActivityReply)) {
-            refreshReplayTextView(RED);
+            refreshReplayTextView(Color.RED);
         }
     }
 }
