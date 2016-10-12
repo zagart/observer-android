@@ -3,8 +3,8 @@
     style="@style/Main">
 
     <TextView
-        android:text="@string/app_name"
-        style="@style/Main.Title"/>
+        style="@style/Main.Title"
+        android:text="@string/app_name"/>
 
     <LinearLayout
         android:id="@+id/main_menu"
@@ -24,6 +24,7 @@
         <Button
             android:id="@+id/main_menu_btn_info"
             style="@style/Main.Button"
+            android:onClick="onInfoClick"
             android:text="@string/main_menu_btn_info"/>
 
         <Button

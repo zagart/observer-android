@@ -20,6 +20,7 @@
         <Button
             android:id="@+id/main_menu_btn_info"
             style="@style/Main.Button"
+            android:onClick="onInfoClick"
             android:text="@string/main_menu_btn_info"/>
 
         <Button
