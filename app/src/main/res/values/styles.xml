@@ -20,8 +20,8 @@
     </style>
 
     <style name="Main.Title">
-        <item name="android:background">@drawable/steel</item>
-        <item name="android:scaleType">centerCrop</item>
+        <!--<item name="android:background">@drawable/steel</item>-->
+        <!--<item name="android:scaleType">centerCrop</item>-->
         <item name="android:layout_width">@dimen/main_title_width</item>
         <item name="android:layout_height">@dimen/main_title_height</item>
         <item name="android:layout_gravity">center_horizontal</item>
