@@ -6,4 +6,7 @@
     <string name="log_in">Войти</string>
     <string name="main_message_to_backend">Failed-to-login!</string>
     <string name="main_menu_btn_info">О приложении</string>
+    <string name="app_info_toast" formatted="false">
+        "This application build type: %s.\nDistributed in %s and cost you %s."
+    </string>
 </resources>

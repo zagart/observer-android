@@ -3,8 +3,11 @@ apply plugin: 'com.android.application'
 android {
     compileSdkVersion 24
     buildToolsVersion "24.0.2"
+    def appId = "by.grodno.zagart.observer.observerandroid"
+    def demoCost = '"nothing"'
+    def paidCost = '"100$"'
     defaultConfig {
-        applicationId "by.grodno.zagart.observer.observerandroid"
+        applicationId appId
         minSdkVersion 16
         targetSdkVersion 24
         versionCode 1
@@ -12,23 +15,56 @@ android {
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
     }
+    applicationVariants.all { variant ->
+        variant.outputs.each { output ->
+            def file = output.outputFile
+            def projectName = getParent().getName()
+            def fileName = projectName
+            def flavor = variant.getFlavorName()
+            def build = variant.getBuildType().getName()
+            flavor = flavor.substring(0, 1).toUpperCase() + flavor.substring(1);
+            build = build.substring(0, 1).toUpperCase() + build.substring(1);
+            fileName = fileName + flavor + build + "_" + versionName + ".apk"
+            output.outputFile = new File(file.parent, fileName)
+            //apk name result sample: observer-androidDemoRussiaDebug_1.0.apk
+        }
+    }
+    flavorDimensions "contentType", "country"
+    productFlavors {
+        demo {
+            dimension "contentType"
+            buildConfigField "String", "APP_COST", demoCost
+        }
+        paid {
+            dimension "contentType"
+            buildConfigField "String", "APP_COST", paidCost
+        }
+        usa {
+            applicationId appId + ".usa"
+            dimension "country"
+        }
+        russia {
+            applicationId appId + ".russia"
+            dimension "country"
+        }
+    }
     buildTypes {
-        release {
+        debug {
             minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+        release {
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
     testOptions {
         unitTests.returnDefaultValues = true
     }
-
-
 }
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
-
-
     compile 'com.android.support:appcompat-v7:24.2.1'
     compile 'com.android.support:design:24.2.1'
     compile 'com.android.support:support-v4:24.2.1'

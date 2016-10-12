@@ -6,6 +6,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Pair;
 import android.view.View;
+import android.widget.Toast;
 
 import by.grodno.zagart.observer.observerandroid.apiengine.EndpointsAsyncTask;
 
@@ -29,6 +30,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onInfoClick(View view) {
+        final String appInfo = String.format(
+                getString(R.string.app_info_toast),
+                BuildConfig.BUILD_TYPE,
+                BuildConfig.FLAVOR_country,
+                BuildConfig.APP_COST);
+        Toast.makeText(this, appInfo, Toast.LENGTH_LONG).show();
     }
 
     public void onLoginClick(View view) {
