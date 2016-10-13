@@ -2,30 +2,39 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     style="@style/Main">
 
+    <TextView
+        style="@style/Main.Title"
+        android:text="@string/app_name"/>
+
     <LinearLayout
         android:id="@+id/main_menu"
-        style="@style/Main.Menu">
+        style="@style/Main.Menu"
+        android:orientation="horizontal">
 
         <Button
             android:id="@+id/main_menu_btn_log_in"
             style="@style/Main.Button"
+            android:layout_width="wrap_content"
             android:onClick="onLoginClick"
             android:text="@string/log_in"/>
 
         <Button
             android:id="@+id/main_menu_btn_config"
             style="@style/Main.Button"
+            android:layout_width="wrap_content"
             android:text="@string/configuration"/>
 
         <Button
             android:id="@+id/main_menu_btn_info"
             style="@style/Main.Button"
+            android:layout_width="wrap_content"
             android:onClick="onInfoClick"
             android:text="@string/main_menu_btn_info"/>
 
         <Button
             android:id="@+id/main_menu_btn_exit"
             style="@style/Main.Button"
+            android:layout_width="match_parent"
             android:onClick="onExitClick"
             android:text="@string/exit"/>
     </LinearLayout>
