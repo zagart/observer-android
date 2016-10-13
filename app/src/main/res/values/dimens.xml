@@ -1,10 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <dimen name="default_margin">20dp</dimen>
     <dimen name="default_button_text_size">20sp</dimen>
     <dimen name="default_button_height">80dp</dimen>
     <dimen name="default_padding">20dp</dimen>
     <dimen name="main_title_margin_top">30dp</dimen>
+    <dimen name="login_title_margin_top">30dp</dimen>
     <dimen name="main_title_text_size">50sp</dimen>
+    <dimen name="login_title_text_size">30sp</dimen>
     <dimen name="main_title_width">280dp</dimen>
     <dimen name="main_title_height">120dp</dimen>
+    <dimen name="login_form_margin_top">160dp</dimen>
+    <dimen name="login_form_margin_bottom">20dp</dimen>
+    <dimen name="login_form_title_text_size">20dp</dimen>
+    <dimen name="land_main_login_button_width">135dp</dimen>
+    <dimen name="zero_dp">0dp</dimen>
 </resources>

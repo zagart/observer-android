@@ -14,7 +14,7 @@
         <Button
             android:id="@+id/main_menu_btn_log_in"
             style="@style/Main.Button"
-            android:layout_width="wrap_content"
+            android:layout_width="@dimen/land_main_login_button_width"
             android:onClick="onLoginClick"
             android:text="@string/log_in"/>
 

@@ -1,12 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Observer</string>
-    <string name="configuration">Настройки</string>
-    <string name="exit">Выход</string>
-    <string name="log_in">Войти</string>
+    <string name="configuration">Settings</string>
+    <string name="exit">Exit</string>
+    <string name="log_in">Log in</string>
     <string name="main_message_to_backend">Failed-to-login!</string>
-    <string name="main_menu_btn_info">О приложении</string>
+    <string name="main_menu_btn_info">About</string>
     <string name="app_info_toast" formatted="false">
         "This application build type: %s.\nDistributed in %s and cost you %s."
     </string>
+    <string name="e_mail">E-mail</string>
+    <string name="password">Password</string>
+    <string name="e_mail_hint">Enter your e-mail here</string>
+    <string name="as_guest">As guest</string>
 </resources>

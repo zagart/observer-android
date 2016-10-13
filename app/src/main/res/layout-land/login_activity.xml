@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.percent.PercentFrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    style="@style/Login">
+
+    <TextView
+        android:id="@+id/login_title"
+        style="@style/Login.Title"/>
+
+    <LinearLayout
+        android:id="@+id/login_form"
+        style="@style/Login.Form"
+        android:layout_margin="@dimen/zero_dp"
+        android:padding="@dimen/zero_dp"
+        app:layout_marginBottomPercent="@fraction/land_login_form_margin_bottom">
+
+        <TextView
+            android:id="@+id/login_email_title"
+            style="@style/Login.Title.Email"/>
+
+        <EditText
+            android:id="@+id/login_email"
+            style="@style/Login.Email"
+            android:layout_marginBottom="@dimen/default_margin"/>
+
+        <TextView
+            android:id="@+id/login_password_title"
+            style="@style/Login.Title.Password"/>
+
+        <EditText
+            android:id="@+id/login_password"
+            style="@style/Login.Password"/>
+    </LinearLayout>
+
+    <android.support.percent.PercentRelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btn_guest"
+            style="@style/Login.Button"
+            android:text="@string/as_guest"
+            app:layout_heightPercent="@fraction/land_login_button_height"
+            app:layout_widthPercent="@fraction/land_login_button_width"/>
+
+        <Button
+            android:id="@+id/btn_login"
+            style="@style/Login.Button"
+            android:text="@string/log_in"
+            app:layout_heightPercent="@fraction/land_login_button_height"
+            app:layout_marginStartPercent="@fraction/land_login_btn_login_margin_left"
+            app:layout_widthPercent="@fraction/land_login_button_width"/>
+    </android.support.percent.PercentRelativeLayout>
+</android.support.percent.PercentFrameLayout>

@@ -22,7 +22,7 @@ public class MainActivity extends AppCompatActivity {
         if (bar != null) {
             bar.hide();
         }
-        setContentView(R.layout.main_activity);
+        setContentView(R.layout.login_activity);
     }
 
     public void onExitClick(View view) {
