@@ -3,11 +3,10 @@ apply plugin: 'com.android.application'
 android {
     compileSdkVersion 24
     buildToolsVersion "24.0.2"
-    def appId = "by.grodno.zagart.observer.observerandroid"
     def demoCost = '"nothing"'
     def paidCost = '"100$"'
     defaultConfig {
-        applicationId appId
+        applicationId "by.grodno.zagart.observer.observerandroid"
         minSdkVersion 16
         targetSdkVersion 24
         versionCode 1
@@ -40,11 +39,11 @@ android {
             buildConfigField "String", "APP_COST", paidCost
         }
         usa {
-            applicationId appId + ".usa"
+            applicationId "by.grodno.zagart.observer.observerandroid.usa"
             dimension "country"
         }
         russia {
-            applicationId appId + ".russia"
+            applicationId "by.grodno.zagart.observer.observerandroid.russia"
             dimension "country"
         }
     }

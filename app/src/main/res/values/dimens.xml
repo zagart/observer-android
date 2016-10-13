@@ -14,5 +14,6 @@
     <dimen name="login_form_margin_top">160dp</dimen>
     <dimen name="login_form_margin_bottom">20dp</dimen>
     <dimen name="login_form_title_text_size">20dp</dimen>
+    <dimen name="guest_form_title_text_size">30dp</dimen>
     <dimen name="zero_dp">0dp</dimen>
 </resources>

@@ -41,6 +41,7 @@
         <Button
             android:id="@+id/btn_guest"
             style="@style/Login.Button"
+            android:onClick="onGuestClick"
             android:text="@string/as_guest"
             app:layout_heightPercent="@fraction/land_login_button_height"
             app:layout_widthPercent="@fraction/land_login_button_width"/>

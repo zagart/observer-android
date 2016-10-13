@@ -13,4 +13,9 @@
     <string name="password">Password</string>
     <string name="e_mail_hint">Enter your e-mail here</string>
     <string name="as_guest">As guest</string>
+    <string name="create">Create</string>
+    <string name="retrieve">Retrieve</string>
+    <string name="update">Update</string>
+    <string name="delete">Delete</string>
+    <string name="sqlite_crud">SQLite (CRUD)</string>
 </resources>

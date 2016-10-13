@@ -16,7 +16,7 @@ public class FeedReaderDbHelper extends SQLiteOpenHelper {
             "CREATE TABLE " + FeedReaderContract.FeedEntry.TABLE_NAME + " (" +
                     FeedReaderContract.FeedEntry._ID + " INTEGER PRIMARY KEY," +
                     FeedReaderContract.FeedEntry.COLUMN_NAME_TITLE + TEXT_TYPE + COMMA_SEP +
-                    FeedReaderContract.FeedEntry.COLUMN_NAME_SUBTITLE + TEXT_TYPE + " )";
+                    FeedReaderContract.FeedEntry.COLUMN_NAME_CONTENT + TEXT_TYPE + " )";
     public static final int DATABASE_VERSION = 1;
     public static final String DATABASE_NAME = "FeedReader.db";
 
@@ -39,4 +39,5 @@ public class FeedReaderDbHelper extends SQLiteOpenHelper {
     public void onOpen(final SQLiteDatabase db) {
         super.onOpen(db);
     }
+
 }
