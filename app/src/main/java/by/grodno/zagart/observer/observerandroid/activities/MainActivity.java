@@ -1,5 +1,6 @@
-package by.grodno.zagart.observer.observerandroid;
+package by.grodno.zagart.observer.observerandroid.activities;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
@@ -8,6 +9,8 @@ import android.util.Pair;
 import android.view.View;
 import android.widget.Toast;
 
+import by.grodno.zagart.observer.observerandroid.BuildConfig;
+import by.grodno.zagart.observer.observerandroid.R;
 import by.grodno.zagart.observer.observerandroid.apiengine.EndpointsAsyncTask;
 
 /**
@@ -22,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
         if (bar != null) {
             bar.hide();
         }
-        setContentView(R.layout.login_activity);
+        setContentView(R.layout.main_activity);
     }
 
     public void onExitClick(View view) {
@@ -39,6 +42,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onLoginClick(View view) {
+        Intent intent = new Intent(this, LoginActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        startActivity(intent);
+    }
+
+    public void onSettingsClick(View view) {
         new EndpointsAsyncTask().execute(
                 new Pair<Context, String>(this, getString(R.string.main_message_to_backend))
         );

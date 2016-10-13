@@ -17,9 +17,10 @@
             android:text="@string/log_in"/>
 
         <Button
-            android:id="@+id/main_menu_btn_config"
+            android:id="@+id/main_menu_btn_settings"
             style="@style/Main.Button"
-            android:text="@string/configuration"/>
+            android:onClick="onSettingsClick"
+            android:text="@string/settings"/>
 
         <Button
             android:id="@+id/main_menu_btn_info"
