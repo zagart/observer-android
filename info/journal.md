@@ -209,4 +209,14 @@
 			</li>
 		</ul>
 	</li>
+	<li>
+		<ul>
+			<h4>Final</h4>
+			<li>
+				I am already got basic understanding about Android, what is it and how it works. From this point 
+				there is no need to continue write my thoughts here. Instead, I'll concentrate on my project. Last 
+				info commit :)
+			</li>
+		</ul>
+	</li>
 </ul>
