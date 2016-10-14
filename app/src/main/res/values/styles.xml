@@ -19,4 +19,70 @@
         <item name="android:layout_height">@dimen/default_button_height</item>
     </style>
 
+    <style name="Main.Title">
+        <!--<item name="android:background">@drawable/steel</item>-->
+        <!--<item name="android:scaleType">centerCrop</item>-->
+        <item name="android:layout_width">@dimen/main_title_width</item>
+        <item name="android:layout_height">@dimen/main_title_height</item>
+        <item name="android:layout_gravity">center_horizontal</item>
+        <item name="android:gravity">center</item>
+        <item name="android:layout_marginTop">@dimen/main_title_margin_top</item>
+        <item name="android:padding">@dimen/default_padding</item>
+        <item name="android:textSize">@dimen/main_title_text_size</item>
+    </style>
+
+    <style name="Login">
+        <item name="android:gravity">center</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+    </style>
+
+    <style name="Login.Title" parent="Main.Title">
+        <item name="android:text">Authorization</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:textSize">@dimen/login_title_text_size</item>
+    </style>
+
+    <style name="Login.Email">
+        <item name="android:background">@android:color/white</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:ems">10</item>
+        <item name="android:textColor">@android:color/black</item>
+        <item name="android:layout_gravity">center_horizontal</item>
+        <item name="android:inputType">textEmailAddress</item>
+    </style>
+
+    <style name="Login.Password" parent="Login.Email">
+        <item name="android:inputType">textWebPassword</item>
+    </style>
+
+    <style name="Login.Title.Email">
+        <item name="android:text">@string/e_mail</item>
+        <item name="android:textSize">@dimen/login_form_title_text_size</item>
+        <item name="android:layout_margin">@dimen/zero_dp</item>
+        <item name="android:padding">@dimen/zero_dp</item>
+    </style>
+
+    <style name="Login.Title.Password" parent="Login.Title.Email">
+        <item name="android:text">@string/password</item>
+    </style>
+
+    <style name="Login.Form">
+        <item name="android:orientation">vertical</item>
+        <item name="android:gravity">center</item>
+        <item name="android:layout_marginTop">@dimen/login_form_margin_top</item>
+        <item name="android:layout_marginBottom">@dimen/login_form_margin_bottom</item>
+        <item name="android:layout_gravity">center_horizontal|bottom</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="Login.Button">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_margin">@dimen/zero_dp</item>
+        <item name="android:padding">@dimen/zero_dp</item>
+    </style>
 </resources>

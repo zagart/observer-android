@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/Main">
+
+    <TextView
+        style="@style/Main.Title"
+        android:textSize="@dimen/guest_form_title_text_size"
+        android:text="@string/sqlite_crud"/>
+
+    <LinearLayout
+        android:id="@+id/main_menu"
+        style="@style/Main.Menu">
+
+        <Button
+            android:id="@+id/main_menu_btn_create"
+            style="@style/Main.Button"
+            android:onClick="onCreateClick"
+            android:text="@string/create"/>
+
+        <Button
+            android:id="@+id/main_menu_btn_retrieve"
+            style="@style/Main.Button"
+            android:onClick="onRetrieveClick"
+            android:text="@string/retrieve"/>
+
+        <Button
+            android:id="@+id/main_menu_btn_update"
+            style="@style/Main.Button"
+            android:onClick="onUpdateClick"
+            android:text="@string/update"/>
+
+        <Button
+            android:id="@+id/main_menu_btn_delete"
+            style="@style/Main.Button"
+            android:onClick="onDeleteClick"
+            android:text="@string/delete"/>
+    </LinearLayout>
+</FrameLayout>

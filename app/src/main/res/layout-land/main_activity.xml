@@ -8,29 +8,34 @@
 
     <LinearLayout
         android:id="@+id/main_menu"
-        style="@style/Main.Menu">
+        style="@style/Main.Menu"
+        android:orientation="horizontal">
 
         <Button
             android:id="@+id/main_menu_btn_log_in"
             style="@style/Main.Button"
+            android:layout_width="@dimen/default_button_width"
             android:onClick="onLoginClick"
             android:text="@string/log_in"/>
 
         <Button
             android:id="@+id/main_menu_btn_settings"
             style="@style/Main.Button"
+            android:layout_width="@dimen/default_button_width"
             android:onClick="onSettingsClick"
             android:text="@string/settings"/>
 
         <Button
             android:id="@+id/main_menu_btn_info"
             style="@style/Main.Button"
+            android:layout_width="@dimen/default_button_width"
             android:onClick="onInfoClick"
             android:text="@string/main_menu_btn_info"/>
 
         <Button
             android:id="@+id/main_menu_btn_exit"
             style="@style/Main.Button"
+            android:layout_width="match_parent"
             android:onClick="onExitClick"
             android:text="@string/exit"/>
     </LinearLayout>
