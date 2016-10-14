@@ -19,7 +19,7 @@ import java.util.Properties;
 @Table(name = "STAND")
 public class Stand implements Identifiable<Long>, Serializable {
     public static final Logger logger = Logger.getLogger(Stand.class);
-    private static final long serialVersionUID = 2L;
+    private static final long SERIAL_VERSION_UID = 2L;
     private String description;
     private Long id;
     private List<Module> moduleList;
