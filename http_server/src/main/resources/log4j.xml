@@ -1,0 +1,25 @@
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
+    <appender name="CONSOLE" class="org.apache.log4j.ConsoleAppender">
+        <param name="Target" value="System.out"/>
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%p %c: %m%n"/>
+        </layout>
+    </appender>
+    <appender name="FILE" class="org.apache.log4j.DailyRollingFileAppender">
+        <param name="file" value="D:/logs/log.out"/>
+        <param name="immediateFlush" value="true"/>
+        <param name="threshold" value="debug"/>
+        <param name="append" value="true"/>
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="conversionPattern" value="%d %p %c: %m%n"/>
+        </layout>
+    </appender>
+    <logger name="org.hibernate">
+        <level value="error" />
+    </logger>
+    <root>
+        <priority value="warning"/>
+        <appender-ref ref="FILE"/>
+    </root>
+</log4j:configuration>
