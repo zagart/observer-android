@@ -12,6 +12,7 @@
 bin/
 gen/
 out/
+http_server/target/
 
 # Gradle files
 .gradle/

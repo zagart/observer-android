@@ -18,13 +18,30 @@
         <mysql.version>5.1.6</mysql.version>
         <commons.lang.version>2.6</commons.lang.version>
         <rxtx.version>2.1.7</rxtx.version>
-        <maven.shade.transformer>org.apache.maven.plugins.shade.resource.ManifestResourceTransformer
+        <tomcat.server.version>8.5.4</tomcat.server.version>
+        <tomcat.maven.plugin.version>2.2</tomcat.maven.plugin.version>
+        <maven.shade.transformer>
+            org.apache.maven.plugins.shade.resource.ManifestResourceTransformer
         </maven.shade.transformer>
-        <serial_receiver.entry.point>by.grodno.zagart.studies.serial_receiver.SerialReceiverMain
+        <serial_receiver.entry.point>
+            by.grodno.zagart.studies.serial_receiver.SerialReceiverMain
         </serial_receiver.entry.point>
     </properties>
 
     <dependencies>
+        <dependency>
+            <groupId>org.apache.tomcat.maven</groupId>
+            <artifactId>tomcat-maven-plugin</artifactId>
+            <version>${tomcat.maven.plugin.version}</version>
+            <type>pom</type>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.tomcat</groupId>
+            <artifactId>tomcat-catalina</artifactId>
+            <version>${tomcat.server.version}</version>
+        </dependency>
+
         <dependency>
             <groupId>org.rxtx</groupId>
             <artifactId>rxtx</artifactId>
@@ -74,6 +91,7 @@
                     <target>1.8</target>
                 </configuration>
             </plugin>
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-shade-plugin</artifactId>
@@ -92,6 +110,42 @@
                                 </transformer>
                             </transformers>
                         </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <version>3.0.0</version>
+                <configuration>
+                    <failOnMissingWebXml>false</failOnMissingWebXml>
+                    <archive>
+                        <manifest>
+                            <addClasspath>true</addClasspath>
+                        </manifest>
+                    </archive>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.tomcat.maven</groupId>
+                <artifactId>tomcat7-maven-plugin</artifactId>
+                <version>2.2</version>
+                <configuration>
+                    <path>/${project.build.finalName}</path>
+                    <update>true</update>
+                    <url>http://localhost:8080/manager/text</url>
+                    <username>tomcat</username>
+                    <password>s3cret</password>
+                    <path>/Observer</path>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>redeploy</goal>
+                        </goals>
+                        <phase>install</phase>
                     </execution>
                 </executions>
             </plugin>

@@ -5,7 +5,6 @@ import org.apache.log4j.Logger;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.sql.Blob;
 
 /**
  * Класс-сущность, описывает объекты типа "пользователь" и их свойства.
@@ -16,18 +15,19 @@ import java.sql.Blob;
 public class User implements Identifiable<Long>, Serializable {
     public static final Logger logger = Logger.getLogger(Stand.class);
     private static final long SERIAL_VERSION_UID = 3L;
-    private Blob avatar;
+    private String avatar;
     private Long id;
     private String info;
     private String login;
     private String password;
     private Role role;
 
-    public Blob getAvatar() {
+    @Column(name = "AVATAR")
+    public String getAvatar() {
         return avatar;
     }
 
-    public void setAvatar(Blob avatar) {
+    public void setAvatar(String avatar) {
         this.avatar = avatar;
     }
 
