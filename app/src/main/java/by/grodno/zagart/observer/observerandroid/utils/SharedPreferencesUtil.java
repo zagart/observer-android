@@ -1,8 +1,5 @@
 package by.grodno.zagart.observer.observerandroid.utils;
-<<<<<<< HEAD
-=======
 import android.content.Context;
->>>>>>> hw05102016sharedpref
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 
@@ -35,8 +32,6 @@ public class SharedPreferencesUtil {
         editor.putString(name, input);
         editor.apply();
     }
-<<<<<<< HEAD
-=======
 
     public static Boolean retrieveBooleanValue(AppCompatActivity activity, String name) {
         return activity.getSharedPreferences(PREF_FILE, Context.MODE_PRIVATE).getBoolean(name, false);
@@ -45,5 +40,4 @@ public class SharedPreferencesUtil {
     public static String retrieveStringValue(AppCompatActivity activity, String name) {
         return activity.getSharedPreferences(PREF_FILE, Context.MODE_PRIVATE).getString(name, null);
     }
->>>>>>> hw05102016sharedpref
 }
