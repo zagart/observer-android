@@ -31,20 +31,20 @@
         <item name="android:textSize">@dimen/main_title_text_size</item>
     </style>
 
-    <style name="Login">
+    <style name="LoginLayout">
         <item name="android:gravity">center</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">match_parent</item>
     </style>
 
-    <style name="Login.Title" parent="Main.Title">
+    <style name="LoginLayout.Title" parent="Main.Title">
         <item name="android:text">Authorization</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:textSize">@dimen/login_title_text_size</item>
     </style>
 
-    <style name="Login.Email">
+    <style name="LoginLayout.Login">
         <item name="android:background">@android:color/white</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
@@ -54,22 +54,22 @@
         <item name="android:inputType">textEmailAddress</item>
     </style>
 
-    <style name="Login.Password" parent="Login.Email">
+    <style name="LoginLayout.Password" parent="LoginLayout.Login">
         <item name="android:inputType">textWebPassword</item>
     </style>
 
-    <style name="Login.Title.Email">
-        <item name="android:text">@string/e_mail</item>
+    <style name="LoginLayout.Title.Login">
+        <item name="android:text">@string/login</item>
         <item name="android:textSize">@dimen/login_form_title_text_size</item>
         <item name="android:layout_margin">@dimen/zero_dp</item>
         <item name="android:padding">@dimen/zero_dp</item>
     </style>
 
-    <style name="Login.Title.Password" parent="Login.Title.Email">
+    <style name="LoginLayout.Title.Password" parent="LoginLayout.Title.Login">
         <item name="android:text">@string/password</item>
     </style>
 
-    <style name="Login.Form">
+    <style name="LoginLayout.Form">
         <item name="android:orientation">vertical</item>
         <item name="android:gravity">center</item>
         <item name="android:layout_marginTop">@dimen/login_form_margin_top</item>
@@ -79,7 +79,7 @@
         <item name="android:layout_height">wrap_content</item>
     </style>
 
-    <style name="Login.Button">
+    <style name="LoginLayout.Button">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_margin">@dimen/zero_dp</item>

@@ -1,5 +1,5 @@
 package by.grodno.zagart.observer.observerandroid.http;
-import java.io.InputStream;
+import java.util.Properties;
 
 /**
  * Implementation of this interface allows to class-implementer
@@ -7,8 +7,20 @@ import java.io.InputStream;
  */
 public interface IHttpClient {
     String get(IRequest pRequest);
-    InputStream post(IRequest pRequest);
+    String post(IRequest pRequest);
     interface IRequest {
+        Properties getProperties();
         String getUrl();
+        enum Action {
+            AUTHORIZE
+        }
+
+        enum Header {
+            ACTION, LOGIN, PASSWORD
+        }
+
+        enum Method {
+            GET, POST
+        }
     }
 }

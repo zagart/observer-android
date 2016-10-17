@@ -1,4 +1,4 @@
-package by.grodno.zagart.observer.observerandroid.singleton;
+package by.grodno.zagart.observer.observerandroid.singletons;
 import android.content.Context;
 
 public enum ContextHolder {

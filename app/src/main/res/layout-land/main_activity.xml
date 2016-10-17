@@ -16,7 +16,7 @@
             style="@style/Main.Button"
             android:layout_width="@dimen/default_button_width"
             android:onClick="onLoginClick"
-            android:text="@string/log_in"/>
+            android:text="@string/sign_in"/>
 
         <Button
             android:id="@+id/main_menu_btn_settings"

@@ -9,15 +9,11 @@ import android.widget.Toast;
 
 import by.grodno.zagart.observer.observerandroid.BuildConfig;
 import by.grodno.zagart.observer.observerandroid.R;
-import by.grodno.zagart.observer.observerandroid.singleton.ContextHolder;
-import by.grodno.zagart.observer.observerandroid.http.HttpGetRequestTask;
 
 /**
  * Application main activity.
  */
 public class MainActivity extends AppCompatActivity {
-    public static final String URL = "http://10.0.2.2:8080/Observer/AndroidRequestHandler";
-
     @Override
     protected void onCreate(@Nullable final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,8 +44,5 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onSettingsClick(View view) {
-        ContextHolder.set(this);
-        final HttpGetRequestTask task = new HttpGetRequestTask(URL);
-        task.execute();
     }
 }
