@@ -1,23 +1,19 @@
 package by.grodno.zagart.observer.observerandroid.activities;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Pair;
 import android.view.View;
 import android.widget.Toast;
 
 import by.grodno.zagart.observer.observerandroid.BuildConfig;
 import by.grodno.zagart.observer.observerandroid.R;
-import by.grodno.zagart.observer.observerandroid.apiengine.EndpointsAsyncTask;
 
 /**
  * Application main activity.
  */
 public class MainActivity extends AppCompatActivity {
-
     @Override
     protected void onCreate(@Nullable final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,8 +44,5 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onSettingsClick(View view) {
-        new EndpointsAsyncTask().execute(
-                new Pair<Context, String>(this, getString(R.string.main_message_to_backend))
-        );
     }
 }

@@ -1,4 +1,4 @@
-package by.zagart.observer.classes;
+package by.zagart.observer.network;
 
 import by.zagart.observer.interfaces.Closeable;
 import org.apache.log4j.Logger;

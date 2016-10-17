@@ -18,7 +18,7 @@ import java.util.Properties;
 @Table(name = "MODULE")
 public class Module implements Identifiable<Long>, Serializable {
     public static final Logger logger = Logger.getLogger(Module.class);
-    private static final long serialVersionUID = 1L;
+    private static final long SERIAL_VERSION_UID = 1L;
     private Long id;
     private String name;
     private Stand stand;

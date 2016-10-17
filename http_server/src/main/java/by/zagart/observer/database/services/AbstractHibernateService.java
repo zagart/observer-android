@@ -23,8 +23,8 @@ import static by.zagart.observer.utils.HibernateUtil.*;
 public abstract class AbstractHibernateService<T extends Identifiable, PK extends Serializable, DAO extends GenericDao>
         implements GenericService<T, PK>, Reflective {
     private final T entityObj;
-    private GenericDao dao = (GenericDao) getGenericObject(2);
-    public final Logger logger = Logger.getLogger(dao.getClass());
+    private GenericDao mUserDao = (GenericDao) getGenericObject(2);
+    public final Logger logger = Logger.getLogger(mUserDao.getClass());
 
     {
         entityObj = (T) getGenericObject(0);
@@ -33,7 +33,7 @@ public abstract class AbstractHibernateService<T extends Identifiable, PK extend
     @Override
     public void delete(PK id) {
         openCurrentSessionWithTransaction();
-        dao.delete(id);
+        mUserDao.delete(id);
         closeCurrentSessionWithTransaction();
         logger.info(String.format("%s object deleted from database by id = %d.",
                 entityObj.getClass().getSimpleName(), id));
@@ -42,7 +42,7 @@ public abstract class AbstractHibernateService<T extends Identifiable, PK extend
     @Override
     public void delete(T obj) {
         openCurrentSessionWithTransaction();
-        dao.delete(obj);
+        mUserDao.delete(obj);
         closeCurrentSessionWithTransaction();
         logger.info(String.format("%s object with id = %d deleted from database.",
                 entityObj.getClass().getSimpleName(),
@@ -52,7 +52,7 @@ public abstract class AbstractHibernateService<T extends Identifiable, PK extend
     @Override
     public int executeQuery(String hql, Map<String, Object> parameters) {
         openCurrentSessionWithTransaction();
-        int affected = dao.executeQuery(hql, parameters);
+        int affected = mUserDao.executeQuery(hql, parameters);
         closeCurrentSessionWithTransaction();
         logger.info(String.format("%s query executed. %d element(s) affected.",
                 entityObj.getClass().getSimpleName(),
@@ -63,7 +63,7 @@ public abstract class AbstractHibernateService<T extends Identifiable, PK extend
     @Override
     public List<T> getAll() {
         openCurrentSession();
-        List<T> daoAll = dao.getAll();
+        List<T> daoAll = mUserDao.getAll();
         closeCurrentSession();
         logger.info(String.format("All %s objects pulled from database(%d).",
                 entityObj.getClass().getSimpleName(),
@@ -74,7 +74,7 @@ public abstract class AbstractHibernateService<T extends Identifiable, PK extend
     @Override
     public T getById(PK id) {
         openCurrentSession();
-        T obj = (T) dao.getById(id);
+        T obj = (T) mUserDao.getById(id);
         closeCurrentSession();
         logger.info(String.format("%s object pulled from database by id = %d.",
                 entityObj.getClass().getSimpleName(),
@@ -85,7 +85,7 @@ public abstract class AbstractHibernateService<T extends Identifiable, PK extend
     @Override
     public List<T> getListByQuery(String hql) {
         openCurrentSession();
-        List<T> daoListByQuery = dao.getListByQuery(hql);
+        List<T> daoListByQuery = mUserDao.getListByQuery(hql);
         closeCurrentSession();
         logger.info(String.format("%s object(s) pulled from database by query(%d).",
                 entityObj.getClass().getSimpleName(),
@@ -96,7 +96,7 @@ public abstract class AbstractHibernateService<T extends Identifiable, PK extend
     @Override
     public Set<PK> getPkSetByQuery(String hql) {
         openCurrentSession();
-        Set<PK> daoPkSetByQuery = dao.getPkSetByQuery(hql);
+        Set<PK> daoPkSetByQuery = mUserDao.getPkSetByQuery(hql);
         closeCurrentSession();
         logger.info(String.format("%s id(s) pulled from database by query(%d).",
                 entityObj.getClass().getSimpleName(),
@@ -107,7 +107,7 @@ public abstract class AbstractHibernateService<T extends Identifiable, PK extend
     @Override
     public PK save(T obj) {
         openCurrentSessionWithTransaction();
-        dao.save(obj);
+        mUserDao.save(obj);
         closeCurrentSessionWithTransaction();
         logger.info(String.format("%s object saved with id = %d.",
                 entityObj.getClass().getSimpleName(),
@@ -118,7 +118,7 @@ public abstract class AbstractHibernateService<T extends Identifiable, PK extend
     @Override
     public void update(T obj) {
         openCurrentSessionWithTransaction();
-        dao.update(obj);
+        mUserDao.update(obj);
         closeCurrentSessionWithTransaction();
         logger.info(String.format("%s object with id = %d updated.",
                 entityObj.getClass().getSimpleName(),

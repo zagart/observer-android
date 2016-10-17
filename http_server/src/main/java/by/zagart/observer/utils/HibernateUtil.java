@@ -2,6 +2,7 @@ package by.zagart.observer.utils;
 
 import by.zagart.observer.database.entities.Module;
 import by.zagart.observer.database.entities.Stand;
+import by.zagart.observer.database.entities.User;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -27,6 +28,7 @@ public class HibernateUtil {
         Metadata metadata = new MetadataSources(standardRegistry)
                 .addAnnotatedClass(Stand.class)
                 .addAnnotatedClass(Module.class)
+                .addAnnotatedClass(User.class)
                 .buildMetadata();
         factory = metadata.buildSessionFactory();
     }

@@ -1,4 +1,4 @@
-package by.zagart.observer.classes;
+package by.zagart.observer.network;
 
 import by.zagart.observer.database.entities.Module;
 import by.zagart.observer.database.entities.Stand;
