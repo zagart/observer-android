@@ -11,6 +11,7 @@ public class HttpRequestTask extends AsyncTask<String, Void, String> {
     private String mUrl;
     private IHttpClient.IRequest.Method mMethod;
     private Properties mProperties;
+    private String mResult;
 
     public HttpRequestTask(String pUrl,
                            IHttpClient.IRequest.Method pMethod,
@@ -46,5 +47,11 @@ public class HttpRequestTask extends AsyncTask<String, Void, String> {
     protected void onPostExecute(final String pResponse) {
         super.onPostExecute(pResponse);
         Toast.makeText(ContextHolder.get(), pResponse, Toast.LENGTH_SHORT).show();
+        mResult = pResponse;
+    }
+
+    @Nullable
+    public String getResult() {
+        return mResult;
     }
 }
