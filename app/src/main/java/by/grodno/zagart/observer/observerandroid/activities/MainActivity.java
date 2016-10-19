@@ -4,16 +4,26 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
 import by.grodno.zagart.observer.observerandroid.BuildConfig;
 import by.grodno.zagart.observer.observerandroid.R;
+import by.grodno.zagart.observer.observerandroid.singletons.ContextHolder;
+import by.grodno.zagart.observer.observerandroid.threadings.Slave;
+import by.grodno.zagart.observer.observerandroid.threadings.impl.ActionImpl;
+import by.grodno.zagart.observer.observerandroid.threadings.impl.CallbackImpl;
 
 /**
  * Application main activity.
  */
 public class MainActivity extends AppCompatActivity {
+    public static final String SLAVE_NAME = "SlaveThread";
+    public static final String CONFIGURATION_CHANGED = "Configuration changed.";
+    public static final String MAIN_TAG = "MainActivity";
+    private Slave mSlave = new Slave(SLAVE_NAME);
+
     @Override
     protected void onCreate(@Nullable final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -22,6 +32,9 @@ public class MainActivity extends AppCompatActivity {
             bar.hide();
         }
         setContentView(R.layout.main_activity);
+        ContextHolder.set(this);
+        //call Slave method onStart()..?
+        mSlave.onStart();
     }
 
     public void onExitClick(View view) {
@@ -43,6 +56,17 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    @Override
+    public Object onRetainCustomNonConfigurationInstance() {
+        if (BuildConfig.DEBUG) {
+            Log.d(MAIN_TAG, CONFIGURATION_CHANGED);
+        }
+        //call Slave method onRotate..?
+        mSlave.onRotate();
+        return super.onRetainCustomNonConfigurationInstance();
+    }
+
     public void onSettingsClick(View view) {
+        mSlave.doWork(new ActionImpl(), new CallbackImpl());
     }
 }
