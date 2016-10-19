@@ -3,6 +3,7 @@
     style="@style/Main">
 
     <TextView
+        android:id="@+id/main_menu_title"
         style="@style/Main.Title"
         android:text="@string/app_name"/>
 
