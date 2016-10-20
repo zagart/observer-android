@@ -1,8 +1,14 @@
 package by.grodno.zagart.observer.observerandroid;
 import android.app.Application;
 
+import by.grodno.zagart.observer.observerandroid.singletons.ContextHolder;
+
 /**
- * Created by ZAGART on 20.10.2016.
+ * Custom application file.
  */
 public class App extends Application {
+    @Override
+    public void onCreate() {
+        ContextHolder.set(this);
+    }
 }

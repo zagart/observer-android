@@ -22,7 +22,8 @@ public class ActionImpl implements Action<String, Integer> {
     }
 
     @Override
-    public String process(final String pName, final Callback pCallback) throws InterruptedException {
+    public String process(final String pName, final Callback<String, Integer> pCallback)
+            throws InterruptedException {
         mStatus = Status.STARTED;
         pCallback.onStart(pName);
         String result = "";

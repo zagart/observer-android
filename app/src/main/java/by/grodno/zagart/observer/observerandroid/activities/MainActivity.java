@@ -10,7 +10,6 @@ import android.widget.Toast;
 
 import by.grodno.zagart.observer.observerandroid.BuildConfig;
 import by.grodno.zagart.observer.observerandroid.R;
-import by.grodno.zagart.observer.observerandroid.singletons.ContextHolder;
 import by.grodno.zagart.observer.observerandroid.threadings.Slave;
 import by.grodno.zagart.observer.observerandroid.threadings.impl.ActionImpl;
 import by.grodno.zagart.observer.observerandroid.threadings.impl.CallbackImpl;
@@ -32,7 +31,6 @@ public class MainActivity extends AppCompatActivity {
             bar.hide();
         }
         setContentView(R.layout.main_activity);
-        ContextHolder.set(this);
         //call Slave method onStart()..?
         mSlave.onStart();
     }

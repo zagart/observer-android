@@ -18,8 +18,8 @@ import by.grodno.zagart.observer.observerandroid.singletons.ContextHolder;
 public class Slave<Result, Progress> {
     private static final int COUNT_CORE = Runtime.getRuntime().availableProcessors();
     private static final int DEFAULT_THREADS_NUMBER = 3;
-    public static final String STR_ROTATE = "Screen orientation changed.";
-    public static final int MAX_THREADS_NUMBER = Math.max(COUNT_CORE, DEFAULT_THREADS_NUMBER);
+    private static final int MAX_THREADS_NUMBER = Math.max(COUNT_CORE, DEFAULT_THREADS_NUMBER);
+    private static final String STR_ROTATE = "Screen orientation changed.";
     private static int sCounter = 0;
     private final ExecutorService mPool;
     private final String mName;
@@ -34,17 +34,18 @@ public class Slave<Result, Progress> {
             final Action<Result, Progress> pAction,
             final Callback<Result, Progress> pCallback
     ) {
+        new Thread();
         final Handler handler = new Handler();
         final String name = String.format(Locale.ENGLISH, "%s-%d", mName, ++sCounter);
         mPool.execute(
-                new Thread() {
+                new Runnable() {
                     @Override
                     public void run() {
                         try {
                             mActions.offer(pAction);
                             final Result result = pAction.process(name, pCallback);
                             handler.post(
-                                    new Thread() {
+                                    new Runnable() {
                                         @Override
                                         public void run() {
                                             onResult(result);
