@@ -1,6 +1,4 @@
 package by.grodno.zagart.observer.observerandroid.http;
-import android.support.annotation.Nullable;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -8,34 +6,21 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.Enumeration;
-import java.util.Properties;
 
-import static by.grodno.zagart.observer.observerandroid.http.IHttpClient.IRequest.Method.GET;
-import static by.grodno.zagart.observer.observerandroid.http.IHttpClient.IRequest.Method.POST;
+import by.grodno.zagart.observer.observerandroid.http.interfaces.IHttpClient;
 
 /**
  * Implementation of IHttpClient interface.
  */
 public class HttpClient implements IHttpClient {
     @Override
-    public String get(final IRequest pRequest) {
-        return processRequest(pRequest, GET);
-    }
-
-    @Override
-    public String post(final IRequest pRequest) {
-        return processRequest(pRequest, POST);
-    }
-
-    @Nullable
-    private String processRequest(final IRequest pRequest, IRequest.Method method) {
+    public String executeRequest(final IRequest pRequest, final Method pMethod) {
         String response = null;
         try {
             URL reqUrl = new URL(pRequest.getUrl());
             HttpURLConnection connection = ((HttpURLConnection) reqUrl.openConnection());
-            connection.setRequestMethod(method.name());
-            setRequestProperties(connection, pRequest.getProperties());
+            connection.setRequestMethod(pMethod.name());
+            pRequest.handleRequestConnection(connection);
             InputStream inputStream = connection.getInputStream();
             BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
             StringBuilder stringBuilder = new StringBuilder();
@@ -51,14 +36,5 @@ public class HttpClient implements IHttpClient {
             e.printStackTrace();
         }
         return response;
-    }
-
-    private void setRequestProperties(HttpURLConnection pConnection, Properties pProperties) {
-        Enumeration e = pProperties.propertyNames();
-        while (e.hasMoreElements()) {
-            String key = (String) e.nextElement();
-            String value = pProperties.getProperty(key);
-            pConnection.setRequestProperty(key, value);
-        }
     }
 }

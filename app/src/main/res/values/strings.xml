@@ -17,5 +17,5 @@
     <string name="retrieve">Retrieve</string>
     <string name="update">Update</string>
     <string name="delete">Delete</string>
-    <string name="sqlite_crud">SQLite (CRUD)</string>
+    <string name="http_json">HTTP(JSON)</string>
 </resources>

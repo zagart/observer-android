@@ -5,7 +5,7 @@
     <TextView
         style="@style/Main.Title"
         android:textSize="@dimen/guest_form_title_text_size"
-        android:text="@string/sqlite_crud"/>
+        android:text="@string/http_json"/>
 
     <LinearLayout
         android:id="@+id/main_menu"

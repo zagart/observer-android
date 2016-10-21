@@ -1,6 +1,8 @@
 package by.grodno.zagart.observer.observerandroid.http;
 import android.support.annotation.Nullable;
 
+import by.grodno.zagart.observer.observerandroid.http.interfaces.IHttpClient;
+
 /**
  * Factory of HTTP-clients.
  */
