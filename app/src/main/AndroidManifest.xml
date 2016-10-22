@@ -18,5 +18,6 @@
         </activity>
         <activity android:name=".activities.LoginActivity"/>
         <activity android:name=".activities.GuestActivity"/>
+        <activity android:name=".activities.ResultActivity"/>
     </application>
 </manifest>

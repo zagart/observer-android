@@ -2,14 +2,15 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     style="@style/Main">
 
-    <TextView
-        style="@style/Main.Title"
-        android:textSize="@dimen/guest_form_title_text_size"
-        android:text="@string/http_json"/>
-
     <LinearLayout
         android:id="@+id/main_menu"
         style="@style/Main.Menu">
+
+        <Button
+            android:id="@+id/main_menu_btn_sample"
+            style="@style/Main.Button"
+            android:onClick="onRecyclerViewClick"
+            android:text="@string/recycler_view"/>
 
         <Button
             android:id="@+id/main_menu_btn_create"

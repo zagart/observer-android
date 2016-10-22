@@ -13,6 +13,8 @@ bin/
 gen/
 out/
 http_server/target/
+http_server/target/classes/
+http_server/target/classes/META-INF
 
 # Gradle files
 .gradle/
