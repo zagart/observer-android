@@ -6,21 +6,21 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.util.Collections;
 import java.util.List;
 
 import by.grodno.zagart.observer.observerandroid.R;
+import by.grodno.zagart.observer.observerandroid.adapter.callbacks.IMovableContent;
 import by.grodno.zagart.observer.observerandroid.cache.model.Stand;
 
 /**
- * My adapter for stand.
+ * My adapter for stand model.
  */
-public class StandAdapter extends RecyclerView.Adapter<StandAdapter.RowHolder> {
+public class StandAdapter extends RecyclerView.Adapter<StandAdapter.RowHolder> implements IMovableContent {
     private List<Stand> mStands;
-    private Context mContext;
 
-    public StandAdapter(final List<Stand> pStands, final Context pContext) {
+    public StandAdapter(final List<Stand> pStands) {
         mStands = pStands;
-        mContext = pContext;
     }
 
     @Override
@@ -28,8 +28,7 @@ public class StandAdapter extends RecyclerView.Adapter<StandAdapter.RowHolder> {
         Context context = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
         View standView = inflater.inflate(R.layout.stand_table_row, parent, false);
-        RowHolder holder = new RowHolder(standView);
-        return holder;
+        return new RowHolder(standView);
     }
 
     @Override
@@ -48,12 +47,32 @@ public class StandAdapter extends RecyclerView.Adapter<StandAdapter.RowHolder> {
         return mStands.size();
     }
 
-    public static class RowHolder extends RecyclerView.ViewHolder {
-        public TextView mIdView;
-        public TextView mNumberView;
-        public TextView mDescriptionView;
+    @Override
+    public void onItemLock(final int pStartPosition, final int pEndPosition) {
+        if (pStartPosition < pEndPosition) {
+            for (int i = pStartPosition; i < pEndPosition; i++) {
+                Collections.swap(mStands, i, i + 1);
+            }
+        } else {
+            for (int i = pStartPosition; i > pEndPosition; i--) {
+                Collections.swap(mStands, i, i - 1);
+            }
+        }
+        notifyItemMoved(pStartPosition, pEndPosition);
+    }
 
-        public RowHolder(final View pItemView) {
+    @Override
+    public void onItemRelease(final int pPosition) {
+        mStands.remove(pPosition);
+        notifyItemRemoved(pPosition);
+    }
+
+    public static class RowHolder extends RecyclerView.ViewHolder {
+        private TextView mIdView;
+        private TextView mNumberView;
+        private TextView mDescriptionView;
+
+        private RowHolder(final View pItemView) {
             super(pItemView);
             mIdView = (TextView) pItemView.findViewById(R.id.stand_id);
             mNumberView = (TextView) pItemView.findViewById(R.id.stand_number);
