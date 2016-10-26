@@ -6,13 +6,14 @@ import java.net.HttpURLConnection;
  * use privileges of HTTP-client such as do HTTP-request.
  */
 public interface IHttpClient {
-    String executeRequest(IRequest pRequest, Method pMethod);
+    String executeRequest(IRequest pRequest);
     enum Method {
         GET, POST
     }
 
     interface IRequest {
         String getContentType();
+        Method getMethodType();
         String getUrl();
         String handleRequestConnection(HttpURLConnection pConnection);
     }

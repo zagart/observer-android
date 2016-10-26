@@ -4,12 +4,17 @@ import java.net.HttpURLConnection;
 import by.grodno.zagart.observer.observerandroid.http.interfaces.IHttpClient;
 
 /**
- * Implementation of GET-method of HTTP-protocol.
+ * Implementation of POST-method of HTTP-protocol.
  */
 public class PostRequest implements IHttpClient.IRequest {
     @Override
     public String getContentType() {
         return null;
+    }
+
+    @Override
+    public IHttpClient.Method getMethodType() {
+        return IHttpClient.Method.POST;
     }
 
     @Override

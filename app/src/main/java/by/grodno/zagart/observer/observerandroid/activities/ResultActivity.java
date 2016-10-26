@@ -55,7 +55,7 @@ public class ResultActivity extends AppCompatActivity {
         ItemTouchHelper.Callback callback = new ManualCallback(adapter);
          /*
              It works the same way as ManualCallback:
-             ItemTouchHelper.Callback callback = getSimpleCallback(adapter);
+             ItemTouchHelper.IActionCallback callback = getSimpleCallback(adapter);
           */
         ItemTouchHelper touchHelper = new ItemTouchHelper(callback);
         touchHelper.attachToRecyclerView(rvStands);

@@ -13,6 +13,11 @@ public class GetRequest implements IHttpClient.IRequest {
     }
 
     @Override
+    public IHttpClient.Method getMethodType() {
+        return IHttpClient.Method.GET;
+    }
+
+    @Override
     public String getUrl() {
         return null;
     }

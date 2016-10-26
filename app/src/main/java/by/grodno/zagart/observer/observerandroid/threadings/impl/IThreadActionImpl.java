@@ -1,13 +1,13 @@
 package by.grodno.zagart.observer.observerandroid.threadings.impl;
-import by.grodno.zagart.observer.observerandroid.threadings.Action;
-import by.grodno.zagart.observer.observerandroid.threadings.Callback;
+import by.grodno.zagart.observer.observerandroid.threadings.IThreadAction;
+import by.grodno.zagart.observer.observerandroid.threadings.IActionCallback;
 
 import static java.lang.Thread.sleep;
 
 /**
- * Action interface implementation.
+ * IThreadAction interface implementation.
  */
-public class ActionImpl implements Action<String, Integer> {
+public class IThreadActionImpl implements IThreadAction<String, Integer> {
     private static final int LOOP_VALUE = 5;
     private static final int SLEEP_TIME_MILLIS = 1000;
     private Status mStatus = Status.CREATED;
@@ -22,7 +22,7 @@ public class ActionImpl implements Action<String, Integer> {
     }
 
     @Override
-    public String process(final String pName, final Callback<String, Integer> pCallback)
+    public String process(final String pName, final IActionCallback<String, Integer> pCallback)
             throws InterruptedException {
         mStatus = Status.STARTED;
         pCallback.onStart(pName);

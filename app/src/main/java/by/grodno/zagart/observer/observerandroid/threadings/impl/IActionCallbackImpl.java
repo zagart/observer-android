@@ -4,12 +4,12 @@ import android.util.Log;
 import java.util.Locale;
 
 import by.grodno.zagart.observer.observerandroid.BuildConfig;
-import by.grodno.zagart.observer.observerandroid.threadings.Callback;
+import by.grodno.zagart.observer.observerandroid.threadings.IActionCallback;
 
 /**
- * Callback interface implementation.
+ * IActionCallback interface implementation.
  */
-public class CallbackImpl implements Callback<String, Integer> {
+public class IActionCallbackImpl implements IActionCallback<String, Integer> {
     public static final String STR_UPDATED = "Updated with ";
     public static final String STR_STARTED = "Started.";
     public static final String STR_COMPLETE = "Completed with %s";

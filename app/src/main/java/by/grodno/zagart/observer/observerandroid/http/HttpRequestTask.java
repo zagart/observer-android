@@ -18,7 +18,7 @@ public class HttpRequestTask extends AsyncTask<String, Void, String> {
     @Override
     @Nullable
     protected String doInBackground(String... urls) {
-        return (new HttpClient()).executeRequest(mRequest, IHttpClient.Method.GET);
+        return (new HttpClient()).executeRequest(mRequest);
     }
 
     @Override

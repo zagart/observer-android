@@ -10,9 +10,9 @@ import android.widget.Toast;
 
 import by.grodno.zagart.observer.observerandroid.BuildConfig;
 import by.grodno.zagart.observer.observerandroid.R;
-import by.grodno.zagart.observer.observerandroid.threadings.Slave;
-import by.grodno.zagart.observer.observerandroid.threadings.impl.ActionImpl;
-import by.grodno.zagart.observer.observerandroid.threadings.impl.CallbackImpl;
+import by.grodno.zagart.observer.observerandroid.threadings.BackgroundTask;
+import by.grodno.zagart.observer.observerandroid.threadings.impl.IThreadActionImpl;
+import by.grodno.zagart.observer.observerandroid.threadings.impl.IActionCallbackImpl;
 
 /**
  * Application main activity.
@@ -21,7 +21,7 @@ public class MainActivity extends AppCompatActivity {
     public static final String SLAVE_NAME = "SlaveThread";
     public static final String CONFIGURATION_CHANGED = "Configuration changed.";
     public static final String MAIN_TAG = "MainActivity";
-    private Slave mSlave = new Slave(SLAVE_NAME);
+    private BackgroundTask mBackgroundTask = new BackgroundTask(SLAVE_NAME);
 
     @Override
     protected void onCreate(@Nullable final Bundle savedInstanceState) {
@@ -31,8 +31,8 @@ public class MainActivity extends AppCompatActivity {
             bar.hide();
         }
         setContentView(R.layout.main_activity);
-        //call Slave method onStart()..?
-        mSlave.onStart();
+        //call BackgroundTask method onStart()..?
+        mBackgroundTask.onStart();
     }
 
     public void onExitClick(View view) {
@@ -59,12 +59,12 @@ public class MainActivity extends AppCompatActivity {
         if (BuildConfig.DEBUG) {
             Log.d(MAIN_TAG, CONFIGURATION_CHANGED);
         }
-        //call Slave method onRotate..?
-        mSlave.onRotate();
+        //call BackgroundTask method onRotate..?
+        mBackgroundTask.onRotate();
         return super.onRetainCustomNonConfigurationInstance();
     }
 
     public void onSettingsClick(View view) {
-        mSlave.doWork(new ActionImpl(), new CallbackImpl());
+        mBackgroundTask.performAction(new IThreadActionImpl(), new IActionCallbackImpl());
     }
 }

@@ -14,12 +14,13 @@ import by.grodno.zagart.observer.observerandroid.http.interfaces.IHttpClient;
  */
 public class HttpClient implements IHttpClient {
     @Override
-    public String executeRequest(final IRequest pRequest, final Method pMethod) {
+    public String executeRequest(final IRequest pRequest) {
         String response = null;
+        HttpURLConnection connection;
         try {
             URL reqUrl = new URL(pRequest.getUrl());
-            HttpURLConnection connection = ((HttpURLConnection) reqUrl.openConnection());
-            connection.setRequestMethod(pMethod.name());
+            connection = ((HttpURLConnection) reqUrl.openConnection());
+            connection.setRequestMethod(pRequest.getMethodType().name());
             pRequest.handleRequestConnection(connection);
             InputStream inputStream = connection.getInputStream();
             BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));

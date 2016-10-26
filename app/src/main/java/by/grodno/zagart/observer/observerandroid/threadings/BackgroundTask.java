@@ -15,7 +15,7 @@ import by.grodno.zagart.observer.observerandroid.singletons.ContextHolder;
 /**
  * My class for asynchronous background tasks.
  */
-public class Slave<Result, Progress> {
+public class BackgroundTask<Progress, Result> {
     private static final int COUNT_CORE = Runtime.getRuntime().availableProcessors();
     private static final int DEFAULT_THREADS_NUMBER = 3;
     private static final int MAX_THREADS_NUMBER = Math.max(COUNT_CORE, DEFAULT_THREADS_NUMBER);
@@ -23,18 +23,51 @@ public class Slave<Result, Progress> {
     private static int sCounter = 0;
     private final ExecutorService mPool;
     private final String mName;
-    private final BlockingQueue<Action> mActions = new ArrayBlockingQueue<>(MAX_THREADS_NUMBER);
+    private final BlockingQueue<IThreadAction> mActions = new ArrayBlockingQueue<>(MAX_THREADS_NUMBER);
 
-    public Slave(String pName) {
+    public BackgroundTask(String pName) {
         mName = pName;
         mPool = Executors.newFixedThreadPool(MAX_THREADS_NUMBER);
     }
 
-    public void doWork(
-            final Action<Result, Progress> pAction,
-            final Callback<Result, Progress> pCallback
+    public void onResult(Result pResult) {
+        if (BuildConfig.DEBUG) {
+            Toast.makeText(ContextHolder.get(), (String) pResult, Toast.LENGTH_SHORT).show();
+        }
+        //handling result
+    }
+
+    public void onRotate() {
+        if (BuildConfig.DEBUG) {
+            Log.d(mName, STR_ROTATE);
+        }
+        //saving pool state
+        for (IThreadAction action : mActions) {
+            action.initPersistProgress();
+        }
+    }
+
+    public void onStart() {
+        //do restoring actions
+        if (mActions != null) {
+            for (IThreadAction action : mActions) {
+                switch (action.getStatus()) {
+                    case CREATED:
+                    case STARTED:
+                    case RUNNING:
+                    case FINISHED:
+                    case PERSISTED:
+                        action.retrieveProgress();
+                        break;
+                }
+            }
+        }
+    }
+
+    public void performAction(
+            final IThreadAction<Progress, Result> pAction,
+            final IActionCallback<Progress, Result> pCallback
     ) {
-        new Thread();
         final Handler handler = new Handler();
         final String name = String.format(Locale.ENGLISH, "%s-%d", mName, ++sCounter);
         mPool.execute(
@@ -58,39 +91,5 @@ public class Slave<Result, Progress> {
                     }
                 }
         );
-    }
-
-    public void onResult(Result pResult) {
-        if (BuildConfig.DEBUG) {
-            Toast.makeText(ContextHolder.get(), (String) pResult, Toast.LENGTH_SHORT).show();
-        }
-        //handling result
-    }
-
-    public void onRotate() {
-        if (BuildConfig.DEBUG) {
-            Log.d(mName, STR_ROTATE);
-        }
-        //saving pool state
-        for (Action action : mActions) {
-            action.initPersistProgress();
-        }
-    }
-
-    public void onStart() {
-        //do restoring actions
-        if (mActions != null) {
-            for (Action action : mActions) {
-                switch (action.getStatus()) {
-                    case CREATED:
-                    case STARTED:
-                    case RUNNING:
-                    case FINISHED:
-                    case PERSISTED:
-                        action.retrieveProgress();
-                        break;
-                }
-            }
-        }
     }
 }
