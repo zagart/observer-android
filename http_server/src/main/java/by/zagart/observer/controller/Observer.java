@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.PrintWriter;
 
 @WebServlet("/ObserverRequestHandler")
 public class Observer extends HttpServlet {
@@ -27,7 +28,9 @@ public class Observer extends HttpServlet {
             case TEXT_HTML:
                 break;
             default:
-                response.sendError(UNSUPPORTED_MEDIA_TYPE);
+                //response.sendError(UNSUPPORTED_MEDIA_TYPE);
+                final PrintWriter writer = response.getWriter();
+                writer.write("<h1>Hello from OpenShift!</h1>");
         }
     }
 
