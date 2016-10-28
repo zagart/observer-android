@@ -81,4 +81,5 @@ dependencies {
     androidTestCompile 'com.android.support.test.espresso:espresso-core:2.2.2'
     androidTestCompile 'com.jayway.android.robotium:robotium-solo:5.6.2'
     compile project(path: ':backend', configuration: 'android-endpoints')
+    compile 'org.testng:testng:6.9.6'
 }

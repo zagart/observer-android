@@ -3,7 +3,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 
 /**
- * Manual implementation of ItemTouchHelper.IActionCallback.
+ * Manual implementation of ItemTouchHelper.ICallback.
  */
 public class ManualCallback extends ItemTouchHelper.Callback {
     private final IMovableContent mContent;

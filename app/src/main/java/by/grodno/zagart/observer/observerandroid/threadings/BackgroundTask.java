@@ -10,12 +10,14 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import by.grodno.zagart.observer.observerandroid.BuildConfig;
+import by.grodno.zagart.observer.observerandroid.interfaces.IAction;
+import by.grodno.zagart.observer.observerandroid.interfaces.ICallback;
 import by.grodno.zagart.observer.observerandroid.singletons.ContextHolder;
 
 /**
  * My class for asynchronous background tasks.
  */
-public class BackgroundTask<Progress, Result> {
+public class BackgroundTask<Progress, Action extends IAction, Result> {
     private static final int COUNT_CORE = Runtime.getRuntime().availableProcessors();
     private static final int DEFAULT_THREADS_NUMBER = 3;
     private static final int MAX_THREADS_NUMBER = Math.max(COUNT_CORE, DEFAULT_THREADS_NUMBER);
@@ -23,7 +25,10 @@ public class BackgroundTask<Progress, Result> {
     private static int sCounter = 0;
     private final ExecutorService mPool;
     private final String mName;
-    private final BlockingQueue<IThreadAction> mActions = new ArrayBlockingQueue<>(MAX_THREADS_NUMBER);
+    private final BlockingQueue<Action> mActions = new ArrayBlockingQueue<>(
+            MAX_THREADS_NUMBER
+    );
+    private Handler mHandler;
 
     public BackgroundTask(String pName) {
         mName = pName;
@@ -42,33 +47,26 @@ public class BackgroundTask<Progress, Result> {
             Log.d(mName, STR_ROTATE);
         }
         //saving pool state
-        for (IThreadAction action : mActions) {
-            action.initPersistProgress();
-        }
     }
 
     public void onStart() {
         //do restoring actions
-        if (mActions != null) {
-            for (IThreadAction action : mActions) {
-                switch (action.getStatus()) {
-                    case CREATED:
-                    case STARTED:
-                    case RUNNING:
-                    case FINISHED:
-                    case PERSISTED:
-                        action.retrieveProgress();
-                        break;
-                }
-            }
-        }
     }
 
-    public void performAction(
-            final IThreadAction<Progress, Result> pAction,
-            final IActionCallback<Progress, Result> pCallback
+    /**
+     * Method adds action for executing in new background thread. If
+     * result of executing not null, then it possible print result in UI-thread
+     * using method {@link #onResult(Result)}.
+     *
+     * @param pAction   Action for executing
+     * @param pCallback Callback implementation for action
+     */
+    public <Param> void performAction(
+            final Action pAction,
+            final ICallback<Progress, Result> pCallback,
+            final Param... pParam
     ) {
-        final Handler handler = new Handler();
+        mHandler = new Handler();
         final String name = String.format(Locale.ENGLISH, "%s-%d", mName, ++sCounter);
         mPool.execute(
                 new Runnable() {
@@ -76,20 +74,26 @@ public class BackgroundTask<Progress, Result> {
                     public void run() {
                         try {
                             mActions.offer(pAction);
-                            final Result result = pAction.process(name, pCallback);
-                            handler.post(
-                                    new Runnable() {
-                                        @Override
-                                        public void run() {
-                                            onResult(result);
+                            final Result result = (Result) pAction.process(pCallback, pParam);
+                            if (result != null) {
+                                mHandler.post(
+                                        new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                onResult(result);
+                                            }
                                         }
-                                    }
-                            );
+                                );
+                            }
                         } catch (Exception pEx) {
                             pCallback.onException(name, pEx);
                         }
                     }
                 }
         );
+    }
+
+    public void doInUiThread(Runnable pRunnable) {
+        mHandler.post(pRunnable);
     }
 }

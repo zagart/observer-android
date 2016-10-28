@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/my_account_root"
+    style="@style/Main">
+
+    <ImageView
+        android:id="@+id/my_account_avatar"
+        android:layout_width="match_parent"
+        android:layout_height="400dp"
+        android:background="#4d4d4d"/>
+
+    <Button
+        android:id="@+id/main_menu_btn_sample"
+        style="@style/Main.Button"
+        android:layout_width="wrap_content"
+        android:layout_gravity="bottom|center_horizontal"
+        android:onClick="onLoadImageClick"
+        android:text="@string/load_avatar"/>
+</FrameLayout>

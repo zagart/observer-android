@@ -3,6 +3,8 @@ import android.os.AsyncTask;
 import android.support.annotation.Nullable;
 import android.widget.Toast;
 
+import java.io.IOException;
+
 import by.grodno.zagart.observer.observerandroid.http.interfaces.IHttpClient;
 import by.grodno.zagart.observer.observerandroid.singletons.ContextHolder;
 
@@ -18,7 +20,12 @@ public class HttpRequestTask extends AsyncTask<String, Void, String> {
     @Override
     @Nullable
     protected String doInBackground(String... urls) {
-        return (new HttpClient()).executeRequest(mRequest);
+        try {
+            return (new HttpClient()).executeRequest(mRequest);
+        } catch (IOException pE) {
+            pE.printStackTrace();
+        }
+        return null;
     }
 
     @Override

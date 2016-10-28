@@ -20,7 +20,7 @@ public class HttpClientFactory {
         return get(Type.HTTP_PURE);
     }
 
-    public enum Type {
-        HTTP_PURE, OK_HTTP
+    private enum Type {
+        HTTP_PURE
     }
 }

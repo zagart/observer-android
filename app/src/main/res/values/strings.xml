@@ -19,4 +19,6 @@
     <string name="delete">Delete</string>
     <string name="http_json">HTTP(JSON)</string>
     <string name="recycler_view">Recycler View</string>
+    <string name="my_account">My Account</string>
+    <string name="load_avatar">Load avatar</string>
 </resources>

@@ -11,4 +11,5 @@ public class App extends Application {
     public void onCreate() {
         ContextHolder.set(this);
     }
+
 }

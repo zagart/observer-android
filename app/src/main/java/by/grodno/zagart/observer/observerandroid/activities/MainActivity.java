@@ -11,8 +11,6 @@ import android.widget.Toast;
 import by.grodno.zagart.observer.observerandroid.BuildConfig;
 import by.grodno.zagart.observer.observerandroid.R;
 import by.grodno.zagart.observer.observerandroid.threadings.BackgroundTask;
-import by.grodno.zagart.observer.observerandroid.threadings.impl.IThreadActionImpl;
-import by.grodno.zagart.observer.observerandroid.threadings.impl.IActionCallbackImpl;
 
 /**
  * Application main activity.
@@ -54,6 +52,12 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void onMyAccountClick(View view) {
+        Intent intent = new Intent(this, MyAccountActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        startActivity(intent);
+    }
+
     @Override
     public Object onRetainCustomNonConfigurationInstance() {
         if (BuildConfig.DEBUG) {
@@ -65,6 +69,5 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onSettingsClick(View view) {
-        mBackgroundTask.performAction(new IThreadActionImpl(), new IActionCallbackImpl());
     }
 }

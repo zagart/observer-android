@@ -11,6 +11,13 @@
         android:id="@+id/main_menu"
         style="@style/Main.Menu">
 
+
+        <Button
+            android:id="@+id/btn_my_account"
+            style="@style/Main.Button"
+            android:onClick="onMyAccountClick"
+            android:text="@string/my_account"/>
+
         <Button
             android:id="@+id/main_menu_btn_log_in"
             style="@style/Main.Button"
