@@ -1,4 +1,4 @@
-package by.grodno.zagart.observer.observerandroid.db;
+package by.grodno.zagart.observer.observerandroid.cache.helper;
 import android.content.ContentValues;
 import android.database.Cursor;
 
@@ -6,7 +6,7 @@ import java.util.List;
 
 /**
  * Interface that describes operations available for executing on
- * SQLite database.
+ * DbHelper database.
  *
  * @author zagart
  */

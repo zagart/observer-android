@@ -1,11 +1,11 @@
-package by.grodno.zagart.observer.observerandroid.db.annotations;
+package by.grodno.zagart.observer.observerandroid.cache.model.annotations;
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Annotation for model-class that will be mapped on SQLite
+ * Annotation for model-class that will be mapped on DbHelper
  * database as table.
  *
  * @author zagart

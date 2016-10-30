@@ -4,7 +4,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
-import by.grodno.zagart.observer.observerandroid.db.model.User;
+import by.grodno.zagart.observer.observerandroid.cache.helper.DbHelper;
+import by.grodno.zagart.observer.observerandroid.cache.model.User;
 
 /**
  * Test class for {@link DbHelper}

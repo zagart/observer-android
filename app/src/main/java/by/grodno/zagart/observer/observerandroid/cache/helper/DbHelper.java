@@ -1,4 +1,4 @@
-package by.grodno.zagart.observer.observerandroid.db;
+package by.grodno.zagart.observer.observerandroid.cache.helper;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -13,14 +13,16 @@ import java.util.List;
 import java.util.Locale;
 
 import by.grodno.zagart.observer.observerandroid.BuildConfig;
-import by.grodno.zagart.observer.observerandroid.db.annotations.Table;
-import by.grodno.zagart.observer.observerandroid.db.annotations.dbInteger;
-import by.grodno.zagart.observer.observerandroid.db.annotations.dbLong;
-import by.grodno.zagart.observer.observerandroid.db.annotations.dbString;
+import by.grodno.zagart.observer.observerandroid.cache.model.annotations.Table;
+import by.grodno.zagart.observer.observerandroid.cache.model.annotations.dbInteger;
+import by.grodno.zagart.observer.observerandroid.cache.model.annotations.dbLong;
+import by.grodno.zagart.observer.observerandroid.cache.model.annotations.dbString;
+import by.grodno.zagart.observer.observerandroid.cache.model.contracts.Contract;
+import by.grodno.zagart.observer.observerandroid.singletons.ContextHolder;
 
 /**
  * SQLiteOpenHelper/IDbOperations implementation. Provides access to
- * SQLite database features.
+ * DbHelper database features and executing CRUD operations.
  *
  * @author zagart
  */
@@ -31,14 +33,25 @@ public class DbHelper extends SQLiteOpenHelper implements IDbOperations {
     private static final String NULL_POINTER_MSG = "Instance is null";
     private static final String SQL_TABLE_CREATE_FIELD_TEMPLATE = "%s %s";
     private static final String SQL_TABLE_CREATE_TEMPLATE = "CREATE TABLE IF NOT EXISTS %s (%s);";
+    public static final int DATABASE_VERSION = 1;
+    public static final String DATABASE_FILE_NAME = "cache.db";
     private static String TAG = DbHelper.class.getSimpleName();
+    private static DbHelper sInstance;
+    private SQLiteDatabase mDatabase;
 
-    public DbHelper(
+    private DbHelper(
             final Context context,
             final String name,
             final int version
     ) {
         super(context, name, null, version);
+    }
+
+    public static synchronized DbHelper getInstance() {
+        if (sInstance == null) {
+            sInstance = new DbHelper(ContextHolder.get(), DATABASE_FILE_NAME, DATABASE_VERSION);
+        }
+        return sInstance;
     }
 
     @Nullable
@@ -81,27 +94,27 @@ public class DbHelper extends SQLiteOpenHelper implements IDbOperations {
                 return String.format(Locale.US, SQL_TABLE_CREATE_TEMPLATE, name, builder);
             } catch (IllegalAccessException pEx) {
                 if (BuildConfig.DEBUG) {
-                    Log.d(TAG, ILLEGAL_ACCESS_MESSAGE);
+                    Log.e(TAG, ILLEGAL_ACCESS_MESSAGE);
                 }
                 pEx.getCause().printStackTrace();
             } catch (IllegalArgumentException pEx) {
                 if (BuildConfig.DEBUG) {
-                    Log.d(TAG, ILLEGAL_ARGUMENT_MSG);
+                    Log.e(TAG, ILLEGAL_ARGUMENT_MSG);
                 }
                 pEx.getCause().printStackTrace();
             } catch (NullPointerException pEx) {
                 if (BuildConfig.DEBUG) {
-                    Log.d(TAG, NULL_POINTER_MSG);
+                    Log.e(TAG, NULL_POINTER_MSG);
                 }
                 pEx.getCause().printStackTrace();
             } catch (ExceptionInInitializerError pEx) {
                 if (BuildConfig.DEBUG) {
-                    Log.d(TAG, EXCEPTION_IN_INIT_MSG);
+                    Log.e(TAG, EXCEPTION_IN_INIT_MSG);
                 }
                 pEx.getCause().printStackTrace();
             } catch (Exception pEx) {
                 if (BuildConfig.DEBUG) {
-                    Log.d(TAG, pEx.getMessage());
+                    Log.e(TAG, pEx.getMessage());
                 }
                 return null;
             }
@@ -136,6 +149,7 @@ public class DbHelper extends SQLiteOpenHelper implements IDbOperations {
                 pE.printStackTrace();
             } finally {
                 database.endTransaction();
+                database.close();
             }
             return count;
         } else {
@@ -155,6 +169,9 @@ public class DbHelper extends SQLiteOpenHelper implements IDbOperations {
                 database.setTransactionSuccessful();
             } catch (Exception pE) {
                 pE.printStackTrace();
+            } finally {
+                database.endTransaction();
+                database.close();
             }
         }
         return count;
@@ -172,6 +189,9 @@ public class DbHelper extends SQLiteOpenHelper implements IDbOperations {
                 database.setTransactionSuccessful();
             } catch (Exception pE) {
                 pE.printStackTrace();
+            } finally {
+                database.endTransaction();
+                database.close();
             }
             return id;
         } else {
@@ -181,8 +201,21 @@ public class DbHelper extends SQLiteOpenHelper implements IDbOperations {
 
     @Override
     public Cursor query(final String pSql, final String... pParams) {
-        final SQLiteDatabase database = getReadableDatabase();
-        return database.rawQuery(pSql, pParams);
+        mDatabase = getReadableDatabase();
+        return mDatabase.rawQuery(pSql, pParams);
+    }
+
+    /**
+     * Method for manual closing database connection to avoid memory leak. Required when
+     * finished work with cursor that returns {@link DbHelper#query(String, String...)} method.
+     * The rest methods close connection automatically.
+     *
+     * @see DbHelper#query(String, String...)
+     */
+    public void closeDatabase() {
+        if (mDatabase.isOpen()) {
+            mDatabase.close();
+        }
     }
 
     @Override
