@@ -10,16 +10,18 @@ import android.widget.Toast;
 
 import by.grodno.zagart.observer.observerandroid.BuildConfig;
 import by.grodno.zagart.observer.observerandroid.R;
-import by.grodno.zagart.observer.observerandroid.threadings.BackgroundTask;
+import by.grodno.zagart.observer.observerandroid.cache.helper.DbHelper;
+import by.grodno.zagart.observer.observerandroid.cache.model.User;
+import by.grodno.zagart.observer.observerandroid.threadings.ThreadWorker;
 
 /**
  * Application main activity.
  */
 public class MainActivity extends AppCompatActivity {
-    public static final String BACKGROUND_TASK_NAME = "BackgroundTask";
+    public static final String BACKGROUND_TASK_NAME = ThreadWorker.class.getSimpleName();
     public static final String CONFIGURATION_CHANGED = "Configuration changed.";
     public static final String MAIN_TAG = MainActivity.class.getSimpleName();
-    private BackgroundTask mBackgroundTask = new BackgroundTask(BACKGROUND_TASK_NAME);
+    private ThreadWorker mThreadWorker = new ThreadWorker(BACKGROUND_TASK_NAME);
 
     @Override
     protected void onCreate(@Nullable final Bundle savedInstanceState) {
@@ -29,8 +31,9 @@ public class MainActivity extends AppCompatActivity {
             bar.hide();
         }
         setContentView(R.layout.main_activity);
-        //call BackgroundTask method onStart()..?
-        mBackgroundTask.onStart();
+        //call ThreadWorker method onStart()..?
+        mThreadWorker.onStart();
+        DbHelper.getTableCreateQuery(User.UserContract.class);
     }
 
     public void onExitClick(View view) {
@@ -63,8 +66,8 @@ public class MainActivity extends AppCompatActivity {
         if (BuildConfig.DEBUG) {
             Log.d(MAIN_TAG, CONFIGURATION_CHANGED);
         }
-        //call BackgroundTask method onRotate..?
-        mBackgroundTask.onRotate();
+        //call ThreadWorker method onRotate..?
+        mThreadWorker.onRotate();
         return super.onRetainCustomNonConfigurationInstance();
     }
 

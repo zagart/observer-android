@@ -4,6 +4,8 @@ import android.content.ContentValues;
 import java.util.Date;
 import java.util.Random;
 
+import by.grodno.zagart.observer.observerandroid.cache.model.annotations.Id;
+import by.grodno.zagart.observer.observerandroid.cache.model.annotations.NotNull;
 import by.grodno.zagart.observer.observerandroid.cache.model.annotations.Table;
 import by.grodno.zagart.observer.observerandroid.cache.model.annotations.dbLong;
 import by.grodno.zagart.observer.observerandroid.cache.model.annotations.dbString;
@@ -96,16 +98,23 @@ public class Module implements IConvertible<ContentValues> {
 
     @Table(name = "MODULE")
     public static class ModuleContract {
+        @Id
         @dbLong
+        @NotNull
         public static final String ID = "id";
         @dbString
+        @NotNull
         public static final String NAME = "name";
+        @NotNull
         @dbLong
         public static final String STAND_ID = "stand_id";
+        @NotNull
         @dbString
         public static final String STATUS = "status";
+        @NotNull
         @dbLong
         public static final String STATUS_CHANGE_DATE = "status_change_date";
+        @NotNull
         @dbString
         public static final String VALUE = "value";
     }

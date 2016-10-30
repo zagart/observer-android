@@ -3,6 +3,7 @@ package by.zagart.observer.database.entities;
 import by.zagart.observer.interfaces.Identifiable;
 import by.zagart.observer.utils.DataUtil;
 import org.apache.log4j.Logger;
+import org.json.simple.JSONObject;
 
 import javax.persistence.*;
 import java.io.IOException;
@@ -17,22 +18,26 @@ import java.util.Properties;
  */
 @Entity
 @Table(name = "STAND")
-public class Stand implements Identifiable<Long>, Serializable {
+public class Stand extends JSONObject implements Identifiable<Long>, Serializable {
+    public static final String CONVERSION_STRING_TO_PROPERTIES_ERROR
+            = "Stand class. Conversion (string-to-properties) error: ";
+    public static final String DESCRIPTION = "mDescription";
+    public static final String STAND = "stand";
     public static final Logger logger = Logger.getLogger(Stand.class);
     private static final long SERIAL_VERSION_UID = 2L;
-    private String description;
-    private Long id;
-    private List<Module> moduleList;
-    private String number;
+    private String mDescription;
+    private Long mId;
+    private List<Module> mModules;
+    private String mNumber;
 
     public static Stand parseSerialString(String serialData) {
         Stand stand = new Stand();
         try {
             Properties properties = DataUtil.convertStringToProperties(serialData);
-            stand.setNumber(properties.getProperty("stand"));
-            stand.setDescription(properties.getProperty("description"));
+            stand.setNumber(properties.getProperty(STAND));
+            stand.setDescription(properties.getProperty(DESCRIPTION));
         } catch (IOException ex) {
-            logger.error("Stand class. Convertion (string-to-properties) error: " + ex.getStackTrace());
+            logger.error(CONVERSION_STRING_TO_PROPERTIES_ERROR + ex.getStackTrace());
         }
         if (stand.getNumber() == null) {
             throw new NoClassDefFoundError();
@@ -41,57 +46,11 @@ public class Stand implements Identifiable<Long>, Serializable {
     }
 
     public void addModule(Module module) {
-        if (moduleList == null) {
-            moduleList = new ArrayList<>();
+        if (mModules == null) {
+            mModules = new ArrayList<>();
         }
         module.setStand(this);
-        this.moduleList.add(module);
-    }
-
-    @Column(name = "DESCRIPTION")
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ID")
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    @OneToMany(mappedBy = "stand", cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
-    public List<Module> getModuleList() {
-        return moduleList;
-    }
-
-    public void setModuleList(List<Module> moduleList) {
-        this.moduleList = moduleList;
-    }
-
-    @Column(name = "NUMBER")
-    public String getNumber() {
-        return number;
-    }
-
-    public void setNumber(String number) {
-        this.number = number;
-    }
-
-    @Override
-    public int hashCode() {
-        int result = id.hashCode();
-        result = 31 * result + (number != null ? number.hashCode() : 0);
-        result = 31 * result + (moduleList != null ? moduleList.hashCode() : 0);
-        return result;
+        this.mModules.add(module);
     }
 
     @Override
@@ -99,8 +58,63 @@ public class Stand implements Identifiable<Long>, Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Stand stand = (Stand) o;
-        if (!id.equals(stand.id)) return false;
-        if (number != null ? !number.equals(stand.number) : stand.number != null) return false;
-        return moduleList != null ? moduleList.equals(stand.moduleList) : stand.moduleList == null;
+        if (!mId.equals(stand.mId)) return false;
+        if (mNumber != null ? !mNumber.equals(stand.mNumber) : stand.mNumber != null) return false;
+        return mModules != null ? mModules.equals(stand.mModules) : stand.mModules == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = mId.hashCode();
+        result = 31 * result + (mNumber != null ? mNumber.hashCode() : 0);
+        result = 31 * result + (mModules != null ? mModules.hashCode() : 0);
+        return result;
+    }
+
+    @Column(name = "DESCRIPTION")
+    public String getDescription() {
+        return mDescription;
+    }
+
+    public void setDescription(String description) {
+        this.mDescription = description;
+    }
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "ID")
+    public Long getId() {
+        return mId;
+    }
+
+    public void setId(Long id) {
+        this.mId = id;
+    }
+
+    @OneToMany(mappedBy = "stand", cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
+    public List<Module> getModules() {
+        return mModules;
+    }
+
+    public void setModules(List<Module> moduleList) {
+        this.mModules = moduleList;
+    }
+
+    @Column(name = "NUMBER")
+    public String getNumber() {
+        return mNumber;
+    }
+
+    public void setNumber(String number) {
+        this.mNumber = number;
+    }
+
+    @Override
+    public String toJSONString() {
+        JSONObject stand = new JSONObject();
+        stand.put("id", mId);
+        stand.put("number", mNumber);
+        stand.put("description", mDescription);
+        return stand.toJSONString();
     }
 }

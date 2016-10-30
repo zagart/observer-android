@@ -17,6 +17,12 @@ import java.util.Properties;
 @Entity
 @Table(name = "MODULE")
 public class Module implements Identifiable<Long>, Serializable {
+    public static final String CONVERSION_STRING_TO_PROPERTIES_ERROR
+            = "Module class. Conversion (string-to-properties) error: ";
+    public static final String EVENT = "event";
+    public static final String MODULE = "module";
+    public static final String STATUS_INIT_STRING = "%s Новое значение -> %s.";
+    public static final String VALUE = "value";
     public static final Logger logger = Logger.getLogger(Module.class);
     private static final long SERIAL_VERSION_UID = 1L;
     private Long id;
@@ -30,13 +36,13 @@ public class Module implements Identifiable<Long>, Serializable {
         Module module = new Module();
         try {
             Properties properties = DataUtil.convertStringToProperties(serialData);
-            module.setName(properties.getProperty("module"));
-            module.setStatus(String.format("%s Новое значение -> %s.",
-                    properties.getProperty("event"),
-                    properties.getProperty("value")));
+            module.setName(properties.getProperty(MODULE));
+            module.setStatus(String.format(STATUS_INIT_STRING,
+                    properties.getProperty(EVENT),
+                    properties.getProperty(VALUE)));
             module.setStatusChangeDate(new Date());
         } catch (IOException ex) {
-            logger.error("Module class. Convertion (string-to-properties) error: " + ex.getStackTrace());
+            logger.error(CONVERSION_STRING_TO_PROPERTIES_ERROR + ex.getStackTrace());
         }
         if (module.getName() == null || module.getStatus() == null) {
             throw new NoClassDefFoundError();

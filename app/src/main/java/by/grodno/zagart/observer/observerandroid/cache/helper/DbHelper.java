@@ -13,6 +13,8 @@ import java.util.List;
 import java.util.Locale;
 
 import by.grodno.zagart.observer.observerandroid.BuildConfig;
+import by.grodno.zagart.observer.observerandroid.cache.model.annotations.Id;
+import by.grodno.zagart.observer.observerandroid.cache.model.annotations.NotNull;
 import by.grodno.zagart.observer.observerandroid.cache.model.annotations.Table;
 import by.grodno.zagart.observer.observerandroid.cache.model.annotations.dbInteger;
 import by.grodno.zagart.observer.observerandroid.cache.model.annotations.dbLong;
@@ -33,6 +35,8 @@ public class DbHelper extends SQLiteOpenHelper implements IDbOperations {
     private static final String NULL_POINTER_MSG = "Instance is null";
     private static final String SQL_TABLE_CREATE_FIELD_TEMPLATE = "%s %s";
     private static final String SQL_TABLE_CREATE_TEMPLATE = "CREATE TABLE IF NOT EXISTS %s (%s);";
+    public static final String NOT_NULL = " NOT NULL";
+    public static final String AUTOINCREMENT = " AUTOINCREMENT";
     public static final int DATABASE_VERSION = 1;
     public static final String DATABASE_FILE_NAME = "cache.db";
     private static String TAG = DbHelper.class.getSimpleName();
@@ -46,8 +50,27 @@ public class DbHelper extends SQLiteOpenHelper implements IDbOperations {
         super(context, name, null, version);
     }
 
+    private static String findSecondaryAnnotations(final Annotation[] pAnnotations, String pType) {
+        for (final Annotation secondaryAnnotation : pAnnotations) {
+            if (secondaryAnnotation instanceof Id) {
+                Id id = (Id) (secondaryAnnotation);
+                pType += " " + id.value();
+                if (id.autoincrement()) {
+                    pType += AUTOINCREMENT;
+                }
+            }
+            if (secondaryAnnotation instanceof NotNull) {
+                NotNull id = (NotNull) (secondaryAnnotation);
+                if (id.value()) {
+                    pType += NOT_NULL;
+                }
+            }
+        }
+        return pType;
+    }
+
     public static DbHelper getInstance() {
-        return SingletonHolder.sInstance;
+        return SingletonHolder.DB_HELPER_INSTANCE;
     }
 
     @Nullable
@@ -61,14 +84,17 @@ public class DbHelper extends SQLiteOpenHelper implements IDbOperations {
                 for (int i = 0; i < fields.length; i++) {
                     final Field field = fields[i];
                     final Annotation[] annotations = field.getAnnotations();
-                    String type = null;
+                    String type = "";
                     for (final Annotation annotation : annotations) {
                         if (annotation instanceof dbInteger) {
-                            type = ((dbInteger) (annotation)).value();
+                            type += ((dbInteger) (annotation)).value();
+                            type = findSecondaryAnnotations(annotations, type);
                         } else if (annotation instanceof dbLong) {
-                            type = ((dbLong) (annotation)).value();
+                            type += ((dbLong) (annotation)).value();
+                            type = findSecondaryAnnotations(annotations, type);
                         } else if (annotation instanceof dbString) {
-                            type = ((dbString) (annotation)).value();
+                            type += ((dbString) (annotation)).value();
+                            type = findSecondaryAnnotations(annotations, type);
                         }
                     }
                     if (type == null) {
@@ -87,7 +113,11 @@ public class DbHelper extends SQLiteOpenHelper implements IDbOperations {
                         builder.append(", ");
                     }
                 }
-                return String.format(Locale.US, SQL_TABLE_CREATE_TEMPLATE, name, builder);
+                String template = String.format(Locale.US, SQL_TABLE_CREATE_TEMPLATE, name, builder);
+                if (BuildConfig.DEBUG) {
+                    Log.d(TAG, template);
+                }
+                return template;
             } catch (IllegalAccessException pEx) {
                 if (BuildConfig.DEBUG) {
                     Log.e(TAG, ILLEGAL_ACCESS_MESSAGE);
@@ -203,7 +233,7 @@ public class DbHelper extends SQLiteOpenHelper implements IDbOperations {
 
     /**
      * Method for manual closing database connection to avoid memory leak. Required when
-     * finished work with cursor that returns {@link DbHelper#query(String, String...)} method.
+     * finished work with cursor that returns {@link #query(String, String...)} method.
      * The rest methods close connection automatically.
      *
      * @see DbHelper#query(String, String...)
@@ -233,7 +263,7 @@ public class DbHelper extends SQLiteOpenHelper implements IDbOperations {
     }
 
     public static class SingletonHolder {
-        private static DbHelper sInstance = new DbHelper(
+        public static final DbHelper DB_HELPER_INSTANCE = new DbHelper(
                 ContextHolder.get(),
                 DATABASE_FILE_NAME,
                 DATABASE_VERSION

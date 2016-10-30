@@ -12,22 +12,58 @@ import by.grodno.zagart.observer.observerandroid.R;
 import by.grodno.zagart.observer.observerandroid.adapter.StandAdapter;
 import by.grodno.zagart.observer.observerandroid.adapter.callbacks.ManualCallback;
 import by.grodno.zagart.observer.observerandroid.cache.model.Stand;
+import by.grodno.zagart.observer.observerandroid.cache.services.StandService;
+import by.grodno.zagart.observer.observerandroid.interfaces.IAction;
+import by.grodno.zagart.observer.observerandroid.interfaces.ICallback;
+import by.grodno.zagart.observer.observerandroid.threadings.ThreadWorker;
 
 /**
  * Activity that shows result from retrieving data.
  */
 public class ResultActivity extends AppCompatActivity {
+    private RecyclerView mRvStands;
+
+    private void fillRecyclerView(List<Stand> pStands) {
+        final StandAdapter adapter = new StandAdapter(pStands);
+        ItemTouchHelper.Callback callback = new ManualCallback(adapter);
+        ItemTouchHelper touchHelper = new ItemTouchHelper(callback);
+        touchHelper.attachToRecyclerView(mRvStands);
+        mRvStands.setAdapter(adapter);
+        mRvStands.setLayoutManager(new LinearLayoutManager(this));
+    }
+
     @Override
     protected void onCreate(@Nullable final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.result_activity);
-        RecyclerView rvStands = (RecyclerView) findViewById(R.id.stand_recycler_view);
-        List<Stand> stands = Stand.createStandList(20);
-        final StandAdapter adapter = new StandAdapter(stands);
-        ItemTouchHelper.Callback callback = new ManualCallback(adapter);
-        ItemTouchHelper touchHelper = new ItemTouchHelper(callback);
-        touchHelper.attachToRecyclerView(rvStands);
-        rvStands.setAdapter(adapter);
-        rvStands.setLayoutManager(new LinearLayoutManager(this));
+        processRecyclerFilling();
+    }
+
+    private void processRecyclerFilling() {
+        mRvStands = (RecyclerView) findViewById(R.id.stand_recycler_view);
+        final ThreadWorker worker = new ThreadWorker<List<Stand>>() {
+            @Override
+            public void onResult(final List<Stand> pStands) {
+                /*
+                Method will be executed in UI-thread.
+                 */
+                fillRecyclerView(pStands);
+            }
+        };
+        worker.performAction(
+                new IAction<Void, Void, List<Stand>>() {
+                    @Override
+                    public List<Stand> process(
+                            final ICallback<Void, List<Stand>> pCallback,
+                            final Void... pParam) throws InterruptedException {
+                        /*
+                        Method will be executed in background thread.
+                         */
+                        return StandService.selectAllStands();
+                    }
+                },
+                null,
+                null
+        );
     }
 }

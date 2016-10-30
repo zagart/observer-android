@@ -33,10 +33,8 @@
     </LinearLayout>
 
     <android.support.percent.PercentRelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:orientation="horizontal">
+        android:id="@+id/login_footer"
+        style="@style/LoginLayout.Footer">
 
         <Button
             android:id="@+id/btn_guest"
@@ -48,9 +46,18 @@
 
         <Button
             android:id="@+id/btn_sign_in"
-            style="@style/LoginLayout.Button"
+            style="@style/RegistrationLayout.Button"
+            android:layout_centerInParent="true"
             android:onClick="onSignInClick"
             android:text="@string/sign_in"
+            app:layout_heightPercent="@fraction/land_login_sign_in_button_height"
+            app:layout_widthPercent="@fraction/land_login_sign_in_button_width"/>
+
+        <Button
+            android:id="@+id/btn_sign_up"
+            style="@style/LoginLayout.Button"
+            android:onClick="onSignUpClick"
+            android:text="@string/sign_up"
             app:layout_heightPercent="@fraction/land_login_button_height"
             app:layout_marginStartPercent="@fraction/land_login_btn_login_margin_left"
             app:layout_widthPercent="@fraction/land_login_button_width"/>

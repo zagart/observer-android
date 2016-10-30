@@ -1,11 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <fraction name="login_button_height">10%</fraction>
-    <fraction name="login_button_width">40%</fraction>
+    <fraction name="login_button_width">25%</fraction>
     <fraction name="login_form_margin_bottom">40%</fraction>
-    <fraction name="login_btn_login_margin_left">60%</fraction>
-    <fraction name="land_login_button_height">20%</fraction>
+    <fraction name="login_btn_login_margin_left">75%</fraction>
+    <fraction name="land_login_button_height">15%</fraction>
     <fraction name="land_login_button_width">20%</fraction>
     <fraction name="land_login_form_margin_bottom">30%</fraction>
     <fraction name="land_login_btn_login_margin_left">80%</fraction>
+    <fraction name="login_sign_in_button_height">15%</fraction>
+    <fraction name="login_sign_in_button_width">50%</fraction>
+    <fraction name="land_login_sign_in_button_height">20%</fraction>
+    <fraction name="land_login_sign_in_button_width">40%</fraction>
 </resources>

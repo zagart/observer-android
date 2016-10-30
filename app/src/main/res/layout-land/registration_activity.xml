@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.percent.PercentFrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    style="@style/RegistrationLayout">
+
+    <TextView
+        android:id="@+id/registration_title"
+        style="@style/RegistrationLayout.Title"/>
+
+    <LinearLayout
+        android:id="@+id/registration_form"
+        style="@style/RegistrationLayout.Form"
+        android:layout_margin="@dimen/zero_dp"
+        android:padding="@dimen/zero_dp"
+        app:layout_marginBottomPercent="@fraction/land_login_form_margin_bottom">
+
+        <TextView
+            android:id="@+id/registration_login_title"
+            style="@style/RegistrationLayout.Title.Login"/>
+
+        <EditText
+            android:id="@+id/registration_login"
+            style="@style/RegistrationLayout.Login"
+            android:layout_marginBottom="@dimen/default_margin"/>
+
+        <TextView
+            android:id="@+id/registration_password_title"
+            style="@style/RegistrationLayout.Title.Password"/>
+
+        <EditText
+            android:id="@+id/registration_password"
+            style="@style/RegistrationLayout.Password"/>
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/registration_btn_confirm"
+        style="@style/RegistrationLayout.Button"
+        android:layout_gravity="center_horizontal|bottom"
+        android:onClick="onConfirmClick"
+        android:text="@string/confirm"
+        app:layout_heightPercent="@fraction/land_login_sign_in_button_height"
+        app:layout_widthPercent="@fraction/land_login_sign_in_button_width"/>
+</android.support.percent.PercentFrameLayout>

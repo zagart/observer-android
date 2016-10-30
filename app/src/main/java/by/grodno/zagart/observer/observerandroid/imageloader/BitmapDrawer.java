@@ -16,6 +16,7 @@ import by.grodno.zagart.observer.observerandroid.http.interfaces.IHttpClient;
 import by.grodno.zagart.observer.observerandroid.interfaces.IAction;
 import by.grodno.zagart.observer.observerandroid.interfaces.ICallback;
 import by.grodno.zagart.observer.observerandroid.interfaces.IDrawable;
+import by.grodno.zagart.observer.observerandroid.threadings.ThreadWorker;
 
 /**
  * Implementation of interface IDrawable.
@@ -26,7 +27,7 @@ import by.grodno.zagart.observer.observerandroid.interfaces.IDrawable;
 public class BitmapDrawer implements IDrawable<ImageView, String> {
     private static final float MEMORY_USE_COEFFICIENT = 0.125f; //12.5%
     private final LruCache<String, Bitmap> mCache;
-    private BitmapBackgroundTask mBitmapTask;
+    private ThreadWorker mBitmapTask;
 
     {
         final int mMaxMemory = (int) (Runtime.getRuntime().maxMemory() / 1024);
@@ -37,7 +38,7 @@ public class BitmapDrawer implements IDrawable<ImageView, String> {
                 return pImage.getByteCount() / 1024;
             }
         };
-        mBitmapTask = new BitmapBackgroundTask(BitmapDrawer.class.getSimpleName());
+        mBitmapTask = new ThreadWorker(BitmapDrawer.class.getSimpleName());
     }
 
     /**
@@ -89,7 +90,7 @@ public class BitmapDrawer implements IDrawable<ImageView, String> {
     /**
      * IAction interface implementation for downloading Bitmap image.
      * Calls {@link BitmapDownloadCallback} methods. Required to
-     * execute downloading in background thread {@link BitmapBackgroundTask}.
+     * execute downloading in background thread {@link ThreadWorker}.
      */
     private class BitmapDownloadAction implements IAction<String, Void, ByteArrayOutputStream> {
         @Override
@@ -130,7 +131,7 @@ public class BitmapDrawer implements IDrawable<ImageView, String> {
             downloaded = null;
             if (pParam != null && bitmap != null) {
                 putInCache(pParam, bitmap);
-                mBitmapTask.doInUiThread(
+                mBitmapTask.post(
                         new Runnable() {
                             @Override
                             public void run() {

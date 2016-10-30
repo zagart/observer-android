@@ -9,26 +9,32 @@ import java.net.HttpURLConnection;
  */
 public interface IHttpClient<Result> {
     ByteArrayOutputStream downloadBytes(String pUrl) throws IOException;
-    Result executeRequest(IRequest<Result> pRequest) throws IOException;
+    Result executeRequest(IRequest pRequest) throws IOException;
     enum Method {
         GET, POST
     }
 
-    interface IRequest<Result> {
+    interface IRequest {
         String getContentType();
         Method getMethodType();
         String getUrl();
-        String handleRequestConnection(HttpURLConnection pConnection);
+        void handleRequestConnection(HttpURLConnection pConnection);
     }
 
     interface IHttpData {
-        enum Attribute {
+        class ContentType {
+            public static final String APPLICATION_JSON = "application/json";
         }
 
-        enum Header {
+        class Header {
+            public static final String ACTION = "action";
+            public static final String LOGIN = "login";
+            public static final String TOKEN = "token";
+            public static final String PASSWORD = "password";
         }
 
-        enum Property {
+        class Actions {
+            public static final String AUTHORIZE = "authorize";
         }
     }
 }

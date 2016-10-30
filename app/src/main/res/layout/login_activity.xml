@@ -46,9 +46,18 @@
 
         <Button
             android:id="@+id/btn_sign_in"
-            style="@style/LoginLayout.Button"
+            style="@style/RegistrationLayout.Button"
+            android:layout_centerInParent="true"
             android:onClick="onSignInClick"
             android:text="@string/sign_in"
+            app:layout_heightPercent="@fraction/login_sign_in_button_height"
+            app:layout_widthPercent="@fraction/login_sign_in_button_width"/>
+
+        <Button
+            android:id="@+id/btn_sign_up"
+            style="@style/LoginLayout.Button"
+            android:onClick="onSignUpClick"
+            android:text="@string/sign_up"
             app:layout_heightPercent="@fraction/login_button_height"
             app:layout_marginStartPercent="@fraction/login_btn_login_margin_left"
             app:layout_widthPercent="@fraction/login_button_width"/>

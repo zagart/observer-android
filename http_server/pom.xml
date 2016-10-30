@@ -21,6 +21,7 @@
         <tomcat.server.version>8.5.4</tomcat.server.version>
         <tomcat.maven.plugin.version>2.2</tomcat.maven.plugin.version>
         <json.simple.version>1.1</json.simple.version>
+        <jjwt.version>0.7.0</jjwt.version>
         <maven.shade.transformer>
             org.apache.maven.plugins.shade.resource.ManifestResourceTransformer
         </maven.shade.transformer>
@@ -30,6 +31,12 @@
     </properties>
 
     <dependencies>
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt</artifactId>
+            <version>${jjwt.version}</version>
+        </dependency>
+
         <dependency>
             <groupId>com.googlecode.json-simple</groupId>
             <artifactId>json-simple</artifactId>

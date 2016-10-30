@@ -37,6 +37,24 @@
         <item name="android:layout_height">match_parent</item>
     </style>
 
+    <style name="RegistrationLayout" parent="LoginLayout"/>
+
+    <style name="RegistrationLayout.Title" parent="LoginLayout.Title">
+        <item name="android:text">Registration</item>
+    </style>
+
+    <style name="RegistrationLayout.Login" parent="LoginLayout.Login"/>
+
+    <style name="RegistrationLayout.Password" parent="LoginLayout.Password"/>
+
+    <style name="RegistrationLayout.Title.Login" parent="LoginLayout.Title.Login"/>
+
+    <style name="RegistrationLayout.Title.Password" parent="LoginLayout.Title.Password"/>
+
+    <style name="RegistrationLayout.Form" parent="LoginLayout.Form"/>
+
+    <style name="RegistrationLayout.Button" parent="LoginLayout.Button"/>
+
     <style name="LoginLayout.Title" parent="Main.Title">
         <item name="android:text">Authorization</item>
         <item name="android:layout_height">wrap_content</item>
@@ -84,5 +102,12 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_margin">@dimen/zero_dp</item>
         <item name="android:padding">@dimen/zero_dp</item>
+    </style>
+    <!-- PercentRelativeLayout -->
+    <style name="LoginLayout.Footer">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_gravity">bottom</item>
+        <item name="android:orientation">horizontal</item>
     </style>
 </resources>

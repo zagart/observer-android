@@ -1,10 +1,13 @@
 package by.grodno.zagart.observer.observerandroid.cache.model;
 import android.content.ContentValues;
+import android.database.Cursor;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import by.grodno.zagart.observer.observerandroid.cache.model.annotations.Id;
+import by.grodno.zagart.observer.observerandroid.cache.model.annotations.NotNull;
 import by.grodno.zagart.observer.observerandroid.cache.model.annotations.Table;
 import by.grodno.zagart.observer.observerandroid.cache.model.annotations.dbLong;
 import by.grodno.zagart.observer.observerandroid.cache.model.annotations.dbString;
@@ -36,6 +39,20 @@ public class Stand implements IConvertible<ContentValues> {
             pSize--;
         }
         return stands;
+    }
+
+    public static Stand parseCursorRow(Cursor pCursor) {
+        Stand stand = new Stand();
+        int idIndex = pCursor.getColumnIndex(StandContract.ID);
+        int numberIndex = pCursor.getColumnIndex(StandContract.NUMBER);
+        int descriptionIndex = pCursor.getColumnIndex(StandContract.DESCRIPTION);
+        Long id = pCursor.getLong(idIndex);
+        String number = pCursor.getString(numberIndex);
+        String description = pCursor.getString(descriptionIndex);
+        stand.setId(id);
+        stand.setNumber(number);
+        stand.setDescription(description);
+        return stand;
     }
 
     @Override
@@ -74,9 +91,13 @@ public class Stand implements IConvertible<ContentValues> {
     @Table(name = "STAND")
     public static class StandContract {
         @dbLong
+        @Id
+        @NotNull
         public static final String ID = "id";
         @dbString
+        @NotNull
         public static final String NUMBER = "number";
+        @NotNull
         @dbString
         public static final String DESCRIPTION = "description";
     }

@@ -43,4 +43,10 @@ public class LoginActivity extends AppCompatActivity {
         final String token = ObserverUtil.generateToken(login, password);
         HttpUtil.requestObserverAuthorization(URL, token);
     }
+
+    public void onSignUpClick(View pView) {
+        Intent intent = new Intent(this, RegistrationActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        startActivity(intent);
+    }
 }

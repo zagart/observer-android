@@ -1,6 +1,8 @@
 package by.grodno.zagart.observer.observerandroid.cache.model;
 import android.content.ContentValues;
 
+import by.grodno.zagart.observer.observerandroid.cache.model.annotations.Id;
+import by.grodno.zagart.observer.observerandroid.cache.model.annotations.NotNull;
 import by.grodno.zagart.observer.observerandroid.cache.model.annotations.Table;
 import by.grodno.zagart.observer.observerandroid.cache.model.annotations.dbLong;
 import by.grodno.zagart.observer.observerandroid.cache.model.annotations.dbString;
@@ -71,14 +73,20 @@ public class User implements IConvertible<ContentValues> {
 
     @Table(name = "USER")
     public static class UserContract {
+        @Id
+        @NotNull
         @dbLong
         public static final String ID = "id";
+        @NotNull
         @dbString
-        public static final String LOGIN = "LOGIN";
+        public static final String LOGIN = "login";
+        @NotNull
         @dbLong
         public static final String TIMESTAMP_OF_REGISTRATION = "timestamp_of_registration";
+        @NotNull
         @dbString
         public static final String TOKEN = "token";
+        @NotNull
         @dbLong
         public static final String TIMESTAMP_OF_LAST_ACTIVITY = "timestamp_of_last_activity";
     }

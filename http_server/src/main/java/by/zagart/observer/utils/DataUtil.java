@@ -39,7 +39,7 @@ public class DataUtil {
         Stand stand = new Stand();
         stand.setNumber("1");
         stand.setDescription(RandomStringUtils.randomAlphabetic(20));
-        stand.setModuleList(new ArrayList<>());
+        stand.setModules(new ArrayList<>());
         return stand;
     }
 

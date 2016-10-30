@@ -1,7 +1,6 @@
 package by.grodno.zagart.observer.observerandroid.threadings;
 import android.os.Handler;
 import android.util.Log;
-import android.widget.Toast;
 
 import java.util.Locale;
 import java.util.concurrent.ArrayBlockingQueue;
@@ -12,33 +11,58 @@ import java.util.concurrent.Executors;
 import by.grodno.zagart.observer.observerandroid.BuildConfig;
 import by.grodno.zagart.observer.observerandroid.interfaces.IAction;
 import by.grodno.zagart.observer.observerandroid.interfaces.ICallback;
-import by.grodno.zagart.observer.observerandroid.singletons.ContextHolder;
 
 /**
  * My class for asynchronous background tasks.
  */
-public class BackgroundTask<Progress, Action extends IAction, Result> {
+public class ThreadWorker<Result> {
     private static final int COUNT_CORE = Runtime.getRuntime().availableProcessors();
     private static final int DEFAULT_THREADS_NUMBER = 3;
     private static final int MAX_THREADS_NUMBER = Math.max(COUNT_CORE, DEFAULT_THREADS_NUMBER);
     private static final String STR_ROTATE = "Screen orientation changed.";
+    public static final String TAG = ThreadWorker.class.getSimpleName();
     private static int sCounter = 0;
     private final ExecutorService mPool;
     private final String mName;
-    private final BlockingQueue<Action> mActions = new ArrayBlockingQueue<>(
+    private final BlockingQueue<IAction> mActions = new ArrayBlockingQueue<>(
             MAX_THREADS_NUMBER
     );
     private Handler mHandler;
 
-    public BackgroundTask(String pName) {
-        mName = pName;
-        mPool = Executors.newFixedThreadPool(MAX_THREADS_NUMBER);
+    public ThreadWorker() {
+        this(TAG);
     }
 
+    public ThreadWorker(String pName) {
+        mName = pName;
+        mPool = Executors.newFixedThreadPool(MAX_THREADS_NUMBER);
+        mHandler = new Handler();
+    }
+
+    public static ThreadWorker getDefaultInstance() {
+        return SingletonHolder.WORKER_INSTANCE;
+    }
+
+    /**
+     * Executes {@link Runnable} implementation on background thread.
+     *
+     * @param pRunnable Object to run
+     */
+    public void execute(Runnable pRunnable) {
+        mPool.execute(pRunnable);
+    }
+
+    /**
+     * When {@link #performAction(IAction, ICallback, Object[])} executes IAction implementation
+     * method {@link IAction#process(ICallback, Object[])}, then result of executing will be
+     * processed in <em>UI-thread</> if it is not null using that method.
+     * <p>
+     * Require to be override. Handle result in override method body.
+     *
+     * @param pResult Data to handle in UI-thread
+     * @see IAction
+     */
     public void onResult(Result pResult) {
-        if (BuildConfig.DEBUG) {
-            Toast.makeText(ContextHolder.get(), (String) pResult, Toast.LENGTH_SHORT).show();
-        }
         //handling result
     }
 
@@ -56,13 +80,13 @@ public class BackgroundTask<Progress, Action extends IAction, Result> {
     /**
      * Method adds action for executing in new background thread. If
      * result of executing not null, then it possible print result in UI-thread
-     * using method {@link #onResult(Result)}.
+     * using method {@link #onResult(Object)}.
      *
      * @param pAction   Action for executing
      * @param pCallback Callback implementation for action
      */
-    public <Param> void performAction(
-            final Action pAction,
+    public <Param, Progress> void performAction(
+            final IAction<Param, Progress, Result> pAction,
             final ICallback<Progress, Result> pCallback,
             final Param... pParam
     ) {
@@ -74,7 +98,7 @@ public class BackgroundTask<Progress, Action extends IAction, Result> {
                     public void run() {
                         try {
                             mActions.offer(pAction);
-                            final Result result = (Result) pAction.process(pCallback, pParam);
+                            final Result result = pAction.process(pCallback, pParam);
                             if (result != null) {
                                 mHandler.post(
                                         new Runnable() {
@@ -93,7 +117,16 @@ public class BackgroundTask<Progress, Action extends IAction, Result> {
         );
     }
 
-    public void doInUiThread(Runnable pRunnable) {
+    /**
+     * Executes {@link Runnable} implementation on UI-thread.
+     *
+     * @param pRunnable Object to run
+     */
+    public void post(Runnable pRunnable) {
         mHandler.post(pRunnable);
+    }
+
+    public static class SingletonHolder {
+        public static final ThreadWorker WORKER_INSTANCE = new ThreadWorker(TAG);
     }
 }
