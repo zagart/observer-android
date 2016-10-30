@@ -1,11 +1,18 @@
 package by.grodno.zagart.observer.observerandroid.cache.model;
+import android.content.ContentValues;
+
 import java.util.Date;
 import java.util.Random;
+
+import by.grodno.zagart.observer.observerandroid.cache.model.annotations.Table;
+import by.grodno.zagart.observer.observerandroid.cache.model.annotations.dbLong;
+import by.grodno.zagart.observer.observerandroid.cache.model.annotations.dbString;
+import by.grodno.zagart.observer.observerandroid.interfaces.IConvertible;
 
 /**
  * Model for module.
  */
-public class Module {
+public class Module implements IConvertible<ContentValues> {
     public static final int MODULE_VALUE_LIMIT = 99;
     public static final int MODULE_ID_LIMIT = 9;
     private Long mId;
@@ -24,6 +31,18 @@ public class Module {
         module.setStatus("Status" + module.getName());
         module.setValue(String.valueOf(random.nextInt(MODULE_VALUE_LIMIT)));
         module.setStatusChangeDate(new Date());
+        return module;
+    }
+
+    @Override
+    public ContentValues convert() {
+        ContentValues module = new ContentValues();
+        module.put(ModuleContract.ID, mId);
+        module.put(ModuleContract.NAME, mName);
+        module.put(ModuleContract.STAND_ID, mStandId);
+        module.put(ModuleContract.STATUS, mStatus);
+        module.put(ModuleContract.STATUS_CHANGE_DATE, mStatusChangeDate.getTime());
+        module.put(ModuleContract.VALUE, mValue);
         return module;
     }
 
@@ -73,5 +92,21 @@ public class Module {
 
     public void setValue(final String value) {
         mValue = value;
+    }
+
+    @Table(name = "MODULE")
+    public static class ModuleContract {
+        @dbLong
+        public static final String ID = "id";
+        @dbString
+        public static final String NAME = "name";
+        @dbLong
+        public static final String STAND_ID = "stand_id";
+        @dbString
+        public static final String STATUS = "status";
+        @dbLong
+        public static final String STATUS_CHANGE_DATE = "status_change_date";
+        @dbString
+        public static final String VALUE = "value";
     }
 }
