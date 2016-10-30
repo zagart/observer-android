@@ -5,6 +5,9 @@ import android.database.Cursor;
 import java.util.List;
 
 /**
+ * Interface that describes operations available for executing on
+ * SQLite database.
+ *
  * @author zagart
  */
 public interface IDbOperations {

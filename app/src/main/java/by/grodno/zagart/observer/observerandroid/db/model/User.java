@@ -1,4 +1,4 @@
-package by.grodno.zagart.observer.observerandroid.cache.model.contract;
+package by.grodno.zagart.observer.observerandroid.db.model;
 import by.grodno.zagart.observer.observerandroid.db.annotations.Table;
 import by.grodno.zagart.observer.observerandroid.db.annotations.dbInteger;
 import by.grodno.zagart.observer.observerandroid.db.annotations.dbLong;

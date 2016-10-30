@@ -5,6 +5,9 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
+ * Annotation for Java-types that are compatible with
+ * SQLite TEXT type.
+ *
  * @author zagart
  */
 @Target(ElementType.FIELD)
