@@ -36,7 +36,6 @@ public class DbHelper extends SQLiteOpenHelper implements IDbOperations {
     public static final int DATABASE_VERSION = 1;
     public static final String DATABASE_FILE_NAME = "cache.db";
     private static String TAG = DbHelper.class.getSimpleName();
-    private static DbHelper sInstance;
     private SQLiteDatabase mDatabase;
 
     private DbHelper(
@@ -47,11 +46,8 @@ public class DbHelper extends SQLiteOpenHelper implements IDbOperations {
         super(context, name, null, version);
     }
 
-    public static synchronized DbHelper getInstance() {
-        if (sInstance == null) {
-            sInstance = new DbHelper(ContextHolder.get(), DATABASE_FILE_NAME, DATABASE_VERSION);
-        }
-        return sInstance;
+    public static DbHelper getInstance() {
+        return SingletonHolder.sInstance;
     }
 
     @Nullable
@@ -234,5 +230,13 @@ public class DbHelper extends SQLiteOpenHelper implements IDbOperations {
             final int pOldVersion,
             final int pNewVersion
     ) {
+    }
+
+    public static class SingletonHolder {
+        private static DbHelper sInstance = new DbHelper(
+                ContextHolder.get(),
+                DATABASE_FILE_NAME,
+                DATABASE_VERSION
+        );
     }
 }

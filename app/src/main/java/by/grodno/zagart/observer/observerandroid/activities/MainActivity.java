@@ -16,10 +16,10 @@ import by.grodno.zagart.observer.observerandroid.threadings.BackgroundTask;
  * Application main activity.
  */
 public class MainActivity extends AppCompatActivity {
-    public static final String SLAVE_NAME = "SlaveThread";
+    public static final String BACKGROUND_TASK_NAME = "BackgroundTask";
     public static final String CONFIGURATION_CHANGED = "Configuration changed.";
-    public static final String MAIN_TAG = "MainActivity";
-    private BackgroundTask mBackgroundTask = new BackgroundTask(SLAVE_NAME);
+    public static final String MAIN_TAG = MainActivity.class.getSimpleName();
+    private BackgroundTask mBackgroundTask = new BackgroundTask(BACKGROUND_TASK_NAME);
 
     @Override
     protected void onCreate(@Nullable final Bundle savedInstanceState) {
