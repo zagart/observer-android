@@ -8,6 +8,7 @@ import java.net.HttpURLConnection;
  * use privileges of HTTP-client such as do HTTP-request.
  */
 public interface IHttpClient<Result> {
+    String OBSERVER_URL = "http://10.0.2.2:8080/Observer/ObserverRequestHandler";
     ByteArrayOutputStream downloadBytes(String pUrl) throws IOException;
     Result executeRequest(IRequest pRequest) throws IOException;
     enum Method {
@@ -23,7 +24,8 @@ public interface IHttpClient<Result> {
 
     interface IHttpData {
         class ContentType {
-            public static final String APPLICATION_JSON = "application/json";
+            public static final String APPLICATION_JSON_CHARSET_UTF_8 =
+                    "application/json; charset=utf-8";
         }
 
         class Header {
@@ -31,6 +33,7 @@ public interface IHttpClient<Result> {
             public static final String LOGIN = "login";
             public static final String TOKEN = "token";
             public static final String PASSWORD = "password";
+            public static final String CONTENT_TYPE = "Content-Type";
         }
 
         class Actions {

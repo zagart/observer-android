@@ -23,7 +23,6 @@ public class GetRequest implements IHttpClient.IRequest {
     }
 
     @Override
-    public String handleRequestConnection(final HttpURLConnection pConnection) {
-        return null;
+    public void handleRequestConnection(final HttpURLConnection pConnection) {
     }
 }

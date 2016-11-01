@@ -1,6 +1,7 @@
 package by.zagart.observer.controller;
 
 import by.zagart.observer.database.services.MainService;
+import by.zagart.observer.utils.HttpUtil;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.impl.crypto.MacProvider;
 
@@ -16,7 +17,7 @@ import java.security.Key;
 @WebServlet("/ObserverRequestHandler")
 public class Observer extends HttpServlet {
     public static final String ACTION = "action";
-    public static final String APPLICATION_JSON = "application/json";
+    public static final String APPLICATION_JSON_CHARSET_UTF_8 = "application/json; charset=utf-8";
     public static final String GET_ALL_STANDS = "get_all_stands";
     public static final String LOGIN = "login";
     public static final String MISSING_CONTENT_TYPE = "missing content type";
@@ -29,32 +30,33 @@ public class Observer extends HttpServlet {
         super();
     }
 
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+    protected void doGet(HttpServletRequest pRequest, HttpServletResponse pResponse)
             throws ServletException, IOException {
-        String contentType = (request.getContentType() == null) ? MISSING_CONTENT_TYPE : request.getContentType();
+        String contentType = (pRequest.getContentType() == null) ? MISSING_CONTENT_TYPE : pRequest.getContentType();
         switch (contentType) {
-            case APPLICATION_JSON:
+            case APPLICATION_JSON_CHARSET_UTF_8:
                 break;
             case TEXT_HTML:
                 break;
             default:
-                //response.sendError(UNSUPPORTED_MEDIA_TYPE);
-                final PrintWriter writer = response.getWriter();
-                writer.println(MainService.getAllStandsInJson());
+                //pResponse.sendError(UNSUPPORTED_MEDIA_TYPE);
+//                final PrintWriter writer = pResponse.getWriter();
+//                writer.println(MainService.getAllStandsInJson());
+                HttpUtil.printRequestInfo(pRequest);
         }
     }
 
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+    protected void doPost(HttpServletRequest pRequest, HttpServletResponse pResponse)
             throws ServletException, IOException {
-        String contentType = (request.getContentType() == null) ? MISSING_CONTENT_TYPE : request.getContentType();
-        final PrintWriter writer = response.getWriter();
+        String contentType = (pRequest.getContentType() == null) ? MISSING_CONTENT_TYPE : pRequest.getContentType();
+        final PrintWriter writer = pResponse.getWriter();
         switch (contentType) {
-            case APPLICATION_JSON:
-                final String login = request.getHeader(LOGIN);
-                final String token = request.getHeader(TOKEN);
+            case APPLICATION_JSON_CHARSET_UTF_8:
+                final String login = pRequest.getHeader(LOGIN);
+                final String token = pRequest.getHeader(TOKEN);
                 final boolean authorized = MainService.isAuthorized(login, token);
                 if (authorized) {
-                    final String action = request.getHeader(ACTION);
+                    final String action = pRequest.getHeader(ACTION);
                     if (action.equals(GET_ALL_STANDS)) {
                         writer.println(MainService.getAllStandsInJson());
                     }
@@ -63,6 +65,7 @@ public class Observer extends HttpServlet {
             case TEXT_HTML:
                 break;
             default:
+                HttpUtil.printRequestInfo(pRequest);
         }
     }
 }

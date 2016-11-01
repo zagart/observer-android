@@ -3,6 +3,8 @@ import java.net.HttpURLConnection;
 
 import by.grodno.zagart.observer.observerandroid.http.interfaces.IHttpClient;
 
+import static by.grodno.zagart.observer.observerandroid.http.interfaces.IHttpClient.OBSERVER_URL;
+
 /**
  * IRequest implementation that is responsible for registration at
  * HTTP-server Observer.
@@ -11,7 +13,6 @@ import by.grodno.zagart.observer.observerandroid.http.interfaces.IHttpClient;
  * @see IHttpClient.IRequest
  */
 public class RegistrationRequest implements IHttpClient.IRequest {
-    private static final String AUTHORIZATION_URL = "authorization_url";
     private String mLogin;
     private String mPassword;
 
@@ -22,7 +23,7 @@ public class RegistrationRequest implements IHttpClient.IRequest {
 
     @Override
     public String getContentType() {
-        return IHttpClient.IHttpData.ContentType.APPLICATION_JSON;
+        return IHttpClient.IHttpData.ContentType.APPLICATION_JSON_CHARSET_UTF_8;
     }
 
     @Override
@@ -32,7 +33,7 @@ public class RegistrationRequest implements IHttpClient.IRequest {
 
     @Override
     public String getUrl() {
-        return AUTHORIZATION_URL;
+        return OBSERVER_URL;
     }
 
     @Override

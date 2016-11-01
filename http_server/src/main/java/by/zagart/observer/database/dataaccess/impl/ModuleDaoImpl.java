@@ -12,4 +12,5 @@ import by.zagart.observer.database.entities.Module;
  * параметров.
  */
 public class ModuleDaoImpl extends AbstractHibernateDao<Module, Long> {
+
 }

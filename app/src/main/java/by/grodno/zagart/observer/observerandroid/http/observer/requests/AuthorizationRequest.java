@@ -3,6 +3,8 @@ import java.net.HttpURLConnection;
 
 import by.grodno.zagart.observer.observerandroid.http.interfaces.IHttpClient;
 
+import static by.grodno.zagart.observer.observerandroid.http.interfaces.IHttpClient.OBSERVER_URL;
+
 /**
  * IRequest implementation that is responsible for authorization at
  * HTTP-server Observer.
@@ -11,7 +13,6 @@ import by.grodno.zagart.observer.observerandroid.http.interfaces.IHttpClient;
  * @see by.grodno.zagart.observer.observerandroid.http.interfaces.IHttpClient.IRequest
  */
 public class AuthorizationRequest implements IHttpClient.IRequest {
-    private static final String AUTHORIZATION_URL = "authorization_url";
     private String mLogin;
     private String mToken;
 
@@ -22,7 +23,7 @@ public class AuthorizationRequest implements IHttpClient.IRequest {
 
     @Override
     public String getContentType() {
-        return IHttpClient.IHttpData.ContentType.APPLICATION_JSON;
+        return IHttpClient.IHttpData.ContentType.APPLICATION_JSON_CHARSET_UTF_8;
     }
 
     @Override
@@ -32,7 +33,7 @@ public class AuthorizationRequest implements IHttpClient.IRequest {
 
     @Override
     public String getUrl() {
-        return AUTHORIZATION_URL;
+        return OBSERVER_URL;
     }
 
     @Override

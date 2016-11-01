@@ -9,6 +9,8 @@ import java.net.URL;
 
 import by.grodno.zagart.observer.observerandroid.http.interfaces.IHttpClient;
 
+import static by.grodno.zagart.observer.observerandroid.http.interfaces.IHttpClient.IHttpData.Header.CONTENT_TYPE;
+
 /**
  * Implementation of IHttpClient interface.
  */
@@ -22,7 +24,7 @@ public class HttpClient implements IHttpClient {
         final ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         URL url = new URL(pUrl);
         connection = (HttpURLConnection) url.openConnection();
-        connection.setRequestMethod("GET");
+        connection.setRequestMethod(Method.GET.name());
         inputStream = connection.getInputStream();
         byte[] buffer = new byte[READ_BUFFER_SIZE];
         int bytesRead;
@@ -42,6 +44,10 @@ public class HttpClient implements IHttpClient {
             URL reqUrl = new URL(pRequest.getUrl());
             connection = ((HttpURLConnection) reqUrl.openConnection());
             connection.setRequestMethod(pRequest.getMethodType().name());
+            connection.setRequestProperty(
+                    CONTENT_TYPE,
+                    pRequest.getContentType()
+            );
             pRequest.handleRequestConnection(connection);
             inputStream = connection.getInputStream();
             BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
