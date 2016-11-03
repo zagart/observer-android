@@ -18,10 +18,12 @@ import java.util.Properties;
  */
 @Entity
 @Table(name = "STAND")
-public class Stand extends JSONObject implements Identifiable<Long>, Serializable {
+public class Stand implements Identifiable<Long>, Serializable {
     public static final String CONVERSION_STRING_TO_PROPERTIES_ERROR
             = "Stand class. Conversion (string-to-properties) error: ";
-    public static final String DESCRIPTION = "mDescription";
+    public static final String DESCRIPTION = "description";
+    public static final String ID = "id";
+    public static final String NUMBER = "number";
     public static final String STAND = "stand";
     public static final Logger logger = Logger.getLogger(Stand.class);
     private static final long SERIAL_VERSION_UID = 2L;
@@ -51,24 +53,6 @@ public class Stand extends JSONObject implements Identifiable<Long>, Serializabl
         }
         module.setStand(this);
         this.mModules.add(module);
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Stand stand = (Stand) o;
-        if (!mId.equals(stand.mId)) return false;
-        if (mNumber != null ? !mNumber.equals(stand.mNumber) : stand.mNumber != null) return false;
-        return mModules != null ? mModules.equals(stand.mModules) : stand.mModules == null;
-    }
-
-    @Override
-    public int hashCode() {
-        int result = mId.hashCode();
-        result = 31 * result + (mNumber != null ? mNumber.hashCode() : 0);
-        result = 31 * result + (mModules != null ? mModules.hashCode() : 0);
-        return result;
     }
 
     @Column(name = "DESCRIPTION")
@@ -110,11 +94,28 @@ public class Stand extends JSONObject implements Identifiable<Long>, Serializabl
     }
 
     @Override
+    public int hashCode() {
+        int result = mId.hashCode();
+        result = 31 * result + (mNumber != null ? mNumber.hashCode() : 0);
+        result = 31 * result + (mModules != null ? mModules.hashCode() : 0);
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Stand stand = (Stand) o;
+        if (!mId.equals(stand.mId)) return false;
+        if (mNumber != null ? !mNumber.equals(stand.mNumber) : stand.mNumber != null) return false;
+        return mModules != null ? mModules.equals(stand.mModules) : stand.mModules == null;
+    }
+
     public String toJSONString() {
         JSONObject stand = new JSONObject();
-        stand.put("id", mId);
-        stand.put("number", mNumber);
-        stand.put("description", mDescription);
+        stand.put(ID, mId);
+        stand.put(NUMBER, mNumber);
+        stand.put(DESCRIPTION, mDescription);
         return stand.toJSONString();
     }
 }

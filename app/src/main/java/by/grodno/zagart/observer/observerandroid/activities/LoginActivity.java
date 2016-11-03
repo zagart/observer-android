@@ -1,4 +1,6 @@
 package by.grodno.zagart.observer.observerandroid.activities;
+import android.accounts.Account;
+import android.accounts.AccountManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -8,15 +10,16 @@ import android.view.View;
 import android.widget.TextView;
 
 import by.grodno.zagart.observer.observerandroid.R;
-import by.grodno.zagart.observer.observerandroid.singletons.ContextHolder;
-import by.grodno.zagart.observer.observerandroid.utils.HttpUtil;
-import by.grodno.zagart.observer.observerandroid.utils.ObserverUtil;
+import by.grodno.zagart.observer.observerandroid.threadings.ThreadWorker;
 
 /**
  * Activity that provides UI for user authorization.
  */
 public class LoginActivity extends AppCompatActivity {
-    public static final String URL = "http://10.0.2.2:8080/Observer/AndroidRequestHandler";
+    private static final String TAG = LoginActivity.class.getSimpleName();
+    public static final String ALREADY_EXISTS = "Already exists";
+    public static final String EXTRA_TOKEN_TYPE = "";
+    private ThreadWorker mWorker;
 
     @Override
     protected void onCreate(@Nullable final Bundle savedInstanceState) {
@@ -26,6 +29,7 @@ public class LoginActivity extends AppCompatActivity {
             bar.hide();
         }
         setContentView(R.layout.login_activity);
+        mWorker = ThreadWorker.getDefaultInstance();
     }
 
     public void onGuestClick(View view) {
@@ -35,18 +39,29 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void onSignInClick(View view) {
-        ContextHolder.set(this);
         final TextView loginView = (TextView) findViewById(R.id.login_login);
         final TextView passwordView = (TextView) findViewById(R.id.login_password);
-        final String login = loginView.getText().toString();
-        final String password = passwordView.getText().toString();
-        final String token = ObserverUtil.generateToken(login, password);
-        HttpUtil.requestObserverAuthorization(URL, token);
     }
 
     public void onSignUpClick(View pView) {
         Intent intent = new Intent(this, RegistrationActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
         startActivity(intent);
+    }
+
+    public void onTokenReceived(Account pAccount, String pPassword, String pToken) {
+        final AccountManager am = AccountManager.get(this);
+        final Bundle result = new Bundle();
+        if (am.addAccountExplicitly(pAccount, pPassword, new Bundle())) {
+            result.putString(AccountManager.KEY_ACCOUNT_NAME, pAccount.name);
+            result.putString(AccountManager.KEY_ACCOUNT_TYPE, pAccount.type);
+            result.putString(AccountManager.KEY_AUTHTOKEN, pToken);
+            am.setAuthToken(pAccount, pAccount.type, pToken);
+        } else {
+            result.putString(AccountManager.KEY_ERROR_MESSAGE, ALREADY_EXISTS);
+        }
+        // TODO setAccountAuthenticatorResult(result);
+        setResult(RESULT_OK);
+        finish();
     }
 }

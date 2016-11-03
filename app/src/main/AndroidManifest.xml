@@ -3,6 +3,11 @@
     package="by.grodno.zagart.observer.observerandroid">
 
     <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.GET_ACCOUNTS"/>
+    <uses-permission android:name="android.permission.MANAGE_ACCOUNTS"/>
+    <uses-permission android:name="android.permission.AUTHENTICATE_ACCOUNTS"/>
+    <uses-permission android:name="android.permission.USE_CREDENTIALS"/>
+
     <application
         android:name="by.grodno.zagart.observer.observerandroid.App"
         android:allowBackup="true"

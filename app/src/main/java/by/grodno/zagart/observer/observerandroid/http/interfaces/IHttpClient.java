@@ -7,10 +7,10 @@ import java.net.HttpURLConnection;
  * Implementation of this interface allows to class-implementer
  * use privileges of HTTP-client such as do HTTP-request.
  */
-public interface IHttpClient<Result> {
+public interface IHttpClient {
     String OBSERVER_URL = "http://10.0.2.2:8080/Observer/ObserverRequestHandler";
     ByteArrayOutputStream downloadBytes(String pUrl) throws IOException;
-    Result executeRequest(IRequest pRequest) throws IOException;
+    String executeRequest(IRequest pRequest) throws IOException;
     enum Method {
         GET, POST
     }

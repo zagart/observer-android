@@ -5,6 +5,8 @@ import by.zagart.observer.database.dataaccess.impl.UserDaoImpl;
 import by.zagart.observer.database.entities.User;
 import by.zagart.observer.database.services.AbstractHibernateService;
 
+import javax.servlet.http.HttpServletRequest;
+
 import static by.zagart.observer.utils.HibernateUtil.closeCurrentSession;
 import static by.zagart.observer.utils.HibernateUtil.openCurrentSession;
 
@@ -25,5 +27,16 @@ public class UserServiceImpl extends AbstractHibernateService<User, Long, StandD
         closeCurrentSession();
         logger.info(String.format("User pulled from database by login = %s.", pLogin));
         return user;
+    }
+
+    public Long registerUser(HttpServletRequest pFields) {
+        User user = new User();
+        user.setLogin(pFields.getHeader(User.Fields.LOGIN));
+        user.setPassword(pFields.getHeader(User.Fields.PASSWORD));
+        user.setInfo(pFields.getHeader(User.Fields.INFO));
+        user.setAvatar(pFields.getHeader(User.Fields.AVATAR));
+        user.setRole(User.Role.valueOf(pFields.getHeader(User.Fields.ROLE)));
+        //TODO check if fields correct
+        return mUserDao.save(user);
     }
 }

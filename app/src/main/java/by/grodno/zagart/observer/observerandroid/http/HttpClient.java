@@ -1,4 +1,6 @@
 package by.grodno.zagart.observer.observerandroid.http;
+import android.util.Log;
+
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -7,6 +9,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+import by.grodno.zagart.observer.observerandroid.BuildConfig;
 import by.grodno.zagart.observer.observerandroid.http.interfaces.IHttpClient;
 
 import static by.grodno.zagart.observer.observerandroid.http.interfaces.IHttpClient.IHttpData.Header.CONTENT_TYPE;
@@ -16,6 +19,7 @@ import static by.grodno.zagart.observer.observerandroid.http.interfaces.IHttpCli
  */
 public class HttpClient implements IHttpClient {
     private static final int READ_BUFFER_SIZE = 4096;
+    private static final String TAG = HttpClient.class.getSimpleName();
 
     @Override
     public ByteArrayOutputStream downloadBytes(final String pUrl) throws IOException {
@@ -58,8 +62,11 @@ public class HttpClient implements IHttpClient {
             }
             response = stringBuilder.toString();
             inputStream.close();
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (Exception pEx) {
+            if (BuildConfig.DEBUG) {
+                Log.e(TAG, pEx.getMessage());
+            }
+            pEx.printStackTrace();
         }
         return response;
     }
