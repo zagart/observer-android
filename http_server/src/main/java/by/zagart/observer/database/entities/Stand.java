@@ -12,6 +12,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
+import static by.zagart.observer.database.entities.Stand.Fields.*;
+import static by.zagart.observer.database.entities.Stand.SerialConstants.SERIAL_DESCRIPTION;
+import static by.zagart.observer.database.entities.Stand.SerialConstants.SERIAL_NUMBER;
+
 /**
  * Класс-сущность, описывает объекты типа "информация о стенде" и их свойства.
  * Также предоставляет доступ к полям.
@@ -21,10 +25,6 @@ import java.util.Properties;
 public class Stand implements Identifiable<Long>, Serializable {
     public static final String CONVERSION_STRING_TO_PROPERTIES_ERROR
             = "Stand class. Conversion (string-to-properties) error: ";
-    public static final String DESCRIPTION = "description";
-    public static final String ID = "id";
-    public static final String NUMBER = "number";
-    public static final String STAND = "stand";
     public static final Logger logger = Logger.getLogger(Stand.class);
     private static final long SERIAL_VERSION_UID = 2L;
     private String mDescription;
@@ -36,8 +36,8 @@ public class Stand implements Identifiable<Long>, Serializable {
         Stand stand = new Stand();
         try {
             Properties properties = DataUtil.convertStringToProperties(serialData);
-            stand.setNumber(properties.getProperty(STAND));
-            stand.setDescription(properties.getProperty(DESCRIPTION));
+            stand.setNumber(properties.getProperty(SERIAL_NUMBER));
+            stand.setDescription(properties.getProperty(SERIAL_DESCRIPTION));
         } catch (IOException ex) {
             logger.error(CONVERSION_STRING_TO_PROPERTIES_ERROR + ex.getStackTrace());
         }
@@ -117,5 +117,16 @@ public class Stand implements Identifiable<Long>, Serializable {
         stand.put(NUMBER, mNumber);
         stand.put(DESCRIPTION, mDescription);
         return stand.toJSONString();
+    }
+
+    public class SerialConstants {
+        public static final String SERIAL_DESCRIPTION = "description";
+        public static final String SERIAL_NUMBER = "number";
+    }
+
+    public class Fields {
+        public static final String DESCRIPTION = "description";
+        public static final String ID = "id";
+        public static final String NUMBER = "number";
     }
 }

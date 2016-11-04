@@ -14,13 +14,14 @@ import java.io.Serializable;
 @Table(name = "USER")
 public class User implements Identifiable<Long>, Serializable {
     public static final Logger logger = Logger.getLogger(Stand.class);
-    private static final long SERIAL_VERSION_UID = 3L;
+    private static final long SERIAL_VERSION_UID = 3L; //TODO correct UID for models
     private String mAvatar;
     private Long mId;
     private String mInfo;
     private String mLogin;
     private String mPassword;
     private Role mRole;
+    private String mToken;
 
     @Column(name = "AVATAR")
     public String getAvatar() {
@@ -75,8 +76,21 @@ public class User implements Identifiable<Long>, Serializable {
         return mRole;
     }
 
-    public void setRole(Role role) {
-        this.mRole = role;
+    public void setRole(Role pRole) {
+        if (pRole == null) {
+            mRole = Role.USER;
+        } else {
+            this.mRole = pRole;
+        }
+    }
+
+    @Column(name = "TOKEN")
+    public String getToken() {
+        return mToken;
+    }
+
+    public void setToken(String pToken) {
+        mToken = pToken;
     }
 
     public enum Role {
@@ -90,5 +104,6 @@ public class User implements Identifiable<Long>, Serializable {
         public static final String LOGIN = "login";
         public static final String PASSWORD = "password";
         public static final String ROLE = "role";
+        public static final String TOKEN = "token";
     }
 }

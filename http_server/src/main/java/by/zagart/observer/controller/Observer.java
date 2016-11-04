@@ -2,8 +2,6 @@ package by.zagart.observer.controller;
 
 import by.zagart.observer.database.services.MainService;
 import by.zagart.observer.utils.HttpUtil;
-import io.jsonwebtoken.SignatureAlgorithm;
-import io.jsonwebtoken.impl.crypto.MacProvider;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -11,32 +9,14 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.security.Key;
 
-@WebServlet("/ObserverRequestHandler")
+import static by.zagart.observer.controller.Observer.HttpErrorCodes.UNAUTHORIZED;
+import static by.zagart.observer.controller.Observer.HttpErrorCodes.UNSUPPORTED_MEDIA_TYPE;
+import static by.zagart.observer.controller.Observer.ObserverHttpRequestTypes.*;
+import static by.zagart.observer.controller.Observer.ServletLogConstants.*;
+
+@WebServlet("/RequestHandler")
 public class Observer extends HttpServlet {
-    public static final String ACTION = "action";
-    public static final String APPLICATION_JSON_CHARSET_UTF_8 = "application/json; charset=utf-8";
-    public static final String ATTEMPT_TO_REGISTER_USER = "Attempt to register user.";
-    public static final String AUTHORIZE = "authorize";
-    public static final int FORBIDDEN = 403;
-    public static final String GET_ALL_STANDS = "get_all_stands";
-    public static final String GUEST = "guest";
-    public static final String GUEST_CONNECTED = "Guest connected.";
-    public static final String LOGIN = "login";
-    public static final String MISSING_CONTENT_TYPE = "missing content type";
-    public static final String PASSWORD = "password";
-    public static final String REGISTER = "register";
-    public static final Key SECRET_KEY = MacProvider.generateKey(SignatureAlgorithm.HS512);
-    public static final int SERVER_INTERNAL_ERROR = 500;
-    public static final String TEXT_HTML = "text/html";
-    public static final String TOKEN = "token";
-    public static final int UNAUTHORIZED = 401;
-    public static final int UNSUPPORTED_MEDIA_TYPE = 415;
-    public static final String USER_AUTHENTICATED = "User authorized.";
-    public static final String USER_HAS_BEEN_AUTHORIZED = "User has been authorized.";
-    public static final String USER_REQUEST_REJECTED = "User request rejected.";
     private MainService mService;
 
     public Observer() {
@@ -58,11 +38,10 @@ public class Observer extends HttpServlet {
 
     protected void doPost(HttpServletRequest pRequest, HttpServletResponse pResponse)
             throws ServletException, IOException {
+        Logger.log(HttpUtil.getRequestInfo(pRequest));
         String contentType = (pRequest.getContentType() == null) ? MISSING_CONTENT_TYPE : pRequest.getContentType();
-        final PrintWriter writer = pResponse.getWriter();
         switch (contentType) {
             case APPLICATION_JSON_CHARSET_UTF_8:
-                HttpUtil.printRequestInfo(pRequest);
                 final String login = pRequest.getHeader(LOGIN);
                 final String password = pRequest.getHeader(PASSWORD);
                 final String token = pRequest.getHeader(TOKEN);
@@ -71,17 +50,11 @@ public class Observer extends HttpServlet {
                         .setPassword(password)
                         .setToken(token);
                 if (login.equals(GUEST)) {
-                    System.out.println(GUEST_CONNECTED);
+                    Logger.log(GUEST_CONNECTED);
                     handleGuestRequest(pRequest);
                 } else {
-                    if (mService.isUserAuthenticated()) {
-                        System.out.println(USER_AUTHENTICATED);
-                        final String action = pRequest.getHeader(ACTION);
-                        handleAction(pRequest, pResponse, action);
-                    } else {
-                        System.out.println(USER_REQUEST_REJECTED);
-                        pResponse.sendError(FORBIDDEN);
-                    }
+                    final String action = pRequest.getHeader(ACTION);
+                    handleAction(pRequest, pResponse, action);
                 }
                 break;
             case TEXT_HTML:
@@ -96,23 +69,28 @@ public class Observer extends HttpServlet {
             HttpServletResponse pResponse,
             String pAction
     ) throws IOException {
+        String token;
         switch (pAction) {
-            case AUTHORIZE:
-                if (mService.isUserAuthorized()) {
-                    System.out.println(USER_HAS_BEEN_AUTHORIZED);
+            case AUTHENTICATE:
+                token = mService.authenticateUser();
+                if (token != null) {
+                    Logger.log(USER_HAS_BEEN_AUTHORIZED);
+                    pResponse.getWriter().println(token);
                 } else {
-                    System.out.println(USER_REQUEST_REJECTED);
+                    Logger.log(USER_REQUEST_REJECTED);
                     pResponse.sendError(UNAUTHORIZED);
                 }
                 break;
             case REGISTER:
-                System.out.println(ATTEMPT_TO_REGISTER_USER);
-                final Long result = mService.registerUser(pRequest);
-                if (result == -1) {
-                    pResponse.sendError(SERVER_INTERNAL_ERROR);
+                token = mService.registerUser(pRequest);
+                if (token == null) {
+                    Logger.log(FAILED_TO_REGISTER_USER);
+//                    pResponse.sendError(SERVER_INTERNAL_ERROR);
+                    pResponse.getWriter().println("Failed :(");
                     break;
+                } else {
+                    pResponse.getWriter().println(token);
                 }
-                pResponse.getWriter().println("User with id #" + result + "registered.");
                 break;
         }
     }
@@ -123,6 +101,35 @@ public class Observer extends HttpServlet {
     @Override
     public void init() throws ServletException {
         mService = new MainService();
+    }
+
+    public class ServletLogConstants {
+        public static final String ATTEMPT_TO_REGISTER_USER = "Attempt to register user.";
+        public static final String FAILED_TO_REGISTER_USER = "Failed to register user.";
+        public static final String GUEST_CONNECTED = "Guest connected.";
+        public static final String USER_AUTHENTICATED = "User has been authenticated as %s";
+        public static final String USER_HAS_BEEN_AUTHORIZED = "User has been authorized.";
+        public static final String USER_REQUEST_REJECTED = "User request rejected.";
+    }
+
+    public class ObserverHttpRequestTypes {
+        public static final String ACTION = "action";
+        public static final String APPLICATION_JSON_CHARSET_UTF_8 = "application/json; charset=utf-8";
+        public static final String AUTHENTICATE = "authenticate";
+        public static final String GUEST = "guest";
+        public static final String LOGIN = "login";
+        public static final String MISSING_CONTENT_TYPE = "missing content type";
+        public static final String PASSWORD = "password";
+        public static final String REGISTER = "register";
+        public static final String TEXT_HTML = "text/html; charset=utf-8";
+        public static final String TOKEN = "token";
+    }
+
+    public class HttpErrorCodes {
+        public static final int FORBIDDEN = 403;
+        public static final int SERVER_INTERNAL_ERROR = 500;
+        public static final int UNAUTHORIZED = 401;
+        public static final int UNSUPPORTED_MEDIA_TYPE = 415;
     }
 }
 

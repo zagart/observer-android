@@ -12,7 +12,10 @@ import by.grodno.zagart.observer.observerandroid.BuildConfig;
 import by.grodno.zagart.observer.observerandroid.R;
 import by.grodno.zagart.observer.observerandroid.cache.helper.DbHelper;
 import by.grodno.zagart.observer.observerandroid.cache.model.User;
+import by.grodno.zagart.observer.observerandroid.http.interfaces.IHttpClient;
+import by.grodno.zagart.observer.observerandroid.singletons.ContextHolder;
 import by.grodno.zagart.observer.observerandroid.threadings.ThreadWorker;
+import by.grodno.zagart.observer.observerandroid.utils.SharedPreferencesUtil;
 
 /**
  * Application main activity.
@@ -50,6 +53,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onLoginClick(View view) {
+
         Intent intent = new Intent(this, LoginActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
         startActivity(intent);

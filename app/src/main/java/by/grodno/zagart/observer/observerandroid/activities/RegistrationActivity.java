@@ -6,10 +6,8 @@ import android.view.View;
 import android.widget.EditText;
 
 import by.grodno.zagart.observer.observerandroid.R;
-import by.grodno.zagart.observer.observerandroid.singletons.ContextHolder;
 import by.grodno.zagart.observer.observerandroid.threadings.ThreadWorker;
-
-import static by.grodno.zagart.observer.observerandroid.utils.HttpUtil.sendRegistrationRequest;
+import by.grodno.zagart.observer.observerandroid.utils.HttpUtil;
 
 /**
  * Activity with UI for executing process of registration
@@ -18,15 +16,23 @@ import static by.grodno.zagart.observer.observerandroid.utils.HttpUtil.sendRegis
  * @author zagart
  */
 public class RegistrationActivity extends AppCompatActivity {
-    public static final String EXTRA_TOKEN_TYPE = "";
+    public static final String EXTRA_TOKEN_TYPE = "by.zagart.observer.EXTRA_TOKEN_TYPE";
     private EditText mPasswordView;
     private EditText mLoginView;
     private ThreadWorker mWorker;
 
     public void onConfirmClick(View pView) {
-        final String login = mLoginView.getText().toString();
-        final String password = mPasswordView.getText().toString();
-        sendRegistrationRequest(ContextHolder.get(), login, password);
+        String login = "";
+        String password = "";
+        final CharSequence loginViewText = mLoginView.getText();
+        final CharSequence passwordViewText = mPasswordView.getText();
+        if (loginViewText != null) {
+            login = loginViewText.toString();
+        }
+        if (passwordViewText != null) {
+            password = passwordViewText.toString();
+        }
+        HttpUtil.sendRegistrationRequest(this, login, password);
     }
 
     @Override

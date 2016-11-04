@@ -44,9 +44,6 @@ public class ResultActivity extends AppCompatActivity {
         final ThreadWorker worker = new ThreadWorker<List<Stand>>() {
             @Override
             public void onResult(final List<Stand> pStands) {
-                /*
-                Method will be executed in UI-thread.
-                 */
                 fillRecyclerView(pStands);
             }
         };

@@ -40,7 +40,7 @@ public class RegistrationRequest implements IHttpClient.IRequest {
     public void handleRequestConnection(final HttpURLConnection pConnection) {
         pConnection.addRequestProperty(
                 IHttpClient.IHttpData.Header.ACTION,
-                IHttpClient.IHttpData.Actions.AUTHORIZE
+                IHttpClient.IHttpData.Actions.REGISTER
         );
         pConnection.addRequestProperty(
                 IHttpClient.IHttpData.Header.LOGIN,

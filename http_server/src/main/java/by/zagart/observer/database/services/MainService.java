@@ -1,19 +1,20 @@
 package by.zagart.observer.database.services;
 
-import by.zagart.observer.database.entities.Module;
-import by.zagart.observer.database.entities.Stand;
+import by.zagart.observer.controller.Logger;
 import by.zagart.observer.database.entities.User;
-import by.zagart.observer.database.services.impl.StandServiceImpl;
 import by.zagart.observer.database.services.impl.UserServiceImpl;
+import by.zagart.observer.security.SecurityProvider;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.List;
+
+import static by.zagart.observer.controller.Observer.ServletLogConstants.ATTEMPT_TO_REGISTER_USER;
 
 public class MainService {
-    private boolean isAuthorized = false;
+    public static final String ATTEMPT_TO_AUTHENTICATE_USER = "Attempt to authenticate user.";
+    public static final String USER_REGISTERED = "User registered.";
+    public static final String USER_WITH_SUCH_LOGIN_ALREADY_EXISTS = "User with such login already exists.";
     private String mLogin = null;
     private String mPassword = null;
-    private StandServiceImpl mStandService = new StandServiceImpl();
     private String mToken = null;
     private User mUser = new User();
     private UserServiceImpl mUserService = new UserServiceImpl();
@@ -21,48 +22,34 @@ public class MainService {
     public MainService() {
     }
 
-    public static void persistPairStandModule(
-            Stand pStand,
-            Module pModule,
-            GenericService pStandService,
-            GenericService pModuleService
-    ) {
-        pStandService.save(pStand);
-        pModuleService.save(pModule);
-        pStand.addModule(pModule);
-        pStandService.update(pStand);
-        pModuleService.update(pModule);
-    }
-
-    public String getAllStandsInJson() {
-        final List<Stand> stands = mStandService.getAll();
-        final StringBuilder builder = new StringBuilder();
-        for (Stand stand : stands) {
-            builder.append(stand.toJSONString());
-        }
-        return stands.toString();
-    }
-
-    public boolean isUserAuthenticated() {
+    public String authenticateUser() {
+        Logger.log(ATTEMPT_TO_AUTHENTICATE_USER);
+        mUser = mUserService.getUserByLogin(mLogin);
         if (mUser == null) {
-            mUser = mUserService.getUserByLogin(mLogin);
-        }
-        if (mUser == null) {
-            return false;
+            return null;
         } else {
-            return true;
+            return SecurityProvider.getToken(mUser, mPassword);
         }
     }
 
-    public boolean isUserAuthorized() {
-        return isAuthorized;
+    public boolean extendSession(String pToken) {
+        final User user = mUserService.getUserByToken(pToken);
+        return true;
     }
 
-    public Long registerUser(HttpServletRequest pRequest) {
+    public String registerUser(HttpServletRequest pRequest) {
+        Logger.log(ATTEMPT_TO_REGISTER_USER);
         if (mUserService.getUserByLogin(mLogin) != null) {
-            return -1L;
+            Logger.log(USER_WITH_SUCH_LOGIN_ALREADY_EXISTS);
+            return null;
+        } else {
+            Logger.log(USER_REGISTERED);
+            return mUserService.saveUserFromRequest(pRequest);
         }
-        return mUserService.registerUser(pRequest);
+    }
+
+    public <Data> Data requestData(String pToken, String pAction) {
+        return (Data) pAction;
     }
 
     public MainService setLogin(String pLogin) {

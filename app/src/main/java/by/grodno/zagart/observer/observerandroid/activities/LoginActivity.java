@@ -1,35 +1,38 @@
 package by.grodno.zagart.observer.observerandroid.activities;
 import android.accounts.Account;
+import android.accounts.AccountAuthenticatorActivity;
 import android.accounts.AccountManager;
+import android.app.ActionBar;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.TextView;
 
 import by.grodno.zagart.observer.observerandroid.R;
-import by.grodno.zagart.observer.observerandroid.threadings.ThreadWorker;
+import by.grodno.zagart.observer.observerandroid.accounts.ObserverAuthenticator;
+import by.grodno.zagart.observer.observerandroid.utils.HttpUtil;
 
 /**
  * Activity that provides UI for user authorization.
  */
-public class LoginActivity extends AppCompatActivity {
-    private static final String TAG = LoginActivity.class.getSimpleName();
+public class LoginActivity extends AccountAuthenticatorActivity {
     public static final String ALREADY_EXISTS = "Already exists";
-    public static final String EXTRA_TOKEN_TYPE = "";
-    private ThreadWorker mWorker;
+    public static final String EXTRA_TOKEN_TYPE = "by.zagart.observer.EXTRA_TOKEN_TYPE";
+    private ObserverAuthenticator mAuthenticator = new ObserverAuthenticator(this);
+    private TextView mLoginView;
+    private TextView mPasswordView;
 
     @Override
     protected void onCreate(@Nullable final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        final ActionBar bar = getSupportActionBar();
+        final ActionBar bar = getActionBar();
         if (bar != null) {
             bar.hide();
         }
         setContentView(R.layout.login_activity);
-        mWorker = ThreadWorker.getDefaultInstance();
+        mLoginView = (TextView) findViewById(R.id.login_login);
+        mPasswordView = (TextView) findViewById(R.id.login_password);
     }
 
     public void onGuestClick(View view) {
@@ -39,8 +42,17 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void onSignInClick(View view) {
-        final TextView loginView = (TextView) findViewById(R.id.login_login);
-        final TextView passwordView = (TextView) findViewById(R.id.login_password);
+        String login = "";
+        String password = "";
+        final CharSequence loginViewText = mLoginView.getText();
+        final CharSequence passwordViewText = mPasswordView.getText();
+        if (loginViewText != null) {
+            login = loginViewText.toString();
+        }
+        if (passwordViewText != null) {
+            password = passwordViewText.toString();
+        }
+        HttpUtil.sendAuthenticationRequest(this, login, password);
     }
 
     public void onSignUpClick(View pView) {
@@ -60,7 +72,7 @@ public class LoginActivity extends AppCompatActivity {
         } else {
             result.putString(AccountManager.KEY_ERROR_MESSAGE, ALREADY_EXISTS);
         }
-        // TODO setAccountAuthenticatorResult(result);
+        setAccountAuthenticatorResult(result);
         setResult(RESULT_OK);
         finish();
     }

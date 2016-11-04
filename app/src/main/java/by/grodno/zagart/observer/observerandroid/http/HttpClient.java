@@ -8,6 +8,9 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import by.grodno.zagart.observer.observerandroid.BuildConfig;
 import by.grodno.zagart.observer.observerandroid.http.interfaces.IHttpClient;
@@ -20,6 +23,9 @@ import static by.grodno.zagart.observer.observerandroid.http.interfaces.IHttpCli
 public class HttpClient implements IHttpClient {
     private static final int READ_BUFFER_SIZE = 4096;
     private static final String TAG = HttpClient.class.getSimpleName();
+    public static final String STATUS = "status";
+    public static final String ERROR_STREAM_NOT_NULL = "Error stream not null";
+    public static final String HTTP_REQUEST_FAILED = "HTTP-request failed";
 
     @Override
     public ByteArrayOutputStream downloadBytes(final String pUrl) throws IOException {
@@ -53,21 +59,41 @@ public class HttpClient implements IHttpClient {
                     pRequest.getContentType()
             );
             pRequest.handleRequestConnection(connection);
-            inputStream = connection.getInputStream();
-            BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
-            StringBuilder stringBuilder = new StringBuilder();
-            String line;
-            while ((line = reader.readLine()) != null) {
-                stringBuilder.append(line);
+            if ((inputStream = connection.getErrorStream()) == null) {
+                inputStream = connection.getInputStream();
+                BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
+                StringBuilder stringBuilder = new StringBuilder();
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    stringBuilder.append(line);
+                }
+                response = stringBuilder.toString();
+            } else {
+                response = getHeadersInfo(connection);
+                if (BuildConfig.DEBUG) {
+                    Log.d(TAG, ERROR_STREAM_NOT_NULL);
+                }
             }
-            response = stringBuilder.toString();
             inputStream.close();
         } catch (Exception pEx) {
             if (BuildConfig.DEBUG) {
-                Log.e(TAG, pEx.getMessage());
+                Log.e(TAG, HTTP_REQUEST_FAILED, pEx);
             }
-            pEx.printStackTrace();
         }
         return response;
+    }
+
+    private String getHeadersInfo(final HttpURLConnection pConnection) {
+        StringBuilder builder = new StringBuilder();
+        final Map<String, List<String>> headerFields = pConnection.getHeaderFields();
+        final Set<Map.Entry<String, List<String>>> entries = headerFields.entrySet();
+        for (Map.Entry<String, List<String>> entry : entries) {
+            builder.append(entry.getKey()).append(": ");
+            for (String value : entry.getValue()) {
+                builder.append("(").append(value).append(")");
+            }
+            builder.append(";\n");
+        }
+        return builder.toString();
     }
 }

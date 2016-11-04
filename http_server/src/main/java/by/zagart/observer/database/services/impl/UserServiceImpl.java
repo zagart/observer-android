@@ -4,6 +4,7 @@ import by.zagart.observer.database.dataaccess.impl.StandDaoImpl;
 import by.zagart.observer.database.dataaccess.impl.UserDaoImpl;
 import by.zagart.observer.database.entities.User;
 import by.zagart.observer.database.services.AbstractHibernateService;
+import by.zagart.observer.security.SecurityProvider;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -29,14 +30,29 @@ public class UserServiceImpl extends AbstractHibernateService<User, Long, StandD
         return user;
     }
 
-    public Long registerUser(HttpServletRequest pFields) {
+    public User getUserByToken(String pToken) {
+        return null;
+    }
+
+    public String saveUserFromRequest(HttpServletRequest pRequest) {
         User user = new User();
-        user.setLogin(pFields.getHeader(User.Fields.LOGIN));
-        user.setPassword(pFields.getHeader(User.Fields.PASSWORD));
-        user.setInfo(pFields.getHeader(User.Fields.INFO));
-        user.setAvatar(pFields.getHeader(User.Fields.AVATAR));
-        user.setRole(User.Role.valueOf(pFields.getHeader(User.Fields.ROLE)));
-        //TODO check if fields correct
-        return mUserDao.save(user);
+        user.setLogin(pRequest.getHeader(User.Fields.LOGIN));
+        user.setPassword(pRequest.getHeader(User.Fields.PASSWORD));
+        user.setInfo(pRequest.getHeader(User.Fields.INFO));
+        user.setAvatar(pRequest.getHeader(User.Fields.AVATAR));
+        final String role = pRequest.getHeader(User.Fields.ROLE);
+        if (role == null) {
+            user.setRole(User.Role.USER);
+        } else {
+            user.setRole(User.Role.valueOf(role));
+        }
+        //TODO check is fields correct, optimize method
+        final String token = SecurityProvider.getToken(user, user.getPassword());
+        user.setToken(token);
+        openCurrentSession();
+        final Long id = mUserDao.save(user);
+        closeCurrentSession();
+        logger.info(String.format("User registered with id = %d.", id));
+        return token;
     }
 }

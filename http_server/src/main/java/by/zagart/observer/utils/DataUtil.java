@@ -2,6 +2,7 @@ package by.zagart.observer.utils;
 
 import by.zagart.observer.database.entities.Module;
 import by.zagart.observer.database.entities.Stand;
+import by.zagart.observer.database.services.GenericService;
 import org.apache.commons.lang.RandomStringUtils;
 import org.apache.log4j.Logger;
 
@@ -28,6 +29,19 @@ public class DataUtil {
         module.setStatus(RandomStringUtils.randomAlphabetic(20));
         module.setStatusChangeDate(new Date());
         return module;
+    }
+
+    public static void persistPairStandModule(
+            Stand pStand,
+            Module pModule,
+            GenericService pStandService,
+            GenericService pModuleService
+    ) {
+        pStandService.save(pStand);
+        pModuleService.save(pModule);
+        pStand.addModule(pModule);
+        pStandService.update(pStand);
+        pModuleService.update(pModule);
     }
 
     /**

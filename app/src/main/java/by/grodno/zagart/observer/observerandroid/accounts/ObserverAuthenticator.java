@@ -12,7 +12,6 @@ import android.text.TextUtils;
 import by.grodno.zagart.observer.observerandroid.activities.LoginActivity;
 import by.grodno.zagart.observer.observerandroid.activities.RegistrationActivity;
 import by.grodno.zagart.observer.observerandroid.singletons.ContextHolder;
-import by.grodno.zagart.observer.observerandroid.utils.HttpUtil;
 
 /**
  * Authenticator for Observer HTTP-server.
@@ -72,11 +71,15 @@ public class ObserverAuthenticator extends AbstractAccountAuthenticator {
     ) throws NetworkErrorException {
         final Bundle result = new Bundle();
         final AccountManager am = AccountManager.get(mContext.getApplicationContext());
-        String authToken = am.peekAuthToken(pAccount, pAuthTokenType);
+        String authToken = null;
+        try {
+            authToken = am.peekAuthToken(pAccount, pAuthTokenType);
+        } catch (Exception pEx) {
+        }
         if (TextUtils.isEmpty(authToken)) {
             final String password = am.getPassword(pAccount);
             if (!TextUtils.isEmpty(password)) {
-                authToken = HttpUtil.sendAuthenticationRequest(mContext, pAccount.name, password);
+                //TODO authentication request
             }
         }
         if (!TextUtils.isEmpty(authToken)) {

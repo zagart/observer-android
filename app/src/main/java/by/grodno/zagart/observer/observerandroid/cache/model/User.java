@@ -1,5 +1,7 @@
 package by.grodno.zagart.observer.observerandroid.cache.model;
+import android.accounts.Account;
 import android.content.ContentValues;
+import android.os.Parcel;
 
 import by.grodno.zagart.observer.observerandroid.cache.model.annotations.Id;
 import by.grodno.zagart.observer.observerandroid.cache.model.annotations.NotNull;
@@ -9,16 +11,28 @@ import by.grodno.zagart.observer.observerandroid.cache.model.annotations.dbStrin
 import by.grodno.zagart.observer.observerandroid.interfaces.IConvertible;
 
 /**
- * Model for user.
+ * Model for user. Also can be used as Account for
+ * Account Manager.
  *
  * @author zagart
+ * @see android.accounts.AccountManager
  */
-public class User implements IConvertible<ContentValues> {
+public class User extends Account implements IConvertible<ContentValues> {
+    public static final String TYPE = "by.zagart.observer";
     private Long mId;
     private String mLogin;
+    private String mPassword;
     private Long mTimestampOfRegistration;
     private String mToken;
     private Long mTimestampOfLastActivity;
+
+    public User(final Parcel in) {
+        super(in);
+    }
+
+    public User(final String name) {
+        super(name, TYPE);
+    }
 
     @Override
     public ContentValues convert() {
@@ -45,6 +59,14 @@ public class User implements IConvertible<ContentValues> {
 
     public void setLogin(final String pLogin) {
         mLogin = pLogin;
+    }
+
+    public String getPassword() {
+        return mPassword;
+    }
+
+    public void setPassword(final String pPassword) {
+        mPassword = pPassword;
     }
 
     public Long getTimestampOfLastActivity() {
@@ -80,6 +102,9 @@ public class User implements IConvertible<ContentValues> {
         @NotNull
         @dbString
         public static final String LOGIN = "login";
+        @NotNull
+        @dbString
+        public static final String PASSWORD = "password";
         @NotNull
         @dbLong
         public static final String TIMESTAMP_OF_REGISTRATION = "timestamp_of_registration";

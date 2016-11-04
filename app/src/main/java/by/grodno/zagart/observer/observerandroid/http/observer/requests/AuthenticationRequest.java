@@ -12,13 +12,13 @@ import static by.grodno.zagart.observer.observerandroid.http.interfaces.IHttpCli
  * @author zagart
  * @see by.grodno.zagart.observer.observerandroid.http.interfaces.IHttpClient.IRequest
  */
-public class AuthorizationRequest implements IHttpClient.IRequest {
+public class AuthenticationRequest implements IHttpClient.IRequest {
     private String mLogin;
-    private String mToken;
+    private String mPassword;
 
-    public AuthorizationRequest(final String pLogin, final String pToken) {
+    public AuthenticationRequest(final String pLogin, final String pPassword) {
         mLogin = pLogin;
-        mToken = pToken;
+        mPassword = pPassword;
     }
 
     @Override
@@ -40,15 +40,15 @@ public class AuthorizationRequest implements IHttpClient.IRequest {
     public void handleRequestConnection(final HttpURLConnection pConnection) {
         pConnection.addRequestProperty(
                 IHttpClient.IHttpData.Header.ACTION,
-                IHttpClient.IHttpData.Actions.AUTHORIZE
+                IHttpClient.IHttpData.Actions.AUTHENTICATE
         );
         pConnection.addRequestProperty(
                 IHttpClient.IHttpData.Header.LOGIN,
                 mLogin
         );
         pConnection.addRequestProperty(
-                IHttpClient.IHttpData.Header.TOKEN,
-                mToken
+                IHttpClient.IHttpData.Header.PASSWORD,
+                mPassword
         );
     }
 }
