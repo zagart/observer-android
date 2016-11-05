@@ -1,9 +1,9 @@
 package by.grodno.zagart.observer.observerandroid.server.requests;
 import java.net.HttpURLConnection;
 
+import by.grodno.zagart.observer.observerandroid.R;
 import by.grodno.zagart.observer.observerandroid.http.interfaces.IHttpClient;
-
-import static by.grodno.zagart.observer.observerandroid.http.interfaces.IHttpClient.OBSERVER_URL;
+import by.grodno.zagart.observer.observerandroid.singletons.ContextHolder;
 
 /**
  * IRequest implementation that is responsible for authorization at
@@ -33,7 +33,7 @@ public class AuthenticationRequest implements IHttpClient.IRequest {
 
     @Override
     public String getUrl() {
-        return OBSERVER_URL;
+        return ContextHolder.get().getString(R.string.observer_url);
     }
 
     @Override

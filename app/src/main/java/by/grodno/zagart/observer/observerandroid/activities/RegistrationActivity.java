@@ -4,10 +4,10 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import by.grodno.zagart.observer.observerandroid.R;
 import by.grodno.zagart.observer.observerandroid.server.api.Observer;
-import by.grodno.zagart.observer.observerandroid.singletons.ContextHolder;
 import by.grodno.zagart.observer.observerandroid.threadings.ThreadWorker;
 
 /**
@@ -17,25 +17,15 @@ import by.grodno.zagart.observer.observerandroid.threadings.ThreadWorker;
  * @author zagart
  */
 public class RegistrationActivity extends AppCompatActivity {
-    public static final String EXTRA_TOKEN_TYPE = "by.zagart.observer.EXTRA_TOKEN_TYPE";
     private EditText mPasswordView;
     private EditText mLoginView;
     private ThreadWorker mWorker;
-    private Observer mServer = Observer.getDefaultInstance();
 
     public void onConfirmClick(View pView) {
-        String login = "";
-        String password = "";
-        final CharSequence loginViewText = mLoginView.getText();
-        final CharSequence passwordViewText = mPasswordView.getText();
-        if (loginViewText != null) {
-            login = loginViewText.toString();
-        }
-        if (passwordViewText != null) {
-            password = passwordViewText.toString();
-        }
-        ContextHolder.set(this);
-        mServer.signUp(login, password);
+        String login = mLoginView.getText().toString();
+        String password = mPasswordView.getText().toString();
+        //TODO fields check
+        Toast.makeText(this, Observer.signUp(this, login, password), Toast.LENGTH_LONG).show();
     }
 
     @Override

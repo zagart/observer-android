@@ -1,19 +1,20 @@
 package by.grodno.zagart.observer.observerandroid.server.api;
+import android.content.Context;
+import android.support.annotation.Nullable;
 import android.util.Log;
-import android.widget.Toast;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.IOException;
-import java.util.Locale;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
 
 import by.grodno.zagart.observer.observerandroid.BuildConfig;
 import by.grodno.zagart.observer.observerandroid.http.HttpClientFactory;
 import by.grodno.zagart.observer.observerandroid.http.interfaces.IHttpClient;
-import by.grodno.zagart.observer.observerandroid.interfaces.IAction;
-import by.grodno.zagart.observer.observerandroid.interfaces.ICallback;
-import by.grodno.zagart.observer.observerandroid.interfaces.IResultCallback;
 import by.grodno.zagart.observer.observerandroid.server.requests.AuthenticationRequest;
 import by.grodno.zagart.observer.observerandroid.server.requests.RegistrationRequest;
-import by.grodno.zagart.observer.observerandroid.singletons.ContextHolder;
 import by.grodno.zagart.observer.observerandroid.threadings.ThreadWorker;
 
 /**
@@ -22,117 +23,84 @@ import by.grodno.zagart.observer.observerandroid.threadings.ThreadWorker;
  * @author zagart
  */
 public class Observer {
-    private static final String FAILED_TO_REGISTER = "Failed to register.";
-    private final String RESPONSE = "Server response: %s";
-    private final String FAILED_TO_SIGN_IN = "Failed to sign in.";
+    private static final String TOKEN = "token";
     private final String TAG = Observer.class.getSimpleName();
     private ThreadWorker mDefaultWorker = ThreadWorker.getDefaultInstance();
     private IHttpClient mClient = HttpClientFactory.get(HttpClientFactory.Type.HTTP_PURE);
+    private Context mContext;
 
-    public static Observer getDefaultInstance() {
-        return SingletonHolder.OBSERVER_INSTANCE;
+    public Observer(final Context pContext) {
+        mContext = pContext;
     }
 
-    public void onResponse(final String pResponse) {
-        mDefaultWorker.post(
-                new Runnable() {
-                    @Override
-                    public void run() {
-                        Toast.makeText(ContextHolder.get(), pResponse, Toast.LENGTH_LONG).show();
-                    }
-                }
-        );
+    public static String signIn(
+            final Context pContext,
+            final String pLogin,
+            final String pPassword
+    ) {
+        return new Observer(pContext).signIn(pLogin, pPassword);
     }
 
-    public void signIn(final String pLogin, final String pPassword) {
-        mDefaultWorker.<String, String>execute(
-                new SignInAction(pLogin, pPassword),
-                new ObserverResultCallback()
-        );
+    public static String signUp(
+            final Context pContext,
+            final String pLogin,
+            final String pPassword
+    ) {
+        return new Observer(pContext).signUp(pLogin, pPassword);
     }
 
-    public void signUp(final String pLogin, final String pPassword) {
-        mDefaultWorker.<String, String>execute(
-                new SignUpAction(pLogin, pPassword),
-                new ObserverResultCallback()
-        );
-    }
-
-    public static class SingletonHolder {
-        public static final Observer OBSERVER_INSTANCE = new Observer();
-    }
-
-    private class ObserverResultCallback implements IResultCallback<String, String> {
-        @Override
-        public String onResult(final String pActionResult) {
+    @Nullable
+    private String getTokenFromResponseString(final String pResponse) {
+        try {
+            final JSONObject jsonResponse = new JSONObject(pResponse);
+            if (jsonResponse.has(TOKEN)) {
+                return jsonResponse.getString(TOKEN);
+            } else {
+                return null;
+            }
+        } catch (JSONException pEx) {
             if (BuildConfig.DEBUG) {
-                Log.d(
-                        TAG,
-                        java.lang.String.format(
-                                Locale.getDefault(),
-                                RESPONSE,
-                                pActionResult
-                        )
-                );
+                Log.e(TAG, pEx.getMessage(), pEx);
             }
-            onResponse(pActionResult);
-            return pActionResult;
+            return null;
         }
     }
 
-    private class SignInAction implements IAction<Void, Void, String> {
-        private String mLogin;
-        private String mPassword;
-
-        public SignInAction(final String pLogin, final String pPassword) {
-            mLogin = pLogin;
-            mPassword = pPassword;
-        }
-
-        @Override
-        public String process(
-                final ICallback<Void, String> pCallback,
-                final Void... pParam
-        ) throws InterruptedException {
-            String response = null;
-            try {
-                response = mClient.executeRequest(
-                        new AuthenticationRequest(mLogin, mPassword)
-                );
-            } catch (IOException pEx) {
-                if (BuildConfig.DEBUG) {
-                    Log.e(TAG, FAILED_TO_SIGN_IN, pEx);
-                }
+    @Nullable
+    private String requestToServer(final IHttpClient.IRequest pRequest) {
+        try {
+            return (String) mDefaultWorker.submit(
+                    new Callable<String>() {
+                        @Override
+                        public String call() {
+                            try {
+                                return mClient.executeRequest(pRequest);
+                            } catch (IOException pEx) {
+                                if (BuildConfig.DEBUG) {
+                                    Log.e(TAG, pEx.getMessage(), pEx);
+                                }
+                                return null;
+                            }
+                        }
+                    }
+            );
+        } catch (ExecutionException | InterruptedException pEx) {
+            if (BuildConfig.DEBUG) {
+                Log.e(TAG, pEx.getMessage(), pEx);
             }
-            return response;
+            return null;
         }
     }
 
-    private class SignUpAction implements IAction<Void, Void, String> {
-        private String mLogin;
-        private String mPassword;
+    public String signIn(final String pLogin, final String pPassword) {
+        return getTokenFromResponseString(
+                requestToServer(new AuthenticationRequest(pLogin, pPassword))
+        );
+    }
 
-        public SignUpAction(final String pLogin, final String pPassword) {
-            mLogin = pLogin;
-            mPassword = pPassword;
-        }
-
-        @Override
-        public String process(
-                final ICallback<Void, String> pCallback,
-                final Void... pParam
-        ) throws InterruptedException {
-            String response = null;
-            try {
-                response = mClient.executeRequest(
-                        new RegistrationRequest(mLogin, mPassword)
-                );
-            } catch (IOException pEx) {
-                if (BuildConfig.DEBUG) {
-                    Log.e(TAG, FAILED_TO_REGISTER, pEx);
-                }
-            }
-            return response;
-        }
+    public String signUp(final String pLogin, final String pPassword) {
+        return getTokenFromResponseString(
+                requestToServer(new RegistrationRequest(pLogin, pPassword))
+        );
     }
 }

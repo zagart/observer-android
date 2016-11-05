@@ -3,7 +3,6 @@ package by.zagart.observer.database.services;
 import by.zagart.observer.controller.Logger;
 import by.zagart.observer.database.entities.User;
 import by.zagart.observer.database.services.impl.UserServiceImpl;
-import by.zagart.observer.security.SecurityProvider;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -28,7 +27,7 @@ public class MainService {
         if (mUser == null) {
             return null;
         } else {
-            return SecurityProvider.getToken(mUser, mPassword);
+            return mUser.getToken();
         }
     }
 

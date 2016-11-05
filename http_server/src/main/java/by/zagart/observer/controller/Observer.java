@@ -2,6 +2,7 @@ package by.zagart.observer.controller;
 
 import by.zagart.observer.database.services.MainService;
 import by.zagart.observer.utils.HttpUtil;
+import org.json.simple.JSONObject;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -69,13 +70,15 @@ public class Observer extends HttpServlet {
             HttpServletResponse pResponse,
             String pAction
     ) throws IOException {
+        JSONObject jsonToken = new JSONObject();
         String token;
         switch (pAction) {
             case AUTHENTICATE:
                 token = mService.authenticateUser();
+                jsonToken.put(TOKEN, token);
                 if (token != null) {
-                    Logger.log(USER_HAS_BEEN_AUTHORIZED);
-                    pResponse.getWriter().println(token);
+                    Logger.log(USER_HAS_BEEN_AUTHENTICATED);
+                    responseInJson(pResponse, jsonToken);
                 } else {
                     Logger.log(USER_REQUEST_REJECTED);
                     pResponse.sendError(UNAUTHORIZED);
@@ -83,13 +86,14 @@ public class Observer extends HttpServlet {
                 break;
             case REGISTER:
                 token = mService.registerUser(pRequest);
+                jsonToken.put(TOKEN, token);
                 if (token == null) {
                     Logger.log(FAILED_TO_REGISTER_USER);
 //                    pResponse.sendError(SERVER_INTERNAL_ERROR);
                     pResponse.getWriter().println("Failed :(");
                     break;
                 } else {
-                    pResponse.getWriter().println(token);
+                    responseInJson(pResponse, jsonToken);
                 }
                 break;
         }
@@ -103,12 +107,15 @@ public class Observer extends HttpServlet {
         mService = new MainService();
     }
 
+    private void responseInJson(HttpServletResponse pResponse, JSONObject pJSONObject) throws IOException {
+        pResponse.getWriter().println(pJSONObject.toJSONString());
+    }
+
     public class ServletLogConstants {
         public static final String ATTEMPT_TO_REGISTER_USER = "Attempt to register user.";
         public static final String FAILED_TO_REGISTER_USER = "Failed to register user.";
         public static final String GUEST_CONNECTED = "Guest connected.";
-        public static final String USER_AUTHENTICATED = "User has been authenticated as %s";
-        public static final String USER_HAS_BEEN_AUTHORIZED = "User has been authorized.";
+        public static final String USER_HAS_BEEN_AUTHENTICATED = "User has been authenticated.";
         public static final String USER_REQUEST_REJECTED = "User request rejected.";
     }
 

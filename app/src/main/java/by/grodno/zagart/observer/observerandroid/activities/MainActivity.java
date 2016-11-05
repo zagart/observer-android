@@ -1,8 +1,11 @@
 package by.grodno.zagart.observer.observerandroid.activities;
+import android.accounts.Account;
+import android.accounts.AccountManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -10,12 +13,7 @@ import android.widget.Toast;
 
 import by.grodno.zagart.observer.observerandroid.BuildConfig;
 import by.grodno.zagart.observer.observerandroid.R;
-import by.grodno.zagart.observer.observerandroid.cache.helper.DbHelper;
-import by.grodno.zagart.observer.observerandroid.cache.model.User;
-import by.grodno.zagart.observer.observerandroid.http.interfaces.IHttpClient;
-import by.grodno.zagart.observer.observerandroid.singletons.ContextHolder;
 import by.grodno.zagart.observer.observerandroid.threadings.ThreadWorker;
-import by.grodno.zagart.observer.observerandroid.utils.SharedPreferencesUtil;
 
 /**
  * Application main activity.
@@ -26,6 +24,7 @@ public class MainActivity extends AppCompatActivity {
     public static final String MAIN_TAG = MainActivity.class.getSimpleName();
     private ThreadWorker mThreadWorker = new ThreadWorker(BACKGROUND_TASK_NAME);
 
+    @SuppressWarnings("MissingPermission")
     @Override
     protected void onCreate(@Nullable final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,9 +33,13 @@ public class MainActivity extends AppCompatActivity {
             bar.hide();
         }
         setContentView(R.layout.main_activity);
-        //call ThreadWorker method onStart()..?
-        mThreadWorker.onStart();
-        DbHelper.getTableCreateQuery(User.UserContract.class);
+        AccountManager mAccountManager = AccountManager.get(this);
+        StringBuilder builder = new StringBuilder();
+        for (Account a : mAccountManager.getAccounts()) {
+            builder.append(a.toString()).append("\n");
+        }
+        AlertDialog.Builder info = new AlertDialog.Builder(this);
+        info.setMessage(builder.toString()).create().show();
     }
 
     public void onExitClick(View view) {
@@ -53,7 +56,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onLoginClick(View view) {
-
         Intent intent = new Intent(this, LoginActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
         startActivity(intent);

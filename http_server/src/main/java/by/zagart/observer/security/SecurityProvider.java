@@ -19,7 +19,7 @@ public class SecurityProvider {
     public static final String KEY = "my_key";
     public static final String TOKEN_CREATE_DATE = "token_create_date";
     public static final String TOKEN_EXPIRATION_DATE = "token_expiration_date";
-    public static final int TOKEN_EXPIRATION_YEAR = 100;
+    public static final int TOKEN_EXPIRATION_HOUR = 1;
 
     private SecurityProvider() {
     }
@@ -32,7 +32,7 @@ public class SecurityProvider {
             tokenData.put(User.Fields.ROLE, pUser.getRole());
             tokenData.put(TOKEN_CREATE_DATE, new Date().getTime());
             Calendar calendar = Calendar.getInstance();
-            calendar.add(Calendar.YEAR, TOKEN_EXPIRATION_YEAR);
+            calendar.add(Calendar.HOUR, TOKEN_EXPIRATION_HOUR);
             tokenData.put(TOKEN_EXPIRATION_DATE, calendar.getTime());
             JwtBuilder jwtBuilder = Jwts.builder();
             jwtBuilder.setExpiration(calendar.getTime());

@@ -27,4 +27,12 @@
         <activity android:name=".activities.MyAccountActivity"/>
         <activity android:name=".activities.RegistrationActivity"/>
     </application>
+    <service android:name=".accounts.ObserverAuthenticatorService">
+        <intent-filter>
+            <action android:name="android.accounts.AccountAuthenticator"/>
+        </intent-filter>
+        <meta-data
+            android:name="android.accounts.AccountAuthenticator"
+            android:resource="@xml/authenticator"/>
+    </service>
 </manifest>
