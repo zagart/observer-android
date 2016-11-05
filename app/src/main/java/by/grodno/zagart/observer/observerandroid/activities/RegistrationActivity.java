@@ -6,8 +6,9 @@ import android.view.View;
 import android.widget.EditText;
 
 import by.grodno.zagart.observer.observerandroid.R;
+import by.grodno.zagart.observer.observerandroid.server.api.Observer;
+import by.grodno.zagart.observer.observerandroid.singletons.ContextHolder;
 import by.grodno.zagart.observer.observerandroid.threadings.ThreadWorker;
-import by.grodno.zagart.observer.observerandroid.utils.HttpUtil;
 
 /**
  * Activity with UI for executing process of registration
@@ -20,6 +21,7 @@ public class RegistrationActivity extends AppCompatActivity {
     private EditText mPasswordView;
     private EditText mLoginView;
     private ThreadWorker mWorker;
+    private Observer mServer = Observer.getDefaultInstance();
 
     public void onConfirmClick(View pView) {
         String login = "";
@@ -32,7 +34,8 @@ public class RegistrationActivity extends AppCompatActivity {
         if (passwordViewText != null) {
             password = passwordViewText.toString();
         }
-        HttpUtil.sendRegistrationRequest(this, login, password);
+        ContextHolder.set(this);
+        mServer.signUp(login, password);
     }
 
     @Override

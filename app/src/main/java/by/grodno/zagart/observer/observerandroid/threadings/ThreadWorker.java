@@ -11,6 +11,7 @@ import java.util.concurrent.Executors;
 import by.grodno.zagart.observer.observerandroid.BuildConfig;
 import by.grodno.zagart.observer.observerandroid.interfaces.IAction;
 import by.grodno.zagart.observer.observerandroid.interfaces.ICallback;
+import by.grodno.zagart.observer.observerandroid.interfaces.IResultCallback;
 
 /**
  * My class for asynchronous background tasks.
@@ -50,6 +51,42 @@ public class ThreadWorker<Result> {
      */
     public void execute(Runnable pRunnable) {
         mPool.execute(pRunnable);
+    }
+
+    /**
+     * Executes method {@link IAction#process(ICallback, Object[])},
+     * handles it's result using {@link IResultCallback#onResult(Object)}.
+     * All work executes in background thread.
+     * <p>
+     * If {@link IAction#process(ICallback, Object[])} returns {@code null}, there
+     * is no result handling.
+     *
+     * @param pAction   Object for executing it's method
+     * @param pCallback Object for handling result of executing
+     * @param <AR>      Type of result of executing method
+     * @param <CR>      Type of result of handling method's result
+     */
+    public <AR, CR> void execute(
+            final IAction<Void, Void, AR> pAction,
+            final IResultCallback<AR, CR> pCallback
+    ) {
+        mPool.execute(
+                new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            final AR actionResult = pAction.process(null, null);
+                            if (actionResult != null) {
+                                pCallback.onResult(actionResult);
+                            }
+                        } catch (InterruptedException pEx) {
+                            if (BuildConfig.DEBUG) {
+                                Log.e(TAG, pEx.getMessage());
+                            }
+                        }
+                    }
+                }
+        );
     }
 
     /**

@@ -1,4 +1,4 @@
-package by.grodno.zagart.observer.observerandroid.http.observer.requests;
+package by.grodno.zagart.observer.observerandroid.server.requests;
 import java.net.HttpURLConnection;
 
 import by.grodno.zagart.observer.observerandroid.http.interfaces.IHttpClient;
