@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
-    <CheckBoxPreference
-        android:defaultValue="false"
-        android:key="pref_sync"
-        android:summary="@string/not_enabled"
-        android:title="@string/str_synchronization"/>
-</PreferenceScreen>
