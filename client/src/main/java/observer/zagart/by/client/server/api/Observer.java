@@ -1,5 +1,9 @@
 package observer.zagart.by.client.server.api;
+import android.accounts.Account;
+import android.accounts.AccountAuthenticatorActivity;
+import android.accounts.AccountManager;
 import android.content.Context;
+import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
@@ -11,11 +15,14 @@ import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 
 import observer.zagart.by.client.BuildConfig;
+import observer.zagart.by.client.R;
 import observer.zagart.by.client.http.HttpClientFactory;
 import observer.zagart.by.client.http.interfaces.IHttpClient;
 import observer.zagart.by.client.server.requests.AuthenticationRequest;
 import observer.zagart.by.client.server.requests.RegistrationRequest;
 import observer.zagart.by.client.threadings.ThreadWorker;
+
+import static android.app.Activity.RESULT_OK;
 
 /**
  * Class that provides methods to work with Observer's HTTP-server.
@@ -31,6 +38,30 @@ public class Observer {
 
     public Observer(final Context pContext) {
         mContext = pContext;
+    }
+
+    public static void onTokenReceived(
+            AccountAuthenticatorActivity pActivity,
+            Account account,
+            String password,
+            String token
+    ) {
+        final AccountManager accountManager = AccountManager.get(pActivity);
+        final Bundle result = new Bundle();
+        if (accountManager.addAccountExplicitly(account, password, new Bundle())) {
+            result.putString(AccountManager.KEY_ACCOUNT_NAME, account.name);
+            result.putString(AccountManager.KEY_ACCOUNT_TYPE, account.type);
+            result.putString(AccountManager.KEY_AUTHTOKEN, token);
+            accountManager.setAuthToken(account, account.type, token);
+        } else {
+            result.putString(
+                    AccountManager.KEY_ERROR_MESSAGE,
+                    pActivity.getString(R.string.error_account_exists)
+            );
+        }
+        pActivity.setAccountAuthenticatorResult(result);
+        pActivity.setResult(RESULT_OK);
+        pActivity.finish();
     }
 
     public static String signIn(
@@ -52,12 +83,11 @@ public class Observer {
     @Nullable
     private String getTokenFromResponseString(final String pResponse) {
         try {
-            final JSONObject jsonResponse = new JSONObject(pResponse);
+            JSONObject jsonResponse = new JSONObject(pResponse);
             if (jsonResponse.has(TOKEN)) {
                 return jsonResponse.getString(TOKEN);
-            } else {
-                return null;
             }
+            return null;
         } catch (JSONException pEx) {
             if (BuildConfig.DEBUG) {
                 Log.e(TAG, pEx.getMessage(), pEx);

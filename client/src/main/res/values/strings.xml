@@ -26,4 +26,6 @@
     <string name="str_observer">Observer</string>
     <string name="str_synchronization">Synchronization</string>
     <string name="not_enabled">Not enabled</string>
+    <string name="err_registration_failed">Registration failed! Maybe user with such login already exists? Try again with new login.</string>
+    <string name="msg_token_invalidated">Token invalidated</string>
 </resources>

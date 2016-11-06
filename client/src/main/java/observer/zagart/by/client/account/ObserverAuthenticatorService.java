@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
 
+import observer.zagart.by.client.singletons.ContextHolder;
+
 /**
  * Service for ObserverAuthenticator.
  *
@@ -14,7 +16,7 @@ public class ObserverAuthenticatorService extends Service {
 
     public ObserverAuthenticatorService() {
         super.onCreate();
-        mAuthenticator = new ObserverAuthenticator(getApplicationContext());
+        mAuthenticator = new ObserverAuthenticator(ContextHolder.get().getApplicationContext());
     }
 
     @Nullable

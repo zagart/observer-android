@@ -1,21 +1,22 @@
 package observer.zagart.by.client.activities;
 import android.accounts.AccountAuthenticatorActivity;
-import android.accounts.AccountManager;
 import android.app.ActionBar;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import observer.zagart.by.client.R;
 import observer.zagart.by.client.account.ObserverAccount;
+import observer.zagart.by.client.server.api.Observer;
 
 /**
  * Activity that provides UI for user authorization.
  */
 public class LoginActivity extends AccountAuthenticatorActivity {
-    private static final String ACCOUNT_ALREADY_EXISTS = "Account already exists";
     public static String EXTRA_TOKEN_TYPE = "by.zagart.observer.EXTRA_TOKEN";
     private TextView mLoginView;
     private TextView mPasswordView;
@@ -40,14 +41,25 @@ public class LoginActivity extends AccountAuthenticatorActivity {
     }
 
     public void onSignInClick(View view) {
-        final AccountManager accountManager = AccountManager.get(this);
-        ObserverAccount account = new ObserverAccount("account");
-        accountManager.addAccountExplicitly(account, "password", null);
+        final CharSequence charLogin = mLoginView.getText();
+        final CharSequence charPassword = mPasswordView.getText();
+        if (TextUtils.isEmpty(charLogin) || TextUtils.isEmpty(charPassword)) {
+            Toast.makeText(this, R.string.error_login_fields_empty, Toast.LENGTH_LONG).show();
+        } else {
+            final String login = charLogin.toString();
+            final String password = charPassword.toString();
+            final String token = Observer.signIn(this, login, password);
+            if (!TextUtils.isEmpty(token)) {
+                ObserverAccount account = new ObserverAccount(login);
+                Observer.onTokenReceived(this, account, password, token);
+            } else {
+                Toast.makeText(this, R.string.msg_failed_authentication, Toast.LENGTH_LONG).show();
+            }
+        }
     }
 
     public void onSignUpClick(View pView) {
         Intent intent = new Intent(this, RegistrationActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
         startActivity(intent);
     }
 }

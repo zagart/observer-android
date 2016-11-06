@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 
 import observer.zagart.by.client.activities.LoginActivity;
+import observer.zagart.by.client.server.api.Observer;
 
 /**
  * Authenticator to Observer HTTP-server.
@@ -30,46 +31,62 @@ public class ObserverAuthenticator extends AbstractAccountAuthenticator {
     }
 
     @Override
-    public Bundle addAccount(AccountAuthenticatorResponse response, String accountType, String authTokenType,
-                             String[] requiredFeatures, Bundle options)
-            throws NetworkErrorException {
+    public Bundle addAccount(
+            AccountAuthenticatorResponse pResponse,
+            String pAccountType,
+            String pAuthTokenType,
+            String[] pRequiredFeatures,
+            Bundle pOptions
+    ) throws NetworkErrorException {
         final Intent intent = new Intent(mContext, LoginActivity.class);
-        intent.putExtra(LoginActivity.EXTRA_TOKEN_TYPE, accountType);
-        intent.putExtra(AccountManager.KEY_ACCOUNT_AUTHENTICATOR_RESPONSE, response);
+        intent.putExtra(LoginActivity.EXTRA_TOKEN_TYPE, pAccountType);
+        intent.putExtra(AccountManager.KEY_ACCOUNT_AUTHENTICATOR_RESPONSE, pResponse);
         final Bundle bundle = new Bundle();
-        if (options != null) {
-            bundle.putAll(options);
+        if (pOptions != null) {
+            bundle.putAll(pOptions);
         }
         bundle.putParcelable(AccountManager.KEY_INTENT, intent);
         return bundle;
     }
 
     @Override
-    public Bundle confirmCredentials(AccountAuthenticatorResponse response, Account account, Bundle options)
-            throws NetworkErrorException {
+    public Bundle confirmCredentials(
+            AccountAuthenticatorResponse response,
+            Account account,
+            Bundle options
+    ) throws NetworkErrorException {
         return null;
     }
 
     @Override
-    public Bundle getAuthToken(AccountAuthenticatorResponse response, Account account, String authTokenType,
-                               Bundle options) throws NetworkErrorException {
+    public Bundle getAuthToken(
+            AccountAuthenticatorResponse pResponse,
+            Account pAccount,
+            String pAuthTokenType,
+            Bundle pOptions
+    ) throws NetworkErrorException {
         final Bundle result = new Bundle();
         final AccountManager am = AccountManager.get(mContext.getApplicationContext());
-        String authToken = am.peekAuthToken(account, authTokenType);
+        String authToken = am.peekAuthToken(pAccount, pAuthTokenType);
         if (TextUtils.isEmpty(authToken)) {
-            final String password = am.getPassword(account);
+            final String password = am.getPassword(pAccount);
             if (!TextUtils.isEmpty(password)) {
-                authToken = "token";
+                authToken = Observer.signIn(mContext, pAccount.name, password);
             }
         }
         if (!TextUtils.isEmpty(authToken)) {
-            result.putString(AccountManager.KEY_ACCOUNT_NAME, account.name);
-            result.putString(AccountManager.KEY_ACCOUNT_TYPE, account.type);
+            result.putString(AccountManager.KEY_ACCOUNT_NAME, pAccount.name);
+            result.putString(AccountManager.KEY_ACCOUNT_TYPE, pAccount.type);
             result.putString(AccountManager.KEY_AUTHTOKEN, authToken);
         } else {
+            am.invalidateAuthToken(
+                    pAccount.type,
+                    am.peekAuthToken(pAccount, ObserverAccount.AUTH_TOKEN_TYPE
+                    )
+            );
             final Intent intent = new Intent(mContext, LoginActivity.class);
-            intent.putExtra(AccountManager.KEY_ACCOUNT_AUTHENTICATOR_RESPONSE, response);
-            intent.putExtra(LoginActivity.EXTRA_TOKEN_TYPE, authTokenType);
+            intent.putExtra(AccountManager.KEY_ACCOUNT_AUTHENTICATOR_RESPONSE, pResponse);
+            intent.putExtra(LoginActivity.EXTRA_TOKEN_TYPE, pAuthTokenType);
             final Bundle bundle = new Bundle();
             bundle.putParcelable(AccountManager.KEY_INTENT, intent);
         }
@@ -82,14 +99,20 @@ public class ObserverAuthenticator extends AbstractAccountAuthenticator {
     }
 
     @Override
-    public Bundle updateCredentials(AccountAuthenticatorResponse response, Account account, String authTokenType,
-                                    Bundle options) throws NetworkErrorException {
+    public Bundle updateCredentials(
+            AccountAuthenticatorResponse response,
+            Account account,
+            String authTokenType, Bundle options
+    ) throws NetworkErrorException {
         return null;
     }
 
     @Override
-    public Bundle hasFeatures(AccountAuthenticatorResponse response, Account account, String[] features)
-            throws NetworkErrorException {
+    public Bundle hasFeatures(
+            AccountAuthenticatorResponse response,
+            Account account,
+            String[] features
+    ) throws NetworkErrorException {
         return null;
     }
 }
