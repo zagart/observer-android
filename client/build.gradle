@@ -1,10 +1,9 @@
 apply plugin: 'com.android.application'
-
 android {
     compileSdkVersion 25
     buildToolsVersion "25.0.0"
     defaultConfig {
-        applicationId "observer.zagart.by.android_client"
+        applicationId 'observer.zagart.by.client'
         minSdkVersion 16
         targetSdkVersion 25
         versionCode 1
@@ -12,7 +11,6 @@ android {
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
     }
-
     buildTypes {
         debug {
             minifyEnabled false
@@ -26,8 +24,14 @@ android {
     testOptions {
         unitTests.returnDefaultValues = true
     }
+    sourceSets {
+        main {
+            manifest.srcFile 'src/main/AndroidManifest.xml'
+        }
+    }
+    productFlavors {
+    }
 }
-
 ext {
     supportLibraryVersion = '25.0.0'
     dependencies {
@@ -47,4 +51,6 @@ ext {
         androidTestCompile 'com.android.support.test.espresso:espresso-core:2.2.2'
         androidTestCompile 'com.jayway.android.robotium:robotium-solo:5.6.2'
     }
+}
+dependencies {
 }

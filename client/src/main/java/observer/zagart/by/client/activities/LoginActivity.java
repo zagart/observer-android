@@ -1,5 +1,6 @@
 package observer.zagart.by.client.activities;
 import android.accounts.AccountAuthenticatorActivity;
+import android.accounts.AccountManager;
 import android.app.ActionBar;
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,11 +9,14 @@ import android.view.View;
 import android.widget.TextView;
 
 import observer.zagart.by.client.R;
+import observer.zagart.by.client.account.ObserverAccount;
 
 /**
  * Activity that provides UI for user authorization.
  */
 public class LoginActivity extends AccountAuthenticatorActivity {
+    private static final String ACCOUNT_ALREADY_EXISTS = "Account already exists";
+    public static String EXTRA_TOKEN_TYPE = "by.zagart.observer.EXTRA_TOKEN";
     private TextView mLoginView;
     private TextView mPasswordView;
 
@@ -36,6 +40,9 @@ public class LoginActivity extends AccountAuthenticatorActivity {
     }
 
     public void onSignInClick(View view) {
+        final AccountManager accountManager = AccountManager.get(this);
+        ObserverAccount account = new ObserverAccount("account");
+        accountManager.addAccountExplicitly(account, "password", null);
     }
 
     public void onSignUpClick(View pView) {

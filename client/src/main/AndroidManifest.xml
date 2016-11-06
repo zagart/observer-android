@@ -1,9 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="observer.zagart.by.client">
 
+    <uses-permission android:name="android.permission.GET_ACCOUNTS"/>
+    <uses-permission android:name="android.permission.MANAGE_ACCOUNTS"/>
+    <uses-permission android:name="android.permission.AUTHENTICATE_ACCOUNTS"/>
+    <uses-permission android:name="android.permission.USE_CREDENTIALS"/>
     <uses-permission android:name="android.permission.INTERNET"/>
+
     <application
-        android:name="observer.zagart.by.client.App"
+        android:name=".App"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -20,5 +26,16 @@
         <activity android:name=".activities.ResultActivity"/>
         <activity android:name=".activities.MyAccountActivity"/>
         <activity android:name=".activities.RegistrationActivity"/>
+
+        <service
+            android:name=".account.ObserverAuthenticatorService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="android.accounts.AccountAuthenticator"/>
+            </intent-filter>
+            <meta-data
+                android:resource="@xml/observer_authenticator"
+                android:name="android.accounts.AccountAuthenticator"/>
+        </service>
     </application>
 </manifest>
