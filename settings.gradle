@@ -1,1 +1,1 @@
-include ':app', ':http_server'
+include ':client'
