@@ -1,7 +1,13 @@
 package observer.zagart.by.client.server.requests;
+import android.util.Log;
+
+import java.io.IOException;
+import java.io.InputStream;
 import java.net.HttpURLConnection;
 
+import observer.zagart.by.client.BuildConfig;
 import observer.zagart.by.client.R;
+import observer.zagart.by.client.http.HttpClient;
 import observer.zagart.by.client.http.interfaces.IHttpClient;
 import observer.zagart.by.client.singletons.ContextHolder;
 
@@ -12,7 +18,7 @@ import observer.zagart.by.client.singletons.ContextHolder;
  * @author zagart
  * @see IHttpClient.IRequest
  */
-public class RegistrationRequest implements IHttpClient.IRequest {
+public class RegistrationRequest implements IHttpClient.IRequest<String> {
     private String mLogin;
     private String mPassword;
 
@@ -50,5 +56,22 @@ public class RegistrationRequest implements IHttpClient.IRequest {
                 IHttpClient.IHttpData.Header.PASSWORD,
                 mPassword
         );
+    }
+
+    @Override
+    public String onErrorStream(final InputStream pInputStream) {
+        return null;
+    }
+
+    @Override
+    public String onStandardStream(final InputStream pInputStream) {
+        try {
+            return HttpClient.readStreamUsingBuffer(pInputStream);
+        } catch (IOException pEx) {
+            if (BuildConfig.DEBUG) {
+                Log.e(RegistrationRequest.class.getSimpleName(), pEx.getMessage(), pEx);
+            }
+            return null;
+        }
     }
 }

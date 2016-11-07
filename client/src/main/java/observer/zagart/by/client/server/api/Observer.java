@@ -82,6 +82,9 @@ public class Observer {
 
     @Nullable
     private String getTokenFromResponseString(final String pResponse) {
+        if (pResponse == null) {
+            return null;
+        }
         try {
             JSONObject jsonResponse = new JSONObject(pResponse);
             if (jsonResponse.has(TOKEN)) {
@@ -97,7 +100,7 @@ public class Observer {
     }
 
     @Nullable
-    private String requestToServer(final IHttpClient.IRequest pRequest) {
+    private String requestToServer(final IHttpClient.IRequest<String> pRequest) {
         try {
             return (String) mDefaultWorker.submit(
                     new Callable<String>() {
@@ -122,13 +125,13 @@ public class Observer {
         }
     }
 
-    public String signIn(final String pLogin, final String pPassword) {
+    private String signIn(final String pLogin, final String pPassword) {
         return getTokenFromResponseString(
                 requestToServer(new AuthenticationRequest(pLogin, pPassword))
         );
     }
 
-    public String signUp(final String pLogin, final String pPassword) {
+    private String signUp(final String pLogin, final String pPassword) {
         return getTokenFromResponseString(
                 requestToServer(new RegistrationRequest(pLogin, pPassword))
         );
