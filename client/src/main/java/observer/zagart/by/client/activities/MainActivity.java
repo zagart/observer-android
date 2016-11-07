@@ -1,6 +1,5 @@
 package observer.zagart.by.client.activities;
 import android.accounts.Account;
-import android.content.ContentValues;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -8,18 +7,13 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
-
-import java.util.ArrayList;
-import java.util.List;
+import android.widget.Button;
 
 import observer.zagart.by.client.BuildConfig;
 import observer.zagart.by.client.R;
-import observer.zagart.by.client.cache.helper.DbHelper;
-import observer.zagart.by.client.cache.model.Stand;
-import observer.zagart.by.client.cache.model.contracts.StandContract;
 import observer.zagart.by.client.singletons.AccountHolder;
 import observer.zagart.by.client.singletons.ContextHolder;
-import observer.zagart.by.client.utils.MessengerUtil;
+import observer.zagart.by.client.utils.AndroidUtil;
 
 /**
  * Application main activity.
@@ -27,7 +21,7 @@ import observer.zagart.by.client.utils.MessengerUtil;
 public class MainActivity extends AppCompatActivity {
     public static final String CONFIGURATION_CHANGED = "Configuration changed.";
     public static final String MAIN_TAG = MainActivity.class.getSimpleName();
-    private DbHelper mDbHelper = DbHelper.getInstance();
+    private Button signInView;
 
     @Override
     protected void onCreate(@Nullable final Bundle savedInstanceState) {
@@ -37,6 +31,17 @@ public class MainActivity extends AppCompatActivity {
             bar.hide();
         }
         setContentView(R.layout.main_activity);
+        signInView = (Button) findViewById(R.id.main_menu_btn_log_in);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        if (AccountHolder.get() != null) {
+            signInView.setVisibility(View.GONE);
+        } else {
+            signInView.setVisibility(View.VISIBLE);
+        }
         ContextHolder.set(this);
     }
 
@@ -54,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
         } else {
             message = getString(R.string.msg_no_accounts);
         }
-        MessengerUtil.showMessage(message);
+        AndroidUtil.showMessage(message);
     }
 
     public void onLoginClick(View view) {
@@ -78,6 +83,5 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onSettingsClick(View view) {
-
     }
 }

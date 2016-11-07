@@ -12,7 +12,7 @@ import observer.zagart.by.client.R;
 import observer.zagart.by.client.account.ObserverAccount;
 import observer.zagart.by.client.server.api.Observer;
 import observer.zagart.by.client.singletons.ContextHolder;
-import observer.zagart.by.client.utils.MessengerUtil;
+import observer.zagart.by.client.utils.AndroidUtil;
 
 /**
  * Activity that provides UI for user authorization.
@@ -46,7 +46,7 @@ public class LoginActivity extends AccountAuthenticatorActivity {
         final CharSequence charLogin = mLoginView.getText();
         final CharSequence charPassword = mPasswordView.getText();
         if (TextUtils.isEmpty(charLogin) || TextUtils.isEmpty(charPassword)) {
-            MessengerUtil.showMessage(R.string.error_login_fields_empty);
+            AndroidUtil.showMessage(R.string.error_login_fields_empty);
         } else {
             final String login = charLogin.toString();
             final String password = charPassword.toString();
@@ -55,7 +55,7 @@ public class LoginActivity extends AccountAuthenticatorActivity {
                 ObserverAccount account = new ObserverAccount(login);
                 Observer.onTokenReceived(this, account, password, token);
             } else {
-                MessengerUtil.showMessage(R.string.msg_failed_authentication);
+                AndroidUtil.showMessage(R.string.msg_failed_authentication);
             }
         }
     }

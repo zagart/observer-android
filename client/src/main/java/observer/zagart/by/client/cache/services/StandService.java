@@ -25,6 +25,7 @@ public class StandService {
             stands.add(Stand.parseCursorRow(cursor));
             cursor.moveToNext();
         }
+        sDbHelper.close();
         return stands;
     }
 }

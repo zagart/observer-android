@@ -3,6 +3,7 @@ import android.accounts.Account;
 import android.accounts.AccountAuthenticatorActivity;
 import android.accounts.AccountManager;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.Log;
@@ -17,6 +18,7 @@ import java.util.concurrent.ExecutionException;
 import observer.zagart.by.client.App;
 import observer.zagart.by.client.BuildConfig;
 import observer.zagart.by.client.R;
+import observer.zagart.by.client.activities.MainActivity;
 import observer.zagart.by.client.http.HttpClientFactory;
 import observer.zagart.by.client.http.interfaces.IHttpClient;
 import observer.zagart.by.client.server.requests.AuthenticationRequest;
@@ -24,6 +26,7 @@ import observer.zagart.by.client.server.requests.RegistrationRequest;
 import observer.zagart.by.client.singletons.AccountHolder;
 import observer.zagart.by.client.singletons.ContextHolder;
 import observer.zagart.by.client.threadings.ThreadWorker;
+import observer.zagart.by.client.utils.AndroidUtil;
 import observer.zagart.by.client.utils.SharedPreferencesUtil;
 
 import static android.app.Activity.RESULT_OK;
@@ -71,8 +74,10 @@ public class Observer {
         AccountHolder.set(account);
         pActivity.setAccountAuthenticatorResult(result);
         pActivity.setResult(RESULT_OK);
-        pActivity.finish();
+        AndroidUtil.startActivity(MainActivity.class);
     }
+
+
 
     @Nullable
     public static String signIn(
