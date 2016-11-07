@@ -53,7 +53,11 @@ public class LoginActivity extends AccountAuthenticatorActivity {
                 ObserverAccount account = new ObserverAccount(login);
                 Observer.onTokenReceived(this, account, password, token);
             } else {
-                Toast.makeText(this, R.string.msg_failed_authentication, Toast.LENGTH_LONG).show();
+                Toast.makeText(
+                        this,
+                        R.string.msg_failed_authentication,
+                        Toast.LENGTH_LONG
+                ).show();
             }
         }
     }

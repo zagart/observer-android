@@ -28,4 +28,5 @@
     <string name="not_enabled">Not enabled</string>
     <string name="err_registration_failed">Registration failed! Maybe user with such login already exists? Try again with new login.</string>
     <string name="msg_token_invalidated">Token invalidated</string>
+    <string name="msg_sp_value_retrieved">Value %s retrieved</string>
 </resources>

@@ -1,15 +1,11 @@
 package observer.zagart.by.client.http;
 import android.util.Log;
 
-import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.nio.charset.Charset;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -24,36 +20,10 @@ import static observer.zagart.by.client.http.interfaces.IHttpClient.IHttpData.He
  * Implementation of IHttpClient interface.
  */
 public class HttpClient implements IHttpClient {
-    private static final byte EOF = -1;
     private static final String ERROR_STREAM_NOT_NULL = "Error stream not null";
     private static final String HTTP_REQUEST_FAILED = "HTTP-request failed";
     private static final short READ_BUFFER_SIZE = 4096;
     private static final String TAG = HttpClient.class.getSimpleName();
-
-    public static String inputStreamToString(InputStream pInputStream) throws IOException {
-        BufferedReader reader = new BufferedReader(new InputStreamReader(pInputStream));
-        StringBuilder stringBuilder = new StringBuilder();
-        String line;
-        while ((line = reader.readLine()) != null) {
-            stringBuilder.append(line);
-        }
-        return stringBuilder.toString();
-    }
-
-    public static String readStreamUsingBuffer(InputStream pInputStream) throws IOException {
-        final StringBuilder result = new StringBuilder();
-        final Reader reader = new InputStreamReader(pInputStream, Charset.defaultCharset());
-        final char[] buffer = new char[READ_BUFFER_SIZE];
-        try {
-            int bytes;
-            while ((bytes = reader.read(buffer)) != EOF) {
-                result.append(buffer, 0, bytes);
-            }
-        } finally {
-            IOUtil.close(reader);
-        }
-        return result.toString();
-    }
 
     @Override
     public ByteArrayOutputStream downloadBytes(final String pUrl) throws IOException {
@@ -96,7 +66,7 @@ public class HttpClient implements IHttpClient {
                 if (BuildConfig.DEBUG) {
                     Log.d(TAG, ERROR_STREAM_NOT_NULL);
                 }
-                result = pRequest.onErrorStream(errorStream);
+                result = pRequest.onErrorStream(connection, errorStream);
             }
             return result;
         } catch (IOException pEx) {

@@ -9,8 +9,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 
+import observer.zagart.by.client.App;
 import observer.zagart.by.client.activities.LoginActivity;
 import observer.zagart.by.client.server.api.Observer;
+import observer.zagart.by.client.singletons.AccountHolder;
+import observer.zagart.by.client.singletons.ContextHolder;
+import observer.zagart.by.client.utils.SharedPreferencesUtil;
 
 /**
  * Authenticator to Observer HTTP-server.
@@ -114,5 +118,19 @@ public class ObserverAuthenticator extends AbstractAccountAuthenticator {
             String[] features
     ) throws NetworkErrorException {
         return null;
+    }
+
+    @Override
+    public Bundle getAccountRemovalAllowed(
+            final AccountAuthenticatorResponse response,
+            final Account account
+    ) throws NetworkErrorException {
+        SharedPreferencesUtil.persistStringValue(
+                ContextHolder.get(),
+                App.CURRENT_ACCOUNT_NAME,
+                null
+        );
+        AccountHolder.set(null);
+        return super.getAccountRemovalAllowed(response, account);
     }
 }

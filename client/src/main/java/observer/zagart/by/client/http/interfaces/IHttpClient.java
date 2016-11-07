@@ -20,7 +20,7 @@ public interface IHttpClient {
         Method getMethodType();
         String getUrl();
         void handleRequestConnection(HttpURLConnection pConnection);
-        Result onErrorStream(InputStream pInputStream);
+        Result onErrorStream(HttpURLConnection pConnection, InputStream pInputStream) throws IOException;
         Result onStandardStream(InputStream pInputStream);
     }
 
