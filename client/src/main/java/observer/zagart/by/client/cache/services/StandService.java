@@ -14,10 +14,11 @@ import observer.zagart.by.client.cache.model.Stand;
  */
 public class StandService {
     private static final String SELECT_ALL_STANDS = "SELECT * FROM STAND;";
-    private static DbHelper sDbHelper = DbHelper.getInstance();
+    private static DbHelper sDbHelper;
 
     public static List<Stand> selectAllStands() {
         List<Stand> stands = new ArrayList<>();
+        sDbHelper = DbHelper.getInstance();
         Cursor cursor = sDbHelper.query(SELECT_ALL_STANDS);
         cursor.moveToFirst();
         while (!cursor.isLast()) {

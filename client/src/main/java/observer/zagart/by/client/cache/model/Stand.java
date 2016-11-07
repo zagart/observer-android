@@ -6,11 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import observer.zagart.by.client.cache.model.annotations.Id;
-import observer.zagart.by.client.cache.model.annotations.NotNull;
-import observer.zagart.by.client.cache.model.annotations.Table;
-import observer.zagart.by.client.cache.model.annotations.dbLong;
-import observer.zagart.by.client.cache.model.annotations.dbString;
+import observer.zagart.by.client.cache.model.contracts.StandContract;
 import observer.zagart.by.client.interfaces.IConvertible;
 
 /**
@@ -86,19 +82,5 @@ public class Stand implements IConvertible<ContentValues> {
 
     public void setNumber(final String number) {
         mNumber = number;
-    }
-
-    @Table(name = "STAND")
-    public static class StandContract {
-        @dbLong
-        @Id
-        @NotNull
-        public static final String ID = "id";
-        @dbString
-        @NotNull
-        public static final String NUMBER = "number";
-        @NotNull
-        @dbString
-        public static final String DESCRIPTION = "description";
     }
 }

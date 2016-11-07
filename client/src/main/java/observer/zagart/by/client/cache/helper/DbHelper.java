@@ -5,6 +5,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.util.Log;
 
 import java.lang.annotation.Annotation;
@@ -17,9 +18,8 @@ import observer.zagart.by.client.cache.model.annotations.Id;
 import observer.zagart.by.client.cache.model.annotations.NotNull;
 import observer.zagart.by.client.cache.model.annotations.Table;
 import observer.zagart.by.client.cache.model.annotations.dbInteger;
-import observer.zagart.by.client.cache.model.annotations.dbLong;
 import observer.zagart.by.client.cache.model.annotations.dbString;
-import observer.zagart.by.client.cache.model.contracts.Contract;
+import observer.zagart.by.client.cache.model.contracts.Contracts;
 import observer.zagart.by.client.singletons.ContextHolder;
 
 /**
@@ -29,20 +29,16 @@ import observer.zagart.by.client.singletons.ContextHolder;
  * @author zagart
  */
 public class DbHelper extends SQLiteOpenHelper implements IDbOperations {
-    private static final String EXCEPTION_IN_INIT_MSG = "Initialization failed";
-    private static final String ILLEGAL_ACCESS_MESSAGE = "Underlying field is inaccessible";
-    private static final String ILLEGAL_ARGUMENT_MSG = "Not an instance of the required class";
-    private static final String NULL_POINTER_MSG = "Instance is null";
     private static final String SQL_TABLE_CREATE_FIELD_TEMPLATE = "%s %s";
     private static final String SQL_TABLE_CREATE_TEMPLATE = "CREATE TABLE IF NOT EXISTS %s (%s);";
     public static final String NOT_NULL = " NOT NULL";
     public static final String AUTOINCREMENT = " AUTOINCREMENT";
     public static final int DATABASE_VERSION = 1;
-    public static final String DATABASE_FILE_NAME = "cache.db";
+    public static final String DATABASE_FILE_NAME = "observer.db";
     private static String TAG = DbHelper.class.getSimpleName();
     private SQLiteDatabase mDatabase;
 
-    private DbHelper(
+    public DbHelper(
             final Context context,
             final String name,
             final int version
@@ -81,7 +77,7 @@ public class DbHelper extends SQLiteOpenHelper implements IDbOperations {
             try {
                 final String name = table.name();
                 Field[] fields = pClass.getFields();
-                for (int i = 0; i < fields.length; i++) {
+                for (int i = 0, hits = 0; i < fields.length; i++) {
                     final Field field = fields[i];
                     final Annotation[] annotations = field.getAnnotations();
                     String type = "";
@@ -89,58 +85,45 @@ public class DbHelper extends SQLiteOpenHelper implements IDbOperations {
                         if (annotation instanceof dbInteger) {
                             type += ((dbInteger) (annotation)).value();
                             type = findSecondaryAnnotations(annotations, type);
-                        } else if (annotation instanceof dbLong) {
-                            type += ((dbLong) (annotation)).value();
-                            type = findSecondaryAnnotations(annotations, type);
                         } else if (annotation instanceof dbString) {
                             type += ((dbString) (annotation)).value();
                             type = findSecondaryAnnotations(annotations, type);
                         }
                     }
-                    if (type == null) {
-                        return null;
-                    }
-                    final String value = (String) field.get(null);
-                    builder.append(
-                            String.format(
-                                    Locale.US,
-                                    SQL_TABLE_CREATE_FIELD_TEMPLATE,
-                                    value,
-                                    type
-                            )
-                    );
-                    if (i < fields.length - 1) {
-                        builder.append(", ");
+                    if (!TextUtils.isEmpty(type)) {
+                        if (hits > 0) {
+                            builder.append(", ");
+                        }
+                        final String value = (String) field.get(null);
+                        builder.append(
+                                String.format(
+                                        Locale.US,
+                                        SQL_TABLE_CREATE_FIELD_TEMPLATE,
+                                        value,
+                                        type
+                                )
+                        );
+                        hits++;
                     }
                 }
-                String template = String.format(Locale.US, SQL_TABLE_CREATE_TEMPLATE, name, builder);
+                String template = String.format(
+                        Locale.US,
+                        SQL_TABLE_CREATE_TEMPLATE,
+                        name,
+                        builder
+                );
                 if (BuildConfig.DEBUG) {
                     Log.d(TAG, template);
                 }
                 return template;
-            } catch (IllegalAccessException pEx) {
+            } catch (
+                            NullPointerException |
+                            ExceptionInInitializerError |
+                            IllegalAccessException |
+                            IllegalArgumentException pEx
+                    ) {
                 if (BuildConfig.DEBUG) {
-                    Log.e(TAG, ILLEGAL_ACCESS_MESSAGE);
-                }
-                pEx.getCause().printStackTrace();
-            } catch (IllegalArgumentException pEx) {
-                if (BuildConfig.DEBUG) {
-                    Log.e(TAG, ILLEGAL_ARGUMENT_MSG);
-                }
-                pEx.getCause().printStackTrace();
-            } catch (NullPointerException pEx) {
-                if (BuildConfig.DEBUG) {
-                    Log.e(TAG, NULL_POINTER_MSG);
-                }
-                pEx.getCause().printStackTrace();
-            } catch (ExceptionInInitializerError pEx) {
-                if (BuildConfig.DEBUG) {
-                    Log.e(TAG, EXCEPTION_IN_INIT_MSG);
-                }
-                pEx.getCause().printStackTrace();
-            } catch (Exception pEx) {
-                if (BuildConfig.DEBUG) {
-                    Log.e(TAG, pEx.getMessage());
+                    Log.e(TAG, pEx.getMessage(), pEx);
                 }
                 return null;
             }
@@ -231,22 +214,9 @@ public class DbHelper extends SQLiteOpenHelper implements IDbOperations {
         return mDatabase.rawQuery(pSql, pParams);
     }
 
-    /**
-     * Method for manual closing database connection to avoid memory leak. Required when
-     * finished work with cursor that returns {@link #query(String, String...)} method.
-     * The rest methods close connection automatically.
-     *
-     * @see DbHelper#query(String, String...)
-     */
-    public void closeDatabase() {
-        if (mDatabase.isOpen()) {
-            mDatabase.close();
-        }
-    }
-
     @Override
     public void onCreate(final SQLiteDatabase pDatabase) {
-        for (final Class<?> clazz : Contract.MODELS) {
+        for (final Class<?> clazz : Contracts.MODELS) {
             final String sql = getTableCreateQuery(clazz);
             if (sql != null) {
                 pDatabase.execSQL(sql);

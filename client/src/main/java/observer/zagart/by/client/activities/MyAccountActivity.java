@@ -8,6 +8,7 @@ import android.widget.ImageView;
 
 import observer.zagart.by.client.R;
 import observer.zagart.by.client.imageloader.BitmapDrawer;
+import observer.zagart.by.client.singletons.ContextHolder;
 
 /**
  * Activity for settings of user account.
@@ -27,6 +28,7 @@ public class MyAccountActivity extends AppCompatActivity {
             bar.hide();
         }
         setContentView(R.layout.my_account_activity);
+        ContextHolder.set(this);
         mAvatar = (ImageView) findViewById(R.id.my_account_avatar);
     }
 

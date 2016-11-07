@@ -4,11 +4,7 @@ import android.content.ContentValues;
 import java.util.Date;
 import java.util.Random;
 
-import observer.zagart.by.client.cache.model.annotations.Id;
-import observer.zagart.by.client.cache.model.annotations.NotNull;
-import observer.zagart.by.client.cache.model.annotations.Table;
-import observer.zagart.by.client.cache.model.annotations.dbLong;
-import observer.zagart.by.client.cache.model.annotations.dbString;
+import observer.zagart.by.client.cache.model.contracts.ModuleContract;
 import observer.zagart.by.client.interfaces.IConvertible;
 
 /**
@@ -94,28 +90,5 @@ public class Module implements IConvertible<ContentValues> {
 
     public void setValue(final String value) {
         mValue = value;
-    }
-
-    @Table(name = "MODULE")
-    public static class ModuleContract {
-        @Id
-        @dbLong
-        @NotNull
-        public static final String ID = "id";
-        @dbString
-        @NotNull
-        public static final String NAME = "name";
-        @NotNull
-        @dbLong
-        public static final String STAND_ID = "stand_id";
-        @NotNull
-        @dbString
-        public static final String STATUS = "status";
-        @NotNull
-        @dbLong
-        public static final String STATUS_CHANGE_DATE = "status_change_date";
-        @NotNull
-        @dbString
-        public static final String VALUE = "value";
     }
 }
