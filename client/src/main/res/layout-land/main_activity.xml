@@ -16,7 +16,15 @@
             style="@style/Main.Button"
             android:layout_width="@dimen/default_button_width"
             android:onClick="onLoginClick"
-            android:text="@string/sign_in"/>
+            android:text="@string/log_in"/>
+
+        <Button
+            android:id="@+id/main_menu_btn_log_out"
+            style="@style/Main.Button"
+            android:layout_width="@dimen/default_button_width"
+            android:onClick="onLogoutClick"
+            android:visibility="gone"
+            android:text="@string/log_out"/>
 
         <Button
             android:id="@+id/main_menu_btn_settings"

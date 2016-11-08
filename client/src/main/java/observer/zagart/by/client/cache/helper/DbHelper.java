@@ -14,8 +14,8 @@ import java.util.List;
 import java.util.Locale;
 
 import observer.zagart.by.client.BuildConfig;
-import observer.zagart.by.client.cache.model.annotations.Id;
-import observer.zagart.by.client.cache.model.annotations.NotNull;
+import observer.zagart.by.client.cache.model.annotations.dbId;
+import observer.zagart.by.client.cache.model.annotations.dbNotNull;
 import observer.zagart.by.client.cache.model.annotations.Table;
 import observer.zagart.by.client.cache.model.annotations.dbInteger;
 import observer.zagart.by.client.cache.model.annotations.dbString;
@@ -48,15 +48,15 @@ public class DbHelper extends SQLiteOpenHelper implements IDbOperations {
 
     private static String findSecondaryAnnotations(final Annotation[] pAnnotations, String pType) {
         for (final Annotation secondaryAnnotation : pAnnotations) {
-            if (secondaryAnnotation instanceof Id) {
-                Id id = (Id) (secondaryAnnotation);
+            if (secondaryAnnotation instanceof dbId) {
+                dbId id = (dbId) (secondaryAnnotation);
                 pType += " " + id.value();
                 if (id.autoincrement()) {
                     pType += AUTOINCREMENT;
                 }
             }
-            if (secondaryAnnotation instanceof NotNull) {
-                NotNull id = (NotNull) (secondaryAnnotation);
+            if (secondaryAnnotation instanceof dbNotNull) {
+                dbNotNull id = (dbNotNull) (secondaryAnnotation);
                 if (id.value()) {
                     pType += NOT_NULL;
                 }

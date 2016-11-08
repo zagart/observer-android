@@ -31,7 +31,6 @@ public class LoginActivity extends AccountAuthenticatorActivity {
             bar.hide();
         }
         setContentView(R.layout.login_activity);
-        ContextHolder.set(this);
         mLoginView = (TextView) findViewById(R.id.login_login);
         mPasswordView = (TextView) findViewById(R.id.login_password);
     }
@@ -63,5 +62,11 @@ public class LoginActivity extends AccountAuthenticatorActivity {
     public void onSignUpClick(View pView) {
         Intent intent = new Intent(this, RegistrationActivity.class);
         startActivity(intent);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        ContextHolder.set(this);
     }
 }

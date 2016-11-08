@@ -28,8 +28,13 @@ public class MyAccountActivity extends AppCompatActivity {
             bar.hide();
         }
         setContentView(R.layout.my_account_activity);
-        ContextHolder.set(this);
         mAvatar = (ImageView) findViewById(R.id.my_account_avatar);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        ContextHolder.set(this);
     }
 
     public void onLoadImageClick(View pView) {

@@ -8,7 +8,7 @@ import java.util.Locale;
 import observer.zagart.by.client.singletons.ContextHolder;
 
 /**
- * ...just not found better place for Toast for now
+ * ...just not found better place for this methods
  *
  * @author zagart
  */
@@ -29,10 +29,13 @@ public class AndroidUtil {
         showMessage(ContextHolder.get().getString(pResId), pFormatArgs);
     }
 
-    public static void startActivity(Class pClass) {
+    public static void startActivity(Class pClass, int... pFlags) {
         final Context context = ContextHolder.get();
         Intent intent = new Intent(context, pClass);
         intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        for (int flag : pFlags) {
+            intent.setFlags(flag);
+        }
         context.startActivity(intent);
     }
 }

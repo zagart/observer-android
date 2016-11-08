@@ -22,9 +22,14 @@ public class ResultActivity extends AppCompatActivity {
     protected void onCreate(@Nullable final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.result_activity);
-        ContextHolder.set(this);
         mRvStands = (RecyclerView) findViewById(R.id.stand_recycler_view);
         processRecycler();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        ContextHolder.set(this);
     }
 
     private void processRecycler() {

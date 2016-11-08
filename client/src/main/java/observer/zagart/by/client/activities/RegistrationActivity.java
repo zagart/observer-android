@@ -47,7 +47,6 @@ public class RegistrationActivity extends AccountAuthenticatorActivity {
         super.onCreate(savedInstanceState);
         mWorker = ThreadWorker.getDefaultInstance();
         setContentView(R.layout.registration_activity);
-        ContextHolder.set(this);
         mWorker.execute(
                 new Runnable() {
                     @Override
@@ -57,5 +56,11 @@ public class RegistrationActivity extends AccountAuthenticatorActivity {
                     }
                 }
         );
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        ContextHolder.set(this);
     }
 }

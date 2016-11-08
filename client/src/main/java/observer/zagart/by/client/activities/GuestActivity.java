@@ -14,7 +14,6 @@ import observer.zagart.by.client.utils.AndroidUtil;
  * Test activity.
  */
 public class GuestActivity extends AppCompatActivity {
-
     @Override
     protected void onCreate(@Nullable final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -23,11 +22,15 @@ public class GuestActivity extends AppCompatActivity {
             bar.hide();
         }
         setContentView(R.layout.guest_activity);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
         ContextHolder.set(this);
     }
 
     public void onCreateClick(View view) {
-
     }
 
     public void onDeleteClick(View view) {

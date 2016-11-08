@@ -1,8 +1,8 @@
 package observer.zagart.by.client.cache.model.contracts;
-import observer.zagart.by.client.cache.model.annotations.Id;
-import observer.zagart.by.client.cache.model.annotations.NotNull;
 import observer.zagart.by.client.cache.model.annotations.Table;
+import observer.zagart.by.client.cache.model.annotations.dbId;
 import observer.zagart.by.client.cache.model.annotations.dbInteger;
+import observer.zagart.by.client.cache.model.annotations.dbNotNull;
 import observer.zagart.by.client.cache.model.annotations.dbString;
 
 /**
@@ -12,23 +12,23 @@ import observer.zagart.by.client.cache.model.annotations.dbString;
  */
 @Table(name = "MODULE")
 public class ModuleContract {
-    @Id
+    @dbId
     @dbInteger
-    @NotNull
+    @dbNotNull
     public static final String ID = "id";
     @dbString
-    @NotNull
+    @dbNotNull
     public static final String NAME = "name";
-    @NotNull
+    @dbNotNull
     @dbInteger
     public static final String STAND_ID = "stand_id";
-    @NotNull
+    @dbNotNull
     @dbString
     public static final String STATUS = "status";
-    @NotNull
+    @dbNotNull
     @dbInteger
     public static final String STATUS_CHANGE_DATE = "status_change_date";
-    @NotNull
+    @dbNotNull
     @dbString
     public static final String VALUE = "value";
 }

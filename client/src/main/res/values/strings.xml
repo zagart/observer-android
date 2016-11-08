@@ -30,4 +30,6 @@
     <string name="msg_token_invalidated">Token invalidated</string>
     <string name="msg_sp_value_retrieved">Value %s retrieved</string>
     <string name="msg_dummy">Dummy message</string>
+    <string name="log_in">Log in</string>
+    <string name="log_out">Log out</string>
 </resources>

@@ -1,6 +1,6 @@
 package observer.zagart.by.client.cache.model.contracts;
-import observer.zagart.by.client.cache.model.annotations.Id;
-import observer.zagart.by.client.cache.model.annotations.NotNull;
+import observer.zagart.by.client.cache.model.annotations.dbId;
+import observer.zagart.by.client.cache.model.annotations.dbNotNull;
 import observer.zagart.by.client.cache.model.annotations.Table;
 import observer.zagart.by.client.cache.model.annotations.dbInteger;
 import observer.zagart.by.client.cache.model.annotations.dbString;
@@ -13,13 +13,13 @@ import observer.zagart.by.client.cache.model.annotations.dbString;
 @Table(name = "STAND")
 public class StandContract {
     @dbInteger
-    @Id
-    @NotNull
+    @dbId
+    @dbNotNull
     public static final String ID = "id";
     @dbString
-    @NotNull
+    @dbNotNull
     public static final String NUMBER = "number";
-    @NotNull
+    @dbNotNull
     @dbString
     public static final String DESCRIPTION = "description";
 }
