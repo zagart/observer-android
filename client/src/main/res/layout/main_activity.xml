@@ -18,29 +18,18 @@
             android:text="@string/my_account"/>
 
         <Button
-            android:id="@+id/main_menu_btn_log_in"
+            android:id="@+id/main_menu_btn_modules"
             style="@style/Main.Button"
-            android:onClick="onLoginClick"
-            android:text="@string/log_in"/>
+            android:onClick="onModulesClick"
+            android:text="@string/modules"
+            android:visibility="gone"/>
 
         <Button
-            android:id="@+id/main_menu_btn_log_out"
+            android:id="@+id/main_menu_btn_stands"
             style="@style/Main.Button"
-            android:onClick="onLogoutClick"
-            android:visibility="gone"
-            android:text="@string/log_out"/>
-
-        <Button
-            android:id="@+id/main_menu_btn_settings"
-            style="@style/Main.Button"
-            android:onClick="onSettingsClick"
-            android:text="@string/settings"/>
-
-        <Button
-            android:id="@+id/main_menu_btn_info"
-            style="@style/Main.Button"
-            android:onClick="onInfoClick"
-            android:text="@string/main_menu_btn_info"/>
+            android:onClick="onStandsClick"
+            android:text="@string/stands"
+            android:visibility="gone"/>
 
         <Button
             android:id="@+id/main_menu_btn_exit"

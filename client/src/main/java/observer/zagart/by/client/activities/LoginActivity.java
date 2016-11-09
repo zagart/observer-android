@@ -1,6 +1,7 @@
 package observer.zagart.by.client.activities;
 import android.accounts.AccountAuthenticatorActivity;
 import android.app.ActionBar;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
@@ -23,43 +24,6 @@ public class LoginActivity extends AccountAuthenticatorActivity {
     private TextView mPasswordView;
     private ThreadWorker mWorker = ThreadWorker.getDefaultInstance();
 
-    @SuppressWarnings("MissingPermission")
-    @Override
-    protected void onCreate(@Nullable final Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        final ActionBar bar = getActionBar();
-        if (bar != null) {
-            bar.hide();
-        }
-        setContentView(R.layout.login_activity);
-        mLoginView = (TextView) findViewById(R.id.login_login);
-        mPasswordView = (TextView) findViewById(R.id.login_password);
-    }
-
-    public void onGuestClick(View view) {
-        AndroidUtil.startActivity(GuestActivity.class);
-    }
-
-    public void onSignInClick(View view) {
-        final CharSequence charLogin = mLoginView.getText();
-        final CharSequence charPassword = mPasswordView.getText();
-        if (TextUtils.isEmpty(charLogin) || TextUtils.isEmpty(charPassword)) {
-            AndroidUtil.showMessage(R.string.error_login_fields_empty);
-        } else {
-            executeAuthentication(charLogin, charPassword);
-        }
-    }
-
-    public void onSignUpClick(View pView) {
-        AndroidUtil.startActivity(RegistrationActivity.class);
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        ContextHolder.set(this);
-    }
-
     private void executeAuthentication(
             final CharSequence pCharLogin,
             final CharSequence pCharPassword
@@ -80,5 +44,42 @@ public class LoginActivity extends AccountAuthenticatorActivity {
                     }
                 }
         );
+    }
+
+    @SuppressWarnings("MissingPermission")
+    @Override
+    protected void onCreate(@Nullable final Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        final ActionBar bar = getActionBar();
+        if (bar != null) {
+            bar.hide();
+        }
+        setContentView(R.layout.login_activity);
+        mLoginView = (TextView) findViewById(R.id.login_login);
+        mPasswordView = (TextView) findViewById(R.id.login_password);
+    }
+
+    public void onGuestClick(View view) {
+        AndroidUtil.showMessage(R.string.msg_dummy);
+    }
+
+    public void onLogInClick(View view) {
+        final CharSequence charLogin = mLoginView.getText();
+        final CharSequence charPassword = mPasswordView.getText();
+        if (TextUtils.isEmpty(charLogin) || TextUtils.isEmpty(charPassword)) {
+            AndroidUtil.showMessage(R.string.error_login_fields_empty);
+        } else {
+            executeAuthentication(charLogin, charPassword);
+        }
+    }
+
+    public void onSignUpClick(View pView) {
+        AndroidUtil.startActivity(RegistrationActivity.class, Intent.FLAG_ACTIVITY_NO_HISTORY);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        ContextHolder.set(this);
     }
 }

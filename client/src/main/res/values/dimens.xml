@@ -16,4 +16,7 @@
     <dimen name="login_form_title_text_size">20dp</dimen>
     <dimen name="guest_form_title_text_size">30dp</dimen>
     <dimen name="zero_dp">0dp</dimen>
+    <dimen name="standard_label_height">40dp</dimen>
+    <dimen name="standard_label_width">120dp</dimen>
+    <dimen name="my_activity_user_status_margin_top">100dp</dimen>
 </resources>

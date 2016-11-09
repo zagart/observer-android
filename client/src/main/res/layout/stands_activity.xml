@@ -4,7 +4,8 @@
 
     <TextView
         style="@style/Main.Title"
-        android:text="@string/recycler_view"
+        android:layout_marginTop="@dimen/default_margin"
+        android:text="@string/stands"
         android:textSize="@dimen/guest_form_title_text_size"/>
 
     <android.support.v7.widget.RecyclerView
@@ -13,5 +14,5 @@
         android:layout_height="match_parent"
         android:layout_marginTop="@dimen/login_form_margin_top"
         android:background="@android:color/darker_gray"
-        android:scrollbars="vertical"></android.support.v7.widget.RecyclerView>
+        android:scrollbars="vertical"/>
 </FrameLayout>

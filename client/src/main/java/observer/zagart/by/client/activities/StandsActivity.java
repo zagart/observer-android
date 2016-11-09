@@ -15,13 +15,13 @@ import observer.zagart.by.client.singletons.ContextHolder;
 /**
  * Activity that shows result from retrieving data.
  */
-public class ResultActivity extends AppCompatActivity {
+public class StandsActivity extends AppCompatActivity {
     private RecyclerView mRvStands;
 
     @Override
     protected void onCreate(@Nullable final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.result_activity);
+        setContentView(R.layout.stands_activity);
         mRvStands = (RecyclerView) findViewById(R.id.stand_recycler_view);
         processRecycler();
     }
