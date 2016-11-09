@@ -10,6 +10,7 @@ import observer.zagart.by.client.BuildConfig;
 import observer.zagart.by.client.R;
 import observer.zagart.by.client.http.interfaces.IHttpClient;
 import observer.zagart.by.client.singletons.ContextHolder;
+import observer.zagart.by.client.utils.AndroidUtil;
 import observer.zagart.by.client.utils.IOUtil;
 
 /**
@@ -57,6 +58,7 @@ public class AuthenticationRequest implements IHttpClient.IRequest<String> {
                 IHttpClient.IHttpData.Header.PASSWORD,
                 mPassword
         );
+        pConnection.setConnectTimeout(1000);
     }
 
     @Override
@@ -85,5 +87,10 @@ public class AuthenticationRequest implements IHttpClient.IRequest<String> {
             }
             return null;
         }
+    }
+
+    @Override
+    public void onTimeoutException() {
+        AndroidUtil.postMessage(R.string.err_timeout);
     }
 }

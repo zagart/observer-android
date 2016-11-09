@@ -5,6 +5,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
+import java.net.SocketTimeoutException;
 import java.net.URL;
 import java.util.List;
 import java.util.Map;
@@ -24,6 +25,7 @@ public class HttpClient implements IHttpClient {
     private static final String HTTP_REQUEST_FAILED = "HTTP-request failed";
     private static final short READ_BUFFER_SIZE = 4096;
     private static final String TAG = HttpClient.class.getSimpleName();
+    public static final int TIMEOUT = 3000;
 
     @Override
     public ByteArrayOutputStream downloadBytes(final String pUrl) throws IOException {
@@ -51,6 +53,7 @@ public class HttpClient implements IHttpClient {
         InputStream standardStream = null;
         URL reqUrl = new URL(pRequest.getUrl());
         connection = ((HttpURLConnection) reqUrl.openConnection());
+        connection.setConnectTimeout(TIMEOUT);
         connection.setRequestMethod(pRequest.getMethodType().name());
         connection.setRequestProperty(
                 CONTENT_TYPE,
@@ -69,6 +72,12 @@ public class HttpClient implements IHttpClient {
                 result = pRequest.onErrorStream(connection, errorStream);
             }
             return result;
+        } catch (SocketTimeoutException pEx) {
+            if (BuildConfig.DEBUG) {
+                Log.e(TAG, pEx.getMessage());
+            }
+            pRequest.onTimeoutException();
+            return null;
         } catch (IOException pEx) {
             if (BuildConfig.DEBUG) {
                 Log.e(TAG, HTTP_REQUEST_FAILED, pEx);

@@ -30,15 +30,7 @@ public class RegistrationActivity extends AccountAuthenticatorActivity {
         if (TextUtils.isEmpty(charLogin) || TextUtils.isEmpty(charPassword)) {
             AndroidUtil.showMessage(R.string.error_login_fields_empty);
         } else {
-            final String login = charLogin.toString();
-            final String password = charPassword.toString();
-            final String token = Observer.signUp(this, login, password);
-            if (!TextUtils.isEmpty(token)) {
-                ObserverAccount account = new ObserverAccount(login);
-                Observer.onTokenReceived(this, account, password, token);
-            } else {
-                AndroidUtil.showMessage(R.string.err_registration_failed);
-            }
+            executeRegistration(charLogin, charPassword);
         }
     }
 
@@ -62,5 +54,33 @@ public class RegistrationActivity extends AccountAuthenticatorActivity {
     protected void onStart() {
         super.onStart();
         ContextHolder.set(this);
+    }
+
+    private void executeRegistration(final CharSequence pCharLogin, final CharSequence pCharPassword) {
+        mWorker.execute(
+                new Runnable() {
+                    @Override
+                    public void run() {
+                        final String login = pCharLogin.toString();
+                        final String password = pCharPassword.toString();
+                        final String token = Observer.signUp(
+                                RegistrationActivity.this,
+                                login,
+                                password
+                        );
+                        if (!TextUtils.isEmpty(token)) {
+                            ObserverAccount account = new ObserverAccount(login);
+                            Observer.onTokenReceived(
+                                    RegistrationActivity.this,
+                                    account,
+                                    password,
+                                    token
+                            );
+                        } else {
+                            AndroidUtil.postMessage(R.string.err_registration_failed);
+                        }
+                    }
+                }
+        );
     }
 }

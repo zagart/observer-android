@@ -22,6 +22,7 @@ public interface IHttpClient {
         void handleRequestConnection(HttpURLConnection pConnection);
         Result onErrorStream(HttpURLConnection pConnection, InputStream pInputStream) throws IOException;
         Result onStandardStream(InputStream pInputStream);
+        void onTimeoutException();
     }
 
     interface IHttpData {

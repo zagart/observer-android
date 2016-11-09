@@ -1,7 +1,6 @@
 package observer.zagart.by.client.activities;
 import android.accounts.AccountAuthenticatorActivity;
 import android.app.ActionBar;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
@@ -12,6 +11,7 @@ import observer.zagart.by.client.R;
 import observer.zagart.by.client.account.ObserverAccount;
 import observer.zagart.by.client.server.api.Observer;
 import observer.zagart.by.client.singletons.ContextHolder;
+import observer.zagart.by.client.threadings.ThreadWorker;
 import observer.zagart.by.client.utils.AndroidUtil;
 
 /**
@@ -21,6 +21,7 @@ public class LoginActivity extends AccountAuthenticatorActivity {
     public static String EXTRA_TOKEN_TYPE = "by.zagart.observer.EXTRA_TOKEN";
     private TextView mLoginView;
     private TextView mPasswordView;
+    private ThreadWorker mWorker = ThreadWorker.getDefaultInstance();
 
     @SuppressWarnings("MissingPermission")
     @Override
@@ -36,9 +37,7 @@ public class LoginActivity extends AccountAuthenticatorActivity {
     }
 
     public void onGuestClick(View view) {
-        Intent intent = new Intent(this, GuestActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-        startActivity(intent);
+        AndroidUtil.startActivity(GuestActivity.class);
     }
 
     public void onSignInClick(View view) {
@@ -47,26 +46,39 @@ public class LoginActivity extends AccountAuthenticatorActivity {
         if (TextUtils.isEmpty(charLogin) || TextUtils.isEmpty(charPassword)) {
             AndroidUtil.showMessage(R.string.error_login_fields_empty);
         } else {
-            final String login = charLogin.toString();
-            final String password = charPassword.toString();
-            final String token = Observer.signIn(this, login, password);
-            if (!TextUtils.isEmpty(token)) {
-                ObserverAccount account = new ObserverAccount(login);
-                Observer.onTokenReceived(this, account, password, token);
-            } else {
-                AndroidUtil.showMessage(R.string.msg_failed_authentication);
-            }
+            executeAuthentication(charLogin, charPassword);
         }
     }
 
     public void onSignUpClick(View pView) {
-        Intent intent = new Intent(this, RegistrationActivity.class);
-        startActivity(intent);
+        AndroidUtil.startActivity(RegistrationActivity.class);
     }
 
     @Override
     protected void onStart() {
         super.onStart();
         ContextHolder.set(this);
+    }
+
+    private void executeAuthentication(
+            final CharSequence pCharLogin,
+            final CharSequence pCharPassword
+    ) {
+        mWorker.execute(
+                new Runnable() {
+                    @Override
+                    public void run() {
+                        final String login = pCharLogin.toString();
+                        final String password = pCharPassword.toString();
+                        final String token = Observer.logIn(LoginActivity.this, login, password);
+                        if (!TextUtils.isEmpty(token)) {
+                            ObserverAccount account = new ObserverAccount(login);
+                            Observer.onTokenReceived(LoginActivity.this, account, password, token);
+                        } else {
+                            AndroidUtil.postMessage(R.string.msg_failed_authentication);
+                        }
+                    }
+                }
+        );
     }
 }

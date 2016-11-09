@@ -77,12 +77,12 @@ public class Observer {
     }
 
     @Nullable
-    public static String signIn(
+    public static String logIn(
             final Context pContext,
             final String pLogin,
             final String pPassword
     ) {
-        return new Observer(pContext).signIn(pLogin, pPassword);
+        return new Observer(pContext).logIn(pLogin, pPassword);
     }
 
     @Nullable
@@ -140,7 +140,7 @@ public class Observer {
     }
 
     @Nullable
-    private String signIn(final String pLogin, final String pPassword) {
+    private String logIn(final String pLogin, final String pPassword) {
         return getTokenFromResponseString(
                 requestToServer(new AuthenticationRequest(pLogin, pPassword))
         );

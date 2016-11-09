@@ -75,7 +75,7 @@ public class ObserverAuthenticator extends AbstractAccountAuthenticator {
         if (TextUtils.isEmpty(authToken)) {
             final String password = am.getPassword(pAccount);
             if (!TextUtils.isEmpty(password)) {
-                authToken = Observer.signIn(mContext, pAccount.name, password);
+                authToken = Observer.logIn(mContext, pAccount.name, password);
             }
         }
         if (!TextUtils.isEmpty(authToken)) {
