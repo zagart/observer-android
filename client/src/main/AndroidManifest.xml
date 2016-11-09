@@ -22,8 +22,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".activities.LoginActivity"/>
-        <activity android:name=".activities.GuestActivity"/>
-        <activity android:name=".activities.ResultActivity"/>
+        <activity android:name=".activities.StandsActivity"/>
         <activity android:name=".activities.MyAccountActivity"/>
         <activity android:name=".activities.RegistrationActivity"/>
 
@@ -34,8 +33,8 @@
                 <action android:name="android.accounts.AccountAuthenticator"/>
             </intent-filter>
             <meta-data
-                android:resource="@xml/observer_authenticator"
-                android:name="android.accounts.AccountAuthenticator"/>
+                android:name="android.accounts.AccountAuthenticator"
+                android:resource="@xml/observer_authenticator"/>
         </service>
     </application>
 </manifest>

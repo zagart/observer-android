@@ -15,7 +15,7 @@
         app:layout_marginBottomPercent="@fraction/land_login_form_margin_bottom">
 
         <TextView
-            android:id="@+id/login_sign_in_title"
+            android:id="@+id/login_log_in_title"
             style="@style/LoginLayout.Title.Login"/>
 
         <EditText
@@ -45,10 +45,10 @@
             app:layout_widthPercent="@fraction/land_login_button_width"/>
 
         <Button
-            android:id="@+id/btn_sign_in"
+            android:id="@+id/btn_log_in"
             style="@style/RegistrationLayout.Button"
             android:layout_centerInParent="true"
-            android:onClick="onSignInClick"
+            android:onClick="onLogInClick"
             android:text="@string/sign_in"
             app:layout_heightPercent="@fraction/land_login_sign_in_button_height"
             app:layout_widthPercent="@fraction/land_login_sign_in_button_width"/>

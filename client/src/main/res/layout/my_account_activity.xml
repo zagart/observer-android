@@ -3,17 +3,43 @@
     android:id="@+id/my_account_root"
     style="@style/Main">
 
-    <ImageView
-        android:id="@+id/my_account_avatar"
-        android:layout_width="match_parent"
-        android:layout_height="400dp"
-        android:background="#4d4d4d"/>
+    <TextView
+        android:id="@+id/my_account_title"
+        style="@style/LoginLayout.Title"
+        android:text="@string/my_account"/>
 
-    <Button
-        android:id="@+id/main_menu_btn_sample"
-        style="@style/Main.Button"
-        android:layout_width="wrap_content"
-        android:layout_gravity="bottom|center_horizontal"
-        android:onClick="onLoadImageClick"
-        android:text="@string/load_avatar"/>
+    <LinearLayout
+        android:id="@+id/my_account_user"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/my_account_login_label"
+            style="@style/StandardTextView"
+            android:text="@string/current_user"/>
+
+        <TextView
+            android:id="@+id/my_account_login"
+            style="@style/StandardTextView"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/my_account"
+        style="@style/Main.Menu">
+
+        <Button
+            android:id="@+id/my_account_btn_log_in"
+            style="@style/Main.Button"
+            android:onClick="onLoginClick"
+            android:text="@string/log_in"/>
+
+        <Button
+            android:id="@+id/my_account_btn_log_out"
+            style="@style/Main.Button"
+            android:onClick="onLogoutClick"
+            android:text="@string/log_out"
+            android:visibility="gone"/>
+    </LinearLayout>
 </FrameLayout>

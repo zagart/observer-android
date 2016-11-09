@@ -1,9 +1,17 @@
 package observer.zagart.by.client.server.requests;
-import java.net.HttpURLConnection;
+import android.util.Log;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.util.Locale;
+
+import observer.zagart.by.client.BuildConfig;
 import observer.zagart.by.client.R;
 import observer.zagart.by.client.http.interfaces.IHttpClient;
 import observer.zagart.by.client.singletons.ContextHolder;
+import observer.zagart.by.client.utils.AndroidUtil;
+import observer.zagart.by.client.utils.IOUtil;
 
 /**
  * IRequest implementation that is responsible for authorization at
@@ -12,7 +20,7 @@ import observer.zagart.by.client.singletons.ContextHolder;
  * @author zagart
  * @see observer.zagart.by.client.http.interfaces.IHttpClient.IRequest
  */
-public class AuthenticationRequest implements IHttpClient.IRequest {
+public class AuthenticationRequest implements IHttpClient.IRequest<String> {
     private String mLogin;
     private String mPassword;
 
@@ -50,5 +58,39 @@ public class AuthenticationRequest implements IHttpClient.IRequest {
                 IHttpClient.IHttpData.Header.PASSWORD,
                 mPassword
         );
+        pConnection.setConnectTimeout(1000);
+    }
+
+    @Override
+    public String onErrorStream(
+            final HttpURLConnection pConnection,
+            final InputStream pInputStream
+    ) throws IOException {
+        if (BuildConfig.DEBUG) {
+            String errorMessage = String.format(
+                    Locale.getDefault(),
+                    ContextHolder.get().getString(R.string.err_code_server_response),
+                    pConnection.getResponseCode()
+            );
+            Log.e(AuthenticationRequest.class.getSimpleName(), errorMessage);
+        }
+        return null;
+    }
+
+    @Override
+    public String onStandardStream(final InputStream pInputStream) {
+        try {
+            return IOUtil.readStreamUsingBuffer(pInputStream);
+        } catch (IOException pEx) {
+            if (BuildConfig.DEBUG) {
+                Log.e(AuthenticationRequest.class.getSimpleName(), pEx.getMessage(), pEx);
+            }
+            return null;
+        }
+    }
+
+    @Override
+    public void onTimeoutException() {
+        AndroidUtil.postMessage(R.string.err_timeout);
     }
 }

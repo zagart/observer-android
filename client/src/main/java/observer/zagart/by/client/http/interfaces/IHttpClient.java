@@ -1,6 +1,7 @@
 package observer.zagart.by.client.http.interfaces;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.HttpURLConnection;
 
 /**
@@ -9,16 +10,19 @@ import java.net.HttpURLConnection;
  */
 public interface IHttpClient {
     ByteArrayOutputStream downloadBytes(String pUrl) throws IOException;
-    String executeRequest(IRequest pRequest) throws IOException;
+    <Result> Result executeRequest(IRequest<Result> pRequest) throws IOException;
     enum Method {
         GET, POST
     }
 
-    interface IRequest {
+    interface IRequest<Result> {
         String getContentType();
         Method getMethodType();
         String getUrl();
         void handleRequestConnection(HttpURLConnection pConnection);
+        Result onErrorStream(HttpURLConnection pConnection, InputStream pInputStream) throws IOException;
+        Result onStandardStream(InputStream pInputStream);
+        void onTimeoutException();
     }
 
     interface IHttpData {

@@ -11,7 +11,7 @@ import java.lang.annotation.Target;
  */
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface Id {
+public @interface dbId {
     boolean autoincrement() default true;
     String value() default "PRIMARY KEY";
 }

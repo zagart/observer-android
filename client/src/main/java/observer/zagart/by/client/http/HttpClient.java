@@ -1,12 +1,11 @@
 package observer.zagart.by.client.http;
 import android.util.Log;
 
-import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
+import java.net.SocketTimeoutException;
 import java.net.URL;
 import java.util.List;
 import java.util.Map;
@@ -14,6 +13,7 @@ import java.util.Set;
 
 import observer.zagart.by.client.BuildConfig;
 import observer.zagart.by.client.http.interfaces.IHttpClient;
+import observer.zagart.by.client.utils.IOUtil;
 
 import static observer.zagart.by.client.http.interfaces.IHttpClient.IHttpData.Header.CONTENT_TYPE;
 
@@ -21,11 +21,11 @@ import static observer.zagart.by.client.http.interfaces.IHttpClient.IHttpData.He
  * Implementation of IHttpClient interface.
  */
 public class HttpClient implements IHttpClient {
-    private static final int READ_BUFFER_SIZE = 4096;
+    private static final String ERROR_STREAM_NOT_NULL = "Error stream not null";
+    private static final String HTTP_REQUEST_FAILED = "HTTP-request failed";
+    private static final short READ_BUFFER_SIZE = 4096;
     private static final String TAG = HttpClient.class.getSimpleName();
-    public static final String STATUS = "status";
-    public static final String ERROR_STREAM_NOT_NULL = "Error stream not null";
-    public static final String HTTP_REQUEST_FAILED = "HTTP-request failed";
+    public static final int TIMEOUT = 3000;
 
     @Override
     public ByteArrayOutputStream downloadBytes(final String pUrl) throws IOException {
@@ -46,41 +46,47 @@ public class HttpClient implements IHttpClient {
     }
 
     @Override
-    public String executeRequest(final IRequest pRequest) throws IOException {
-        String response = null;
+    public <Result> Result executeRequest(final IRequest<Result> pRequest) throws IOException {
+        Result result;
         HttpURLConnection connection;
-        InputStream inputStream;
+        InputStream errorStream = null;
+        InputStream standardStream = null;
+        URL reqUrl = new URL(pRequest.getUrl());
+        connection = ((HttpURLConnection) reqUrl.openConnection());
+        connection.setConnectTimeout(TIMEOUT);
+        connection.setRequestMethod(pRequest.getMethodType().name());
+        connection.setRequestProperty(
+                CONTENT_TYPE,
+                pRequest.getContentType()
+        );
+        pRequest.handleRequestConnection(connection);
         try {
-            URL reqUrl = new URL(pRequest.getUrl());
-            connection = ((HttpURLConnection) reqUrl.openConnection());
-            connection.setRequestMethod(pRequest.getMethodType().name());
-            connection.setRequestProperty(
-                    CONTENT_TYPE,
-                    pRequest.getContentType()
-            );
-            pRequest.handleRequestConnection(connection);
-            if ((inputStream = connection.getErrorStream()) == null) {
-                inputStream = connection.getInputStream();
-                BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
-                StringBuilder stringBuilder = new StringBuilder();
-                String line;
-                while ((line = reader.readLine()) != null) {
-                    stringBuilder.append(line);
-                }
-                response = stringBuilder.toString();
+            errorStream = connection.getErrorStream();
+            if (errorStream == null) {
+                standardStream = connection.getInputStream();
+                result = pRequest.onStandardStream(standardStream);
             } else {
-                response = getHeadersInfo(connection);
                 if (BuildConfig.DEBUG) {
                     Log.d(TAG, ERROR_STREAM_NOT_NULL);
                 }
+                result = pRequest.onErrorStream(connection, errorStream);
             }
-            inputStream.close();
-        } catch (Exception pEx) {
+            return result;
+        } catch (SocketTimeoutException pEx) {
+            if (BuildConfig.DEBUG) {
+                Log.e(TAG, pEx.getMessage());
+            }
+            pRequest.onTimeoutException();
+            return null;
+        } catch (IOException pEx) {
             if (BuildConfig.DEBUG) {
                 Log.e(TAG, HTTP_REQUEST_FAILED, pEx);
             }
+            return null;
+        } finally {
+            IOUtil.close(standardStream);
+            IOUtil.close(errorStream);
         }
-        return response;
     }
 
     private String getHeadersInfo(final HttpURLConnection pConnection) {
