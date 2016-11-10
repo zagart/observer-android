@@ -3,14 +3,20 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
+import java.io.IOException;
+
 import observer.zagart.by.client.BuildConfig;
 import observer.zagart.by.client.R;
+import observer.zagart.by.client.http.HttpClientFactory;
+import observer.zagart.by.client.server.requests.GetStandsRequest;
 import observer.zagart.by.client.singletons.AccountHolder;
 import observer.zagart.by.client.singletons.ContextHolder;
+import observer.zagart.by.client.threadings.ThreadWorker;
 import observer.zagart.by.client.utils.AndroidUtil;
 
 /**
@@ -21,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
     public static final String MAIN_TAG = MainActivity.class.getSimpleName();
     private Button mModulesButton;
     private Button mStandsButton;
+    private ThreadWorker mWorker = ThreadWorker.getDefaultInstance();
 
     @Override
     protected void onCreate(@Nullable final Bundle savedInstanceState) {
@@ -54,7 +61,29 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onModulesClick(View view) {
-        AndroidUtil.showMessage(R.string.msg_dummy);
+        mWorker.execute(
+                new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            final String result = HttpClientFactory
+                                    .getDefaultClient()
+                                    .executeRequest(
+                                            new GetStandsRequest()
+                                    );
+                            if (!TextUtils.isEmpty(result)) {
+                                AndroidUtil.postMessage(result);
+                            } else {
+                                AndroidUtil.postMessage(R.string.err_failed_get_data);
+                            }
+                        } catch (IOException pEx) {
+                            if (BuildConfig.DEBUG) {
+                                Log.e(MainActivity.class.getSimpleName(), pEx.getMessage(), pEx);
+                            }
+                        }
+                    }
+                }
+        );
     }
 
     public void onMyAccountClick(View view) {
