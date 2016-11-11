@@ -1,7 +1,6 @@
 package observer.zagart.by.client.activities;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
@@ -10,12 +9,11 @@ import observer.zagart.by.client.R;
 import observer.zagart.by.client.adapter.StandAdapter;
 import observer.zagart.by.client.adapter.callbacks.ManualCallback;
 import observer.zagart.by.client.cache.services.StandService;
-import observer.zagart.by.client.singletons.ContextHolder;
 
 /**
  * Activity that shows result from retrieving data.
  */
-public class StandsActivity extends AppCompatActivity {
+public class StandsActivity extends BaseActivity {
     private RecyclerView mRvStands;
 
     @Override
@@ -24,12 +22,6 @@ public class StandsActivity extends AppCompatActivity {
         setContentView(R.layout.stands_activity);
         mRvStands = (RecyclerView) findViewById(R.id.stand_recycler_view);
         processRecycler();
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        ContextHolder.set(this);
     }
 
     private void processRecycler() {

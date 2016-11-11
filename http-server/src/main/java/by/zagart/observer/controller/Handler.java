@@ -35,6 +35,7 @@ public class Handler {
         switch (pAction) {
             case GET_DATA:
                 getDataByCriteria(pResponse, pRequest.getHeader(ObserverConstants.Headers.CRITERIA));
+                break;
             default:
                 pResponse.sendError(HttpServletResponse.SC_BAD_REQUEST);
         }
@@ -53,7 +54,7 @@ public class Handler {
                 jsonToken.put(TOKEN, token);
                 if (token != null) {
                     Logger.log(USER_HAS_BEEN_AUTHENTICATED);
-                    responseInJson(pResponse, jsonToken);
+                    printResponseInJson(pResponse, jsonToken);
                 } else {
                     Logger.log(USER_REQUEST_REJECTED);
                     pResponse.sendError(HttpServletResponse.SC_UNAUTHORIZED);
@@ -67,7 +68,7 @@ public class Handler {
                     pResponse.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
                     break;
                 } else {
-                    responseInJson(pResponse, jsonToken);
+                    printResponseInJson(pResponse, jsonToken);
                 }
                 break;
         }
@@ -85,7 +86,7 @@ public class Handler {
                 for (Stand stand : stands) {
                     jsonResponse.put("stand", stand.toJSONString());
                 }
-                responseInJson(pResponse, jsonResponse);
+                printResponseInJson(pResponse, jsonResponse);
                 break;
             default:
                 pResponse.sendError(HttpServletResponse.SC_BAD_REQUEST);
@@ -133,7 +134,7 @@ public class Handler {
         }
     }
 
-    private void responseInJson(HttpServletResponse pResponse, JSONObject pJSONObject) throws IOException {
+    private void printResponseInJson(HttpServletResponse pResponse, JSONObject pJSONObject) throws IOException {
         pResponse.getWriter().println(pJSONObject.toJSONString());
     }
 }

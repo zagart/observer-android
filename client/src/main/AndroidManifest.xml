@@ -24,16 +24,20 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activities.LoginActivity"
+            android:name=".activities.AuthenticationActivity"
+            android:launchMode="singleTop"
             android:screenOrientation="portrait"/>
         <activity
             android:name=".activities.StandsActivity"
+            android:launchMode="singleTop"
             android:screenOrientation="portrait"/>
         <activity
             android:name=".activities.MyAccountActivity"
+            android:launchMode="singleTop"
             android:screenOrientation="portrait"/>
         <activity
             android:name=".activities.RegistrationActivity"
+            android:launchMode="singleTop"
             android:screenOrientation="portrait"/>
 
         <service

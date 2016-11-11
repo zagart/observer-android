@@ -3,7 +3,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -11,8 +10,6 @@ import android.widget.TextView;
 import observer.zagart.by.client.App;
 import observer.zagart.by.client.R;
 import observer.zagart.by.client.singletons.AccountHolder;
-import observer.zagart.by.client.singletons.ContextHolder;
-import observer.zagart.by.client.utils.AndroidUtil;
 import observer.zagart.by.client.utils.SharedPreferencesUtil;
 
 /**
@@ -20,7 +17,7 @@ import observer.zagart.by.client.utils.SharedPreferencesUtil;
  *
  * @author zagart
  */
-public class MyAccountActivity extends AppCompatActivity {
+public class MyAccountActivity extends BaseActivity {
     private Button mLogInView;
     private Button mLogOutView;
     private TextView mUserLabel;
@@ -40,6 +37,18 @@ public class MyAccountActivity extends AppCompatActivity {
         mUserLogin = (TextView) findViewById(R.id.my_account_login);
     }
 
+    public void onLoginClick(View view) {
+        Intent intent = new Intent(this, AuthenticationActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_NO_HISTORY);
+        startActivity(intent);
+    }
+
+    public void onLogoutClick(View pView) {
+        AccountHolder.set(null);
+        SharedPreferencesUtil.persistStringValue(this, App.CURRENT_ACCOUNT_NAME, null);
+        onStart();
+    }
+
     @Override
     protected void onStart() {
         super.onStart();
@@ -56,20 +65,5 @@ public class MyAccountActivity extends AppCompatActivity {
             mUserLogin.setVisibility(View.GONE);
             mUserLogin.setText("");
         }
-        ContextHolder.set(this);
-    }
-
-    public void onLoginClick(View view) {
-        AndroidUtil.startActivity(
-                LoginActivity.class,
-                Intent.FLAG_ACTIVITY_NEW_TASK,
-                Intent.FLAG_ACTIVITY_NO_HISTORY
-        );
-    }
-
-    public void onLogoutClick(View pView) {
-        AccountHolder.set(null);
-        SharedPreferencesUtil.persistStringValue(this, App.CURRENT_ACCOUNT_NAME, null);
-        onStart();
     }
 }

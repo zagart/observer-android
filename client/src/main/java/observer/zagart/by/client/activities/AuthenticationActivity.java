@@ -7,18 +7,18 @@ import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import observer.zagart.by.client.R;
 import observer.zagart.by.client.account.ObserverAccount;
 import observer.zagart.by.client.server.api.Observer;
-import observer.zagart.by.client.singletons.ContextHolder;
 import observer.zagart.by.client.threadings.ThreadWorker;
-import observer.zagart.by.client.utils.AndroidUtil;
+import observer.zagart.by.client.utils.BroadcastUtil;
 
 /**
  * Activity that provides UI for user authorization.
  */
-public class LoginActivity extends AccountAuthenticatorActivity {
+public class AuthenticationActivity extends AccountAuthenticatorActivity {
     public static String EXTRA_TOKEN_TYPE = "by.zagart.observer.EXTRA_TOKEN";
     private TextView mLoginView;
     private TextView mPasswordView;
@@ -34,12 +34,25 @@ public class LoginActivity extends AccountAuthenticatorActivity {
                     public void run() {
                         final String login = pCharLogin.toString();
                         final String password = pCharPassword.toString();
-                        final String token = Observer.logIn(LoginActivity.this, login, password);
+                        final String token = Observer.logIn(
+                                AuthenticationActivity.this,
+                                login,
+                                password
+                        );
                         if (!TextUtils.isEmpty(token)) {
                             ObserverAccount account = new ObserverAccount(login);
-                            Observer.onTokenReceived(LoginActivity.this, account, password, token);
+                            Observer.onTokenReceived(
+                                    AuthenticationActivity.this,
+                                    account,
+                                    password,
+                                    token
+                            );
                         } else {
-                            AndroidUtil.postMessage(R.string.msg_failed_authentication);
+                            BroadcastUtil.sendBroadcast(
+                                    AuthenticationActivity.this,
+                                    BaseActivity.AUTHENTICATION_RESULT,
+                                    getString(R.string.msg_failed_authentication)
+                            );
                         }
                     }
                 }
@@ -60,26 +73,26 @@ public class LoginActivity extends AccountAuthenticatorActivity {
     }
 
     public void onGuestClick(View view) {
-        AndroidUtil.showMessage(R.string.msg_dummy);
+        Toast.makeText(this, getString(R.string.msg_dummy), Toast.LENGTH_LONG).show();
     }
 
     public void onLogInClick(View view) {
         final CharSequence charLogin = mLoginView.getText();
         final CharSequence charPassword = mPasswordView.getText();
         if (TextUtils.isEmpty(charLogin) || TextUtils.isEmpty(charPassword)) {
-            AndroidUtil.showMessage(R.string.error_login_fields_empty);
+            Toast.makeText(
+                    this,
+                    getString(R.string.error_login_fields_empty),
+                    Toast.LENGTH_LONG
+            ).show();
         } else {
             executeAuthentication(charLogin, charPassword);
         }
     }
 
     public void onSignUpClick(View pView) {
-        AndroidUtil.startActivity(RegistrationActivity.class, Intent.FLAG_ACTIVITY_NO_HISTORY);
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        ContextHolder.set(this);
+        Intent intent = new Intent(this, RegistrationActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+        startActivity(intent);
     }
 }

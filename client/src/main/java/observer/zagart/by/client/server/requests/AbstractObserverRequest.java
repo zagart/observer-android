@@ -1,4 +1,5 @@
 package observer.zagart.by.client.server.requests;
+import android.content.Context;
 import android.util.Log;
 
 import java.io.IOException;
@@ -8,9 +9,10 @@ import java.util.Locale;
 
 import observer.zagart.by.client.BuildConfig;
 import observer.zagart.by.client.R;
+import observer.zagart.by.client.activities.BaseActivity;
 import observer.zagart.by.client.http.interfaces.IHttpClient;
 import observer.zagart.by.client.singletons.ContextHolder;
-import observer.zagart.by.client.utils.AndroidUtil;
+import observer.zagart.by.client.utils.BroadcastUtil;
 import observer.zagart.by.client.utils.IOUtil;
 
 /**
@@ -57,6 +59,11 @@ public abstract class AbstractObserverRequest implements IHttpClient.IRequest<St
 
     @Override
     public void onTimeoutException() {
-        AndroidUtil.postMessage(R.string.err_timeout);
+        final Context context = ContextHolder.get();
+        BroadcastUtil.sendBroadcast(
+                context,
+                BaseActivity.TIMEOUT_ERROR,
+                context.getString(R.string.err_timeout)
+        );
     }
 }
