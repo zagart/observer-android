@@ -6,9 +6,9 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 
 import observer.zagart.by.client.R;
-import observer.zagart.by.client.adapter.StandAdapter;
-import observer.zagart.by.client.adapter.callbacks.ManualCallback;
-import observer.zagart.by.client.cache.services.StandService;
+import observer.zagart.by.client.adapters.StandAdapter;
+import observer.zagart.by.client.adapters.callbacks.ManualCallback;
+import observer.zagart.by.client.repository.Service;
 
 /**
  * Activity that shows result from retrieving data.
@@ -20,12 +20,12 @@ public class StandsActivity extends BaseActivity {
     protected void onCreate(@Nullable final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.stands_activity);
-        mRvStands = (RecyclerView) findViewById(R.id.stand_recycler_view);
+        mRvStands = (RecyclerView) findViewById(R.id.stands_recycler_view);
         processRecycler();
     }
 
     private void processRecycler() {
-        final StandAdapter adapter = new StandAdapter(StandService.selectAllStands());
+        final StandAdapter adapter = new StandAdapter(Service.selectAllStands());
         ItemTouchHelper.Callback callback = new ManualCallback(adapter);
         ItemTouchHelper touchHelper = new ItemTouchHelper(callback);
         touchHelper.attachToRecyclerView(mRvStands);

@@ -45,6 +45,7 @@ public class MainActivity extends BaseActivity {
     }
 
     public void onModulesClick(View view) {
+        startActivity(new Intent(this, ModulesActivity.class));
     }
 
     public void onMyAccountClick(View view) {

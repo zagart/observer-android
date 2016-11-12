@@ -32,6 +32,10 @@
             android:launchMode="singleTop"
             android:screenOrientation="portrait"/>
         <activity
+            android:name=".activities.ModulesActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"/>
+        <activity
             android:name=".activities.MyAccountActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"/>

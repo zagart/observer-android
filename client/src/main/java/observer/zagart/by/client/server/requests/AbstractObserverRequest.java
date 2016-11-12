@@ -62,7 +62,7 @@ public abstract class AbstractObserverRequest implements IHttpClient.IRequest<St
         final Context context = ContextHolder.get();
         BroadcastUtil.sendBroadcast(
                 context,
-                BaseActivity.TIMEOUT_ERROR,
+                BaseActivity.SERVER_TIMEOUT_ERROR,
                 context.getString(R.string.err_timeout)
         );
     }

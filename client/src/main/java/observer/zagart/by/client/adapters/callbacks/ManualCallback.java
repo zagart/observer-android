@@ -1,4 +1,4 @@
-package observer.zagart.by.client.adapter.callbacks;
+package observer.zagart.by.client.adapters.callbacks;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 

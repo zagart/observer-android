@@ -1,4 +1,4 @@
-package observer.zagart.by.client.cache.model;
+package observer.zagart.by.client.repository.model;
 import android.content.ContentValues;
 import android.database.Cursor;
 
@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import observer.zagart.by.client.cache.model.contracts.StandContract;
+import observer.zagart.by.client.repository.model.contracts.StandContract;
 import observer.zagart.by.client.interfaces.IConvertible;
 
 /**

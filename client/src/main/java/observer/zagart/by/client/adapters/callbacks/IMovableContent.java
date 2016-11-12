@@ -1,4 +1,4 @@
-package observer.zagart.by.client.adapter.callbacks;
+package observer.zagart.by.client.adapters.callbacks;
 /**
  * Interface shows that class allows manipulate it visible content.
  */

@@ -1,11 +1,14 @@
-package observer.zagart.by.client.cache.model;
+package observer.zagart.by.client.repository.model;
 import android.content.ContentValues;
+import android.database.Cursor;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Random;
 
-import observer.zagart.by.client.cache.model.contracts.ModuleContract;
 import observer.zagart.by.client.interfaces.IConvertible;
+import observer.zagart.by.client.repository.model.contracts.ModuleContract;
 
 /**
  * Model for module.
@@ -20,7 +23,16 @@ public class Module implements IConvertible<ContentValues> {
     private Date mStatusChangeDate;
     private String mValue;
 
-    public static Module getRandomModule() {
+    public static List<Module> createModuleList(int pSize) {
+        List<Module> stands = new ArrayList<>();
+        while (pSize > 0) {
+            stands.add(createRandomModule());
+            pSize--;
+        }
+        return stands;
+    }
+
+    public static Module createRandomModule() {
         Random random = new Random();
         Module module = new Module();
         module.setId((long) random.nextInt(MODULE_ID_LIMIT));
@@ -29,6 +41,29 @@ public class Module implements IConvertible<ContentValues> {
         module.setStatus("Status" + module.getName());
         module.setValue(String.valueOf(random.nextInt(MODULE_VALUE_LIMIT)));
         module.setStatusChangeDate(new Date());
+        return module;
+    }
+
+    public static Module parseCursorRow(final Cursor pCursor) {
+        Module module = new Module();
+        int idIndex = pCursor.getColumnIndex(ModuleContract.ID);
+        int nameIndex = pCursor.getColumnIndex(ModuleContract.NAME);
+        int statusIndex = pCursor.getColumnIndex(ModuleContract.STATUS);
+        int valueIndex = pCursor.getColumnIndex(ModuleContract.VALUE);
+        int statusChangeDateIndex = pCursor.getColumnIndex(ModuleContract.STATUS_CHANGE_DATE);
+        int standIdIndex = pCursor.getColumnIndex(ModuleContract.STAND_ID);
+        Long id = pCursor.getLong(idIndex);
+        String name = pCursor.getString(nameIndex);
+        String status = pCursor.getString(statusIndex);
+        String value = pCursor.getString(valueIndex);
+        Long statusChangeDate = pCursor.getLong(statusChangeDateIndex);
+        Long standId = pCursor.getLong(standIdIndex);
+        module.setId(id);
+        module.setName(name);
+        module.setStatus(status);
+        module.setValue(value);
+        module.setStatusChangeDate(new Date(statusChangeDate));
+        module.setStandId(standId);
         return module;
     }
 

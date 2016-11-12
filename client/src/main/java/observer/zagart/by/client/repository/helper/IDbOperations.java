@@ -1,4 +1,4 @@
-package observer.zagart.by.client.cache.helper;
+package observer.zagart.by.client.repository.helper;
 import android.content.ContentValues;
 import android.database.Cursor;
 

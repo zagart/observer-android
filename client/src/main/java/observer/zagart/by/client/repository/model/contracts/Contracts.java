@@ -1,4 +1,4 @@
-package observer.zagart.by.client.cache.model.contracts;
+package observer.zagart.by.client.repository.model.contracts;
 /**
  * Class that contains all available model contracts.
  *

@@ -1,4 +1,4 @@
-package observer.zagart.by.client.adapter;
+package observer.zagart.by.client.adapters;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -10,13 +10,14 @@ import java.util.Collections;
 import java.util.List;
 
 import observer.zagart.by.client.R;
-import observer.zagart.by.client.adapter.callbacks.IMovableContent;
-import observer.zagart.by.client.cache.model.Stand;
+import observer.zagart.by.client.adapters.callbacks.IMovableContent;
+import observer.zagart.by.client.repository.model.Stand;
 
 /**
  * My adapter for stand model.
  */
-public class StandAdapter extends RecyclerView.Adapter<StandAdapter.RowHolder> implements IMovableContent {
+public class StandAdapter extends RecyclerView.Adapter<StandAdapter.RowHolder>
+        implements IMovableContent {
     private List<Stand> mStands;
 
     public StandAdapter(final List<Stand> pStands) {
@@ -27,8 +28,8 @@ public class StandAdapter extends RecyclerView.Adapter<StandAdapter.RowHolder> i
     public StandAdapter.RowHolder onCreateViewHolder(final ViewGroup parent, final int viewType) {
         Context context = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
-        View standView = inflater.inflate(R.layout.stand_table_row, parent, false);
-        return new RowHolder(standView);
+        View standRowView = inflater.inflate(R.layout.stand_table_row, parent, false);
+        return new RowHolder(standRowView);
     }
 
     @Override

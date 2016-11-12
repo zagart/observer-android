@@ -1,9 +1,9 @@
-package observer.zagart.by.client.cache.model.contracts;
-import observer.zagart.by.client.cache.model.annotations.Table;
-import observer.zagart.by.client.cache.model.annotations.dbId;
-import observer.zagart.by.client.cache.model.annotations.dbInteger;
-import observer.zagart.by.client.cache.model.annotations.dbNotNull;
-import observer.zagart.by.client.cache.model.annotations.dbString;
+package observer.zagart.by.client.repository.model.contracts;
+import observer.zagart.by.client.repository.model.annotations.Table;
+import observer.zagart.by.client.repository.model.annotations.dbId;
+import observer.zagart.by.client.repository.model.annotations.dbInteger;
+import observer.zagart.by.client.repository.model.annotations.dbNotNull;
+import observer.zagart.by.client.repository.model.annotations.dbString;
 
 /**
  * Database contract for Module model.

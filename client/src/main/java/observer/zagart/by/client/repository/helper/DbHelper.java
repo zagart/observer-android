@@ -1,4 +1,4 @@
-package observer.zagart.by.client.cache.helper;
+package observer.zagart.by.client.repository.helper;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -14,12 +14,12 @@ import java.util.List;
 import java.util.Locale;
 
 import observer.zagart.by.client.BuildConfig;
-import observer.zagart.by.client.cache.model.annotations.dbId;
-import observer.zagart.by.client.cache.model.annotations.dbNotNull;
-import observer.zagart.by.client.cache.model.annotations.Table;
-import observer.zagart.by.client.cache.model.annotations.dbInteger;
-import observer.zagart.by.client.cache.model.annotations.dbString;
-import observer.zagart.by.client.cache.model.contracts.Contracts;
+import observer.zagart.by.client.repository.model.annotations.Table;
+import observer.zagart.by.client.repository.model.annotations.dbId;
+import observer.zagart.by.client.repository.model.annotations.dbInteger;
+import observer.zagart.by.client.repository.model.annotations.dbNotNull;
+import observer.zagart.by.client.repository.model.annotations.dbString;
+import observer.zagart.by.client.repository.model.contracts.Contracts;
 import observer.zagart.by.client.singletons.ContextHolder;
 
 /**
@@ -38,12 +38,8 @@ public class DbHelper extends SQLiteOpenHelper implements IDbOperations {
     private static String TAG = DbHelper.class.getSimpleName();
     private SQLiteDatabase mDatabase;
 
-    public DbHelper(
-            final Context context,
-            final String name,
-            final int version
-    ) {
-        super(context, name, null, version);
+    public DbHelper(final Context pContext) {
+        super(pContext, DATABASE_FILE_NAME, null, DATABASE_VERSION);
     }
 
     private static String findSecondaryAnnotations(final Annotation[] pAnnotations, String pType) {
@@ -117,7 +113,7 @@ public class DbHelper extends SQLiteOpenHelper implements IDbOperations {
                 }
                 return template;
             } catch (
-                            NullPointerException |
+                    NullPointerException |
                             ExceptionInInitializerError |
                             IllegalAccessException |
                             IllegalArgumentException pEx
@@ -233,10 +229,6 @@ public class DbHelper extends SQLiteOpenHelper implements IDbOperations {
     }
 
     public static class SingletonHolder {
-        public static final DbHelper DB_HELPER_INSTANCE = new DbHelper(
-                ContextHolder.get(),
-                DATABASE_FILE_NAME,
-                DATABASE_VERSION
-        );
+        public static final DbHelper DB_HELPER_INSTANCE = new DbHelper(ContextHolder.get());
     }
 }
