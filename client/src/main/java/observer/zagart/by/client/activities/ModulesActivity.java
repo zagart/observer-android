@@ -5,11 +5,11 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
 import observer.zagart.by.client.R;
-import observer.zagart.by.client.adapters.ModuleAdapter;
+import observer.zagart.by.client.adapters.ModuleTableAdapter;
 import observer.zagart.by.client.repository.Service;
 
 /**
- * Activity that shows result from retrieving data.
+ * @author zagart
  */
 public class ModulesActivity extends BaseActivity {
     private RecyclerView mRecyclerViewModules;
@@ -23,7 +23,7 @@ public class ModulesActivity extends BaseActivity {
     }
 
     private void processRecycler() {
-        final ModuleAdapter adapter = new ModuleAdapter(Service.selectAllModules());
+        final ModuleTableAdapter adapter = new ModuleTableAdapter(Service.selectAllModules());
         mRecyclerViewModules.setAdapter(adapter);
         mRecyclerViewModules.setLayoutManager(new LinearLayoutManager(this));
     }

@@ -1,8 +1,7 @@
 package observer.zagart.by.client.repository.model.contracts;
-import observer.zagart.by.client.repository.model.annotations.dbId;
-import observer.zagart.by.client.repository.model.annotations.dbNotNull;
 import observer.zagart.by.client.repository.model.annotations.Table;
 import observer.zagart.by.client.repository.model.annotations.dbInteger;
+import observer.zagart.by.client.repository.model.annotations.dbNotNull;
 import observer.zagart.by.client.repository.model.annotations.dbString;
 
 /**
@@ -13,7 +12,6 @@ import observer.zagart.by.client.repository.model.annotations.dbString;
 @Table(name = "STAND")
 public class StandContract {
     @dbInteger
-    @dbId
     @dbNotNull
     public static final String ID = "id";
     @dbString

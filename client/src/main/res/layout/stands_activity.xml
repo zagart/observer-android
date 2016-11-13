@@ -15,4 +15,10 @@
         android:layout_marginTop="@dimen/login_form_margin_top"
         android:background="@android:color/darker_gray"
         android:scrollbars="vertical"/>
+
+    <Button
+        android:id="@+id/button"
+        style="@style/ReloadButton"
+        android:onClick="onReloadClick"
+        android:text="@string/reload"/>
 </FrameLayout>

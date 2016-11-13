@@ -1,12 +1,12 @@
-package observer.zagart.by.client.server.requests;
+package observer.zagart.by.client.backend.requests;
 import java.net.HttpURLConnection;
 
 import observer.zagart.by.client.http.interfaces.IHttpClient;
-import observer.zagart.by.client.server.api.Criteria;
+import observer.zagart.by.client.backend.Criteria;
 
 /**
  * AbstractObserverRequest implementation that is responsible for getting
- * all stands data that satisfy filters from HTTP-server Observer.
+ * all stands data that satisfy filters from HTTP-server ObserverApi.
  *
  * @author zagart
  */

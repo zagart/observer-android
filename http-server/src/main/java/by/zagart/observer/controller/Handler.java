@@ -84,7 +84,7 @@ public class Handler {
                 final List<Stand> stands = mStandService.getAll();
                 JSONObject jsonResponse = new JSONObject();
                 for (Stand stand : stands) {
-                    jsonResponse.put("stand", stand.toJSONString());
+                    jsonResponse.put(String.valueOf(stand.getId()), stand.toJSONString());
                 }
                 printResponseInJson(pResponse, jsonResponse);
                 break;

@@ -1,4 +1,4 @@
-package observer.zagart.by.client.server.api;
+package observer.zagart.by.client.backend;
 /**
  * @author zagart
  */

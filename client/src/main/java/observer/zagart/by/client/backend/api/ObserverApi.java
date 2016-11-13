@@ -1,10 +1,5 @@
-package observer.zagart.by.client.server.api;
-import android.accounts.Account;
-import android.accounts.AccountAuthenticatorActivity;
-import android.accounts.AccountManager;
+package observer.zagart.by.client.backend.api;
 import android.content.Context;
-import android.content.Intent;
-import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
@@ -15,34 +10,26 @@ import java.io.IOException;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 
-import observer.zagart.by.client.App;
 import observer.zagart.by.client.BuildConfig;
-import observer.zagart.by.client.R;
-import observer.zagart.by.client.activities.MyAccountActivity;
+import observer.zagart.by.client.backend.requests.AuthenticationRequest;
+import observer.zagart.by.client.backend.requests.RegistrationRequest;
 import observer.zagart.by.client.http.HttpClientFactory;
 import observer.zagart.by.client.http.interfaces.IHttpClient;
-import observer.zagart.by.client.server.requests.AuthenticationRequest;
-import observer.zagart.by.client.server.requests.RegistrationRequest;
-import observer.zagart.by.client.singletons.AccountHolder;
-import observer.zagart.by.client.singletons.ContextHolder;
 import observer.zagart.by.client.threadings.ThreadWorker;
-import observer.zagart.by.client.utils.SharedPreferencesUtil;
-
-import static android.app.Activity.RESULT_OK;
 
 /**
- * Class that provides methods to work with Observer's HTTP-server.
+ * Class that provides methods to work with ObserverApi's HTTP-server.
  *
  * @author zagart
  */
-public class Observer {
+public class ObserverApi {
     private static final String TOKEN = "token";
-    private final String TAG = Observer.class.getSimpleName();
+    private final String TAG = ObserverApi.class.getSimpleName();
     private ThreadWorker mDefaultWorker = ThreadWorker.getDefaultInstance();
     private IHttpClient mClient = HttpClientFactory.get(HttpClientFactory.Type.HTTP_PURE);
     private Context mContext;
 
-    public Observer(final Context pContext) {
+    public ObserverApi(final Context pContext) {
         mContext = pContext;
     }
 
@@ -52,39 +39,7 @@ public class Observer {
             final String pLogin,
             final String pPassword
     ) {
-        return new Observer(pContext).logIn(pLogin, pPassword);
-    }
-
-    public static void onTokenReceived(
-            AccountAuthenticatorActivity pActivity,
-            Account account,
-            String password,
-            String token
-    ) {
-        final AccountManager accountManager = AccountManager.get(pActivity);
-        final Bundle result = new Bundle();
-        if (accountManager.addAccountExplicitly(account, password, new Bundle())) {
-            result.putString(AccountManager.KEY_ACCOUNT_NAME, account.name);
-            result.putString(AccountManager.KEY_ACCOUNT_TYPE, account.type);
-            result.putString(AccountManager.KEY_AUTHTOKEN, token);
-            accountManager.setAuthToken(account, account.type, token);
-        } else {
-            result.putString(
-                    AccountManager.KEY_ERROR_MESSAGE,
-                    pActivity.getString(R.string.error_account_exists)
-            );
-        }
-        SharedPreferencesUtil.persistStringValue(
-                ContextHolder.get(),
-                App.CURRENT_ACCOUNT_NAME,
-                account.name
-        );
-        AccountHolder.set(account);
-        pActivity.setAccountAuthenticatorResult(result);
-        pActivity.setResult(RESULT_OK);
-        final Intent intent = new Intent(pActivity, MyAccountActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_NO_HISTORY);
-        pActivity.getApplicationContext().startActivity(intent);
+        return new ObserverApi(pContext).logIn(pLogin, pPassword);
     }
 
     @Nullable
@@ -93,7 +48,7 @@ public class Observer {
             final String pLogin,
             final String pPassword
     ) {
-        return new Observer(pContext).signUp(pLogin, pPassword);
+        return new ObserverApi(pContext).signUp(pLogin, pPassword);
     }
 
     @Nullable

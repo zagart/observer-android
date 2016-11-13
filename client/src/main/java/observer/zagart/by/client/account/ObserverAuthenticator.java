@@ -11,13 +11,13 @@ import android.text.TextUtils;
 
 import observer.zagart.by.client.App;
 import observer.zagart.by.client.activities.AuthenticationActivity;
-import observer.zagart.by.client.server.api.Observer;
+import observer.zagart.by.client.backend.api.ObserverApi;
 import observer.zagart.by.client.singletons.AccountHolder;
 import observer.zagart.by.client.singletons.ContextHolder;
 import observer.zagart.by.client.utils.SharedPreferencesUtil;
 
 /**
- * Authenticator to Observer HTTP-server.
+ * Authenticator to ObserverApi HTTP-server.
  *
  * @author zagart
  */
@@ -75,7 +75,7 @@ public class ObserverAuthenticator extends AbstractAccountAuthenticator {
         if (TextUtils.isEmpty(authToken)) {
             final String password = am.getPassword(pAccount);
             if (!TextUtils.isEmpty(password)) {
-                authToken = Observer.logIn(mContext, pAccount.name, password);
+                authToken = ObserverApi.logIn(mContext, pAccount.name, password);
             }
         }
         if (!TextUtils.isEmpty(authToken)) {

@@ -16,10 +16,10 @@ import observer.zagart.by.client.repository.model.Module;
  *
  * @author zagart
  */
-public class ModuleAdapter extends RecyclerView.Adapter<ModuleAdapter.RowHolder> {
+public class ModuleTableAdapter extends RecyclerView.Adapter<ModuleTableAdapter.RowHolder> {
     private List<Module> mModules;
 
-    public ModuleAdapter(final List<Module> pModules) {
+    public ModuleTableAdapter(final List<Module> pModules) {
         mModules = pModules;
     }
 

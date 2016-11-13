@@ -11,7 +11,8 @@ import android.widget.Toast;
 
 import observer.zagart.by.client.R;
 import observer.zagart.by.client.account.ObserverAccount;
-import observer.zagart.by.client.server.api.Observer;
+import observer.zagart.by.client.backend.api.ObserverApi;
+import observer.zagart.by.client.backend.api.ObserverCallback;
 import observer.zagart.by.client.threadings.ThreadWorker;
 import observer.zagart.by.client.utils.BroadcastUtil;
 
@@ -34,14 +35,14 @@ public class AuthenticationActivity extends AccountAuthenticatorActivity {
                     public void run() {
                         final String login = pCharLogin.toString();
                         final String password = pCharPassword.toString();
-                        final String token = Observer.logIn(
+                        final String token = ObserverApi.logIn(
                                 AuthenticationActivity.this,
                                 login,
                                 password
                         );
                         if (!TextUtils.isEmpty(token)) {
                             ObserverAccount account = new ObserverAccount(login);
-                            Observer.onTokenReceived(
+                            ObserverCallback.onTokenReceived(
                                     AuthenticationActivity.this,
                                     account,
                                     password,

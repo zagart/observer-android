@@ -6,8 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import observer.zagart.by.client.repository.model.contracts.StandContract;
 import observer.zagart.by.client.interfaces.IConvertible;
+import observer.zagart.by.client.repository.model.contracts.StandContract;
 
 /**
  * Model for stand.

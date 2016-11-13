@@ -16,16 +16,16 @@ import observer.zagart.by.client.repository.model.Stand;
 /**
  * My adapter for stand model.
  */
-public class StandAdapter extends RecyclerView.Adapter<StandAdapter.RowHolder>
+public class StandTableAdapter extends RecyclerView.Adapter<StandTableAdapter.RowHolder>
         implements IMovableContent {
     private List<Stand> mStands;
 
-    public StandAdapter(final List<Stand> pStands) {
+    public StandTableAdapter(final List<Stand> pStands) {
         mStands = pStands;
     }
 
     @Override
-    public StandAdapter.RowHolder onCreateViewHolder(final ViewGroup parent, final int viewType) {
+    public StandTableAdapter.RowHolder onCreateViewHolder(final ViewGroup parent, final int viewType) {
         Context context = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
         View standRowView = inflater.inflate(R.layout.stand_table_row, parent, false);
@@ -33,7 +33,7 @@ public class StandAdapter extends RecyclerView.Adapter<StandAdapter.RowHolder>
     }
 
     @Override
-    public void onBindViewHolder(final StandAdapter.RowHolder holder, final int position) {
+    public void onBindViewHolder(final StandTableAdapter.RowHolder holder, final int position) {
         Stand stand = mStands.get(position);
         TextView idView = holder.mIdView;
         idView.setText(String.valueOf(stand.getId()));

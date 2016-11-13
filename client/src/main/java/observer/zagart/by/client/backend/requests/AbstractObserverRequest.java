@@ -1,4 +1,4 @@
-package observer.zagart.by.client.server.requests;
+package observer.zagart.by.client.backend.requests;
 import android.content.Context;
 import android.util.Log;
 
@@ -16,6 +16,8 @@ import observer.zagart.by.client.utils.BroadcastUtil;
 import observer.zagart.by.client.utils.IOUtil;
 
 /**
+ * Abstract class with main data for connecting ObserverApi HTTP-server.
+ *
  * @author zagart
  */
 public abstract class AbstractObserverRequest implements IHttpClient.IRequest<String> {

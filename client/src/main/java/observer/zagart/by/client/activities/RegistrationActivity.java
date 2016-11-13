@@ -9,7 +9,8 @@ import android.widget.Toast;
 
 import observer.zagart.by.client.R;
 import observer.zagart.by.client.account.ObserverAccount;
-import observer.zagart.by.client.server.api.Observer;
+import observer.zagart.by.client.backend.api.ObserverApi;
+import observer.zagart.by.client.backend.api.ObserverCallback;
 import observer.zagart.by.client.threadings.ThreadWorker;
 import observer.zagart.by.client.utils.BroadcastUtil;
 
@@ -24,21 +25,24 @@ public class RegistrationActivity extends AccountAuthenticatorActivity {
     private EditText mLoginView;
     private ThreadWorker mWorker;
 
-    private void executeRegistration(final CharSequence pCharLogin, final CharSequence pCharPassword) {
+    private void executeRegistration(
+            final CharSequence pCharLogin,
+            final CharSequence pCharPassword
+    ) {
         mWorker.execute(
                 new Runnable() {
                     @Override
                     public void run() {
                         final String login = pCharLogin.toString();
                         final String password = pCharPassword.toString();
-                        final String token = Observer.signUp(
+                        final String token = ObserverApi.signUp(
                                 RegistrationActivity.this,
                                 login,
                                 password
                         );
                         if (!TextUtils.isEmpty(token)) {
                             ObserverAccount account = new ObserverAccount(login);
-                            Observer.onTokenReceived(
+                            ObserverCallback.onTokenReceived(
                                     RegistrationActivity.this,
                                     account,
                                     password,
