@@ -37,11 +37,13 @@ public interface IHttpClient {
             public static final String TOKEN = "token";
             public static final String PASSWORD = "password";
             public static final String CONTENT_TYPE = "Content-Type";
+            public static final String CRITERIA = "criteria";
         }
 
         class Actions {
             public static final String AUTHENTICATE = "authenticate";
             public static final String REGISTER = "register";
+            public static final String GET_DATA = "get_data";
         }
     }
 }

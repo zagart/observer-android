@@ -3,7 +3,7 @@ import android.accounts.Account;
 import android.os.Parcel;
 
 /**
- * Account model to Observer HTTP-server.
+ * Account model to ObserverApi HTTP-server.
  *
  * @author zagart
  */

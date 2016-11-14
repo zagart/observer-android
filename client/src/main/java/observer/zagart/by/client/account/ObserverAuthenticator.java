@@ -10,14 +10,14 @@ import android.os.Bundle;
 import android.text.TextUtils;
 
 import observer.zagart.by.client.App;
-import observer.zagart.by.client.activities.LoginActivity;
-import observer.zagart.by.client.server.api.Observer;
+import observer.zagart.by.client.activities.AuthenticationActivity;
+import observer.zagart.by.client.backend.api.ObserverApi;
 import observer.zagart.by.client.singletons.AccountHolder;
 import observer.zagart.by.client.singletons.ContextHolder;
 import observer.zagart.by.client.utils.SharedPreferencesUtil;
 
 /**
- * Authenticator to Observer HTTP-server.
+ * Authenticator to ObserverApi HTTP-server.
  *
  * @author zagart
  */
@@ -42,8 +42,8 @@ public class ObserverAuthenticator extends AbstractAccountAuthenticator {
             String[] pRequiredFeatures,
             Bundle pOptions
     ) throws NetworkErrorException {
-        final Intent intent = new Intent(mContext, LoginActivity.class);
-        intent.putExtra(LoginActivity.EXTRA_TOKEN_TYPE, pAccountType);
+        final Intent intent = new Intent(mContext, AuthenticationActivity.class);
+        intent.putExtra(AuthenticationActivity.EXTRA_TOKEN_TYPE, pAccountType);
         intent.putExtra(AccountManager.KEY_ACCOUNT_AUTHENTICATOR_RESPONSE, pResponse);
         final Bundle bundle = new Bundle();
         if (pOptions != null) {
@@ -75,7 +75,7 @@ public class ObserverAuthenticator extends AbstractAccountAuthenticator {
         if (TextUtils.isEmpty(authToken)) {
             final String password = am.getPassword(pAccount);
             if (!TextUtils.isEmpty(password)) {
-                authToken = Observer.logIn(mContext, pAccount.name, password);
+                authToken = ObserverApi.logIn(mContext, pAccount.name, password);
             }
         }
         if (!TextUtils.isEmpty(authToken)) {
@@ -88,9 +88,9 @@ public class ObserverAuthenticator extends AbstractAccountAuthenticator {
                     am.peekAuthToken(pAccount, ObserverAccount.AUTH_TOKEN_TYPE
                     )
             );
-            final Intent intent = new Intent(mContext, LoginActivity.class);
+            final Intent intent = new Intent(mContext, AuthenticationActivity.class);
             intent.putExtra(AccountManager.KEY_ACCOUNT_AUTHENTICATOR_RESPONSE, pResponse);
-            intent.putExtra(LoginActivity.EXTRA_TOKEN_TYPE, pAuthTokenType);
+            intent.putExtra(AuthenticationActivity.EXTRA_TOKEN_TYPE, pAuthTokenType);
             final Bundle bundle = new Bundle();
             bundle.putParcelable(AccountManager.KEY_INTENT, intent);
         }

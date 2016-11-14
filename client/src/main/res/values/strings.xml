@@ -35,4 +35,6 @@
     <string name="current_user">Current user:</string>
     <string name="stands">Stands</string>
     <string name="modules">Modules</string>
+    <string name="reload">Reload</string>
+    <string name="clear">Clear</string>
 </resources>

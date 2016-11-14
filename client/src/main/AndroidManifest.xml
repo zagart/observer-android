@@ -15,16 +15,34 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/ObserverDefault">
-        <activity android:name=".activities.MainActivity">
+        <activity
+            android:name=".activities.MainActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".activities.LoginActivity"/>
-        <activity android:name=".activities.StandsActivity"/>
-        <activity android:name=".activities.MyAccountActivity"/>
-        <activity android:name=".activities.RegistrationActivity"/>
+        <activity
+            android:name=".activities.AuthenticationActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".activities.StandsActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".activities.ModulesActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".activities.MyAccountActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".activities.RegistrationActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"/>
 
         <service
             android:name=".account.ObserverAuthenticatorService"

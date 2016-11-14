@@ -1,10 +1,12 @@
 package observer.zagart.by.client.activities;
 import android.accounts.AccountAuthenticatorActivity;
+import android.app.ActionBar;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.view.View;
-import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import observer.zagart.by.client.R;
@@ -15,17 +17,15 @@ import observer.zagart.by.client.threadings.ThreadWorker;
 import observer.zagart.by.client.utils.BroadcastUtil;
 
 /**
- * Activity with UI for executing process of registration
- * for users.
- *
- * @author zagart
+ * Activity that provides UI for user authorization.
  */
-public class RegistrationActivity extends AccountAuthenticatorActivity {
-    private EditText mPasswordView;
-    private EditText mLoginView;
-    private ThreadWorker mWorker;
+public class AuthenticationActivity extends AccountAuthenticatorActivity {
+    public static String EXTRA_TOKEN_TYPE = "by.zagart.observer.EXTRA_TOKEN";
+    private TextView mLoginView;
+    private TextView mPasswordView;
+    private ThreadWorker mWorker = ThreadWorker.getDefaultInstance();
 
-    private void executeRegistration(
+    private void executeAuthentication(
             final CharSequence pCharLogin,
             final CharSequence pCharPassword
     ) {
@@ -35,24 +35,24 @@ public class RegistrationActivity extends AccountAuthenticatorActivity {
                     public void run() {
                         final String login = pCharLogin.toString();
                         final String password = pCharPassword.toString();
-                        final String token = ObserverApi.signUp(
-                                RegistrationActivity.this,
+                        final String token = ObserverApi.logIn(
+                                AuthenticationActivity.this,
                                 login,
                                 password
                         );
                         if (!TextUtils.isEmpty(token)) {
                             ObserverAccount account = new ObserverAccount(login);
                             ObserverCallback.onTokenReceived(
-                                    RegistrationActivity.this,
+                                    AuthenticationActivity.this,
                                     account,
                                     password,
                                     token
                             );
                         } else {
                             BroadcastUtil.sendBroadcast(
-                                    RegistrationActivity.this,
-                                    BaseActivity.REGISTRATION_RESULT,
-                                    getString(R.string.err_registration_failed)
+                                    AuthenticationActivity.this,
+                                    BaseActivity.AUTHENTICATION_RESULT,
+                                    getString(R.string.msg_failed_authentication)
                             );
                         }
                     }
@@ -60,7 +60,24 @@ public class RegistrationActivity extends AccountAuthenticatorActivity {
         );
     }
 
-    public void onConfirmClick(View pView) {
+    @SuppressWarnings("MissingPermission")
+    @Override
+    protected void onCreate(@Nullable final Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        final ActionBar bar = getActionBar();
+        if (bar != null) {
+            bar.hide();
+        }
+        setContentView(R.layout.login_activity);
+        mLoginView = (TextView) findViewById(R.id.login_login);
+        mPasswordView = (TextView) findViewById(R.id.login_password);
+    }
+
+    public void onGuestClick(View view) {
+        Toast.makeText(this, getString(R.string.msg_dummy), Toast.LENGTH_LONG).show();
+    }
+
+    public void onLogInClick(View view) {
         final CharSequence charLogin = mLoginView.getText();
         final CharSequence charPassword = mPasswordView.getText();
         if (TextUtils.isEmpty(charLogin) || TextUtils.isEmpty(charPassword)) {
@@ -70,23 +87,13 @@ public class RegistrationActivity extends AccountAuthenticatorActivity {
                     Toast.LENGTH_LONG
             ).show();
         } else {
-            executeRegistration(charLogin, charPassword);
+            executeAuthentication(charLogin, charPassword);
         }
     }
 
-    @Override
-    protected void onCreate(@Nullable final Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        mWorker = ThreadWorker.getDefaultInstance();
-        setContentView(R.layout.registration_activity);
-        mWorker.execute(
-                new Runnable() {
-                    @Override
-                    public void run() {
-                        mLoginView = (EditText) findViewById(R.id.registration_login);
-                        mPasswordView = (EditText) findViewById(R.id.registration_password);
-                    }
-                }
-        );
+    public void onSignUpClick(View pView) {
+        Intent intent = new Intent(this, RegistrationActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+        startActivity(intent);
     }
 }

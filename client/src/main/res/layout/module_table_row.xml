@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
+
+    <TextView
+        android:id="@+id/module_id"
+        style="@style/RecyclerViewTableCell"/>
+
+    <TextView
+        android:id="@+id/module_name"
+        style="@style/RecyclerViewTableCell"/>
+
+    <TextView
+        android:id="@+id/module_status"
+        style="@style/RecyclerViewTableCell"/>
+
+    <TextView
+        android:id="@+id/module_value"
+        style="@style/RecyclerViewTableCell"/>
+
+    <TextView
+        android:id="@+id/module_status_change_date"
+        style="@style/RecyclerViewTableCell"/>
+
+    <TextView
+        android:id="@+id/module_stand_id"
+        style="@style/RecyclerViewTableCell"/>
+</LinearLayout>

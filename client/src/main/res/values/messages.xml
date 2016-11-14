@@ -8,4 +8,5 @@
     <string name="msg_no_accounts">No accounts found.</string>
     <string name="msg_sp_value_persisted">Value %s persisted</string>
     <string name="err_timeout">Timeout exception!</string>
+    <string name="err_failed_get_data">Failed to get data from server</string>
 </resources>
