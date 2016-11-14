@@ -16,6 +16,7 @@ import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 
+import observer.zagart.by.client.App;
 import observer.zagart.by.client.BuildConfig;
 import observer.zagart.by.client.R;
 import observer.zagart.by.client.adapters.StandTableAdapter;
@@ -28,12 +29,18 @@ import observer.zagart.by.client.repository.model.Stand;
 import observer.zagart.by.client.threadings.ThreadWorker;
 
 /**
+ * Activity for showing cached stand objects.
+ *
  * @author zagart
  */
 public class StandsActivity extends BaseActivity {
 
     private RecyclerView mRvStands;
-    private ThreadWorker mWorker = ThreadWorker.getDefaultInstance();
+    private ThreadWorker mWorker;
+
+    {
+        mWorker = App.getState().getThreadWorker();
+    }
 
     public void onClearClick(View pView) {
         Service.clearCachedStands();

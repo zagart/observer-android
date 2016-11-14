@@ -10,11 +10,13 @@ import android.widget.TextView;
 
 import observer.zagart.by.client.App;
 import observer.zagart.by.client.R;
-import observer.zagart.by.client.singletons.AccountHolder;
+import observer.zagart.by.client.constants.Constants;
 import observer.zagart.by.client.utils.SharedPreferencesUtil;
 
+import static observer.zagart.by.client.constants.Constants.EMPTY_STRING;
+
 /**
- * Activity for settings of user account.
+ * Activity for user account.
  *
  * @author zagart
  */
@@ -32,9 +34,9 @@ public class MyAccountActivity extends BaseActivity {
     }
 
     public void onLogoutClick(View pView) {
-        AccountHolder.set(null);
-        SharedPreferencesUtil.persistStringValue(this, App.CURRENT_ACCOUNT_NAME, null);
-        onStart();
+        App.getState().setAccount(null);
+        SharedPreferencesUtil.persistStringValue(this, Constants.CURRENT_ACCOUNT_NAME, null);
+        onViewsVisibilityCheck();
     }
 
     @Override
@@ -52,20 +54,19 @@ public class MyAccountActivity extends BaseActivity {
     }
 
     @Override
-    protected void onStart() {
-        super.onStart();
-        if (AccountHolder.get() != null) {
+    protected void onViewsVisibilityCheck() {
+        if (App.getState().getAccount() != null) {
             mLogInView.setVisibility(View.GONE);
             mLogOutView.setVisibility(View.VISIBLE);
             mUserLabel.setVisibility(View.VISIBLE);
             mUserLogin.setVisibility(View.VISIBLE);
-            mUserLogin.setText(AccountHolder.get().name);
+            mUserLogin.setText(App.getState().getAccount().name);
         } else {
             mLogInView.setVisibility(View.VISIBLE);
             mLogOutView.setVisibility(View.GONE);
             mUserLabel.setVisibility(View.GONE);
             mUserLogin.setVisibility(View.GONE);
-            mUserLogin.setText("");
+            mUserLogin.setText(EMPTY_STRING);
         }
     }
 }

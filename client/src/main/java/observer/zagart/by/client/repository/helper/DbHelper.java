@@ -14,6 +14,7 @@ import java.lang.reflect.Field;
 import java.util.List;
 import java.util.Locale;
 
+import observer.zagart.by.client.App;
 import observer.zagart.by.client.BuildConfig;
 import observer.zagart.by.client.repository.model.annotations.Table;
 import observer.zagart.by.client.repository.model.annotations.dbId;
@@ -21,7 +22,6 @@ import observer.zagart.by.client.repository.model.annotations.dbInteger;
 import observer.zagart.by.client.repository.model.annotations.dbNotNull;
 import observer.zagart.by.client.repository.model.annotations.dbString;
 import observer.zagart.by.client.repository.model.contracts.Contracts;
-import observer.zagart.by.client.singletons.ContextHolder;
 
 /**
  * SQLiteOpenHelper/IDbOperations implementation. Provides access to
@@ -232,6 +232,6 @@ public class DbHelper extends SQLiteOpenHelper implements IDbOperations {
 
     public static class SingletonHolder {
 
-        public static final DbHelper DB_HELPER_INSTANCE = new DbHelper(ContextHolder.get());
+        public static final DbHelper DB_HELPER_INSTANCE = new DbHelper(App.getState().getContext());
     }
 }

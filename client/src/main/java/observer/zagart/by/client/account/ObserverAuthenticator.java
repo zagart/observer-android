@@ -13,8 +13,7 @@ import android.text.TextUtils;
 import observer.zagart.by.client.App;
 import observer.zagart.by.client.activities.AuthenticationActivity;
 import observer.zagart.by.client.backend.api.ObserverApi;
-import observer.zagart.by.client.singletons.AccountHolder;
-import observer.zagart.by.client.singletons.ContextHolder;
+import observer.zagart.by.client.constants.Constants;
 import observer.zagart.by.client.utils.SharedPreferencesUtil;
 
 /**
@@ -22,11 +21,11 @@ import observer.zagart.by.client.utils.SharedPreferencesUtil;
  *
  * @author zagart
  */
-public class ObserverAuthenticator extends AbstractAccountAuthenticator {
+class ObserverAuthenticator extends AbstractAccountAuthenticator {
 
     private Context mContext;
 
-    public ObserverAuthenticator(final Context pContext) {
+    ObserverAuthenticator(final Context pContext) {
         super(pContext);
         mContext = pContext;
     }
@@ -45,7 +44,7 @@ public class ObserverAuthenticator extends AbstractAccountAuthenticator {
             Bundle pOptions
     ) throws NetworkErrorException {
         final Intent intent = new Intent(mContext, AuthenticationActivity.class);
-        intent.putExtra(AuthenticationActivity.EXTRA_TOKEN_TYPE, pAccountType);
+        intent.putExtra(ObserverAccount.EXTRA_TOKEN_TYPE, pAccountType);
         intent.putExtra(AccountManager.KEY_ACCOUNT_AUTHENTICATOR_RESPONSE, pResponse);
         final Bundle bundle = new Bundle();
         if (pOptions != null) {
@@ -92,7 +91,7 @@ public class ObserverAuthenticator extends AbstractAccountAuthenticator {
             );
             final Intent intent = new Intent(mContext, AuthenticationActivity.class);
             intent.putExtra(AccountManager.KEY_ACCOUNT_AUTHENTICATOR_RESPONSE, pResponse);
-            intent.putExtra(AuthenticationActivity.EXTRA_TOKEN_TYPE, pAuthTokenType);
+            intent.putExtra(ObserverAccount.EXTRA_TOKEN_TYPE, pAuthTokenType);
             final Bundle bundle = new Bundle();
             bundle.putParcelable(AccountManager.KEY_INTENT, intent);
         }
@@ -128,11 +127,11 @@ public class ObserverAuthenticator extends AbstractAccountAuthenticator {
             final Account account
     ) throws NetworkErrorException {
         SharedPreferencesUtil.persistStringValue(
-                ContextHolder.get(),
-                App.CURRENT_ACCOUNT_NAME,
+                App.getState().getContext(),
+                Constants.CURRENT_ACCOUNT_NAME,
                 null
         );
-        AccountHolder.set(null);
+        App.getState().setAccount(null);
         return super.getAccountRemovalAllowed(response, account);
     }
 }

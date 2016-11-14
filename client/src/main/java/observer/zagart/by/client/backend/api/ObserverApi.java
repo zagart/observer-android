@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 
+import observer.zagart.by.client.App;
 import observer.zagart.by.client.BuildConfig;
 import observer.zagart.by.client.backend.requests.AuthenticationRequest;
 import observer.zagart.by.client.backend.requests.RegistrationRequest;
@@ -27,9 +28,13 @@ public class ObserverApi {
 
     private static final String TOKEN = "token";
     private final String TAG = ObserverApi.class.getSimpleName();
-    private ThreadWorker mDefaultWorker = ThreadWorker.getDefaultInstance();
+    private ThreadWorker mWorker;
     private IHttpClient mClient = HttpClientFactory.get(HttpClientFactory.Type.HTTP_PURE);
     private Context mContext;
+
+    {
+        mWorker = App.getState().getThreadWorker();
+    }
 
     public ObserverApi(final Context pContext) {
         mContext = pContext;
@@ -82,7 +87,7 @@ public class ObserverApi {
     @Nullable
     private String requestToServer(final IHttpClient.IRequest<String> pRequest) {
         try {
-            return (String) mDefaultWorker.submit(
+            return (String) mWorker.submit(
                     new Callable<String>() {
 
                         @Override

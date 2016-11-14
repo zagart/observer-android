@@ -1,6 +1,8 @@
 package observer.zagart.by.client.utils;
 
+import android.content.Context;
 import android.util.Log;
+import android.widget.Toast;
 
 import java.io.Closeable;
 import java.io.IOException;
@@ -31,6 +33,12 @@ public class IOUtil {
                     Log.e(IOUtil.class.getSimpleName(), FAILED_TO_EXECUTE_CLOSING, pEx);
                 }
             }
+        }
+    }
+
+    public static void showToast(Context pContext, String pMessage) {
+        if (pMessage != null) {
+            Toast.makeText(pContext, pMessage, Toast.LENGTH_LONG).show();
         }
     }
 

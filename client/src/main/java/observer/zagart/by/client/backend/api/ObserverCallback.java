@@ -14,12 +14,11 @@ import java.util.Iterator;
 import java.util.List;
 
 import observer.zagart.by.client.App;
+import observer.zagart.by.client.constants.Constants;
 import observer.zagart.by.client.R;
 import observer.zagart.by.client.activities.MyAccountActivity;
 import observer.zagart.by.client.repository.model.Stand;
 import observer.zagart.by.client.repository.model.contracts.StandContract;
-import observer.zagart.by.client.singletons.AccountHolder;
-import observer.zagart.by.client.singletons.ContextHolder;
 import observer.zagart.by.client.utils.SharedPreferencesUtil;
 
 import static android.app.Activity.RESULT_OK;
@@ -66,11 +65,11 @@ public class ObserverCallback {
             );
         }
         SharedPreferencesUtil.persistStringValue(
-                ContextHolder.get(),
-                App.CURRENT_ACCOUNT_NAME,
+                App.getState().getContext(),
+                Constants.CURRENT_ACCOUNT_NAME,
                 pAccount.name
         );
-        AccountHolder.set(pAccount);
+        App.getState().setAccount(pAccount);
         pActivity.setAccountAuthenticatorResult(result);
         pActivity.setResult(RESULT_OK);
         final Intent intent = new Intent(pActivity, MyAccountActivity.class);

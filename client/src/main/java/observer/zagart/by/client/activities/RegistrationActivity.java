@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import observer.zagart.by.client.App;
 import observer.zagart.by.client.R;
 import observer.zagart.by.client.account.ObserverAccount;
 import observer.zagart.by.client.backend.api.ObserverApi;
@@ -27,6 +28,10 @@ public class RegistrationActivity extends AccountAuthenticatorActivity {
     private EditText mLoginView;
     private ThreadWorker mWorker;
 
+    {
+        mWorker = App.getState().getThreadWorker();
+    }
+
     public void onConfirmClick(View pView) {
         final CharSequence charLogin = mLoginView.getText();
         final CharSequence charPassword = mPasswordView.getText();
@@ -44,7 +49,6 @@ public class RegistrationActivity extends AccountAuthenticatorActivity {
     @Override
     protected void onCreate(@Nullable final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mWorker = ThreadWorker.getDefaultInstance();
         setContentView(R.layout.registration_activity);
         mWorker.execute(
                 new Runnable() {

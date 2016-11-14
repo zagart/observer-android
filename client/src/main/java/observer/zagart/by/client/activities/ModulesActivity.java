@@ -10,6 +10,8 @@ import observer.zagart.by.client.adapters.ModuleTableAdapter;
 import observer.zagart.by.client.repository.Service;
 
 /**
+ * Activity for showing cached module objects.
+ *
  * @author zagart
  */
 public class ModulesActivity extends BaseActivity {
@@ -21,10 +23,6 @@ public class ModulesActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.modules_activity);
         mRecyclerViewModules = (RecyclerView) findViewById(R.id.modules_recycler_view);
-        processRecycler();
-    }
-
-    private void processRecycler() {
         final ModuleTableAdapter adapter = new ModuleTableAdapter(Service.selectAllModules());
         mRecyclerViewModules.setAdapter(adapter);
         mRecyclerViewModules.setLayoutManager(new LinearLayoutManager(this));

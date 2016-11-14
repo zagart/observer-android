@@ -7,8 +7,8 @@ import android.support.v7.app.ActionBar;
 import android.view.View;
 import android.widget.Button;
 
+import observer.zagart.by.client.App;
 import observer.zagart.by.client.R;
-import observer.zagart.by.client.singletons.AccountHolder;
 
 /**
  * Application main activity.
@@ -51,13 +51,8 @@ public class MainActivity extends BaseActivity {
     }
 
     @Override
-    protected void onStart() {
-        super.onStart();
-        refreshButtonsVisibility();
-    }
-
-    private void refreshButtonsVisibility() {
-        if (AccountHolder.get() != null) {
+    protected void onViewsVisibilityCheck() {
+        if (App.getState().getAccount() != null) {
             mModulesButton.setVisibility(View.VISIBLE);
             mStandsButton.setVisibility(View.VISIBLE);
         } else {

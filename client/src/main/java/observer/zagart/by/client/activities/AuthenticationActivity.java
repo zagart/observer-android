@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import observer.zagart.by.client.App;
 import observer.zagart.by.client.R;
 import observer.zagart.by.client.account.ObserverAccount;
 import observer.zagart.by.client.backend.api.ObserverApi;
@@ -22,10 +23,13 @@ import observer.zagart.by.client.utils.BroadcastUtil;
  */
 public class AuthenticationActivity extends AccountAuthenticatorActivity {
 
-    public static String EXTRA_TOKEN_TYPE = "by.zagart.observer.EXTRA_TOKEN";
     private TextView mLoginView;
     private TextView mPasswordView;
-    private ThreadWorker mWorker = ThreadWorker.getDefaultInstance();
+    private ThreadWorker mWorker;
+
+    {
+        mWorker = App.getState().getThreadWorker();
+    }
 
     public void onGuestClick(View view) {
         Toast.makeText(this, getString(R.string.msg_dummy), Toast.LENGTH_LONG).show();
