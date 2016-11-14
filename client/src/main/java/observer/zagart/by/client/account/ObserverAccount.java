@@ -1,4 +1,5 @@
 package observer.zagart.by.client.account;
+
 import android.accounts.Account;
 import android.os.Parcel;
 
@@ -8,6 +9,7 @@ import android.os.Parcel;
  * @author zagart
  */
 public class ObserverAccount extends Account {
+
     public static final String TYPE = "by.zagart.observer";
     public static final String AUTH_TOKEN_TYPE = "by.zagart.observer.TOKEN_TYPE";
 

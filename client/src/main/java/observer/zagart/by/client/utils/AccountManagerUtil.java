@@ -1,4 +1,5 @@
 package observer.zagart.by.client.utils;
+
 import android.accounts.Account;
 import android.accounts.AccountManager;
 
@@ -11,8 +12,9 @@ import observer.zagart.by.client.singletons.ContextHolder;
  * @author zagart
  */
 public class AccountManagerUtil {
+
     @SuppressWarnings("MissingPermission")
-    public static Account getSavedAccount() {
+    public static Account getPersistedAccount() {
         final String accountName = SharedPreferencesUtil.retrieveStringValue(
                 ContextHolder.get(),
                 App.CURRENT_ACCOUNT_NAME

@@ -1,4 +1,5 @@
 package observer.zagart.by.client.utils;
+
 import android.util.Log;
 
 import java.io.Closeable;
@@ -16,6 +17,7 @@ import observer.zagart.by.client.BuildConfig;
  * @author zagart
  */
 public class IOUtil {
+
     private static final byte EOF = -1;
     private static final String FAILED_TO_EXECUTE_CLOSING = "Failed to execute closing";
     private static final short READ_BUFFER_SIZE = 4096;

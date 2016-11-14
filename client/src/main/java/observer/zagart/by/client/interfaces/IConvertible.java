@@ -1,4 +1,5 @@
 package observer.zagart.by.client.interfaces;
+
 /**
  * Interface implementations have method to covert themselves
  * into {@link Target} object.
@@ -6,5 +7,6 @@ package observer.zagart.by.client.interfaces;
  * @author zagart
  */
 public interface IConvertible<Target> {
+
     Target convert();
 }

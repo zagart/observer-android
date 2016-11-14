@@ -1,4 +1,5 @@
 package observer.zagart.by.client.repository.model;
+
 import android.content.ContentValues;
 import android.database.Cursor;
 
@@ -14,6 +15,7 @@ import observer.zagart.by.client.repository.model.contracts.ModuleContract;
  * Model for module.
  */
 public class Module implements IConvertible<ContentValues> {
+
     public static final int MODULE_VALUE_LIMIT = 99;
     public static final int MODULE_ID_LIMIT = 9;
     private Long mId;

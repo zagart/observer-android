@@ -1,4 +1,5 @@
 package observer.zagart.by.client.interfaces;
+
 import android.view.View;
 
 /**
@@ -8,5 +9,6 @@ import android.view.View;
  * @author zagart
  */
 public interface IDrawable<Canvas extends View, Source> {
+
     void draw(Canvas pCanvas, Source pSource);
 }

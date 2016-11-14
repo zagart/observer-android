@@ -1,4 +1,5 @@
 package observer.zagart.by.client.activities;
+
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
@@ -30,28 +31,12 @@ import observer.zagart.by.client.threadings.ThreadWorker;
  * @author zagart
  */
 public class StandsActivity extends BaseActivity {
+
     private RecyclerView mRvStands;
     private ThreadWorker mWorker = ThreadWorker.getDefaultInstance();
 
-    private void loadRecycler() {
-        final StandTableAdapter adapter = new StandTableAdapter(Service.selectAllStands());
-        ItemTouchHelper.Callback callback = new ManualCallback(adapter);
-        ItemTouchHelper touchHelper = new ItemTouchHelper(callback);
-        touchHelper.attachToRecyclerView(mRvStands);
-        mRvStands.setAdapter(adapter);
-        mRvStands.setLayoutManager(new LinearLayoutManager(this));
-    }
-
     public void onClearClick(View pView) {
         Service.clearCachedStands();
-        loadRecycler();
-    }
-
-    @Override
-    protected void onCreate(@Nullable final Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.stands_activity);
-        mRvStands = (RecyclerView) findViewById(R.id.stands_recycler_view);
         loadRecycler();
     }
 
@@ -61,6 +46,7 @@ public class StandsActivity extends BaseActivity {
             stands = ObserverCallback.onStandsReceived(
                     (String) mWorker.submit(
                             new Callable() {
+
                                 @Override
                                 public Object call() throws Exception {
                                     try {
@@ -89,5 +75,22 @@ public class StandsActivity extends BaseActivity {
         }
         Service.synchronizeStands(stands);
         loadRecycler();
+    }
+
+    @Override
+    protected void onCreate(@Nullable final Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.stands_activity);
+        mRvStands = (RecyclerView) findViewById(R.id.stands_recycler_view);
+        loadRecycler();
+    }
+
+    private void loadRecycler() {
+        final StandTableAdapter adapter = new StandTableAdapter(Service.selectAllStands());
+        ItemTouchHelper.Callback callback = new ManualCallback(adapter);
+        ItemTouchHelper touchHelper = new ItemTouchHelper(callback);
+        touchHelper.attachToRecyclerView(mRvStands);
+        mRvStands.setAdapter(adapter);
+        mRvStands.setLayoutManager(new LinearLayoutManager(this));
     }
 }

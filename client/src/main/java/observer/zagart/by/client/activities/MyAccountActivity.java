@@ -1,4 +1,5 @@
 package observer.zagart.by.client.activities;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -18,10 +19,23 @@ import observer.zagart.by.client.utils.SharedPreferencesUtil;
  * @author zagart
  */
 public class MyAccountActivity extends BaseActivity {
+
     private Button mLogInView;
     private Button mLogOutView;
     private TextView mUserLabel;
     private TextView mUserLogin;
+
+    public void onLoginClick(View view) {
+        Intent intent = new Intent(this, AuthenticationActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_NO_HISTORY);
+        startActivity(intent);
+    }
+
+    public void onLogoutClick(View pView) {
+        AccountHolder.set(null);
+        SharedPreferencesUtil.persistStringValue(this, App.CURRENT_ACCOUNT_NAME, null);
+        onStart();
+    }
 
     @Override
     protected void onCreate(@Nullable final Bundle savedInstanceState) {
@@ -35,18 +49,6 @@ public class MyAccountActivity extends BaseActivity {
         mLogOutView = (Button) findViewById(R.id.my_account_btn_log_out);
         mUserLabel = (TextView) findViewById(R.id.my_account_login_label);
         mUserLogin = (TextView) findViewById(R.id.my_account_login);
-    }
-
-    public void onLoginClick(View view) {
-        Intent intent = new Intent(this, AuthenticationActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_NO_HISTORY);
-        startActivity(intent);
-    }
-
-    public void onLogoutClick(View pView) {
-        AccountHolder.set(null);
-        SharedPreferencesUtil.persistStringValue(this, App.CURRENT_ACCOUNT_NAME, null);
-        onStart();
     }
 
     @Override

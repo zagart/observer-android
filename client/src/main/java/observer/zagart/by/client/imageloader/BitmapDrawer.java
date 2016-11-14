@@ -1,4 +1,5 @@
 package observer.zagart.by.client.imageloader;
+
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Log;
@@ -25,6 +26,7 @@ import observer.zagart.by.client.threadings.ThreadWorker;
  * @author zagart
  */
 public class BitmapDrawer implements IDrawable<ImageView, String> {
+
     private static final float MEMORY_USE_COEFFICIENT = 0.125f; //12.5%
     private final LruCache<String, Bitmap> mCache;
     private ThreadWorker mBitmapTask;
@@ -33,6 +35,7 @@ public class BitmapDrawer implements IDrawable<ImageView, String> {
         final int mMaxMemory = (int) (Runtime.getRuntime().maxMemory() / 1024);
         final int mCacheSize = (int) (mMaxMemory * MEMORY_USE_COEFFICIENT);
         mCache = new LruCache<String, Bitmap>(mCacheSize) {
+
             @Override
             protected int sizeOf(final String pKey, final android.graphics.Bitmap pImage) {
                 return pImage.getByteCount() / 1024;
@@ -93,6 +96,7 @@ public class BitmapDrawer implements IDrawable<ImageView, String> {
      * execute downloading in background thread {@link ThreadWorker}.
      */
     private class BitmapDownloadAction implements IAction<String, Void, ByteArrayOutputStream> {
+
         @Override
         public ByteArrayOutputStream process(
                 final ICallback<Void, ByteArrayOutputStream> pCallback,
@@ -112,6 +116,7 @@ public class BitmapDrawer implements IDrawable<ImageView, String> {
      * downloading convert them into Bitmap and try to set downloaded image.
      */
     private class BitmapDownloadCallback implements ICallback<Void, ByteArrayOutputStream> {
+
         private static final String ON_START_EXCEPTION_LOG = "Parameter on failing onStart: %s";
         private IHttpClient mHttpClient = HttpClientFactory.getDefaultClient();
         private byte[] downloaded;
@@ -133,6 +138,7 @@ public class BitmapDrawer implements IDrawable<ImageView, String> {
                 putInCache(pParam, bitmap);
                 mBitmapTask.post(
                         new Runnable() {
+
                             @Override
                             public void run() {
                                 setImageBitmap(mImageView.get(), pParam);

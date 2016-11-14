@@ -1,4 +1,5 @@
 package observer.zagart.by.client.repository.model.contracts;
+
 import observer.zagart.by.client.repository.model.annotations.Table;
 import observer.zagart.by.client.repository.model.annotations.dbId;
 import observer.zagart.by.client.repository.model.annotations.dbInteger;
@@ -12,6 +13,7 @@ import observer.zagart.by.client.repository.model.annotations.dbString;
  */
 @Table(name = "MODULE")
 public class ModuleContract {
+
     @dbId
     @dbInteger
     @dbNotNull

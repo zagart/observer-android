@@ -1,4 +1,5 @@
 package observer.zagart.by.client.singletons;
+
 import android.accounts.Account;
 
 /**

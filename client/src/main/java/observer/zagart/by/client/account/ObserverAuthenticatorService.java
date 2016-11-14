@@ -1,4 +1,5 @@
 package observer.zagart.by.client.account;
+
 import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
@@ -12,6 +13,7 @@ import observer.zagart.by.client.singletons.ContextHolder;
  * @author zagart
  */
 public class ObserverAuthenticatorService extends Service {
+
     private ObserverAuthenticator mAuthenticator;
 
     public ObserverAuthenticatorService() {

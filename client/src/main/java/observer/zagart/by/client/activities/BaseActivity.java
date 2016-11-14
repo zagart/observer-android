@@ -1,4 +1,5 @@
 package observer.zagart.by.client.activities;
+
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -14,10 +15,12 @@ import android.widget.Toast;
  * @author zagart
  */
 abstract public class BaseActivity extends AppCompatActivity {
+
     public static final String AUTHENTICATION_RESULT = "authentication_result";
     public static final String REGISTRATION_RESULT = "registration_result";
     public static final String SERVER_TIMEOUT_ERROR = "server_timeout_error";
     private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
+
         @Override
         public void onReceive(Context context, Intent intent) {
             String authenticationResult = intent.getStringExtra(AUTHENTICATION_RESULT);

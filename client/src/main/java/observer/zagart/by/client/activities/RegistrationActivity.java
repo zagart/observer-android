@@ -1,4 +1,5 @@
 package observer.zagart.by.client.activities;
+
 import android.accounts.AccountAuthenticatorActivity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -21,9 +22,41 @@ import observer.zagart.by.client.utils.BroadcastUtil;
  * @author zagart
  */
 public class RegistrationActivity extends AccountAuthenticatorActivity {
+
     private EditText mPasswordView;
     private EditText mLoginView;
     private ThreadWorker mWorker;
+
+    public void onConfirmClick(View pView) {
+        final CharSequence charLogin = mLoginView.getText();
+        final CharSequence charPassword = mPasswordView.getText();
+        if (TextUtils.isEmpty(charLogin) || TextUtils.isEmpty(charPassword)) {
+            Toast.makeText(
+                    this,
+                    getString(R.string.error_login_fields_empty),
+                    Toast.LENGTH_LONG
+            ).show();
+        } else {
+            executeRegistration(charLogin, charPassword);
+        }
+    }
+
+    @Override
+    protected void onCreate(@Nullable final Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        mWorker = ThreadWorker.getDefaultInstance();
+        setContentView(R.layout.registration_activity);
+        mWorker.execute(
+                new Runnable() {
+
+                    @Override
+                    public void run() {
+                        mLoginView = (EditText) findViewById(R.id.registration_login);
+                        mPasswordView = (EditText) findViewById(R.id.registration_password);
+                    }
+                }
+        );
+    }
 
     private void executeRegistration(
             final CharSequence pCharLogin,
@@ -31,6 +64,7 @@ public class RegistrationActivity extends AccountAuthenticatorActivity {
     ) {
         mWorker.execute(
                 new Runnable() {
+
                     @Override
                     public void run() {
                         final String login = pCharLogin.toString();
@@ -55,36 +89,6 @@ public class RegistrationActivity extends AccountAuthenticatorActivity {
                                     getString(R.string.err_registration_failed)
                             );
                         }
-                    }
-                }
-        );
-    }
-
-    public void onConfirmClick(View pView) {
-        final CharSequence charLogin = mLoginView.getText();
-        final CharSequence charPassword = mPasswordView.getText();
-        if (TextUtils.isEmpty(charLogin) || TextUtils.isEmpty(charPassword)) {
-            Toast.makeText(
-                    this,
-                    getString(R.string.error_login_fields_empty),
-                    Toast.LENGTH_LONG
-            ).show();
-        } else {
-            executeRegistration(charLogin, charPassword);
-        }
-    }
-
-    @Override
-    protected void onCreate(@Nullable final Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        mWorker = ThreadWorker.getDefaultInstance();
-        setContentView(R.layout.registration_activity);
-        mWorker.execute(
-                new Runnable() {
-                    @Override
-                    public void run() {
-                        mLoginView = (EditText) findViewById(R.id.registration_login);
-                        mPasswordView = (EditText) findViewById(R.id.registration_password);
                     }
                 }
         );

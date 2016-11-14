@@ -1,4 +1,5 @@
 package observer.zagart.by.client.repository;
+
 import android.database.Cursor;
 import android.util.Log;
 
@@ -17,9 +18,11 @@ import observer.zagart.by.client.repository.model.contracts.StandContract;
  * @author zagart
  */
 public class Service {
+
+    public static final String STANDS_SYNCHRONIZE_LOG_TEMPLATE =
+            "Stand with id=%d already cached = %s";
     private static final String SELECT_ALL_MODULES = "SELECT * FROM MODULE;";
     private static final String SELECT_ALL_STANDS = "SELECT * FROM STAND;";
-    public static final String STANDS_SYNCHRONIZE_LOG_TEMPLATE = "Stand with id=%d already cached = %s";
     private static DbHelper sDbHelper;
 
     public static void clearCachedStands() {
@@ -27,7 +30,10 @@ public class Service {
     }
 
     private static boolean isStandCached(Stand pStand) {
-        final Cursor query = sDbHelper.query("SELECT * FROM STAND WHERE id=?", pStand.getId().toString());
+        final Cursor query = sDbHelper.query(
+                "SELECT * FROM STAND WHERE id=?",
+                pStand.getId().toString()
+        );
         if (query.getCount() > 0) {
             return true;
         } else {

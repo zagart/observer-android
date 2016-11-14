@@ -1,4 +1,5 @@
 package observer.zagart.by.client.account;
+
 import android.accounts.AbstractAccountAuthenticator;
 import android.accounts.Account;
 import android.accounts.AccountAuthenticatorResponse;
@@ -22,6 +23,7 @@ import observer.zagart.by.client.utils.SharedPreferencesUtil;
  * @author zagart
  */
 public class ObserverAuthenticator extends AbstractAccountAuthenticator {
+
     private Context mContext;
 
     public ObserverAuthenticator(final Context pContext) {

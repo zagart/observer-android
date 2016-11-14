@@ -1,4 +1,5 @@
 package observer.zagart.by.client.backend.api;
+
 import android.content.Context;
 import android.support.annotation.Nullable;
 import android.util.Log;
@@ -23,6 +24,7 @@ import observer.zagart.by.client.threadings.ThreadWorker;
  * @author zagart
  */
 public class ObserverApi {
+
     private static final String TOKEN = "token";
     private final String TAG = ObserverApi.class.getSimpleName();
     private ThreadWorker mDefaultWorker = ThreadWorker.getDefaultInstance();
@@ -82,6 +84,7 @@ public class ObserverApi {
         try {
             return (String) mDefaultWorker.submit(
                     new Callable<String>() {
+
                         @Override
                         public String call() {
                             try {

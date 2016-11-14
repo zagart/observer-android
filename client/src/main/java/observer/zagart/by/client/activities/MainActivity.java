@@ -1,4 +1,5 @@
 package observer.zagart.by.client.activities;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -13,20 +14,9 @@ import observer.zagart.by.client.singletons.AccountHolder;
  * Application main activity.
  */
 public class MainActivity extends BaseActivity {
+
     private Button mModulesButton;
     private Button mStandsButton;
-
-    @Override
-    protected void onCreate(@Nullable final Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        final ActionBar bar = getSupportActionBar();
-        if (bar != null) {
-            bar.hide();
-        }
-        setContentView(R.layout.main_activity);
-        mModulesButton = (Button) findViewById(R.id.main_menu_btn_modules);
-        mStandsButton = (Button) findViewById(R.id.main_menu_btn_stands);
-    }
 
     public void onExitClick(View view) {
         moveTaskToBack(true);
@@ -46,6 +36,18 @@ public class MainActivity extends BaseActivity {
 
     public void onStandsClick(View view) {
         startActivity(new Intent(this, StandsActivity.class));
+    }
+
+    @Override
+    protected void onCreate(@Nullable final Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        final ActionBar bar = getSupportActionBar();
+        if (bar != null) {
+            bar.hide();
+        }
+        setContentView(R.layout.main_activity);
+        mModulesButton = (Button) findViewById(R.id.main_menu_btn_modules);
+        mStandsButton = (Button) findViewById(R.id.main_menu_btn_stands);
     }
 
     @Override

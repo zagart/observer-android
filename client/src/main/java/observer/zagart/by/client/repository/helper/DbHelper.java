@@ -1,4 +1,5 @@
 package observer.zagart.by.client.repository.helper;
+
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -29,12 +30,13 @@ import observer.zagart.by.client.singletons.ContextHolder;
  * @author zagart
  */
 public class DbHelper extends SQLiteOpenHelper implements IDbOperations {
-    private static final String SQL_TABLE_CREATE_FIELD_TEMPLATE = "%s %s";
-    private static final String SQL_TABLE_CREATE_TEMPLATE = "CREATE TABLE IF NOT EXISTS %s (%s);";
+
     public static final String NOT_NULL = " NOT NULL";
     public static final String AUTOINCREMENT = " AUTOINCREMENT";
     public static final int DATABASE_VERSION = 1;
     public static final String DATABASE_FILE_NAME = "observer.db";
+    private static final String SQL_TABLE_CREATE_FIELD_TEMPLATE = "%s %s";
+    private static final String SQL_TABLE_CREATE_TEMPLATE = "CREATE TABLE IF NOT EXISTS %s (%s);";
     private static String TAG = DbHelper.class.getSimpleName();
     private SQLiteDatabase mDatabase;
 
@@ -229,6 +231,7 @@ public class DbHelper extends SQLiteOpenHelper implements IDbOperations {
     }
 
     public static class SingletonHolder {
+
         public static final DbHelper DB_HELPER_INSTANCE = new DbHelper(ContextHolder.get());
     }
 }

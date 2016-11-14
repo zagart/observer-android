@@ -1,4 +1,5 @@
 package observer.zagart.by.client.utils;
+
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
@@ -12,6 +13,7 @@ import observer.zagart.by.client.R;
  * Utility class with methods for persisting activity's data as Shared References.
  */
 public class SharedPreferencesUtil {
+
     public static final String PREF_FILE = "SharedFile";
 
     public static void clearPersistedValues(Context pContext) {

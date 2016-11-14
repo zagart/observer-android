@@ -1,4 +1,5 @@
 package observer.zagart.by.client.activities;
+
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
@@ -12,6 +13,7 @@ import observer.zagart.by.client.repository.Service;
  * @author zagart
  */
 public class ModulesActivity extends BaseActivity {
+
     private RecyclerView mRecyclerViewModules;
 
     @Override

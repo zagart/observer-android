@@ -1,4 +1,5 @@
 package observer.zagart.by.client.repository.model;
+
 import android.content.ContentValues;
 import android.database.Cursor;
 
@@ -13,6 +14,7 @@ import observer.zagart.by.client.repository.model.contracts.StandContract;
  * Model for stand.
  */
 public class Stand implements IConvertible<ContentValues> {
+
     public static final int STAND_ID_LIMIT = 100;
     public static final int STAND_NUMBER_LIMIT = 1000;
     private Long mId;
