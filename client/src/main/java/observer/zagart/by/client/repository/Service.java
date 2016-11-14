@@ -1,8 +1,10 @@
 package observer.zagart.by.client.repository;
 import android.database.Cursor;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import observer.zagart.by.client.repository.helper.DbHelper;
 import observer.zagart.by.client.repository.model.Module;
@@ -17,7 +19,21 @@ import observer.zagart.by.client.repository.model.contracts.StandContract;
 public class Service {
     private static final String SELECT_ALL_MODULES = "SELECT * FROM MODULE;";
     private static final String SELECT_ALL_STANDS = "SELECT * FROM STAND;";
+    public static final String STANDS_SYNCHRONIZE_LOG_TEMPLATE = "Stand with id=%d already cached = %s";
     private static DbHelper sDbHelper;
+
+    public static void clearCachedStands() {
+        sDbHelper.delete(StandContract.class, null, null);
+    }
+
+    private static boolean isStandCached(Stand pStand) {
+        final Cursor query = sDbHelper.query("SELECT * FROM STAND WHERE id=?", pStand.getId().toString());
+        if (query.getCount() > 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 
     public static List<Module> selectAllModules() {
         List<Module> modules = new ArrayList<>();
@@ -46,10 +62,20 @@ public class Service {
     }
 
     public static void synchronizeStands(List<Stand> pStands) {
-        sDbHelper.delete(StandContract.class, null);
-        //TODO correct synchronization
         for (Stand stand : pStands) {
-            sDbHelper.insert(StandContract.class, stand.convert());
+            final boolean cached = isStandCached(stand);
+            Log.d(
+                    Service.class.getSimpleName(),
+                    String.format(
+                            Locale.getDefault(),
+                            STANDS_SYNCHRONIZE_LOG_TEMPLATE,
+                            stand.getId(),
+                            String.valueOf(cached)
+                    )
+            );
+            if (!cached) {
+                sDbHelper.insert(StandContract.class, stand.convert());
+            }
         }
         sDbHelper.close();
     }

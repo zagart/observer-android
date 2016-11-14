@@ -42,6 +42,11 @@ public class StandsActivity extends BaseActivity {
         mRvStands.setLayoutManager(new LinearLayoutManager(this));
     }
 
+    public void onClearClick(View pView) {
+        Service.clearCachedStands();
+        loadRecycler();
+    }
+
     @Override
     protected void onCreate(@Nullable final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
