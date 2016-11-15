@@ -25,6 +25,8 @@ public interface MVP {
 
         List<Module> getModulesFromModel();
 
+        void downloadAllStands();
+
         void executeRegistration(
                 final AccountAuthenticatorActivity pActivity,
                 final CharSequence pLogin,
@@ -36,10 +38,6 @@ public interface MVP {
                 CharSequence pLogin,
                 CharSequence pPassword
         );
-
-        void onStandsReceived(String pServerResponse);
-
-        void onModulesReceived(String pServerResponse);
 
         void clearStandModel();
 

@@ -4,26 +4,16 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 
 import org.json.JSONException;
 
-import java.io.IOException;
-import java.util.List;
-import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 
-import observer.zagart.by.client.App;
-import observer.zagart.by.client.BuildConfig;
 import observer.zagart.by.client.R;
 import observer.zagart.by.client.adapters.StandTableAdapter;
-import observer.zagart.by.client.backend.api.ObserverCallback;
-import observer.zagart.by.client.backend.requests.GetStandsRequest;
-import observer.zagart.by.client.http.HttpClientFactory;
-import observer.zagart.by.client.repository.entities.Stand;
-import observer.zagart.by.client.services.Service;
-import observer.zagart.by.client.threadings.ThreadWorker;
+import observer.zagart.by.client.mvp.MVP;
+import observer.zagart.by.client.mvp.presenters.Presenter;
 
 /**
  * Activity for showing cached stand objects.
@@ -32,11 +22,11 @@ import observer.zagart.by.client.threadings.ThreadWorker;
  */
 public class StandsActivity extends BaseActivity {
 
+    private MVP.IPresenterOperations mPresenter;
     private RecyclerView mRecyclerViewStands;
-    private ThreadWorker mWorker;
 
     {
-        mWorker = App.getState().getThreadWorker();
+        mPresenter = new Presenter(this);
     }
 
     public void onClearClick(View pView) {
@@ -44,9 +34,9 @@ public class StandsActivity extends BaseActivity {
         loadRecycler();
     }
 
-    public void onReloadClick(View pView) {
-        List<Stand> stands = downloadAllStands();
-        Service.synchronizeStands(stands);
+    public void onReloadClick(View pView)
+            throws InterruptedException, ExecutionException, JSONException {
+        mPresenter.downloadAllStands();
         loadRecycler();
     }
 
@@ -56,41 +46,6 @@ public class StandsActivity extends BaseActivity {
         setContentView(R.layout.stands_activity);
         mRecyclerViewStands = (RecyclerView) findViewById(R.id.stands_recycler_view);
         loadRecycler();
-    }
-
-    private List<Stand> downloadAllStands() {
-        try {
-            return ObserverCallback.onStandsReceived(
-                    (String) mWorker.submit(
-                            new Callable() {
-
-                                @Override
-                                public Object call() throws Exception {
-                                    try {
-                                        return HttpClientFactory.getDefaultClient().executeRequest(
-                                                new GetStandsRequest()
-                                        );
-                                    } catch (IOException pEx) {
-                                        if (BuildConfig.DEBUG) {
-                                            Log.e(
-                                                    StandsActivity.class.getSimpleName(),
-                                                    pEx.getMessage(),
-                                                    pEx
-                                            );
-                                        }
-                                        return null;
-                                    }
-                                }
-                            }
-                    )
-            );
-        } catch (ExecutionException | InterruptedException |
-                JSONException | NullPointerException pEx) {
-            if (BuildConfig.DEBUG) {
-                Log.e(StandsActivity.class.getSimpleName(), pEx.getMessage(), pEx);
-            }
-            return null;
-        }
     }
 
     private void loadRecycler() {

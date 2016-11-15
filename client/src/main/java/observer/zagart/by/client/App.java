@@ -6,13 +6,11 @@ import android.content.Context;
 
 import java.lang.ref.WeakReference;
 
+import observer.zagart.by.client.constants.Constants;
+import observer.zagart.by.client.exceptions.ExceptionHandler;
 import observer.zagart.by.client.repository.helper.DbHelper;
 import observer.zagart.by.client.threadings.ThreadWorker;
 import observer.zagart.by.client.utils.AccountManagerUtil;
-
-import static observer.zagart.by.client.constants.Constants.CONTEXT_IS_NULL;
-import static observer.zagart.by.client.constants.Constants.DB_HELPER_IS_NULL;
-import static observer.zagart.by.client.constants.Constants.THREAD_WORKER_IS_NULL;
 
 /**
  * Custom application file.
@@ -28,6 +26,7 @@ public class App extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        Thread.setDefaultUncaughtExceptionHandler(new ExceptionHandler());
         mState = new State(this);
         mState
                 .setAccount(AccountManagerUtil.getPersistedAccount())
@@ -52,7 +51,7 @@ public class App extends Application {
 
         public DbHelper getDbHelper() {
             if (mHelper == null) {
-                throw new RuntimeException(DB_HELPER_IS_NULL);
+                throw new RuntimeException(Constants.DB_HELPER_IS_NULL);
             }
             return mHelper;
         }
@@ -73,7 +72,7 @@ public class App extends Application {
 
         public ThreadWorker getThreadWorker() {
             if (mThreadWorker == null) {
-                throw new RuntimeException(THREAD_WORKER_IS_NULL);
+                throw new RuntimeException(Constants.THREAD_WORKER_IS_NULL);
             }
             return mThreadWorker;
         }
@@ -85,7 +84,7 @@ public class App extends Application {
 
         public Context getContext() {
             if (mContextWeakReference == null) {
-                throw new RuntimeException(CONTEXT_IS_NULL);
+                throw new RuntimeException(Constants.CONTEXT_IS_NULL);
             }
             return mContextWeakReference.get();
         }

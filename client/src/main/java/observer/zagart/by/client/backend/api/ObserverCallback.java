@@ -5,6 +5,7 @@ import android.accounts.AccountAuthenticatorActivity;
 import android.accounts.AccountManager;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -14,8 +15,8 @@ import java.util.Iterator;
 import java.util.List;
 
 import observer.zagart.by.client.App;
-import observer.zagart.by.client.constants.Constants;
 import observer.zagart.by.client.R;
+import observer.zagart.by.client.constants.Constants;
 import observer.zagart.by.client.mvp.views.MyAccountActivity;
 import observer.zagart.by.client.repository.entities.Stand;
 import observer.zagart.by.client.repository.entities.contracts.StandContract;
@@ -28,7 +29,11 @@ import static android.app.Activity.RESULT_OK;
  */
 public class ObserverCallback {
 
-    public static List<Stand> onStandsReceived(String pServerResponse) throws JSONException {
+    @Nullable
+    public static List<Stand> onStandsReceived(final String pServerResponse) throws JSONException {
+        if (pServerResponse == null) {
+            return null;
+        }
         List<Stand> stands = new ArrayList<>();
         JSONObject root = new JSONObject(pServerResponse);
         final Iterator<String> keys = root.keys();
@@ -46,10 +51,10 @@ public class ObserverCallback {
     }
 
     public static void onTokenReceived(
-            AccountAuthenticatorActivity pActivity,
-            Account pAccount,
-            String pPassword,
-            String pToken
+            final AccountAuthenticatorActivity pActivity,
+            final Account pAccount,
+            final String pPassword,
+            final String pToken
     ) {
         final AccountManager accountManager = AccountManager.get(pActivity);
         final Bundle result = new Bundle();

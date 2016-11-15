@@ -4,6 +4,9 @@ import android.accounts.AccountAuthenticatorActivity;
 import android.content.Context;
 import android.text.TextUtils;
 
+import org.json.JSONException;
+
+import java.io.IOException;
 import java.lang.ref.WeakReference;
 import java.util.List;
 
@@ -12,6 +15,8 @@ import observer.zagart.by.client.R;
 import observer.zagart.by.client.account.ObserverAccount;
 import observer.zagart.by.client.backend.api.ObserverApi;
 import observer.zagart.by.client.backend.api.ObserverCallback;
+import observer.zagart.by.client.backend.requests.GetStandsRequest;
+import observer.zagart.by.client.http.HttpClientFactory;
 import observer.zagart.by.client.mvp.MVP;
 import observer.zagart.by.client.mvp.models.ModuleModel;
 import observer.zagart.by.client.mvp.models.StandModel;
@@ -47,6 +52,33 @@ public class Presenter implements MVP.IPresenterOperations {
     @Override
     public List<Module> getModulesFromModel() {
         return mModuleModel.retrieveAll();
+    }
+
+    @Override
+    public void downloadAllStands() {
+        mThreadWorker.execute(
+                new Runnable() {
+
+                    @Override
+                    public void run() {
+                        try {
+                            final String response = HttpClientFactory
+                                    .getDefaultClient()
+                                    .executeRequest(new GetStandsRequest());
+                            final List<Stand> parsedStands = ObserverCallback.onStandsReceived(
+                                    response
+                            );
+                            mStandModel.persistAll(parsedStands);
+                        } catch (IOException | JSONException | NullPointerException pEx) {
+                            final Context context = Presenter.this.mView.get().getViewContext();
+                            IOUtil.showToast(
+                                    context,
+                                    context.getString(R.string.msg_failed_download_stands)
+                            );
+                        }
+                    }
+                }
+        );
     }
 
     @Override
@@ -123,14 +155,6 @@ public class Presenter implements MVP.IPresenterOperations {
                     }
                 }
         );
-    }
-
-    @Override
-    public void onStandsReceived(final String pServerResponse) {
-    }
-
-    @Override
-    public void onModulesReceived(final String pServerResponse) {
     }
 
     @Override

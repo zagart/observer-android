@@ -2,16 +2,14 @@ package observer.zagart.by.client.imageloader;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.util.Log;
 import android.util.LruCache;
 import android.widget.ImageView;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.lang.ref.WeakReference;
-import java.util.Locale;
 
-import observer.zagart.by.client.BuildConfig;
+import observer.zagart.by.client.App;
 import observer.zagart.by.client.http.HttpClientFactory;
 import observer.zagart.by.client.http.interfaces.IHttpClient;
 import observer.zagart.by.client.interfaces.IAction;
@@ -29,7 +27,7 @@ public class BitmapDrawer implements IDrawable<ImageView, String> {
 
     private static final float MEMORY_USE_COEFFICIENT = 0.125f; //12.5%
     private final LruCache<String, Bitmap> mCache;
-    private ThreadWorker mBitmapTask;
+    private ThreadWorker mThreadWorker;
 
     {
         final int mMaxMemory = (int) (Runtime.getRuntime().maxMemory() / 1024);
@@ -41,7 +39,7 @@ public class BitmapDrawer implements IDrawable<ImageView, String> {
                 return pImage.getByteCount() / 1024;
             }
         };
-        mBitmapTask = new ThreadWorker(BitmapDrawer.class.getSimpleName());
+        mThreadWorker = App.getState().getThreadWorker();
     }
 
     /**
@@ -57,7 +55,7 @@ public class BitmapDrawer implements IDrawable<ImageView, String> {
     public void draw(final ImageView pImageView, final String pUrl) {
         final boolean isImageSet = setImageBitmap(pImageView, pUrl);
         if (!isImageSet) {
-            mBitmapTask.performAction(
+            mThreadWorker.performAction(
                     new BitmapDownloadAction(),
                     new BitmapDownloadCallback(pImageView),
                     pUrl
@@ -117,7 +115,6 @@ public class BitmapDrawer implements IDrawable<ImageView, String> {
      */
     private class BitmapDownloadCallback implements ICallback<Void, ByteArrayOutputStream> {
 
-        private static final String ON_START_EXCEPTION_LOG = "Parameter on failing onStart: %s";
         private IHttpClient mHttpClient = HttpClientFactory.getDefaultClient();
         private byte[] downloaded;
         private WeakReference<ImageView> mImageView;
@@ -136,7 +133,7 @@ public class BitmapDrawer implements IDrawable<ImageView, String> {
             downloaded = null;
             if (pParam != null && bitmap != null) {
                 putInCache(pParam, bitmap);
-                mBitmapTask.post(
+                mThreadWorker.post(
                         new Runnable() {
 
                             @Override
@@ -150,10 +147,7 @@ public class BitmapDrawer implements IDrawable<ImageView, String> {
 
         @Override
         public void onException(final String pParam, final Exception pEx) {
-            if (BuildConfig.DEBUG) {
-                Log.d(this.getClass().getSimpleName(), pEx.getMessage());
-            }
-            pEx.getCause();
+            //ignored
         }
 
         @Override
@@ -162,18 +156,13 @@ public class BitmapDrawer implements IDrawable<ImageView, String> {
                 final ByteArrayOutputStream resultStream = mHttpClient.downloadBytes(pParam);
                 downloaded = resultStream.toByteArray();
             } catch (IOException pEx) {
-                if (BuildConfig.DEBUG) {
-                    Log.d(
-                            this.getClass().getSimpleName(),
-                            String.format(Locale.ENGLISH, ON_START_EXCEPTION_LOG, pParam)
-                    );
-                }
                 onException(pParam, pEx);
             }
         }
 
         @Override
         public void onUpdate(final String pParam, final Void pVoid) {
+            //ignored
         }
     }
 }
