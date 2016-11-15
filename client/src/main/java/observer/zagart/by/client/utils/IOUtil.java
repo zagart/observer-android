@@ -1,6 +1,7 @@
 package observer.zagart.by.client.utils;
 
 import android.content.Context;
+import android.os.Looper;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -11,7 +12,10 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.nio.charset.Charset;
 
+import observer.zagart.by.client.App;
 import observer.zagart.by.client.BuildConfig;
+import observer.zagart.by.client.constants.Constants;
+import observer.zagart.by.client.threadings.ThreadWorker;
 
 /**
  * Utility class for input/output related methods.
@@ -20,35 +24,53 @@ import observer.zagart.by.client.BuildConfig;
  */
 public class IOUtil {
 
-    private static final byte EOF = -1;
-    private static final String FAILED_TO_EXECUTE_CLOSING = "Failed to execute closing";
-    private static final short READ_BUFFER_SIZE = 4096;
+    private static ThreadWorker sThreadWorker;
 
-    public static void close(Closeable pCloseable) {
+    static {
+        sThreadWorker = App.getState().getThreadWorker();
+    }
+
+    public static void close(final Closeable pCloseable) {
         if (pCloseable != null) {
             try {
                 pCloseable.close();
             } catch (IOException pEx) {
                 if (BuildConfig.DEBUG) {
-                    Log.e(IOUtil.class.getSimpleName(), FAILED_TO_EXECUTE_CLOSING, pEx);
+                    Log.e(IOUtil.class.getSimpleName(), Constants.FAILED_TO_EXECUTE_CLOSING, pEx);
                 }
             }
         }
     }
 
-    public static void showToast(Context pContext, String pMessage) {
+    public static void showToast(final Context pContext, final String pMessage) {
+        if (Looper.getMainLooper().getThread() == Thread.currentThread()) {
+            showNotNullMessage(pContext, pMessage);
+        } else {
+            sThreadWorker.post(
+                    new Runnable() {
+
+                        @Override
+                        public void run() {
+                            showNotNullMessage(pContext, pMessage);
+                        }
+                    }
+            );
+        }
+    }
+
+    private static void showNotNullMessage(final Context pContext, final String pMessage) {
         if (pMessage != null) {
             Toast.makeText(pContext, pMessage, Toast.LENGTH_LONG).show();
         }
     }
 
-    public static String readStreamUsingBuffer(InputStream pInputStream) throws IOException {
+    public static String readStreamUsingBuffer(final InputStream pInputStream) throws IOException {
         final StringBuilder result = new StringBuilder();
         final Reader reader = new InputStreamReader(pInputStream, Charset.defaultCharset());
-        final char[] buffer = new char[READ_BUFFER_SIZE];
+        final char[] buffer = new char[Constants.READ_BUFFER_SIZE];
         try {
             int bytes;
-            while ((bytes = reader.read(buffer)) != EOF) {
+            while ((bytes = reader.read(buffer)) != Constants.EOF) {
                 result.append(buffer, 0, bytes);
             }
         } finally {

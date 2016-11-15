@@ -15,4 +15,8 @@ public class Constants {
     public static final String CURRENT_ACCOUNT_NAME = "current_account_name";
     public static final String DB_HELPER_IS_NULL = "DbHelper is null";
     public static final String THREAD_WORKER_IS_NULL = "ThreadWorker is null";
+    public static final String CONTEXT_IS_NULL = "Context is null";
+    public static final byte EOF = -1;
+    public static final String FAILED_TO_EXECUTE_CLOSING = "Failed to execute closing";
+    public static final short READ_BUFFER_SIZE = 4096;
 }

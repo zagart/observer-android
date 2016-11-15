@@ -16,9 +16,9 @@ import java.util.List;
 import observer.zagart.by.client.App;
 import observer.zagart.by.client.constants.Constants;
 import observer.zagart.by.client.R;
-import observer.zagart.by.client.activities.MyAccountActivity;
-import observer.zagart.by.client.repository.model.Stand;
-import observer.zagart.by.client.repository.model.contracts.StandContract;
+import observer.zagart.by.client.mvp.views.MyAccountActivity;
+import observer.zagart.by.client.repository.entities.Stand;
+import observer.zagart.by.client.repository.entities.contracts.StandContract;
 import observer.zagart.by.client.utils.SharedPreferencesUtil;
 
 import static android.app.Activity.RESULT_OK;

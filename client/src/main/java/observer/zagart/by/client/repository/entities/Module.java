@@ -1,4 +1,4 @@
-package observer.zagart.by.client.repository.model;
+package observer.zagart.by.client.repository.entities;
 
 import android.content.ContentValues;
 import android.database.Cursor;
@@ -9,10 +9,10 @@ import java.util.List;
 import java.util.Random;
 
 import observer.zagart.by.client.interfaces.IConvertible;
-import observer.zagart.by.client.repository.model.contracts.ModuleContract;
+import observer.zagart.by.client.repository.entities.contracts.ModuleContract;
 
 /**
- * Model for module.
+ * StandModel for module.
  */
 public class Module implements IConvertible<ContentValues> {
 

@@ -16,7 +16,7 @@
         android:supportsRtl="true"
         android:theme="@style/ObserverDefault">
         <activity
-            android:name=".activities.MainActivity"
+            android:name=".mvp.views.MainActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -24,23 +24,23 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activities.AuthenticationActivity"
+            android:name=".mvp.views.AuthenticationActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".activities.StandsActivity"
+            android:name=".mvp.views.StandsActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".activities.ModulesActivity"
+            android:name=".mvp.views.ModulesActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".activities.MyAccountActivity"
+            android:name=".mvp.views.MyAccountActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".activities.RegistrationActivity"
+            android:name=".mvp.views.RegistrationActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"/>
 

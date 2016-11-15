@@ -10,7 +10,7 @@ import android.widget.TextView;
 import java.util.List;
 
 import observer.zagart.by.client.R;
-import observer.zagart.by.client.repository.model.Module;
+import observer.zagart.by.client.repository.entities.Module;
 
 /**
  * Simple adapter for modules table.
@@ -55,7 +55,7 @@ public class ModuleTableAdapter extends RecyclerView.Adapter<ModuleTableAdapter.
         return mModules.size();
     }
 
-    public static class RowHolder extends RecyclerView.ViewHolder {
+    static class RowHolder extends RecyclerView.ViewHolder {
 
         private TextView mId;
         private TextView mName;

@@ -1,4 +1,4 @@
-package observer.zagart.by.client.activities;
+package observer.zagart.by.client.mvp.views;
 
 import android.content.Intent;
 import android.os.Bundle;

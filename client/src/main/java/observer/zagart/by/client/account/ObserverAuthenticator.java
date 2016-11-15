@@ -11,7 +11,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 
 import observer.zagart.by.client.App;
-import observer.zagart.by.client.activities.AuthenticationActivity;
+import observer.zagart.by.client.mvp.views.AuthenticationActivity;
 import observer.zagart.by.client.backend.api.ObserverApi;
 import observer.zagart.by.client.constants.Constants;
 import observer.zagart.by.client.utils.SharedPreferencesUtil;
@@ -71,10 +71,10 @@ class ObserverAuthenticator extends AbstractAccountAuthenticator {
             Bundle pOptions
     ) throws NetworkErrorException {
         final Bundle result = new Bundle();
-        final AccountManager am = AccountManager.get(mContext.getApplicationContext());
-        String authToken = am.peekAuthToken(pAccount, pAuthTokenType);
+        final AccountManager accountManager = AccountManager.get(mContext.getApplicationContext());
+        String authToken = accountManager.peekAuthToken(pAccount, pAuthTokenType);
         if (TextUtils.isEmpty(authToken)) {
-            final String password = am.getPassword(pAccount);
+            final String password = accountManager.getPassword(pAccount);
             if (!TextUtils.isEmpty(password)) {
                 authToken = ObserverApi.logIn(mContext, pAccount.name, password);
             }
@@ -84,9 +84,9 @@ class ObserverAuthenticator extends AbstractAccountAuthenticator {
             result.putString(AccountManager.KEY_ACCOUNT_TYPE, pAccount.type);
             result.putString(AccountManager.KEY_AUTHTOKEN, authToken);
         } else {
-            am.invalidateAuthToken(
+            accountManager.invalidateAuthToken(
                     pAccount.type,
-                    am.peekAuthToken(pAccount, ObserverAccount.AUTH_TOKEN_TYPE
+                    accountManager.peekAuthToken(pAccount, ObserverAccount.AUTH_TOKEN_TYPE
                     )
             );
             final Intent intent = new Intent(mContext, AuthenticationActivity.class);

@@ -1,4 +1,4 @@
-package observer.zagart.by.client.repository.model.annotations;
+package observer.zagart.by.client.repository.entities.annotations;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

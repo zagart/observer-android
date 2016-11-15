@@ -1,6 +1,5 @@
 package observer.zagart.by.client.backend.requests;
 
-import android.content.Context;
 import android.util.Log;
 
 import java.io.IOException;
@@ -11,10 +10,7 @@ import java.util.Locale;
 import observer.zagart.by.client.App;
 import observer.zagart.by.client.BuildConfig;
 import observer.zagart.by.client.R;
-import observer.zagart.by.client.activities.BaseActivity;
 import observer.zagart.by.client.http.interfaces.IHttpClient;
-import observer.zagart.by.client.singletons.ContextHolder;
-import observer.zagart.by.client.utils.BroadcastUtil;
 import observer.zagart.by.client.utils.IOUtil;
 
 /**
@@ -55,20 +51,12 @@ public abstract class AbstractObserverRequest implements IHttpClient.IRequest<St
         try {
             return IOUtil.readStreamUsingBuffer(pInputStream);
         } catch (IOException pEx) {
-            if (BuildConfig.DEBUG) {
-                Log.e(AbstractObserverRequest.class.getSimpleName(), pEx.getMessage(), pEx);
-            }
             return null;
         }
     }
 
     @Override
     public void onTimeoutException() {
-        final Context context = App.getState().getContext();
-        BroadcastUtil.sendBroadcast(
-                context,
-                BaseActivity.SERVER_TIMEOUT_ERROR,
-                context.getString(R.string.err_timeout)
-        );
+        //TODO connection timeout handling
     }
 }

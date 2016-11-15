@@ -4,10 +4,13 @@ import android.accounts.Account;
 import android.app.Application;
 import android.content.Context;
 
+import java.lang.ref.WeakReference;
+
 import observer.zagart.by.client.repository.helper.DbHelper;
 import observer.zagart.by.client.threadings.ThreadWorker;
 import observer.zagart.by.client.utils.AccountManagerUtil;
 
+import static observer.zagart.by.client.constants.Constants.CONTEXT_IS_NULL;
 import static observer.zagart.by.client.constants.Constants.DB_HELPER_IS_NULL;
 import static observer.zagart.by.client.constants.Constants.THREAD_WORKER_IS_NULL;
 
@@ -24,7 +27,8 @@ public class App extends Application {
 
     @Override
     public void onCreate() {
-        mState = new State();
+        super.onCreate();
+        mState = new State(this);
         mState
                 .setAccount(AccountManagerUtil.getPersistedAccount())
                 .setThreadWorker(new ThreadWorker())
@@ -37,11 +41,13 @@ public class App extends Application {
      */
     public class State {
 
+        private WeakReference<Context> mContextWeakReference;
         private Account mAccount;
         private ThreadWorker mThreadWorker;
         private DbHelper mHelper;
 
-        State() {
+        State(Context pContext) {
+            mContextWeakReference = new WeakReference<>(pContext);
         }
 
         public DbHelper getDbHelper() {
@@ -78,7 +84,10 @@ public class App extends Application {
         }
 
         public Context getContext() {
-            return App.this.getApplicationContext();
+            if (mContextWeakReference == null) {
+                throw new RuntimeException(CONTEXT_IS_NULL);
+            }
+            return mContextWeakReference.get();
         }
     }
 }

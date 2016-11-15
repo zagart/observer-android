@@ -1,4 +1,4 @@
-package observer.zagart.by.client.repository;
+package observer.zagart.by.client.services;
 
 import android.database.Cursor;
 
@@ -7,9 +7,9 @@ import java.util.List;
 
 import observer.zagart.by.client.App;
 import observer.zagart.by.client.repository.helper.DbHelper;
-import observer.zagart.by.client.repository.model.Module;
-import observer.zagart.by.client.repository.model.Stand;
-import observer.zagart.by.client.repository.model.contracts.StandContract;
+import observer.zagart.by.client.repository.entities.Module;
+import observer.zagart.by.client.repository.entities.Stand;
+import observer.zagart.by.client.repository.entities.contracts.StandContract;
 
 import static observer.zagart.by.client.constants.Constants.SELECT_ALL_MODULES;
 import static observer.zagart.by.client.constants.Constants.SELECT_ALL_STANDS;

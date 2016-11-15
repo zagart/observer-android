@@ -1,4 +1,5 @@
 package observer.zagart.by.client.adapters;
+
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -6,18 +7,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import java.util.Collections;
 import java.util.List;
 
 import observer.zagart.by.client.R;
-import observer.zagart.by.client.adapters.callbacks.IMovableContent;
-import observer.zagart.by.client.repository.model.Stand;
+import observer.zagart.by.client.repository.entities.Stand;
 
 /**
  * My adapter for stand model.
  */
-public class StandTableAdapter extends RecyclerView.Adapter<StandTableAdapter.RowHolder>
-        implements IMovableContent {
+public class StandTableAdapter extends RecyclerView.Adapter<StandTableAdapter.RowHolder> {
+
     private List<Stand> mStands;
 
     public StandTableAdapter(final List<Stand> pStands) {
@@ -51,27 +50,8 @@ public class StandTableAdapter extends RecyclerView.Adapter<StandTableAdapter.Ro
         return mStands.size();
     }
 
-    @Override
-    public void onItemLock(final int pStartPosition, final int pEndPosition) {
-        if (pStartPosition < pEndPosition) {
-            for (int i = pStartPosition; i < pEndPosition; i++) {
-                Collections.swap(mStands, i, i + 1);
-            }
-        } else {
-            for (int i = pStartPosition; i > pEndPosition; i--) {
-                Collections.swap(mStands, i, i - 1);
-            }
-        }
-        notifyItemMoved(pStartPosition, pEndPosition);
-    }
+    static class RowHolder extends RecyclerView.ViewHolder {
 
-    @Override
-    public void onItemRelease(final int pPosition) {
-        mStands.remove(pPosition);
-        notifyItemRemoved(pPosition);
-    }
-
-    public static class RowHolder extends RecyclerView.ViewHolder {
         private TextView mIdView;
         private TextView mNumberView;
         private TextView mDescriptionView;
