@@ -1,4 +1,5 @@
 package observer.zagart.by.client.threadings;
+
 import android.os.Handler;
 import android.util.Log;
 
@@ -19,11 +20,12 @@ import observer.zagart.by.client.interfaces.ICallback;
  * My class for asynchronous background tasks.
  */
 public class ThreadWorker<Result> {
+
+    public static final String TAG = ThreadWorker.class.getSimpleName();
     private static final int COUNT_CORE = Runtime.getRuntime().availableProcessors();
     private static final int DEFAULT_THREADS_NUMBER = 3;
     private static final int MAX_THREADS_NUMBER = Math.max(COUNT_CORE, DEFAULT_THREADS_NUMBER);
     private static final String STR_ROTATE = "Screen orientation changed.";
-    public static final String TAG = ThreadWorker.class.getSimpleName();
     private static int sCounter = 0;
     private final ExecutorService mPool;
     private final String mName;
@@ -97,6 +99,7 @@ public class ThreadWorker<Result> {
         final String name = String.format(Locale.ENGLISH, "%s-%d", mName, ++sCounter);
         mPool.execute(
                 new Runnable() {
+
                     @Override
                     public void run() {
                         try {
@@ -105,6 +108,7 @@ public class ThreadWorker<Result> {
                             if (result != null) {
                                 mHandler.post(
                                         new Runnable() {
+
                                             @Override
                                             public void run() {
                                                 onResult(result);
@@ -144,6 +148,7 @@ public class ThreadWorker<Result> {
     }
 
     public static class SingletonHolder {
+
         public static final ThreadWorker WORKER_INSTANCE = new ThreadWorker(TAG);
     }
 }

@@ -1,4 +1,5 @@
 package observer.zagart.by.client.http;
+
 import android.support.annotation.Nullable;
 
 import observer.zagart.by.client.http.interfaces.IHttpClient;
@@ -7,6 +8,7 @@ import observer.zagart.by.client.http.interfaces.IHttpClient;
  * Factory of HTTP-clients.
  */
 public class HttpClientFactory {
+
     @Nullable
     public static IHttpClient get(final Type pType) {
         if (pType == Type.HTTP_PURE) {

@@ -1,17 +1,19 @@
-package observer.zagart.by.client.repository.model.annotations;
+package observer.zagart.by.client.repository.entities.annotations;
+
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Annotation for primary key fields.
+ * Annotation for Java-types that are compatible with
+ * DbHelper INTEGER type.
  *
  * @author zagart
  */
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface dbId {
-    boolean autoincrement() default true;
-    String value() default "PRIMARY KEY";
+public @interface dbInteger {
+
+    String value() default "INTEGER";
 }

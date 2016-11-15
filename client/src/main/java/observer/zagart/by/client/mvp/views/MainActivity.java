@@ -1,4 +1,5 @@
-package observer.zagart.by.client.activities;
+package observer.zagart.by.client.mvp.views;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -6,27 +7,16 @@ import android.support.v7.app.ActionBar;
 import android.view.View;
 import android.widget.Button;
 
+import observer.zagart.by.client.App;
 import observer.zagart.by.client.R;
-import observer.zagart.by.client.singletons.AccountHolder;
 
 /**
  * Application main activity.
  */
 public class MainActivity extends BaseActivity {
+
     private Button mModulesButton;
     private Button mStandsButton;
-
-    @Override
-    protected void onCreate(@Nullable final Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        final ActionBar bar = getSupportActionBar();
-        if (bar != null) {
-            bar.hide();
-        }
-        setContentView(R.layout.main_activity);
-        mModulesButton = (Button) findViewById(R.id.main_menu_btn_modules);
-        mStandsButton = (Button) findViewById(R.id.main_menu_btn_stands);
-    }
 
     public void onExitClick(View view) {
         moveTaskToBack(true);
@@ -49,13 +39,20 @@ public class MainActivity extends BaseActivity {
     }
 
     @Override
-    protected void onStart() {
-        super.onStart();
-        refreshButtonsVisibility();
+    protected void onCreate(@Nullable final Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        final ActionBar bar = getSupportActionBar();
+        if (bar != null) {
+            bar.hide();
+        }
+        setContentView(R.layout.main_activity);
+        mModulesButton = (Button) findViewById(R.id.main_menu_btn_modules);
+        mStandsButton = (Button) findViewById(R.id.main_menu_btn_stands);
     }
 
-    private void refreshButtonsVisibility() {
-        if (AccountHolder.get() != null) {
+    @Override
+    protected void onViewsVisibilityCheck() {
+        if (App.getState().getAccount() != null) {
             mModulesButton.setVisibility(View.VISIBLE);
             mStandsButton.setVisibility(View.VISIBLE);
         } else {

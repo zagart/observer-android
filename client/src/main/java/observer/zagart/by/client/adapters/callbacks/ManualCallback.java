@@ -1,4 +1,5 @@
 package observer.zagart.by.client.adapters.callbacks;
+
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 
@@ -6,6 +7,7 @@ import android.support.v7.widget.helper.ItemTouchHelper;
  * Manual implementation of ItemTouchHelper.ICallback.
  */
 public class ManualCallback extends ItemTouchHelper.Callback {
+
     private final IMovableContent mContent;
 
     public ManualCallback(final IMovableContent pContent) {
@@ -13,7 +15,10 @@ public class ManualCallback extends ItemTouchHelper.Callback {
     }
 
     @Override
-    public int getMovementFlags(final RecyclerView recyclerView, final RecyclerView.ViewHolder viewHolder) {
+    public int getMovementFlags(
+            final RecyclerView pRecyclerView,
+            final RecyclerView.ViewHolder pViewHolder
+    ) {
         int dragFlags = ItemTouchHelper.UP | ItemTouchHelper.DOWN;
         int swipeFlags = ItemTouchHelper.START | ItemTouchHelper.END;
         return makeMovementFlags(dragFlags, swipeFlags);
@@ -21,16 +26,16 @@ public class ManualCallback extends ItemTouchHelper.Callback {
 
     @Override
     public boolean onMove(
-            final RecyclerView recyclerView,
-            final RecyclerView.ViewHolder viewHolder,
-            final RecyclerView.ViewHolder target
+            final RecyclerView pRecyclerView,
+            final RecyclerView.ViewHolder pViewHolder,
+            final RecyclerView.ViewHolder pTarget
     ) {
-        mContent.onItemLock(viewHolder.getAdapterPosition(), target.getAdapterPosition());
+        mContent.onItemLock(pViewHolder.getAdapterPosition(), pTarget.getAdapterPosition());
         return true;
     }
 
     @Override
-    public void onSwiped(final RecyclerView.ViewHolder viewHolder, final int direction) {
-        mContent.onItemRelease(viewHolder.getAdapterPosition());
+    public void onSwiped(final RecyclerView.ViewHolder pViewHolder, final int pDirection) {
+        mContent.onItemRelease(pViewHolder.getAdapterPosition());
     }
 }

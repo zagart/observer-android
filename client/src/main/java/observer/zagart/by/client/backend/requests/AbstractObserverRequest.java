@@ -1,5 +1,5 @@
 package observer.zagart.by.client.backend.requests;
-import android.content.Context;
+
 import android.util.Log;
 
 import java.io.IOException;
@@ -7,12 +7,10 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.util.Locale;
 
+import observer.zagart.by.client.App;
 import observer.zagart.by.client.BuildConfig;
 import observer.zagart.by.client.R;
-import observer.zagart.by.client.activities.BaseActivity;
 import observer.zagart.by.client.http.interfaces.IHttpClient;
-import observer.zagart.by.client.singletons.ContextHolder;
-import observer.zagart.by.client.utils.BroadcastUtil;
 import observer.zagart.by.client.utils.IOUtil;
 
 /**
@@ -21,6 +19,7 @@ import observer.zagart.by.client.utils.IOUtil;
  * @author zagart
  */
 public abstract class AbstractObserverRequest implements IHttpClient.IRequest<String> {
+
     @Override
     public String getContentType() {
         return IHttpClient.IHttpData.ContentType.APPLICATION_JSON_CHARSET_UTF_8;
@@ -28,7 +27,7 @@ public abstract class AbstractObserverRequest implements IHttpClient.IRequest<St
 
     @Override
     public String getUrl() {
-        return ContextHolder.get().getString(R.string.observer_url);
+        return App.getState().getContext().getString(R.string.observer_url);
     }
 
     @Override
@@ -39,7 +38,7 @@ public abstract class AbstractObserverRequest implements IHttpClient.IRequest<St
         if (BuildConfig.DEBUG) {
             String errorMessage = String.format(
                     Locale.getDefault(),
-                    ContextHolder.get().getString(R.string.err_code_server_response),
+                    App.getState().getContext().getString(R.string.err_code_server_response),
                     pConnection.getResponseCode()
             );
             Log.e(AbstractObserverRequest.class.getSimpleName(), errorMessage);
@@ -52,20 +51,12 @@ public abstract class AbstractObserverRequest implements IHttpClient.IRequest<St
         try {
             return IOUtil.readStreamUsingBuffer(pInputStream);
         } catch (IOException pEx) {
-            if (BuildConfig.DEBUG) {
-                Log.e(AbstractObserverRequest.class.getSimpleName(), pEx.getMessage(), pEx);
-            }
             return null;
         }
     }
 
     @Override
     public void onTimeoutException() {
-        final Context context = ContextHolder.get();
-        BroadcastUtil.sendBroadcast(
-                context,
-                BaseActivity.SERVER_TIMEOUT_ERROR,
-                context.getString(R.string.err_timeout)
-        );
+        //TODO connection timeout handling
     }
 }

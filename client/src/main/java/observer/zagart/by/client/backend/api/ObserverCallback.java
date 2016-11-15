@@ -1,4 +1,5 @@
 package observer.zagart.by.client.backend.api;
+
 import android.accounts.Account;
 import android.accounts.AccountAuthenticatorActivity;
 import android.accounts.AccountManager;
@@ -13,12 +14,11 @@ import java.util.Iterator;
 import java.util.List;
 
 import observer.zagart.by.client.App;
+import observer.zagart.by.client.constants.Constants;
 import observer.zagart.by.client.R;
-import observer.zagart.by.client.activities.MyAccountActivity;
-import observer.zagart.by.client.repository.model.Stand;
-import observer.zagart.by.client.repository.model.contracts.StandContract;
-import observer.zagart.by.client.singletons.AccountHolder;
-import observer.zagart.by.client.singletons.ContextHolder;
+import observer.zagart.by.client.mvp.views.MyAccountActivity;
+import observer.zagart.by.client.repository.entities.Stand;
+import observer.zagart.by.client.repository.entities.contracts.StandContract;
 import observer.zagart.by.client.utils.SharedPreferencesUtil;
 
 import static android.app.Activity.RESULT_OK;
@@ -27,6 +27,7 @@ import static android.app.Activity.RESULT_OK;
  * @author zagart
  */
 public class ObserverCallback {
+
     public static List<Stand> onStandsReceived(String pServerResponse) throws JSONException {
         List<Stand> stands = new ArrayList<>();
         JSONObject root = new JSONObject(pServerResponse);
@@ -46,17 +47,17 @@ public class ObserverCallback {
 
     public static void onTokenReceived(
             AccountAuthenticatorActivity pActivity,
-            Account account,
-            String password,
-            String token
+            Account pAccount,
+            String pPassword,
+            String pToken
     ) {
         final AccountManager accountManager = AccountManager.get(pActivity);
         final Bundle result = new Bundle();
-        if (accountManager.addAccountExplicitly(account, password, new Bundle())) {
-            result.putString(AccountManager.KEY_ACCOUNT_NAME, account.name);
-            result.putString(AccountManager.KEY_ACCOUNT_TYPE, account.type);
-            result.putString(AccountManager.KEY_AUTHTOKEN, token);
-            accountManager.setAuthToken(account, account.type, token);
+        if (accountManager.addAccountExplicitly(pAccount, pPassword, new Bundle())) {
+            result.putString(AccountManager.KEY_ACCOUNT_NAME, pAccount.name);
+            result.putString(AccountManager.KEY_ACCOUNT_TYPE, pAccount.type);
+            result.putString(AccountManager.KEY_AUTHTOKEN, pToken);
+            accountManager.setAuthToken(pAccount, pAccount.type, pToken);
         } else {
             result.putString(
                     AccountManager.KEY_ERROR_MESSAGE,
@@ -64,11 +65,11 @@ public class ObserverCallback {
             );
         }
         SharedPreferencesUtil.persistStringValue(
-                ContextHolder.get(),
-                App.CURRENT_ACCOUNT_NAME,
-                account.name
+                App.getState().getContext(),
+                Constants.CURRENT_ACCOUNT_NAME,
+                pAccount.name
         );
-        AccountHolder.set(account);
+        App.getState().setAccount(pAccount);
         pActivity.setAccountAuthenticatorResult(result);
         pActivity.setResult(RESULT_OK);
         final Intent intent = new Intent(pActivity, MyAccountActivity.class);

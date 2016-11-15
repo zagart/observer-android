@@ -1,4 +1,5 @@
-package observer.zagart.by.client.repository.model;
+package observer.zagart.by.client.repository.entities;
+
 import android.content.ContentValues;
 import android.database.Cursor;
 
@@ -7,12 +8,13 @@ import java.util.List;
 import java.util.Random;
 
 import observer.zagart.by.client.interfaces.IConvertible;
-import observer.zagart.by.client.repository.model.contracts.StandContract;
+import observer.zagart.by.client.repository.entities.contracts.StandContract;
 
 /**
- * Model for stand.
+ * StandModel for stand.
  */
 public class Stand implements IConvertible<ContentValues> {
+
     public static final int STAND_ID_LIMIT = 100;
     public static final int STAND_NUMBER_LIMIT = 1000;
     private Long mId;

@@ -1,4 +1,5 @@
 package observer.zagart.by.client.threadings;
+
 import observer.zagart.by.client.interfaces.IAction;
 
 /**
@@ -6,9 +7,13 @@ import observer.zagart.by.client.interfaces.IAction;
  * processing background data.
  */
 public interface IThreadAction<Param, Progress, Result> extends IAction<Param, Progress, Result> {
+
     Status getStatus();
+
     void initPersistProgress();
+
     Progress retrieveProgress();
+
     enum Status {
         CREATED, STARTED, RUNNING, FINISHED, PERSISTED
     }

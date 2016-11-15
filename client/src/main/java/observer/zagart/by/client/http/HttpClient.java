@@ -1,4 +1,5 @@
 package observer.zagart.by.client.http;
+
 import android.util.Log;
 
 import java.io.ByteArrayOutputStream;
@@ -21,11 +22,12 @@ import static observer.zagart.by.client.http.interfaces.IHttpClient.IHttpData.He
  * Implementation of IHttpClient interface.
  */
 public class HttpClient implements IHttpClient {
+
+    public static final int TIMEOUT = 3000;
     private static final String ERROR_STREAM_NOT_NULL = "Error stream not null";
     private static final String HTTP_REQUEST_FAILED = "HTTP-request failed";
     private static final short READ_BUFFER_SIZE = 4096;
     private static final String TAG = HttpClient.class.getSimpleName();
-    public static final int TIMEOUT = 3000;
 
     @Override
     public ByteArrayOutputStream downloadBytes(final String pUrl) throws IOException {
@@ -86,6 +88,7 @@ public class HttpClient implements IHttpClient {
         } finally {
             IOUtil.close(standardStream);
             IOUtil.close(errorStream);
+            connection.disconnect();
         }
     }
 
