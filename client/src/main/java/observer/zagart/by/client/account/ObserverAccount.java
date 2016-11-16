@@ -9,8 +9,8 @@ import android.accounts.Account;
  */
 public class ObserverAccount extends Account {
 
-    public static final String EXTRA_TOKEN_TYPE = "by.zagart.observer.extra_token_type";
-    static final String AUTH_TOKEN_TYPE = "by.zagart.observer.jwt";
+    public static final String EXTRA_TOKEN_TYPE = "by.zagart.observer.EXTRA_TOKEN_TYPE";
+    static final String AUTH_TOKEN_TYPE = "by.zagart.observer.JWT";
     private static final String TYPE = "by.zagart.observer";
 
     public ObserverAccount(final String name) {

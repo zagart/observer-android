@@ -11,6 +11,7 @@
     <application
         android:name=".App"
         android:allowBackup="true"
+        android:fullBackupContent="true"
         android:icon="@mipmap/observer_mipmap"
         android:label="@string/app_name"
         android:theme="@style/ObserverDefault">
@@ -18,8 +19,17 @@
             android:name=".mvp.views.MainActivity"
             android:screenOrientation="portrait">
             <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
                 <action android:name="android.intent.action.MAIN"/>
+
+                <data
+                    android:host="observer.zagart.by.client"
+                    android:path="/observer_folder"
+                    android:port="200"
+                    android:scheme="content"/>
+
                 <category android:name="android.intent.category.LAUNCHER"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
             </intent-filter>
         </activity>
         <activity
