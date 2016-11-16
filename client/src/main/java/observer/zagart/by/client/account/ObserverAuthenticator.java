@@ -11,9 +11,9 @@ import android.os.Bundle;
 import android.text.TextUtils;
 
 import observer.zagart.by.client.App;
-import observer.zagart.by.client.mvp.views.AuthenticationActivity;
 import observer.zagart.by.client.backend.api.ObserverApi;
 import observer.zagart.by.client.constants.Constants;
+import observer.zagart.by.client.mvp.views.AuthenticationActivity;
 import observer.zagart.by.client.utils.SharedPreferencesUtil;
 
 /**
@@ -86,8 +86,7 @@ class ObserverAuthenticator extends AbstractAccountAuthenticator {
         } else {
             accountManager.invalidateAuthToken(
                     pAccount.type,
-                    accountManager.peekAuthToken(pAccount, ObserverAccount.AUTH_TOKEN_TYPE
-                    )
+                    accountManager.peekAuthToken(pAccount, ObserverAccount.AUTH_TOKEN_TYPE)
             );
             final Intent intent = new Intent(mContext, AuthenticationActivity.class);
             intent.putExtra(AccountManager.KEY_ACCOUNT_AUTHENTICATOR_RESPONSE, pResponse);

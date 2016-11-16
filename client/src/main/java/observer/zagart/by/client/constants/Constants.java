@@ -20,5 +20,8 @@ public class Constants {
     public static final String FAILED_TO_EXECUTE_CLOSING = "Failed to execute closing";
     public static final short READ_BUFFER_SIZE = 4096;
     public static final int TIMEOUT = 3000;
-    public static final String ERROR_STREAM_NOT_NULL = "Error stream not null";
+    public static final String PREF_FILE = "SharedFile";
+    public static final String MODULE = "Module";
+    public static final String STAND = "Stand";
+    public static final String URI_BUILDER = "%s/%s/%d";
 }

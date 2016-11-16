@@ -19,7 +19,7 @@ import observer.zagart.by.client.repository.entities.Module;
  */
 public class ModuleTableAdapter extends RecyclerView.Adapter<ModuleTableAdapter.RowHolder> {
 
-    private List<Module> mModules;
+    final private List<Module> mModules;
 
     public ModuleTableAdapter(final List<Module> pModules) {
         mModules = pModules;
@@ -57,12 +57,12 @@ public class ModuleTableAdapter extends RecyclerView.Adapter<ModuleTableAdapter.
 
     static class RowHolder extends RecyclerView.ViewHolder {
 
-        private TextView mId;
-        private TextView mName;
-        private TextView mStatus;
-        private TextView mValue;
-        private TextView mStatusChangeDate;
-        private TextView mStandId;
+        final private TextView mId;
+        final private TextView mName;
+        final private TextView mStatus;
+        final private TextView mValue;
+        final private TextView mStatusChangeDate;
+        final private TextView mStandId;
 
         private RowHolder(final View pItemView) {
             super(pItemView);

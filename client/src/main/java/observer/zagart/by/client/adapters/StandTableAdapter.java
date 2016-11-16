@@ -17,7 +17,7 @@ import observer.zagart.by.client.repository.entities.Stand;
  */
 public class StandTableAdapter extends RecyclerView.Adapter<StandTableAdapter.RowHolder> {
 
-    private List<Stand> mStands;
+    final private List<Stand> mStands;
 
     public StandTableAdapter(final List<Stand> pStands) {
         mStands = pStands;
@@ -28,20 +28,20 @@ public class StandTableAdapter extends RecyclerView.Adapter<StandTableAdapter.Ro
             final ViewGroup pParent,
             final int pViewType
     ) {
-        Context context = pParent.getContext();
-        LayoutInflater inflater = LayoutInflater.from(context);
-        View standRowView = inflater.inflate(R.layout.stand_table_row, pParent, false);
+        final Context context = pParent.getContext();
+        final LayoutInflater inflater = LayoutInflater.from(context);
+        final View standRowView = inflater.inflate(R.layout.stand_table_row, pParent, false);
         return new RowHolder(standRowView);
     }
 
     @Override
     public void onBindViewHolder(final StandTableAdapter.RowHolder pHolder, final int pPosition) {
-        Stand stand = mStands.get(pPosition);
-        TextView idView = pHolder.mIdView;
+        final Stand stand = mStands.get(pPosition);
+        final TextView idView = pHolder.mIdView;
         idView.setText(String.valueOf(stand.getId()));
-        TextView numberView = pHolder.mNumberView;
+        final TextView numberView = pHolder.mNumberView;
         numberView.setText(stand.getNumber());
-        TextView descriptionView = pHolder.mDescriptionView;
+        final TextView descriptionView = pHolder.mDescriptionView;
         descriptionView.setText(stand.getDescription());
     }
 
@@ -52,9 +52,9 @@ public class StandTableAdapter extends RecyclerView.Adapter<StandTableAdapter.Ro
 
     static class RowHolder extends RecyclerView.ViewHolder {
 
-        private TextView mIdView;
-        private TextView mNumberView;
-        private TextView mDescriptionView;
+        final private TextView mIdView;
+        final private TextView mNumberView;
+        final private TextView mDescriptionView;
 
         private RowHolder(final View pItemView) {
             super(pItemView);

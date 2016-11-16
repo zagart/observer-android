@@ -20,7 +20,7 @@ import observer.zagart.by.client.http.interfaces.IHttpClient;
 import observer.zagart.by.client.threadings.ThreadWorker;
 
 /**
- * Class that provides methods to work with ObserverApi's HTTP-server.
+ * Class that provides methods to work with Observer's HTTP-server.
  *
  * @author zagart
  */
