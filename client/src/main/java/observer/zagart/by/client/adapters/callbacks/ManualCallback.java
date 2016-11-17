@@ -6,6 +6,8 @@ import android.support.v7.widget.helper.ItemTouchHelper;
 /**
  * Manual implementation of ItemTouchHelper.ICallback.
  */
+//TODO remove if will be not required to release date
+@SuppressWarnings("unused")
 public class ManualCallback extends ItemTouchHelper.Callback {
 
     private final IMovableContent mContent;

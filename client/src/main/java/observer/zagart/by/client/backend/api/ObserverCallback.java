@@ -5,6 +5,8 @@ import android.accounts.AccountAuthenticatorActivity;
 import android.accounts.AccountManager;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -14,8 +16,9 @@ import java.util.Iterator;
 import java.util.List;
 
 import observer.zagart.by.client.App;
-import observer.zagart.by.client.constants.Constants;
 import observer.zagart.by.client.R;
+import observer.zagart.by.client.backend.Criteria;
+import observer.zagart.by.client.constants.Constants;
 import observer.zagart.by.client.mvp.views.MyAccountActivity;
 import observer.zagart.by.client.repository.entities.Stand;
 import observer.zagart.by.client.repository.entities.contracts.StandContract;
@@ -28,7 +31,25 @@ import static android.app.Activity.RESULT_OK;
  */
 public class ObserverCallback {
 
-    public static List<Stand> onStandsReceived(String pServerResponse) throws JSONException {
+    @SuppressWarnings("unchecked")
+    @Nullable
+    public static <Entity> List<Entity> onResponseReceived(final String pServerResponse)
+            throws JSONException {
+        //TODO as universal response handler, not just for stands
+        final String reflectedAction = ObserverApi.getReflectedAction(pServerResponse);
+        if (pServerResponse == null || reflectedAction == null) {
+            return null;
+        }
+        switch (reflectedAction) {
+            case Criteria.GET_STANDS:
+                return (List<Entity>) parseStandsResponse(pServerResponse);
+            default:
+                return null;
+        }
+    }
+
+    @NonNull
+    private static List<Stand> parseStandsResponse(final String pServerResponse) throws JSONException {
         List<Stand> stands = new ArrayList<>();
         JSONObject root = new JSONObject(pServerResponse);
         final Iterator<String> keys = root.keys();
@@ -46,10 +67,10 @@ public class ObserverCallback {
     }
 
     public static void onTokenReceived(
-            AccountAuthenticatorActivity pActivity,
-            Account pAccount,
-            String pPassword,
-            String pToken
+            final AccountAuthenticatorActivity pActivity,
+            final Account pAccount,
+            final String pPassword,
+            final String pToken
     ) {
         final AccountManager accountManager = AccountManager.get(pActivity);
         final Bundle result = new Bundle();

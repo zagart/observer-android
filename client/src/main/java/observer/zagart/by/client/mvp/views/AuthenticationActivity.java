@@ -12,7 +12,7 @@ import android.widget.TextView;
 
 import observer.zagart.by.client.R;
 import observer.zagart.by.client.mvp.MVP;
-import observer.zagart.by.client.mvp.presenters.Presenter;
+import observer.zagart.by.client.mvp.presenters.AccountPresenter;
 import observer.zagart.by.client.utils.IOUtil;
 
 /**
@@ -21,13 +21,13 @@ import observer.zagart.by.client.utils.IOUtil;
 public class AuthenticationActivity
         extends AccountAuthenticatorActivity implements MVP.IViewOperations {
 
-    private MVP.IPresenterOperations mPresenter;
+    private AccountPresenter mPresenter;
 
     private TextView mLoginView;
     private TextView mPasswordView;
 
     {
-        mPresenter = new Presenter(this);
+        mPresenter = new AccountPresenter(this);
     }
 
     public void onGuestClick(View view) {
@@ -53,6 +53,14 @@ public class AuthenticationActivity
     @Override
     public Context getViewContext() {
         return this;
+    }
+
+    @Override
+    public void onViewsVisibilityCheck() {
+    }
+
+    @Override
+    public void onDataChanged() {
     }
 
     @Override

@@ -9,4 +9,7 @@
     <string name="msg_sp_value_persisted">Value %s persisted</string>
     <string name="err_timeout">Timeout exception!</string>
     <string name="err_failed_get_data">Failed to get data from server</string>
+    <string name="msg_failed_download_stands">
+        Failed to download, persist or parse requested stands.
+    </string>
 </resources>

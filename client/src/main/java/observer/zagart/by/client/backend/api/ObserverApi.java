@@ -1,6 +1,5 @@
 package observer.zagart.by.client.backend.api;
 
-import android.content.Context;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
@@ -13,49 +12,48 @@ import java.util.concurrent.ExecutionException;
 
 import observer.zagart.by.client.App;
 import observer.zagart.by.client.BuildConfig;
+import observer.zagart.by.client.backend.Criteria;
 import observer.zagart.by.client.backend.requests.AuthenticationRequest;
 import observer.zagart.by.client.backend.requests.RegistrationRequest;
+import observer.zagart.by.client.constants.Constants;
 import observer.zagart.by.client.http.HttpClientFactory;
 import observer.zagart.by.client.http.interfaces.IHttpClient;
 import observer.zagart.by.client.threadings.ThreadWorker;
 
 /**
- * Class that provides methods to work with ObserverApi's HTTP-server.
+ * Class that provides methods to work with Observer's HTTP-server.
  *
  * @author zagart
  */
 public class ObserverApi {
 
-    private static final String TOKEN = "token";
     private final String TAG = ObserverApi.class.getSimpleName();
     private ThreadWorker mWorker;
     private IHttpClient mClient = HttpClientFactory.get(HttpClientFactory.Type.HTTP_PURE);
-    private Context mContext;
 
     {
         mWorker = App.getState().getThreadWorker();
     }
 
-    public ObserverApi(final Context pContext) {
-        mContext = pContext;
-    }
-
     @Nullable
     public static String logIn(
-            final Context pContext,
             final String pLogin,
             final String pPassword
     ) {
-        return new ObserverApi(pContext).logIn(pLogin, pPassword);
+        return new ObserverApi().requestLogIn(pLogin, pPassword);
     }
 
     @Nullable
     public static String signUp(
-            final Context pContext,
             final String pLogin,
             final String pPassword
     ) {
-        return new ObserverApi(pContext).signUp(pLogin, pPassword);
+        return new ObserverApi().requestSignUp(pLogin, pPassword);
+    }
+
+    public static String getReflectedAction(String pServerResponse) {
+        //TODO get real server response reflection
+        return Criteria.GET_STANDS;
     }
 
     @Nullable
@@ -65,8 +63,8 @@ public class ObserverApi {
         }
         try {
             JSONObject jsonResponse = new JSONObject(pResponse);
-            if (jsonResponse.has(TOKEN)) {
-                return jsonResponse.getString(TOKEN);
+            if (jsonResponse.has(Constants.TOKEN)) {
+                return jsonResponse.getString(Constants.TOKEN);
             }
             return null;
         } catch (JSONException pEx) {
@@ -78,7 +76,7 @@ public class ObserverApi {
     }
 
     @Nullable
-    private String logIn(final String pLogin, final String pPassword) {
+    private String requestLogIn(final String pLogin, final String pPassword) {
         return getTokenFromResponseString(
                 requestToServer(new AuthenticationRequest(pLogin, pPassword))
         );
@@ -95,24 +93,18 @@ public class ObserverApi {
                             try {
                                 return mClient.executeRequest(pRequest);
                             } catch (IOException pEx) {
-                                if (BuildConfig.DEBUG) {
-                                    Log.e(TAG, pEx.getMessage(), pEx);
-                                }
                                 return null;
                             }
                         }
                     }
             );
         } catch (ExecutionException | InterruptedException pEx) {
-            if (BuildConfig.DEBUG) {
-                Log.e(TAG, pEx.getMessage(), pEx);
-            }
             return null;
         }
     }
 
     @Nullable
-    private String signUp(final String pLogin, final String pPassword) {
+    private String requestSignUp(final String pLogin, final String pPassword) {
         return getTokenFromResponseString(
                 requestToServer(new RegistrationRequest(pLogin, pPassword))
         );

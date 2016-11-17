@@ -16,6 +16,7 @@ import java.util.Locale;
 
 import observer.zagart.by.client.App;
 import observer.zagart.by.client.BuildConfig;
+import observer.zagart.by.client.constants.Constants;
 import observer.zagart.by.client.repository.entities.annotations.Table;
 import observer.zagart.by.client.repository.entities.annotations.dbId;
 import observer.zagart.by.client.repository.entities.annotations.dbInteger;
@@ -31,14 +32,13 @@ import observer.zagart.by.client.repository.entities.contracts.Contracts;
  */
 public class DbHelper extends SQLiteOpenHelper implements IDbOperations {
 
-    public static final String NOT_NULL = " NOT NULL";
-    public static final String AUTOINCREMENT = " AUTOINCREMENT";
-    public static final int DATABASE_VERSION = 1;
-    public static final String DATABASE_FILE_NAME = "observer.db";
+    private static final String NOT_NULL = " NOT NULL";
+    private static final String AUTOINCREMENT = " AUTOINCREMENT";
+    private static final int DATABASE_VERSION = 1;
+    private static final String DATABASE_FILE_NAME = "observer.db";
     private static final String SQL_TABLE_CREATE_FIELD_TEMPLATE = "%s %s";
     private static final String SQL_TABLE_CREATE_TEMPLATE = "CREATE TABLE IF NOT EXISTS %s (%s);";
     private static String TAG = DbHelper.class.getSimpleName();
-    private SQLiteDatabase mDatabase;
 
     public DbHelper(final Context pContext) {
         super(pContext, DATABASE_FILE_NAME, null, DATABASE_VERSION);
@@ -63,12 +63,13 @@ public class DbHelper extends SQLiteOpenHelper implements IDbOperations {
         return pType;
     }
 
+    @SuppressWarnings("unused")
     public static DbHelper getInstance() {
         return SingletonHolder.DB_HELPER_INSTANCE;
     }
 
     @Nullable
-    public static String getTableCreateQuery(final Class<?> pClass) {
+    private static String getTableCreateQuery(final Class<?> pClass) {
         Table table = pClass.getAnnotation(Table.class);
         if (table != null) {
             StringBuilder builder = new StringBuilder();
@@ -130,7 +131,7 @@ public class DbHelper extends SQLiteOpenHelper implements IDbOperations {
     }
 
     @Nullable
-    public static String getTableName(Class<?> pClass) {
+    private static String getTableName(Class<?> pClass) {
         final Table table = pClass.getAnnotation(Table.class);
         if (table != null) {
             return table.name();
@@ -152,15 +153,15 @@ public class DbHelper extends SQLiteOpenHelper implements IDbOperations {
                     count++;
                 }
                 database.setTransactionSuccessful();
-            } catch (Exception pE) {
-                pE.printStackTrace();
+            } catch (Exception pEx) {
+                throw new RuntimeException(Constants.TRANSACTION_FAILED);
             } finally {
                 database.endTransaction();
                 database.close();
             }
             return count;
         } else {
-            throw new RuntimeException();
+            throw new RuntimeException(Constants.INCORRECT_TABLE_NAME);
         }
     }
 
@@ -174,8 +175,8 @@ public class DbHelper extends SQLiteOpenHelper implements IDbOperations {
                 database.beginTransaction();
                 count = database.delete(name, pSql, pParams);
                 database.setTransactionSuccessful();
-            } catch (Exception pE) {
-                pE.printStackTrace();
+            } catch (Exception pEx) {
+                pEx.printStackTrace();
             } finally {
                 database.endTransaction();
                 database.close();
@@ -208,8 +209,7 @@ public class DbHelper extends SQLiteOpenHelper implements IDbOperations {
 
     @Override
     public Cursor query(final String pSql, final String... pParams) {
-        mDatabase = getReadableDatabase();
-        return mDatabase.rawQuery(pSql, pParams);
+        return getReadableDatabase().rawQuery(pSql, pParams);
     }
 
     @Override
@@ -230,8 +230,10 @@ public class DbHelper extends SQLiteOpenHelper implements IDbOperations {
     ) {
     }
 
-    public static class SingletonHolder {
+    private static class SingletonHolder {
 
-        public static final DbHelper DB_HELPER_INSTANCE = new DbHelper(App.getState().getContext());
+        private static final DbHelper DB_HELPER_INSTANCE = new DbHelper(
+                App.getState().getContext()
+        );
     }
 }

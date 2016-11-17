@@ -19,4 +19,15 @@ public class Constants {
     public static final byte EOF = -1;
     public static final String FAILED_TO_EXECUTE_CLOSING = "Failed to execute closing";
     public static final short READ_BUFFER_SIZE = 4096;
+    public static final int TIMEOUT = 3000;
+    public static final String PREF_FILE = "SharedFile";
+    public static final String MODULE = "Module";
+    public static final String STAND = "Stand";
+    public static final String CONTENT = "content";
+    public static final String AUTHORITY =
+            "observer.zagart.by.client.repository.ObserverContentProvider";
+    public static final String URI_SEPARATOR = "/";
+    public static final String TRANSACTION_FAILED = "Transaction failed";
+    public static final String INCORRECT_TABLE_NAME = "Incorrect table name";
+    public static final String TOKEN = "token";
 }

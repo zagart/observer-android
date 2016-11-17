@@ -10,7 +10,7 @@ import android.widget.EditText;
 
 import observer.zagart.by.client.R;
 import observer.zagart.by.client.mvp.MVP;
-import observer.zagart.by.client.mvp.presenters.Presenter;
+import observer.zagart.by.client.mvp.presenters.AccountPresenter;
 import observer.zagart.by.client.utils.IOUtil;
 
 /**
@@ -22,12 +22,12 @@ import observer.zagart.by.client.utils.IOUtil;
 public class RegistrationActivity
         extends AccountAuthenticatorActivity implements MVP.IViewOperations {
 
-    private MVP.IPresenterOperations mPresenter;
+    private AccountPresenter mPresenter;
     private EditText mPasswordView;
     private EditText mLoginView;
 
     {
-        mPresenter = new Presenter(this);
+        mPresenter = new AccountPresenter(this);
     }
 
     public void onConfirmClick(View pView) {
@@ -43,6 +43,14 @@ public class RegistrationActivity
     @Override
     public Context getViewContext() {
         return this;
+    }
+
+    @Override
+    public void onViewsVisibilityCheck() {
+    }
+
+    @Override
+    public void onDataChanged() {
     }
 
     @Override

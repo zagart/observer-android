@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="observer.zagart.by.client">
+<manifest package="observer.zagart.by.client"
+          xmlns:android="http://schemas.android.com/apk/res/android">
 
     <uses-permission android:name="android.permission.GET_ACCOUNTS"/>
     <uses-permission android:name="android.permission.MANAGE_ACCOUNTS"/>
@@ -11,16 +11,25 @@
     <application
         android:name=".App"
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:fullBackupContent="true"
+        android:icon="@mipmap/observer_mipmap"
         android:label="@string/app_name"
-        android:supportsRtl="true"
         android:theme="@style/ObserverDefault">
         <activity
             android:name=".mvp.views.MainActivity"
             android:screenOrientation="portrait">
             <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
                 <action android:name="android.intent.action.MAIN"/>
+
+                <data
+                    android:host="observer.zagart.by.client"
+                    android:path="/observer_folder"
+                    android:port="200"
+                    android:scheme="content"/>
+
                 <category android:name="android.intent.category.LAUNCHER"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
             </intent-filter>
         </activity>
         <activity
@@ -54,5 +63,9 @@
                 android:name="android.accounts.AccountAuthenticator"
                 android:resource="@xml/observer_authenticator"/>
         </service>
+        <provider
+            android:name=".repository.ObserverContentProvider"
+            android:authorities="observer.zagart.by.client.repository.ObserverContentProvider"
+            android:exported="false"/>
     </application>
 </manifest>

@@ -51,7 +51,7 @@ public class MainActivity extends BaseActivity {
     }
 
     @Override
-    protected void onViewsVisibilityCheck() {
+    public void onViewsVisibilityCheck() {
         if (App.getState().getAccount() != null) {
             mModulesButton.setVisibility(View.VISIBLE);
             mStandsButton.setVisibility(View.VISIBLE);

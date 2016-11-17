@@ -1,12 +1,11 @@
 package observer.zagart.by.client.mvp;
 
-import android.accounts.AccountAuthenticatorActivity;
 import android.content.Context;
+import android.net.Uri;
 
 import java.util.List;
 
-import observer.zagart.by.client.repository.entities.Module;
-import observer.zagart.by.client.repository.entities.Stand;
+import observer.zagart.by.client.http.interfaces.IHttpClient;
 
 /**
  * @author zagart
@@ -17,40 +16,28 @@ public interface MVP {
     interface IViewOperations {
 
         Context getViewContext();
+
+        void onViewsVisibilityCheck();
+
+        void onDataChanged();
     }
 
-    interface IPresenterOperations {
+    interface IPresenterOperations<Entity> {
 
-        List<Stand> getStandsFromModel();
+        void onCreate(final IModelOperations<Entity> pModel);
 
-        List<Module> getModulesFromModel();
+        List<Entity> getElementsFromModel(final Uri pUri);
 
-        void executeRegistration(
-                final AccountAuthenticatorActivity pActivity,
-                final CharSequence pLogin,
-                final CharSequence pPassword
-        );
+        void synchronizeModel(final Uri pUri, final IHttpClient.IRequest<String> pRequest);
 
-        void executeAuthentication(
-                AccountAuthenticatorActivity pActivity,
-                CharSequence pLogin,
-                CharSequence pPassword
-        );
-
-        void onStandsReceived(String pServerResponse);
-
-        void onModulesReceived(String pServerResponse);
-
-        void clearStandModel();
-
-        void clearModuleModel();
+        void clearModel(final Uri pUri);
     }
 
     interface IModelOperations<Entity> {
 
         List<Entity> retrieveAll();
 
-        void persistAll(List<Entity> pEntities);
+        void persistAll(final List<Entity> pEntities);
 
         void deleteAll();
     }

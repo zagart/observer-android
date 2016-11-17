@@ -4,26 +4,18 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 
 import org.json.JSONException;
 
-import java.io.IOException;
 import java.util.List;
-import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 
-import observer.zagart.by.client.App;
-import observer.zagart.by.client.BuildConfig;
 import observer.zagart.by.client.R;
 import observer.zagart.by.client.adapters.StandTableAdapter;
-import observer.zagart.by.client.backend.api.ObserverCallback;
-import observer.zagart.by.client.backend.requests.GetStandsRequest;
-import observer.zagart.by.client.http.HttpClientFactory;
+import observer.zagart.by.client.mvp.presenters.StandPresenter;
 import observer.zagart.by.client.repository.entities.Stand;
-import observer.zagart.by.client.services.Service;
-import observer.zagart.by.client.threadings.ThreadWorker;
+import observer.zagart.by.client.utils.URIUtil;
 
 /**
  * Activity for showing cached stand objects.
@@ -32,22 +24,26 @@ import observer.zagart.by.client.threadings.ThreadWorker;
  */
 public class StandsActivity extends BaseActivity {
 
+    private StandPresenter mPresenter;
     private RecyclerView mRecyclerViewStands;
-    private ThreadWorker mWorker;
 
     {
-        mWorker = App.getState().getThreadWorker();
+        mPresenter = new StandPresenter(this);
     }
 
     public void onClearClick(View pView) {
-        getPresenter().clearStandModel();
-        loadRecycler();
+        mPresenter.clearModel(URIUtil.getStandUri());
     }
 
-    public void onReloadClick(View pView) {
-        List<Stand> stands = downloadAllStands();
-        Service.synchronizeStands(stands);
-        loadRecycler();
+    public void onReloadClick(View pView)
+            throws InterruptedException, ExecutionException, JSONException {
+        mPresenter.synchronizeModel(URIUtil.getStandUri(), null);
+    }
+
+    @Override
+    public void onDataChanged() {
+        super.onDataChanged();
+        setAdapter();
     }
 
     @Override
@@ -55,48 +51,12 @@ public class StandsActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.stands_activity);
         mRecyclerViewStands = (RecyclerView) findViewById(R.id.stands_recycler_view);
-        loadRecycler();
+        setAdapter();
     }
 
-    private List<Stand> downloadAllStands() {
-        try {
-            return ObserverCallback.onStandsReceived(
-                    (String) mWorker.submit(
-                            new Callable() {
-
-                                @Override
-                                public Object call() throws Exception {
-                                    try {
-                                        return HttpClientFactory.getDefaultClient().executeRequest(
-                                                new GetStandsRequest()
-                                        );
-                                    } catch (IOException pEx) {
-                                        if (BuildConfig.DEBUG) {
-                                            Log.e(
-                                                    StandsActivity.class.getSimpleName(),
-                                                    pEx.getMessage(),
-                                                    pEx
-                                            );
-                                        }
-                                        return null;
-                                    }
-                                }
-                            }
-                    )
-            );
-        } catch (ExecutionException | InterruptedException |
-                JSONException | NullPointerException pEx) {
-            if (BuildConfig.DEBUG) {
-                Log.e(StandsActivity.class.getSimpleName(), pEx.getMessage(), pEx);
-            }
-            return null;
-        }
-    }
-
-    private void loadRecycler() {
-        final StandTableAdapter adapter = new StandTableAdapter(
-                getPresenter().getStandsFromModel()
-        );
+    private void setAdapter() {
+        final List<Stand> stands = mPresenter.getElementsFromModel(URIUtil.getStandUri());
+        final StandTableAdapter adapter = new StandTableAdapter(stands);
         mRecyclerViewStands.setAdapter(adapter);
         mRecyclerViewStands.setLayoutManager(new LinearLayoutManager(this));
     }
