@@ -29,4 +29,5 @@ public class Constants {
     public static final String URI_SEPARATOR = "/";
     public static final String TRANSACTION_FAILED = "Transaction failed";
     public static final String INCORRECT_TABLE_NAME = "Incorrect table name";
+    public static final String TOKEN = "token";
 }

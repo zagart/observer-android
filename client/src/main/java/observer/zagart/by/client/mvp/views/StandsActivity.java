@@ -13,7 +13,9 @@ import java.util.concurrent.ExecutionException;
 
 import observer.zagart.by.client.R;
 import observer.zagart.by.client.adapters.StandTableAdapter;
+import observer.zagart.by.client.mvp.presenters.StandPresenter;
 import observer.zagart.by.client.repository.entities.Stand;
+import observer.zagart.by.client.utils.URIUtil;
 
 /**
  * Activity for showing cached stand objects.
@@ -22,15 +24,20 @@ import observer.zagart.by.client.repository.entities.Stand;
  */
 public class StandsActivity extends BaseActivity {
 
+    private StandPresenter mPresenter;
     private RecyclerView mRecyclerViewStands;
 
+    {
+        mPresenter = new StandPresenter(this);
+    }
+
     public void onClearClick(View pView) {
-        getPresenter().clearStandModel();
+        mPresenter.clearModel(URIUtil.getStandUri());
     }
 
     public void onReloadClick(View pView)
             throws InterruptedException, ExecutionException, JSONException {
-        getPresenter().downloadAllStands();
+        mPresenter.synchronizeModel(URIUtil.getStandUri(), null);
     }
 
     @Override
@@ -48,7 +55,7 @@ public class StandsActivity extends BaseActivity {
     }
 
     private void setAdapter() {
-        final List<Stand> stands = getPresenter().getStandsFromModel();
+        final List<Stand> stands = mPresenter.getElementsFromModel(URIUtil.getStandUri());
         final StandTableAdapter adapter = new StandTableAdapter(stands);
         mRecyclerViewStands.setAdapter(adapter);
         mRecyclerViewStands.setLayoutManager(new LinearLayoutManager(this));

@@ -5,6 +5,7 @@ import android.accounts.AccountAuthenticatorActivity;
 import android.accounts.AccountManager;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import org.json.JSONException;
@@ -16,6 +17,7 @@ import java.util.List;
 
 import observer.zagart.by.client.App;
 import observer.zagart.by.client.R;
+import observer.zagart.by.client.backend.Criteria;
 import observer.zagart.by.client.constants.Constants;
 import observer.zagart.by.client.mvp.views.MyAccountActivity;
 import observer.zagart.by.client.repository.entities.Stand;
@@ -29,11 +31,25 @@ import static android.app.Activity.RESULT_OK;
  */
 public class ObserverCallback {
 
+    @SuppressWarnings("unchecked")
     @Nullable
-    public static List<Stand> onStandsReceived(final String pServerResponse) throws JSONException {
-        if (pServerResponse == null) {
+    public static <Entity> List<Entity> onResponseReceived(final String pServerResponse)
+            throws JSONException {
+        //TODO as universal response handler, not just for stands
+        final String reflectedAction = ObserverApi.getReflectedAction(pServerResponse);
+        if (pServerResponse == null || reflectedAction == null) {
             return null;
         }
+        switch (reflectedAction) {
+            case Criteria.GET_STANDS:
+                return (List<Entity>) parseStandsResponse(pServerResponse);
+            default:
+                return null;
+        }
+    }
+
+    @NonNull
+    private static List<Stand> parseStandsResponse(final String pServerResponse) throws JSONException {
         List<Stand> stands = new ArrayList<>();
         JSONObject root = new JSONObject(pServerResponse);
         final Iterator<String> keys = root.keys();
