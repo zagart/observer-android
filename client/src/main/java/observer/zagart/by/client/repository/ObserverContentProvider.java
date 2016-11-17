@@ -7,27 +7,30 @@ import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
-import java.util.Locale;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 import observer.zagart.by.client.App;
 import observer.zagart.by.client.constants.Constants;
 import observer.zagart.by.client.repository.entities.contracts.ModuleContract;
 import observer.zagart.by.client.repository.entities.contracts.StandContract;
 import observer.zagart.by.client.repository.helper.DbHelper;
+import observer.zagart.by.client.utils.URIUtil;
 
 /**
+ * Implementation of {@link ContentProvider}.
+ *
  * @author zagart
  */
 
 public class ObserverContentProvider extends ContentProvider {
 
-    private static final String AUTH =
-            "content://observer.zagart.by.client.repository.ObserverContentProvider";
-    private DbHelper mOperations;
+    private DbHelper mHelper;
 
     @Override
     public boolean onCreate() {
-        mOperations = App.getState().getDbHelper();
+        mHelper = new DbHelper(getContext());
         return true;
     }
 
@@ -40,7 +43,7 @@ public class ObserverContentProvider extends ContentProvider {
             final String[] pSelectionArgs,
             final String pSortOrder
     ) {
-        return mOperations.query(pUri.toString(), pSelectionArgs);
+        return mHelper.query(pSelection, pSelectionArgs);
     }
 
     @Nullable
@@ -53,36 +56,48 @@ public class ObserverContentProvider extends ContentProvider {
     @Override
     public Uri insert(@NonNull final Uri pUri, final ContentValues pContentValues) {
         final Class<?> table = getTable(pUri);
-        final long id = mOperations.insert(table, pContentValues);
-        final String uriBuilder = String.format(
-                Locale.getDefault(),
-                Constants.URI_BUILDER,
-                AUTH,
-                DbHelper.getTableName(table),
-                id
-        );
-        final Uri uri = Uri.parse(uriBuilder);
-        App.getState().getContext().getContentResolver().notifyChange(uri, null);
-        return uri;
+        final long id = mHelper.insert(table, pContentValues);
+        final Uri newUri = URIUtil.addId(pUri, id);
+        onDataChanged(newUri);
+        return newUri;
     }
 
     @Override
-    public int delete(@NonNull final Uri pUri, final String pS, final String[] pStrings) {
-        return 0;
+    public int delete(
+            @NonNull final Uri pUri,
+            final String pSelection,
+            final String[] pSelectionArgs
+    ) {
+        final int id = (int) mHelper.delete(getTable(pUri), pSelection, pSelectionArgs);
+        onDataChanged(pUri);
+        return id;
+    }
+
+    @Override
+    public int bulkInsert(@NonNull final Uri pUri, @NonNull final ContentValues[] pValues) {
+        List<ContentValues> values = new ArrayList<>();
+        Collections.addAll(values, pValues);
+        final int affected = mHelper.bulkInsert(getTable(pUri), values);
+        onDataChanged(pUri);
+        return affected;
     }
 
     @Override
     public int update(
             @NonNull final Uri pUri,
             final ContentValues pContentValues,
-            final String pS,
-            final String[] pStrings
+            final String pSelection,
+            final String[] pSelectionArgs
     ) {
         return 0;
     }
 
+    private void onDataChanged(Uri pUri) {
+        App.getState().getContext().getContentResolver().notifyChange(pUri, null);
+    }
+
     private Class<?> getTable(Uri pUri) {
-        String table = pUri.getPath();
+        final String table = URIUtil.getClearUriPath(pUri);
         switch (table) {
             case Constants.MODULE:
                 return ModuleContract.class;

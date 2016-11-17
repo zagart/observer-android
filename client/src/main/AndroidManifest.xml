@@ -63,5 +63,9 @@
                 android:name="android.accounts.AccountAuthenticator"
                 android:resource="@xml/observer_authenticator"/>
         </service>
+        <provider
+            android:name=".repository.ObserverContentProvider"
+            android:authorities="observer.zagart.by.client.repository.ObserverContentProvider"
+            android:exported="false"/>
     </application>
 </manifest>

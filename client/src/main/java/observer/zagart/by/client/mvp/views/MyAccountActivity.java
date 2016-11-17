@@ -54,7 +54,7 @@ public class MyAccountActivity extends BaseActivity {
     }
 
     @Override
-    protected void onViewsVisibilityCheck() {
+    public void onViewsVisibilityCheck() {
         if (App.getState().getAccount() != null) {
             mLogInView.setVisibility(View.GONE);
             mLogOutView.setVisibility(View.VISIBLE);

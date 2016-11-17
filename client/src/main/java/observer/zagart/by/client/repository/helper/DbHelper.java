@@ -16,6 +16,7 @@ import java.util.Locale;
 
 import observer.zagart.by.client.App;
 import observer.zagart.by.client.BuildConfig;
+import observer.zagart.by.client.constants.Constants;
 import observer.zagart.by.client.repository.entities.annotations.Table;
 import observer.zagart.by.client.repository.entities.annotations.dbId;
 import observer.zagart.by.client.repository.entities.annotations.dbInteger;
@@ -130,7 +131,7 @@ public class DbHelper extends SQLiteOpenHelper implements IDbOperations {
     }
 
     @Nullable
-    public static String getTableName(Class<?> pClass) {
+    private static String getTableName(Class<?> pClass) {
         final Table table = pClass.getAnnotation(Table.class);
         if (table != null) {
             return table.name();
@@ -152,15 +153,15 @@ public class DbHelper extends SQLiteOpenHelper implements IDbOperations {
                     count++;
                 }
                 database.setTransactionSuccessful();
-            } catch (Exception pE) {
-                pE.printStackTrace();
+            } catch (Exception pEx) {
+                throw new RuntimeException(Constants.TRANSACTION_FAILED);
             } finally {
                 database.endTransaction();
                 database.close();
             }
             return count;
         } else {
-            throw new RuntimeException();
+            throw new RuntimeException(Constants.INCORRECT_TABLE_NAME);
         }
     }
 
@@ -174,8 +175,8 @@ public class DbHelper extends SQLiteOpenHelper implements IDbOperations {
                 database.beginTransaction();
                 count = database.delete(name, pSql, pParams);
                 database.setTransactionSuccessful();
-            } catch (Exception pE) {
-                pE.printStackTrace();
+            } catch (Exception pEx) {
+                pEx.printStackTrace();
             } finally {
                 database.endTransaction();
                 database.close();

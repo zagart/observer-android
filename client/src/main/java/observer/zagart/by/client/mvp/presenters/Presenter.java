@@ -69,6 +69,7 @@ public class Presenter implements MVP.IPresenterOperations {
                                     response
                             );
                             mStandModel.persistAll(parsedStands);
+                            notifyViewDataChange();
                         } catch (IOException | JSONException | NullPointerException pEx) {
                             final Context context = Presenter.this.mView.get().getViewContext();
                             IOUtil.showToast(
@@ -160,10 +161,24 @@ public class Presenter implements MVP.IPresenterOperations {
     @Override
     public void clearStandModel() {
         mStandModel.deleteAll();
+        mView.get().onDataChanged();
     }
 
     @Override
     public void clearModuleModel() {
         mModuleModel.deleteAll();
+        mView.get().onDataChanged();
+    }
+
+    private void notifyViewDataChange() {
+        mThreadWorker.post(
+                new Runnable() {
+
+                    @Override
+                    public void run() {
+                        mView.get().onDataChanged();
+                    }
+                }
+        );
     }
 }

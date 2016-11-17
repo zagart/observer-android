@@ -17,6 +17,10 @@ public interface MVP {
     interface IViewOperations {
 
         Context getViewContext();
+
+        void onViewsVisibilityCheck();
+
+        void onDataChanged();
     }
 
     interface IPresenterOperations {

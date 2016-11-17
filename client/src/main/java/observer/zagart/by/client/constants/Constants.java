@@ -23,5 +23,10 @@ public class Constants {
     public static final String PREF_FILE = "SharedFile";
     public static final String MODULE = "Module";
     public static final String STAND = "Stand";
-    public static final String URI_BUILDER = "%s/%s/%d";
+    public static final String CONTENT = "content";
+    public static final String AUTHORITY =
+            "observer.zagart.by.client.repository.ObserverContentProvider";
+    public static final String URI_SEPARATOR = "/";
+    public static final String TRANSACTION_FAILED = "Transaction failed";
+    public static final String INCORRECT_TABLE_NAME = "Incorrect table name";
 }

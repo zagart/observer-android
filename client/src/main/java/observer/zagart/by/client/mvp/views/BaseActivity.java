@@ -25,6 +25,16 @@ abstract public class BaseActivity extends AppCompatActivity implements MVP.IVie
     }
 
     @Override
+    public void onViewsVisibilityCheck() {
+        //activity specific buttons visibility check
+    }
+
+    @Override
+    public void onDataChanged() {
+        //activity specific content changed actions
+    }
+
+    @Override
     protected void onStart() {
         super.onStart();
         onViewsVisibilityCheck();
@@ -32,9 +42,5 @@ abstract public class BaseActivity extends AppCompatActivity implements MVP.IVie
 
     protected MVP.IPresenterOperations getPresenter() {
         return mPresenter;
-    }
-
-    protected void onViewsVisibilityCheck() {
-        //activity specific buttons visibility check
     }
 }

@@ -46,6 +46,14 @@ public class RegistrationActivity
     }
 
     @Override
+    public void onViewsVisibilityCheck() {
+    }
+
+    @Override
+    public void onDataChanged() {
+    }
+
+    @Override
     protected void onCreate(@Nullable final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.registration_activity);

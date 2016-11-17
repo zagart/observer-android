@@ -56,6 +56,14 @@ public class AuthenticationActivity
     }
 
     @Override
+    public void onViewsVisibilityCheck() {
+    }
+
+    @Override
+    public void onDataChanged() {
+    }
+
+    @Override
     protected void onCreate(@Nullable final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         final ActionBar bar = getActionBar();

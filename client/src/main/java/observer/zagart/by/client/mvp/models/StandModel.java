@@ -1,5 +1,6 @@
 package observer.zagart.by.client.mvp.models;
 
+import android.content.ContentResolver;
 import android.database.Cursor;
 
 import java.util.ArrayList;
@@ -9,8 +10,7 @@ import observer.zagart.by.client.App;
 import observer.zagart.by.client.constants.Constants;
 import observer.zagart.by.client.mvp.MVP;
 import observer.zagart.by.client.repository.entities.Stand;
-import observer.zagart.by.client.repository.entities.contracts.StandContract;
-import observer.zagart.by.client.repository.helper.DbHelper;
+import observer.zagart.by.client.utils.URIUtil;
 
 /**
  * MVP model implementation for stand.
@@ -21,24 +21,29 @@ import observer.zagart.by.client.repository.helper.DbHelper;
 public class StandModel implements MVP.IModelOperations<Stand> {
 
     private MVP.IPresenterOperations mPresenter;
-    private DbHelper mHelper;
 
     public StandModel(final MVP.IPresenterOperations pPresenter) {
         mPresenter = pPresenter;
-        mHelper = App.getState().getDbHelper();
     }
 
     @Override
     public List<Stand> retrieveAll() {
-        List<Stand> stands = new ArrayList<>();
-        Cursor cursor = mHelper.query(Constants.SELECT_ALL_STANDS);
-        cursor.moveToFirst();
-        while (!cursor.isAfterLast()) {
-            stands.add(Stand.parseCursorRow(cursor));
-            cursor.moveToNext();
+        final ContentResolver resolver = App.getState().getContext().getContentResolver();
+        final List<Stand> stands = new ArrayList<>();
+        final Cursor cursor = resolver.query(
+                URIUtil.getStandUri(),
+                null,
+                Constants.SELECT_ALL_STANDS,
+                null,
+                null
+        );
+        if (cursor != null && cursor.moveToFirst()) {
+            while (!cursor.isAfterLast()) {
+                stands.add(Stand.parseCursorRow(cursor));
+                cursor.moveToNext();
+            }
+            cursor.close();
         }
-        cursor.close();
-        mHelper.close();
         return stands;
     }
 
@@ -46,24 +51,34 @@ public class StandModel implements MVP.IModelOperations<Stand> {
     public void persistAll(final List<Stand> pStands) {
         for (Stand stand : pStands) {
             if (!isStandCached(stand)) {
-                mHelper.insert(StandContract.class, stand.convert());
+                final ContentResolver resolver = App.getState().getContext().getContentResolver();
+                resolver.insert(URIUtil.getStandUri(), stand.convert());
             }
         }
-        mHelper.close();
     }
 
     @Override
     public void deleteAll() {
-        mHelper.delete(StandContract.class, null);
+        final ContentResolver resolver = App.getState().getContext().getContentResolver();
+        resolver.delete(URIUtil.getStandUri(), null, null);
     }
 
     private boolean isStandCached(final Stand pStand) {
-        final Cursor cursor = mHelper.query(
+        final ContentResolver resolver = App.getState().getContext().getContentResolver();
+        final String[] args = {pStand.getId().toString()};
+        final Cursor cursor = resolver.query(
+                URIUtil.getStandUri(),
+                null,
                 Constants.SELECT_FROM_STAND_WHERE_ID,
-                pStand.getId().toString()
+                args,
+                null
         );
-        final boolean cached = cursor.getCount() > 0;
-        cursor.close();
-        return cached;
+        if (cursor == null) {
+            return false;
+        } else {
+            final boolean cached = cursor.getCount() > 0;
+            cursor.close();
+            return cached;
+        }
     }
 }
