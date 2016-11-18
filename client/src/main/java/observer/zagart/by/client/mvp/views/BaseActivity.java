@@ -17,6 +17,7 @@ public class BaseActivity extends AppCompatActivity implements MVP.IViewOperatio
         return this;
     }
 
+    //TODO
     @Override
     public void onViewsVisibilityCheck() {
         //activity specific buttons visibility check

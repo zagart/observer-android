@@ -20,6 +20,7 @@ import observer.zagart.by.client.utils.IOUtil;
 public class HttpClient implements IHttpClient {
 
     //TODO implement method as IRequest object
+    //TODO fix your TODO
     @Override
     public ByteArrayOutputStream downloadBytes(final String pUrl) throws IOException {
         final HttpURLConnection connection;

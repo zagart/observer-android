@@ -134,6 +134,7 @@ public class AccountPresenter implements MVP.IPresenterOperations<Account> {
     @SuppressWarnings("MissingPermission")
     @Override
     @TargetApi(22)
+    //TODO crash on pre 22 api
     public void clearModel(final Uri pUri) {
         final AccountManager accountManager = AccountManager.get(mView.get().getViewContext());
         final Account[] accounts = accountManager.getAccounts();

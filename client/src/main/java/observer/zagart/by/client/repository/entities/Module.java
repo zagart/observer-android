@@ -27,7 +27,7 @@ public class Module implements IConvertible<ContentValues> {
     private String mStatus;
     private Date mStatusChangeDate;
     private String mValue;
-
+    //TODO remove
     public static List<Module> createModuleList(int pSize) {
         List<Module> stands = new ArrayList<>();
         while (pSize > 0) {
@@ -48,7 +48,7 @@ public class Module implements IConvertible<ContentValues> {
         module.setStatusChangeDate(new Date());
         return module;
     }
-
+    //TODO static is evil.
     public static Module parseCursorRow(final Cursor pCursor) {
         Module module = new Module();
         int idIndex = pCursor.getColumnIndex(ModuleContract.ID);

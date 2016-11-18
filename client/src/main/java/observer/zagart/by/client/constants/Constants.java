@@ -6,6 +6,7 @@ package observer.zagart.by.client.constants;
  * @author zagart
  */
 
+//TODO group constants
 public class Constants {
 
     public static final String EMPTY_STRING = "";

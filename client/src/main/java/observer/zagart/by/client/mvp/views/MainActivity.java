@@ -19,6 +19,7 @@ public class MainActivity extends BaseActivity {
     private Button mStandsButton;
 
     public void onExitClick(View view) {
+        //TODO remove exit button
         moveTaskToBack(true);
         android.os.Process.killProcess(android.os.Process.myPid());
         System.exit(1);

@@ -24,6 +24,9 @@ import static android.app.Activity.RESULT_OK;
 /**
  * @author zagart
  */
+//TODO it's not callback
+    //TODO move working with json to another class
+    //ObserverCallback shouln't work with accountManager
 public class ObserverCallback {
 
     @SuppressWarnings("unchecked")

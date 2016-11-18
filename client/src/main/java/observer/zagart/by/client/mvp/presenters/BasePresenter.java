@@ -58,8 +58,11 @@ class BasePresenter<Entity> implements MVP.IPresenterOperations<Entity> {
                             final List<Entity> entities = ObserverCallback.onResponseReceived(
                                     response
                             );
-                            mModel.persistAll(entities);
-                            notifyViewDataChange();
+                            if (entities != null && entities.size() > 0) {
+                                mModel.persistAll(entities);
+                                notifyViewDataChange();
+                            }
+                            //TODO hande NullPoiterException very bad solution!
                         } catch (IOException | JSONException | NullPointerException pEx) {
                             final Context context = BasePresenter.this.mView.get().getViewContext();
                             IOUtil.showToast(

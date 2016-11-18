@@ -17,6 +17,7 @@ import observer.zagart.by.client.utils.AccountManagerUtil;
  */
 public class App extends Application {
 
+    //TODO singletone
     private static State mState;
 
     public static State getState() {
@@ -27,6 +28,7 @@ public class App extends Application {
     public void onCreate() {
         super.onCreate();
         if (BuildConfig.DEBUG) {
+            //TODO bad solution
             Thread.setDefaultUncaughtExceptionHandler(new ExceptionHandler());
         }
         mState = new State(this);
@@ -40,6 +42,7 @@ public class App extends Application {
      * Class is responsible for storing application's state and it's
      * main executors, such as thread manager and database helper.
      */
+    //TODO move to another class
     public class State {
 
         private WeakReference<Context> mContextWeakReference;

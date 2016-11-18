@@ -24,6 +24,7 @@ public class Stand implements IConvertible<ContentValues> {
     private String mNumber;
     private String mDescription;
 
+    //TODO remove
     public static Stand createRandomStand() {
         Random random = new Random();
         Stand stand = new Stand();

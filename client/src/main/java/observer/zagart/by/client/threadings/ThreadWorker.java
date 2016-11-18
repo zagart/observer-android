@@ -41,6 +41,7 @@ public class ThreadWorker<Result> {
     public ThreadWorker(String pName) {
         mName = pName;
         mPool = Executors.newFixedThreadPool(MAX_THREADS_NUMBER);
+        //TODO use looper
         mHandler = new Handler();
     }
 

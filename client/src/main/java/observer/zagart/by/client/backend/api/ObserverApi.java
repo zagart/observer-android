@@ -24,21 +24,17 @@ import observer.zagart.by.client.threadings.ThreadWorker;
  *
  * @author zagart
  */
+//TODO apply java style
 public class ObserverApi {
 
     private final String TAG = ObserverApi.class.getSimpleName();
-    private ThreadWorker mWorker;
+    private ThreadWorker mWorker = App.getState().getThreadWorker();
     private IHttpClient mClient = HttpClientFactory.get(HttpClientFactory.Type.HTTP_PURE);
-
-    {
-        mWorker = App.getState().getThreadWorker();
-    }
 
     @Nullable
     public static String logIn(
             final String pLogin,
-            final String pPassword
-    ) {
+            final String pPassword) {
         return new ObserverApi().requestLogIn(pLogin, pPassword);
     }
 
@@ -62,9 +58,8 @@ public class ObserverApi {
             }
             return null;
         } catch (JSONException pEx) {
-            if (BuildConfig.DEBUG) {
-                Log.e(TAG, pEx.getMessage(), pEx);
-            }
+            //TODO remove all logs by proguard
+            Log.e(TAG, pEx.getMessage(), pEx);
             return null;
         }
     }

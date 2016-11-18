@@ -69,6 +69,7 @@ public class DbHelper extends SQLiteOpenHelper implements IDbOperations {
     }
 
     @Nullable
+    //TODO extract to separated class
     private static String getTableCreateQuery(final Class<?> pClass) {
         Table table = pClass.getAnnotation(Table.class);
         if (table != null) {
@@ -115,6 +116,7 @@ public class DbHelper extends SQLiteOpenHelper implements IDbOperations {
                     Log.d(TAG, template);
                 }
                 return template;
+                //TODO nullpointerexception
             } catch (
                     NullPointerException |
                             ExceptionInInitializerError |
@@ -141,6 +143,7 @@ public class DbHelper extends SQLiteOpenHelper implements IDbOperations {
     }
 
     @Override
+    //TODO change pValues to array
     public int bulkInsert(final Class<?> pTable, final List<ContentValues> pValues) {
         final String name = getTableName(pTable);
         if (name != null) {
@@ -153,6 +156,7 @@ public class DbHelper extends SQLiteOpenHelper implements IDbOperations {
                     count++;
                 }
                 database.setTransactionSuccessful();
+                //TODO bad solution
             } catch (Exception pEx) {
                 throw new RuntimeException(Constants.TRANSACTION_FAILED);
             } finally {
@@ -161,7 +165,7 @@ public class DbHelper extends SQLiteOpenHelper implements IDbOperations {
             }
             return count;
         } else {
-            throw new RuntimeException(Constants.INCORRECT_TABLE_NAME);
+            throw new IllegalStateException(Constants.INCORRECT_TABLE_NAME);
         }
     }
 
@@ -203,7 +207,8 @@ public class DbHelper extends SQLiteOpenHelper implements IDbOperations {
             }
             return id;
         } else {
-            throw new RuntimeException();
+            throw new IllegalStateException("Db name should't be null")
+//            throw new RuntimeException();
         }
     }
 
