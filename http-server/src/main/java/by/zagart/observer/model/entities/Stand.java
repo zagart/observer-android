@@ -1,4 +1,4 @@
-package by.zagart.observer.database.entities;
+package by.zagart.observer.model.entities;
 
 import by.zagart.observer.interfaces.Identifiable;
 import by.zagart.observer.utils.DataUtil;
@@ -12,8 +12,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
-import static by.zagart.observer.database.entities.Stand.SerialConstants.SERIAL_DESCRIPTION;
-import static by.zagart.observer.database.entities.Stand.SerialConstants.SERIAL_NUMBER;
+import static by.zagart.observer.model.entities.Stand.SerialConstants.SERIAL_DESCRIPTION;
+import static by.zagart.observer.model.entities.Stand.SerialConstants.SERIAL_NUMBER;
 
 /**
  * Класс-сущность, описывает объекты типа "информация о стенде" и их свойства.

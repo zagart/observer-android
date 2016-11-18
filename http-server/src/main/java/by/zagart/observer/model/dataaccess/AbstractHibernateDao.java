@@ -1,4 +1,4 @@
-package by.zagart.observer.database.dataaccess;
+package by.zagart.observer.model.dataaccess;
 
 import by.zagart.observer.interfaces.Identifiable;
 import by.zagart.observer.interfaces.Reflective;

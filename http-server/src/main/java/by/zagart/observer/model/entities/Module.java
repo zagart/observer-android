@@ -1,4 +1,4 @@
-package by.zagart.observer.database.entities;
+package by.zagart.observer.model.entities;
 
 import by.zagart.observer.interfaces.Identifiable;
 import by.zagart.observer.utils.DataUtil;
@@ -11,8 +11,8 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.Properties;
 
-import static by.zagart.observer.database.entities.Module.Fields.*;
-import static by.zagart.observer.database.entities.Module.SerialConstants.*;
+import static by.zagart.observer.model.entities.Module.Fields.*;
+import static by.zagart.observer.model.entities.Module.SerialConstants.*;
 
 /**
  * Класс описывает объекты типа "модуль" и их свойства.
@@ -33,7 +33,7 @@ public class Module implements Identifiable<Long>, Serializable {
     private String mValue;
 
     public static Module parseSerialString(String serialData) {
-        Module module = new Module();
+        final Module module = new Module();
         try {
             Properties properties = DataUtil.convertStringToProperties(serialData);
             module.setName(properties.getProperty(SERIAL_MODULE));

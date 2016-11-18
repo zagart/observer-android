@@ -1,9 +1,9 @@
-package by.zagart.observer.database.services.impl;
+package by.zagart.observer.model.services.impl;
 
-import by.zagart.observer.database.dataaccess.impl.StandDaoImpl;
-import by.zagart.observer.database.dataaccess.impl.UserDaoImpl;
-import by.zagart.observer.database.entities.User;
-import by.zagart.observer.database.services.AbstractHibernateService;
+import by.zagart.observer.model.dataaccess.impl.StandDaoImpl;
+import by.zagart.observer.model.dataaccess.impl.UserDaoImpl;
+import by.zagart.observer.model.entities.User;
+import by.zagart.observer.model.services.AbstractHibernateService;
 import by.zagart.observer.security.SecurityProvider;
 
 import javax.servlet.http.HttpServletRequest;
@@ -26,7 +26,7 @@ public class UserServiceImpl extends AbstractHibernateService<User, Long, StandD
         openCurrentSession();
         User user = mUserDao.getUserByLogin(pLogin);
         closeCurrentSession();
-        logger.info(String.format("User pulled from database by login = %s.", pLogin));
+        logger.info(String.format("User pulled from model by login = %s.", pLogin));
         return user;
     }
 

@@ -1,10 +1,10 @@
 package by.zagart.observer.controller;
 
-import by.zagart.observer.database.entities.Module;
-import by.zagart.observer.database.entities.Stand;
-import by.zagart.observer.database.services.MainService;
-import by.zagart.observer.database.services.impl.ModuleServiceImpl;
-import by.zagart.observer.database.services.impl.StandServiceImpl;
+import by.zagart.observer.model.entities.Module;
+import by.zagart.observer.model.entities.Stand;
+import by.zagart.observer.model.services.MainService;
+import by.zagart.observer.model.services.impl.ModuleServiceImpl;
+import by.zagart.observer.model.services.impl.StandServiceImpl;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
@@ -29,6 +29,7 @@ public class Handler {
     public Handler() {
         mService = new MainService();
         mStandService = new StandServiceImpl();
+        mModuleService = new ModuleServiceImpl();
     }
 
     public void defineGetAction(
@@ -99,7 +100,7 @@ public class Handler {
                 JSONArray moduleJsonArray = moduleList.stream().map(Module::toJSONObject).collect(
                         Collectors.toCollection(JSONArray::new)
                 );
-                jsonResponse.put(Constants.STANDS_KEY, moduleJsonArray);
+                jsonResponse.put(Constants.MODULES_KEY, moduleJsonArray);
                 printResponseInJson(pResponse, jsonResponse);
                 break;
             default:
@@ -149,6 +150,8 @@ public class Handler {
     }
 
     private void printResponseInJson(HttpServletResponse pResponse, JSONObject pJSONObject) throws IOException {
-        pResponse.getWriter().println(pJSONObject.toJSONString());
+        final String result = pJSONObject.toJSONString();
+        Logger.log(result);
+        pResponse.getWriter().println(result);
     }
 }

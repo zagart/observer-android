@@ -40,6 +40,8 @@ public class ModulesActivity extends BaseActivity {
         mPresenter.synchronizeModel(URIUtil.getModuleUri(), null);
     }
 
+
+
     @Override
     public void onDataChanged() {
         super.onDataChanged();

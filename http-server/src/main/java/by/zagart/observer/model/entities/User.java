@@ -1,4 +1,4 @@
-package by.zagart.observer.database.entities;
+package by.zagart.observer.model.entities;
 
 import by.zagart.observer.interfaces.Identifiable;
 import org.apache.log4j.Logger;

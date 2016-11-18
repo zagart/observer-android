@@ -1,5 +1,8 @@
 package by.zagart.observer.controller;
 
+import by.zagart.observer.model.services.impl.ModuleServiceImpl;
+import by.zagart.observer.model.services.impl.StandServiceImpl;
+import by.zagart.observer.utils.DataUtil;
 import by.zagart.observer.utils.HttpUtil;
 
 import javax.servlet.ServletException;
@@ -12,10 +15,6 @@ import java.io.IOException;
 @WebServlet("/RequestHandler")
 public class Observer extends HttpServlet {
     private Handler mHandler;
-
-    public Observer() {
-        super();
-    }
 
     protected void doGet(HttpServletRequest pRequest, HttpServletResponse pResponse)
             throws ServletException, IOException {
@@ -32,6 +31,12 @@ public class Observer extends HttpServlet {
     @Override
     public void init() throws ServletException {
         mHandler = new Handler();
+        DataUtil.persistPairStandModule(
+                DataUtil.getNewStand(),
+                DataUtil.getNewModule(),
+                new StandServiceImpl(),
+                new ModuleServiceImpl()
+        );
     }
 }
 

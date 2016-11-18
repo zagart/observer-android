@@ -1,8 +1,8 @@
-package by.zagart.observer.database.services;
+package by.zagart.observer.model.services;
 
 import by.zagart.observer.controller.Logger;
-import by.zagart.observer.database.entities.User;
-import by.zagart.observer.database.services.impl.UserServiceImpl;
+import by.zagart.observer.model.entities.User;
+import by.zagart.observer.model.services.impl.UserServiceImpl;
 
 import javax.servlet.http.HttpServletRequest;
 

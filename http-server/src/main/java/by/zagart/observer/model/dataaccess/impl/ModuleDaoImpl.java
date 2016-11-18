@@ -1,7 +1,7 @@
-package by.zagart.observer.database.dataaccess.impl;
+package by.zagart.observer.model.dataaccess.impl;
 
-import by.zagart.observer.database.dataaccess.AbstractHibernateDao;
-import by.zagart.observer.database.entities.Module;
+import by.zagart.observer.model.dataaccess.AbstractHibernateDao;
+import by.zagart.observer.model.entities.Module;
 
 /**
  * Наследник абстрактного класса слоя dataaccess, отвечает за манипуляцию

@@ -1,7 +1,7 @@
-package by.zagart.observer.database.dataaccess.impl;
+package by.zagart.observer.model.dataaccess.impl;
 
-import by.zagart.observer.database.dataaccess.AbstractHibernateDao;
-import by.zagart.observer.database.entities.User;
+import by.zagart.observer.model.dataaccess.AbstractHibernateDao;
+import by.zagart.observer.model.entities.User;
 import org.hibernate.query.Query;
 
 import static by.zagart.observer.utils.HibernateUtil.getCurrentSession;

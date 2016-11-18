@@ -1,4 +1,4 @@
-package by.zagart.observer.database.services;
+package by.zagart.observer.model.dataaccess;
 
 import java.io.Serializable;
 import java.util.List;
@@ -6,13 +6,13 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * Интерфейс определяет методы, необходимые классам
- * слоя service.
+ * Интерфейс определяет методы, необходимые для классов
+ * слоя dataaccess.
  *
  * @param <T>
  * @param <PK>
  */
-public interface GenericService<T, PK extends Serializable> {
+public interface GenericDao<T, PK extends Serializable> {
     void delete(final PK id);
 
     void delete(final T obj);

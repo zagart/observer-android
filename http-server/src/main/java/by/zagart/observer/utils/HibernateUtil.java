@@ -1,8 +1,8 @@
 package by.zagart.observer.utils;
 
-import by.zagart.observer.database.entities.Module;
-import by.zagart.observer.database.entities.Stand;
-import by.zagart.observer.database.entities.User;
+import by.zagart.observer.model.entities.Module;
+import by.zagart.observer.model.entities.Stand;
+import by.zagart.observer.model.entities.User;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;

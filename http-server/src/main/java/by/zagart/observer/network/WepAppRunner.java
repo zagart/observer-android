@@ -1,7 +1,7 @@
 package by.zagart.observer.network;
 
-import by.zagart.observer.database.services.impl.ModuleServiceImpl;
-import by.zagart.observer.database.services.impl.StandServiceImpl;
+import by.zagart.observer.model.services.impl.ModuleServiceImpl;
+import by.zagart.observer.model.services.impl.StandServiceImpl;
 import org.apache.log4j.Logger;
 
 import java.io.IOException;
