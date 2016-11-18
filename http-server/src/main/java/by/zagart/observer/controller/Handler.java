@@ -1,24 +1,28 @@
 package by.zagart.observer.controller;
 
+import by.zagart.observer.database.entities.Module;
 import by.zagart.observer.database.entities.Stand;
 import by.zagart.observer.database.services.MainService;
+import by.zagart.observer.database.services.impl.ModuleServiceImpl;
 import by.zagart.observer.database.services.impl.StandServiceImpl;
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
+import java.util.stream.Collectors;
 
-import static by.zagart.observer.controller.ObserverConstants.DataActions.GET_DATA;
-import static by.zagart.observer.controller.ObserverConstants.DataActions.GET_STANDS;
-import static by.zagart.observer.controller.ObserverConstants.HttpRequestTypes.*;
-import static by.zagart.observer.controller.ObserverConstants.ServletLogConstants.*;
+import static by.zagart.observer.controller.Constants.DataActions.*;
+import static by.zagart.observer.controller.Constants.HttpRequestTypes.*;
+import static by.zagart.observer.controller.Constants.ServletLogConstants.*;
 
 /**
  * @author zagart
  */
 public class Handler {
+    private ModuleServiceImpl mModuleService;
     private MainService mService;
     private StandServiceImpl mStandService;
 
@@ -34,7 +38,7 @@ public class Handler {
     ) throws IOException {
         switch (pAction) {
             case GET_DATA:
-                getDataByCriteria(pResponse, pRequest.getHeader(ObserverConstants.Headers.CRITERIA));
+                getDataByCriteria(pResponse, pRequest.getHeader(Constants.Headers.CRITERIA));
                 break;
             default:
                 pResponse.sendError(HttpServletResponse.SC_BAD_REQUEST);
@@ -79,13 +83,23 @@ public class Handler {
     }
 
     private void getDataByCriteria(HttpServletResponse pResponse, String pCriteria) throws IOException {
+        JSONObject jsonResponse = new JSONObject();
+        jsonResponse.put(Constants.REFLECTION, pCriteria);
         switch (pCriteria) {
             case GET_STANDS:
-                final List<Stand> stands = mStandService.getAll();
-                JSONObject jsonResponse = new JSONObject();
-                for (Stand stand : stands) {
-                    jsonResponse.put(String.valueOf(stand.getId()), stand.toJSONString());
-                }
+                final List<Stand> standList = mStandService.getAll();
+                JSONArray standJsonArray = standList.stream().map(Stand::toJSONObject).collect(
+                        Collectors.toCollection(JSONArray::new)
+                );
+                jsonResponse.put(Constants.STANDS_KEY, standJsonArray);
+                printResponseInJson(pResponse, jsonResponse);
+                break;
+            case GET_MODULES:
+                final List<Module> moduleList = mModuleService.getAll();
+                JSONArray moduleJsonArray = moduleList.stream().map(Module::toJSONObject).collect(
+                        Collectors.toCollection(JSONArray::new)
+                );
+                jsonResponse.put(Constants.STANDS_KEY, moduleJsonArray);
                 printResponseInJson(pResponse, jsonResponse);
                 break;
             default:

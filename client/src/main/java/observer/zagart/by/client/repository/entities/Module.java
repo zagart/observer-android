@@ -3,6 +3,9 @@ package observer.zagart.by.client.repository.entities;
 import android.content.ContentValues;
 import android.database.Cursor;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -69,6 +72,17 @@ public class Module implements IConvertible<ContentValues> {
         return module;
     }
 
+    public static Module parseJsonObject(final JSONObject pJsonModule) throws JSONException {
+        final Module module = new Module();
+        module.setId(pJsonModule.getLong(ModuleContract.ID));
+        module.setName(pJsonModule.getString(ModuleContract.NAME));
+        module.setStatus(pJsonModule.getString(ModuleContract.STATUS));
+        module.setValue(pJsonModule.getString(ModuleContract.VALUE));
+        module.setStatusChangeDate(new Date(pJsonModule.getInt(ModuleContract.STATUS_CHANGE_DATE)));
+        module.setStandId(pJsonModule.getLong(ModuleContract.STAND_ID));
+        return module;
+    }
+
     @Override
     public ContentValues convert() {
         ContentValues module = new ContentValues();
@@ -76,8 +90,8 @@ public class Module implements IConvertible<ContentValues> {
         module.put(ModuleContract.NAME, mName);
         module.put(ModuleContract.STAND_ID, mStandId);
         module.put(ModuleContract.STATUS, mStatus);
-        module.put(ModuleContract.STATUS_CHANGE_DATE, mStatusChangeDate.getTime());
         module.put(ModuleContract.VALUE, mValue);
+        module.put(ModuleContract.STATUS_CHANGE_DATE, mStatusChangeDate.getTime());
         return module;
     }
 

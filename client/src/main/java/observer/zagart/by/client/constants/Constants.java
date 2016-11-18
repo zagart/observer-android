@@ -30,4 +30,7 @@ public class Constants {
     public static final String TRANSACTION_FAILED = "Transaction failed";
     public static final String INCORRECT_TABLE_NAME = "Incorrect table name";
     public static final String TOKEN = "token";
+    public static final String STANDS_KEY = "stands";
+    public static final String MODULES_KEY = "modules";
+    public static final String REFLECTION = "reflection";
 }

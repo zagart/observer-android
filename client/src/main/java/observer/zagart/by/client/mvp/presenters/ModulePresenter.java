@@ -4,13 +4,14 @@ import android.net.Uri;
 
 import java.util.List;
 
+import observer.zagart.by.client.backend.requests.GetModulesRequest;
 import observer.zagart.by.client.http.interfaces.IHttpClient;
 import observer.zagart.by.client.mvp.MVP;
 import observer.zagart.by.client.mvp.models.ModuleModel;
 import observer.zagart.by.client.repository.entities.Module;
 
 /**
- * Presenter implementation for {@link observer.zagart.by.client.mvp.views.StandsActivity} view.
+ * Presenter implementation for {@link observer.zagart.by.client.mvp.views.ModulesActivity} view.
  *
  * @author zagart
  */
@@ -29,7 +30,7 @@ public class ModulePresenter extends BasePresenter<Module> {
 
     @Override
     public void synchronizeModel(final Uri pUri, final IHttpClient.IRequest<String> pRequest) {
-        super.synchronizeModel(pUri, pRequest);
+        super.synchronizeModel(pUri, new GetModulesRequest());
     }
 
     @Override

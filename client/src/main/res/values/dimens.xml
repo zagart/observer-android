@@ -13,8 +13,8 @@
     <dimen name="main_title_height">120dp</dimen>
     <dimen name="login_form_margin_top">160dp</dimen>
     <dimen name="login_form_margin_bottom">20dp</dimen>
-    <dimen name="login_form_title_text_size">20dp</dimen>
-    <dimen name="guest_form_title_text_size">30dp</dimen>
+    <dimen name="login_form_title_text_size">20sp</dimen>
+    <dimen name="guest_form_title_text_size">30sp</dimen>
     <dimen name="zero_dp">0dp</dimen>
     <dimen name="standard_label_height">40dp</dimen>
     <dimen name="standard_label_width">120dp</dimen>
