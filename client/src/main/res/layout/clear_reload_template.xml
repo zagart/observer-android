@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:id="@+id/clear_reload_template"
+              xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:gravity="end"
+              android:orientation="horizontal">
+
+    <Button
+        android:id="@+id/stands_clear_button"
+        style="@style/ReloadButton"
+        android:onClick="onClearClick"
+        android:text="@string/clear"/>
+
+    <Button
+        android:id="@+id/stands_reload_button"
+        style="@style/ReloadButton"
+        android:onClick="onReloadClick"
+        android:text="@string/reload"/>
+
+</LinearLayout>

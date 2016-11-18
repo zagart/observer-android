@@ -132,7 +132,7 @@ public class Module implements Identifiable<Long>, Serializable {
         return mStand != null ? mStand.equals(module.mStand) : module.mStand == null;
     }
 
-    public String toJSONString() {
+    public JSONObject toJSONObject() {
         JSONObject module = new JSONObject();
         module.put(ID, mId);
         module.put(NAME, mName);
@@ -140,7 +140,7 @@ public class Module implements Identifiable<Long>, Serializable {
         module.put(STATUS, mStatus);
         module.put(STATUS_CHANGE_DATE, mStatusChangeDate);
         module.put(VALUE, mValue);
-        return module.toJSONString();
+        return module;
     }
 
     class SerialConstants {

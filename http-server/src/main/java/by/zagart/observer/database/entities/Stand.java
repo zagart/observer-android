@@ -12,8 +12,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
-import static by.zagart.observer.database.entities.Stand.Fields.DESCRIPTION;
-import static by.zagart.observer.database.entities.Stand.Fields.NUMBER;
 import static by.zagart.observer.database.entities.Stand.SerialConstants.SERIAL_DESCRIPTION;
 import static by.zagart.observer.database.entities.Stand.SerialConstants.SERIAL_NUMBER;
 
@@ -112,14 +110,12 @@ public class Stand implements Identifiable<Long>, Serializable {
         return mModules != null ? mModules.equals(stand.mModules) : stand.mModules == null;
     }
 
-    public String toJSONString() {
+    public JSONObject toJSONObject() {
         JSONObject stand = new JSONObject();
-        /*
-        stand.put(ID, mId); - will be used as key instead
-        */
-        stand.put(NUMBER, mNumber);
-        stand.put(DESCRIPTION, mDescription);
-        return stand.toJSONString();
+        stand.put(Fields.ID, mId);
+        stand.put(Fields.NUMBER, mNumber);
+        stand.put(Fields.DESCRIPTION, mDescription);
+        return stand;
     }
 
     public class SerialConstants {

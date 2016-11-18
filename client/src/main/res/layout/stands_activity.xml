@@ -16,17 +16,5 @@
         android:background="@android:color/darker_gray"
         android:scrollbars="vertical"/>
 
-    <Button
-        android:id="@+id/stands_clear_button"
-        style="@style/ReloadButton"
-        android:layout_marginEnd="90dp"
-        android:layout_marginRight="90dp"
-        android:onClick="onClearClick"
-        android:text="@string/clear"/>
-
-    <Button
-        android:id="@+id/stands_reload_button"
-        style="@style/ReloadButton"
-        android:onClick="onReloadClick"
-        android:text="@string/reload"/>
+    <include layout="@layout/clear_reload_template"/>
 </FrameLayout>

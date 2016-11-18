@@ -5,14 +5,11 @@ import android.accounts.AccountAuthenticatorActivity;
 import android.accounts.AccountManager;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import observer.zagart.by.client.App;
@@ -20,8 +17,6 @@ import observer.zagart.by.client.R;
 import observer.zagart.by.client.backend.Criteria;
 import observer.zagart.by.client.constants.Constants;
 import observer.zagart.by.client.mvp.views.MyAccountActivity;
-import observer.zagart.by.client.repository.entities.Stand;
-import observer.zagart.by.client.repository.entities.contracts.StandContract;
 import observer.zagart.by.client.utils.SharedPreferencesUtil;
 
 import static android.app.Activity.RESULT_OK;
@@ -35,35 +30,19 @@ public class ObserverCallback {
     @Nullable
     public static <Entity> List<Entity> onResponseReceived(final String pServerResponse)
             throws JSONException {
-        //TODO as universal response handler, not just for stands
-        final String reflectedAction = ObserverApi.getReflectedAction(pServerResponse);
+        final JSONObject jsonObjectResponse = new JSONObject(pServerResponse);
+        final String reflectedAction = jsonObjectResponse.getString(Constants.REFLECTION);
         if (pServerResponse == null || reflectedAction == null) {
             return null;
         }
         switch (reflectedAction) {
             case Criteria.GET_STANDS:
-                return (List<Entity>) parseStandsResponse(pServerResponse);
+                return (List<Entity>) ObserverJsonParser.parseStandsResponse(jsonObjectResponse);
+            case Criteria.GET_MODULES:
+                return (List<Entity>) ObserverJsonParser.parseModulesResponse(jsonObjectResponse);
             default:
                 return null;
         }
-    }
-
-    @NonNull
-    private static List<Stand> parseStandsResponse(final String pServerResponse) throws JSONException {
-        List<Stand> stands = new ArrayList<>();
-        JSONObject root = new JSONObject(pServerResponse);
-        final Iterator<String> keys = root.keys();
-        while (keys.hasNext()) {
-            final String key = keys.next();
-            Stand stand = new Stand();
-            stand.setId(Long.valueOf(Integer.valueOf(key)));
-            final String value = root.getString(key);
-            final JSONObject data = new JSONObject(value);
-            stand.setNumber(data.getString(StandContract.NUMBER));
-            stand.setDescription(data.getString(StandContract.DESCRIPTION));
-            stands.add(stand);
-        }
-        return stands;
     }
 
     public static void onTokenReceived(

@@ -7,11 +7,11 @@ import observer.zagart.by.client.http.interfaces.IHttpClient;
 
 /**
  * AbstractObserverRequest implementation that is responsible for getting
- * all stands data that satisfy criteria from HTTP-server ObserverApi.
+ * all modules data that satisfy criteria from HTTP-server Observer.
  *
  * @author zagart
  */
-public class GetStandsRequest extends AbstractObserverRequest {
+public class GetModulesRequest extends AbstractObserverRequest {
 
     @Override
     public IHttpClient.Method getMethodType() {
@@ -26,7 +26,7 @@ public class GetStandsRequest extends AbstractObserverRequest {
         );
         pConnection.addRequestProperty(
                 IHttpClient.IHttpData.Header.CRITERIA,
-                Criteria.getStandsCriteria()
+                Criteria.getModulesCriteria()
         );
     }
 }

@@ -3,6 +3,9 @@ package observer.zagart.by.client.repository.entities;
 import android.content.ContentValues;
 import android.database.Cursor;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -37,6 +40,14 @@ public class Stand implements IConvertible<ContentValues> {
             pSize--;
         }
         return stands;
+    }
+
+    public static Stand parseJsonObject(JSONObject pJsonStand) throws JSONException {
+        final Stand stand = new Stand();
+        stand.setId(pJsonStand.getLong(StandContract.ID));
+        stand.setDescription(pJsonStand.getString(StandContract.DESCRIPTION));
+        stand.setNumber(pJsonStand.getString(StandContract.NUMBER));
+        return stand;
     }
 
     public static Stand parseCursorRow(Cursor pCursor) {

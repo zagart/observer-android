@@ -12,7 +12,6 @@ import java.util.concurrent.ExecutionException;
 
 import observer.zagart.by.client.App;
 import observer.zagart.by.client.BuildConfig;
-import observer.zagart.by.client.backend.Criteria;
 import observer.zagart.by.client.backend.requests.AuthenticationRequest;
 import observer.zagart.by.client.backend.requests.RegistrationRequest;
 import observer.zagart.by.client.constants.Constants;
@@ -49,11 +48,6 @@ public class ObserverApi {
             final String pPassword
     ) {
         return new ObserverApi().requestSignUp(pLogin, pPassword);
-    }
-
-    public static String getReflectedAction(String pServerResponse) {
-        //TODO get real server response reflection
-        return Criteria.GET_STANDS;
     }
 
     @Nullable

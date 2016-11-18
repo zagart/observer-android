@@ -6,7 +6,7 @@ import by.zagart.observer.database.services.impl.UserServiceImpl;
 
 import javax.servlet.http.HttpServletRequest;
 
-import static by.zagart.observer.controller.ObserverConstants.ServletLogConstants.ATTEMPT_TO_REGISTER_USER;
+import static by.zagart.observer.controller.Constants.ServletLogConstants.ATTEMPT_TO_REGISTER_USER;
 
 public class MainService {
     public static final String ATTEMPT_TO_AUTHENTICATE_USER = "Attempt to authenticate user.";
