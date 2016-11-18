@@ -1,8 +1,8 @@
-package by.zagart.observer.database.services.impl;
+package by.zagart.observer.model.services.impl;
 
-import by.zagart.observer.database.dataaccess.impl.StandDaoImpl;
-import by.zagart.observer.database.entities.Stand;
-import by.zagart.observer.database.services.AbstractHibernateService;
+import by.zagart.observer.model.dataaccess.impl.StandDaoImpl;
+import by.zagart.observer.model.entities.Stand;
+import by.zagart.observer.model.services.AbstractHibernateService;
 
 /**
  * Наследник абстрактного класса service, отвечает за использование

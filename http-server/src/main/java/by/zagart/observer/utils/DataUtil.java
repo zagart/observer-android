@@ -1,8 +1,8 @@
 package by.zagart.observer.utils;
 
-import by.zagart.observer.database.entities.Module;
-import by.zagart.observer.database.entities.Stand;
-import by.zagart.observer.database.services.GenericService;
+import by.zagart.observer.model.entities.Module;
+import by.zagart.observer.model.entities.Stand;
+import by.zagart.observer.model.services.GenericService;
 import org.apache.commons.lang.RandomStringUtils;
 import org.apache.log4j.Logger;
 

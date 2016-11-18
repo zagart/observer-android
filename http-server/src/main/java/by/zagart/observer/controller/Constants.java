@@ -4,6 +4,7 @@ package by.zagart.observer.controller;
  * @author zagart
  */
 public class Constants {
+    public static final String MODULES_KEY = "modules";
     public static final String REFLECTION = "reflection";
     public static final String STANDS_KEY = "stands";
 
@@ -17,8 +18,8 @@ public class Constants {
 
     public class DataActions {
         public static final String GET_DATA = "get_data";
-        public static final String GET_STANDS = "get_stands";
         public static final String GET_MODULES = "get_modules";
+        public static final String GET_STANDS = "get_stands";
     }
 
     public class Headers {

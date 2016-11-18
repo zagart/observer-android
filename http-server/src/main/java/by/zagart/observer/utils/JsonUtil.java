@@ -1,9 +1,9 @@
 package by.zagart.observer.utils;
 
-import by.zagart.observer.database.entities.Module;
-import by.zagart.observer.database.entities.Stand;
-import by.zagart.observer.database.services.impl.ModuleServiceImpl;
-import by.zagart.observer.database.services.impl.StandServiceImpl;
+import by.zagart.observer.model.entities.Module;
+import by.zagart.observer.model.entities.Stand;
+import by.zagart.observer.model.services.impl.ModuleServiceImpl;
+import by.zagart.observer.model.services.impl.StandServiceImpl;
 import org.json.simple.JSONObject;
 
 /**

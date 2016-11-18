@@ -14,8 +14,7 @@ public class ExceptionHandler implements Thread.UncaughtExceptionHandler {
 
     @Override
     public void uncaughtException(final Thread pThread, final Throwable pEx) {
-        if (BuildConfig.DEBUG) {
+
             Log.e(ExceptionHandler.class.getSimpleName(), pEx.getMessage(), pEx);
-        }
     }
 }

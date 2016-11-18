@@ -3,8 +3,6 @@ package observer.zagart.by.client;
 import android.accounts.Account;
 import android.app.Application;
 import android.content.Context;
-import android.net.Uri;
-import android.util.Log;
 
 import java.lang.ref.WeakReference;
 
@@ -13,7 +11,6 @@ import observer.zagart.by.client.exceptions.ExceptionHandler;
 import observer.zagart.by.client.repository.helper.DbHelper;
 import observer.zagart.by.client.threadings.ThreadWorker;
 import observer.zagart.by.client.utils.AccountManagerUtil;
-import observer.zagart.by.client.utils.URIUtil;
 
 /**
  * Custom application file.
@@ -29,7 +26,9 @@ public class App extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        Thread.setDefaultUncaughtExceptionHandler(new ExceptionHandler());
+        if (BuildConfig.DEBUG) {
+            Thread.setDefaultUncaughtExceptionHandler(new ExceptionHandler());
+        }
         mState = new State(this);
         mState
                 .setAccount(AccountManagerUtil.getPersistedAccount())
@@ -59,7 +58,7 @@ public class App extends Application {
             return mHelper;
         }
 
-        public State setDbHelper(final DbHelper pHelper) {
+        State setDbHelper(final DbHelper pHelper) {
             mHelper = pHelper;
             return this;
         }

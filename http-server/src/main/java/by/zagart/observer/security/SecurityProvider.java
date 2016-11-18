@@ -1,6 +1,6 @@
 package by.zagart.observer.security;
 
-import by.zagart.observer.database.entities.User;
+import by.zagart.observer.model.entities.User;
 import io.jsonwebtoken.JwtBuilder;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
