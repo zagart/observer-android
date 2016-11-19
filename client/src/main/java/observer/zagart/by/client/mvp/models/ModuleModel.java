@@ -33,7 +33,7 @@ public class ModuleModel implements MVP.IModelOperations<Module> {
         Cursor cursor = mHelper.query(Constants.SELECT_ALL_MODULES);
         if (cursor.moveToFirst()) {
             while (!cursor.isLast()) {
-                modules.add(Module.parseCursorRow(cursor));
+                modules.add(new Module().extractFromCursor(cursor));
                 cursor.moveToNext();
             }
         }

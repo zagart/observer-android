@@ -10,12 +10,13 @@ import java.util.Date;
 
 import observer.zagart.by.client.interfaces.IConvertible;
 import observer.zagart.by.client.repository.entities.contracts.ModuleContract;
+import observer.zagart.by.client.utils.CursorUtil;
 
 /**
- * StandModel for module.
+ * Model for module.
  */
 public class Module implements IConvertible<ContentValues> {
- 
+
     private Long mId;
     private String mName;
     private Long mStandId;
@@ -23,39 +24,25 @@ public class Module implements IConvertible<ContentValues> {
     private Date mStatusChangeDate;
     private String mValue;
 
-    //TODO static is evil.
-    public static Module parseCursorRow(final Cursor pCursor) {
-        Module module = new Module();
-        int idIndex = pCursor.getColumnIndex(ModuleContract.ID);
-        int nameIndex = pCursor.getColumnIndex(ModuleContract.NAME);
-        int statusIndex = pCursor.getColumnIndex(ModuleContract.STATUS);
-        int valueIndex = pCursor.getColumnIndex(ModuleContract.VALUE);
-        int statusChangeDateIndex = pCursor.getColumnIndex(ModuleContract.STATUS_CHANGE_DATE);
-        int standIdIndex = pCursor.getColumnIndex(ModuleContract.STAND_ID);
-        Long id = pCursor.getLong(idIndex);
-        String name = pCursor.getString(nameIndex);
-        String status = pCursor.getString(statusIndex);
-        String value = pCursor.getString(valueIndex);
-        Long statusChangeDate = pCursor.getLong(statusChangeDateIndex);
-        Long standId = pCursor.getLong(standIdIndex);
-        module.setId(id);
-        module.setName(name);
-        module.setStatus(status);
-        module.setValue(value);
-        module.setStatusChangeDate(new Date(statusChangeDate));
-        module.setStandId(standId);
-        return module;
+    public Module extractFromJsonObject(final JSONObject pJsonModule) throws JSONException {
+        mId = pJsonModule.getLong(ModuleContract.ID);
+        mName = pJsonModule.getString(ModuleContract.NAME);
+        mStatus = pJsonModule.getString(ModuleContract.STATUS);
+        mValue = pJsonModule.getString(ModuleContract.VALUE);
+        mStatusChangeDate = new Date(pJsonModule.getInt(ModuleContract.STATUS_CHANGE_DATE));
+        mStandId = pJsonModule.getLong(ModuleContract.STAND_ID);
+        return this;
     }
 
-    public static Module parseJsonObject(final JSONObject pJsonModule) throws JSONException {
-        final Module module = new Module();
-        module.setId(pJsonModule.getLong(ModuleContract.ID));
-        module.setName(pJsonModule.getString(ModuleContract.NAME));
-        module.setStatus(pJsonModule.getString(ModuleContract.STATUS));
-        module.setValue(pJsonModule.getString(ModuleContract.VALUE));
-        module.setStatusChangeDate(new Date(pJsonModule.getInt(ModuleContract.STATUS_CHANGE_DATE)));
-        module.setStandId(pJsonModule.getLong(ModuleContract.STAND_ID));
-        return module;
+    public Module extractFromCursor(final Cursor pCursor) {
+        mId = CursorUtil.getLong(pCursor, ModuleContract.ID);
+        mName = CursorUtil.getString(pCursor, ModuleContract.NAME);
+        mStatus = CursorUtil.getString(pCursor, ModuleContract.STATUS);
+        mValue = CursorUtil.getString(pCursor, ModuleContract.VALUE);
+        mStatusChangeDate = new Date(CursorUtil
+                .getLong(pCursor, ModuleContract.STATUS_CHANGE_DATE));
+        mStandId = CursorUtil.getLong(pCursor, ModuleContract.STAND_ID);
+        return this;
     }
 
     @Override

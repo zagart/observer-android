@@ -8,9 +8,10 @@ import org.json.JSONObject;
 
 import observer.zagart.by.client.interfaces.IConvertible;
 import observer.zagart.by.client.repository.entities.contracts.StandContract;
+import observer.zagart.by.client.utils.CursorUtil;
 
 /**
- * StandModel for stand.
+ * Model for stand.
  */
 public class Stand implements IConvertible<ContentValues> {
 
@@ -18,26 +19,18 @@ public class Stand implements IConvertible<ContentValues> {
     private String mNumber;
     private String mDescription;
 
-    public static Stand parseJsonObject(JSONObject pJsonStand) throws JSONException {
-        final Stand stand = new Stand();
-        stand.setId(pJsonStand.getLong(StandContract.ID));
-        stand.setDescription(pJsonStand.getString(StandContract.DESCRIPTION));
-        stand.setNumber(pJsonStand.getString(StandContract.NUMBER));
-        return stand;
+    public Stand extractFromCursor(Cursor pCursor) {
+        mId = CursorUtil.getLong(pCursor, StandContract.ID);
+        mDescription = CursorUtil.getString(pCursor, StandContract.DESCRIPTION);
+        mNumber = CursorUtil.getString(pCursor, StandContract.NUMBER);
+        return this;
     }
 
-    public static Stand parseCursorRow(Cursor pCursor) {
-        Stand stand = new Stand();
-        int idIndex = pCursor.getColumnIndex(StandContract.ID);
-        int numberIndex = pCursor.getColumnIndex(StandContract.NUMBER);
-        int descriptionIndex = pCursor.getColumnIndex(StandContract.DESCRIPTION);
-        Long id = pCursor.getLong(idIndex);
-        String number = pCursor.getString(numberIndex);
-        String description = pCursor.getString(descriptionIndex);
-        stand.setId(id);
-        stand.setNumber(number);
-        stand.setDescription(description);
-        return stand;
+    public Stand extractFromJsonObject(JSONObject pJSONStand) throws JSONException {
+        mId = pJSONStand.getLong(StandContract.ID);
+        mDescription = pJSONStand.getString(StandContract.DESCRIPTION);
+        mNumber = pJSONStand.getString(StandContract.NUMBER);
+        return this;
     }
 
     @Override

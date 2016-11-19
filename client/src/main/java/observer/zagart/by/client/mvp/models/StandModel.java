@@ -38,7 +38,7 @@ public class StandModel implements MVP.IModelOperations<Stand> {
                 null);
         if (cursor != null && cursor.moveToFirst()) {
             while (!cursor.isAfterLast()) {
-                stands.add(Stand.parseCursorRow(cursor));
+                stands.add(new Stand().extractFromCursor(cursor));
                 cursor.moveToNext();
             }
             cursor.close();

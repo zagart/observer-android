@@ -26,8 +26,7 @@ class ObserverJsonParser {
             final JSONArray modules = pJSONObject.getJSONArray(Constants.STANDS_KEY);
             for (int i = 0; i < modules.length(); i++) {
                 final JSONObject jsonStand = modules.getJSONObject(i);
-                final Module parsedModule = Module.parseJsonObject(jsonStand);
-                moduleList.add(parsedModule);
+                moduleList.add(new Module().extractFromJsonObject(jsonStand));
             }
         }
         return moduleList;
@@ -41,8 +40,7 @@ class ObserverJsonParser {
             final JSONArray stands = pJSONObject.getJSONArray(Constants.STANDS_KEY);
             for (int i = 0; i < stands.length(); i++) {
                 final JSONObject jsonStand = stands.getJSONObject(i);
-                final Stand parsedStand = Stand.parseJsonObject(jsonStand);
-                standList.add(parsedStand);
+                standList.add(new Stand().extractFromJsonObject(jsonStand));
             }
         }
         return standList;
