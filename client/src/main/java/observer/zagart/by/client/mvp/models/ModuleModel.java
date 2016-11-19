@@ -6,25 +6,25 @@ import java.util.ArrayList;
 import java.util.List;
 
 import observer.zagart.by.client.App;
-import observer.zagart.by.client.constants.Constants;
-import observer.zagart.by.client.mvp.MVP;
-import observer.zagart.by.client.repository.entities.Module;
-import observer.zagart.by.client.repository.helper.DbHelper;
+import observer.zagart.by.client.application.constants.Constants;
+import observer.zagart.by.client.application.managers.DatabaseManager;
+import observer.zagart.by.client.mvp.IMvp;
+import observer.zagart.by.client.mvp.models.repository.entities.Module;
 
 /**
- * MVP model implementation for stand.
+ * IMvp model implementation for stand.
  *
  * @author zagart
  */
 
-public class ModuleModel implements MVP.IModelOperations<Module> {
+public class ModuleModel implements IMvp.IModelOperations<Module> {
 
-    private MVP.IPresenterOperations mPresenter;
-    private DbHelper mHelper;
+    private IMvp.IPresenterOperations mPresenter;
+    private DatabaseManager mHelper;
 
-    public ModuleModel(final MVP.IPresenterOperations pPresenter) {
+    public ModuleModel(final IMvp.IPresenterOperations pPresenter) {
         mPresenter = pPresenter;
-        mHelper = App.getState().getDbHelper();
+        mHelper = App.getState().getDatabaseManager();
     }
 
     @Override

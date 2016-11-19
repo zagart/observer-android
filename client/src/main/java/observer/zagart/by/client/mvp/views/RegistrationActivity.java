@@ -9,9 +9,9 @@ import android.view.View;
 import android.widget.EditText;
 
 import observer.zagart.by.client.R;
-import observer.zagart.by.client.mvp.MVP;
+import observer.zagart.by.client.mvp.IMvp;
 import observer.zagart.by.client.mvp.presenters.AccountPresenter;
-import observer.zagart.by.client.utils.IOUtil;
+import observer.zagart.by.client.application.utils.IOUtil;
 
 /**
  * Activity with UI for executing process of registration
@@ -20,7 +20,7 @@ import observer.zagart.by.client.utils.IOUtil;
  * @author zagart
  */
 public class RegistrationActivity
-        extends AccountAuthenticatorActivity implements MVP.IViewOperations {
+        extends AccountAuthenticatorActivity implements IMvp.IViewOperations {
 
     private AccountPresenter mPresenter = new AccountPresenter(this);
     private EditText mPasswordView;

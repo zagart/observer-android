@@ -12,10 +12,10 @@ import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 import observer.zagart.by.client.R;
-import observer.zagart.by.client.adapters.StandTableAdapter;
+import observer.zagart.by.client.mvp.views.adapters.StandTableAdapter;
 import observer.zagart.by.client.mvp.presenters.StandPresenter;
-import observer.zagart.by.client.repository.entities.Stand;
-import observer.zagart.by.client.utils.URIUtil;
+import observer.zagart.by.client.mvp.models.repository.entities.Stand;
+import observer.zagart.by.client.application.utils.URIUtil;
 
 /**
  * Activity for showing cached stand objects.

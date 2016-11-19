@@ -7,22 +7,22 @@ import java.util.ArrayList;
 import java.util.List;
 
 import observer.zagart.by.client.App;
-import observer.zagart.by.client.constants.Constants;
-import observer.zagart.by.client.mvp.MVP;
-import observer.zagart.by.client.repository.entities.Stand;
-import observer.zagart.by.client.utils.URIUtil;
+import observer.zagart.by.client.application.constants.Constants;
+import observer.zagart.by.client.mvp.IMvp;
+import observer.zagart.by.client.mvp.models.repository.entities.Stand;
+import observer.zagart.by.client.application.utils.URIUtil;
 
 /**
- * MVP model implementation for stand.
+ * IMvp model implementation for stand.
  *
  * @author zagart
  */
 
-public class StandModel implements MVP.IModelOperations<Stand> {
+public class StandModel implements IMvp.IModelOperations<Stand> {
 
-    private MVP.IPresenterOperations mPresenter;
+    private IMvp.IPresenterOperations mPresenter;
 
-    public StandModel(final MVP.IPresenterOperations pPresenter) {
+    public StandModel(final IMvp.IPresenterOperations pPresenter) {
         mPresenter = pPresenter;
     }
 

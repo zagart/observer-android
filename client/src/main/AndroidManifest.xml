@@ -54,7 +54,7 @@
             android:screenOrientation="portrait"/>
 
         <service
-            android:name=".account.ObserverAuthenticatorService"
+            android:name=".application.accounts.ObserverAuthenticatorService"
             android:exported="false">
             <intent-filter>
                 <action android:name="android.accounts.AccountAuthenticator"/>
@@ -64,8 +64,8 @@
                 android:resource="@xml/observer_authenticator"/>
         </service>
         <provider
-            android:name=".repository.ObserverContentProvider"
-            android:authorities="observer.zagart.by.client.repository.ObserverContentProvider"
+            android:name=".mvp.models.repository.ObserverContentProvider"
+            android:authorities="observer.zagart.by.client.mvp.models.repository.ObserverContentProvider"
             android:exported="false"/>
     </application>
 </manifest>

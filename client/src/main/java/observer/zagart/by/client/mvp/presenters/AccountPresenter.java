@@ -15,13 +15,13 @@ import java.util.List;
 
 import observer.zagart.by.client.App;
 import observer.zagart.by.client.R;
-import observer.zagart.by.client.account.ObserverAccount;
-import observer.zagart.by.client.backend.api.ObserverApi;
-import observer.zagart.by.client.backend.api.ObserverCallback;
-import observer.zagart.by.client.http.interfaces.IHttpClient;
-import observer.zagart.by.client.mvp.MVP;
-import observer.zagart.by.client.threadings.ThreadWorker;
-import observer.zagart.by.client.utils.IOUtil;
+import observer.zagart.by.client.application.accounts.ObserverAccount;
+import observer.zagart.by.client.application.managers.ThreadManager;
+import observer.zagart.by.client.mvp.IMvp;
+import observer.zagart.by.client.network.api.ObserverApi;
+import observer.zagart.by.client.network.api.ObserverCallback;
+import observer.zagart.by.client.network.http.interfaces.IHttpClient;
+import observer.zagart.by.client.application.utils.IOUtil;
 
 /**
  * Responsibility for creating and managing accounts lies on {@link AccountManager},
@@ -30,21 +30,21 @@ import observer.zagart.by.client.utils.IOUtil;
  * @author zagart
  */
 
-public class AccountPresenter implements MVP.IPresenterOperations<Account> {
+public class AccountPresenter implements IMvp.IPresenterOperations<Account> {
 
-    private WeakReference<MVP.IViewOperations> mView;
-    private ThreadWorker mThreadWorker;
+    private WeakReference<IMvp.IViewOperations> mView;
+    private ThreadManager mThreadManager;
 
-    public AccountPresenter(final MVP.IViewOperations pView) {
+    public AccountPresenter(final IMvp.IViewOperations pView) {
         mView = new WeakReference<>(pView);
-        mThreadWorker = App.getState().getThreadWorker();
+        mThreadManager = App.getState().getThreadManager();
     }
 
     public void executeRegistration(
             final AccountAuthenticatorActivity pActivity,
             final CharSequence pCharLogin,
             final CharSequence pCharPassword) {
-        mThreadWorker.execute(
+        mThreadManager.execute(
                 new Runnable() {
 
                     @Override
@@ -76,7 +76,7 @@ public class AccountPresenter implements MVP.IPresenterOperations<Account> {
             final CharSequence pLogin,
             final CharSequence pPassword
     ) {
-        mThreadWorker.execute(
+        mThreadManager.execute(
                 new Runnable() {
 
                     @Override
@@ -104,7 +104,7 @@ public class AccountPresenter implements MVP.IPresenterOperations<Account> {
     }
 
     @Override
-    public void onCreate(final MVP.IModelOperations<Account> pModel) {
+    public void onCreate(final IMvp.IModelOperations<Account> pModel) {
     }
 
     @SuppressWarnings("MissingPermission")

@@ -11,31 +11,31 @@ import java.util.List;
 
 import observer.zagart.by.client.App;
 import observer.zagart.by.client.R;
-import observer.zagart.by.client.backend.api.ObserverCallback;
-import observer.zagart.by.client.http.HttpClientFactory;
-import observer.zagart.by.client.http.interfaces.IHttpClient;
-import observer.zagart.by.client.mvp.MVP;
-import observer.zagart.by.client.threadings.ThreadWorker;
-import observer.zagart.by.client.utils.IOUtil;
+import observer.zagart.by.client.application.managers.ThreadManager;
+import observer.zagart.by.client.mvp.IMvp;
+import observer.zagart.by.client.network.api.ObserverCallback;
+import observer.zagart.by.client.network.http.HttpFactory;
+import observer.zagart.by.client.network.http.interfaces.IHttpClient;
+import observer.zagart.by.client.application.utils.IOUtil;
 
 /**
  * Main presenter implementation.
  *
  * @author zagart
  */
-class BasePresenter<Entity> implements MVP.IPresenterOperations<Entity> {
+class BasePresenter<Entity> implements IMvp.IPresenterOperations<Entity> {
 
-    private WeakReference<MVP.IViewOperations> mView;
-    private ThreadWorker mThreadWorker;
-    private MVP.IModelOperations<Entity> mModel;
+    private WeakReference<IMvp.IViewOperations> mView;
+    private ThreadManager mThreadManager;
+    private IMvp.IModelOperations<Entity> mModel;
 
-    BasePresenter(final MVP.IViewOperations pView) {
+    BasePresenter(final IMvp.IViewOperations pView) {
         mView = new WeakReference<>(pView);
-        mThreadWorker = App.getState().getThreadWorker();
+        mThreadManager = App.getState().getThreadManager();
     }
 
     @Override
-    public void onCreate(final MVP.IModelOperations<Entity> pModel) {
+    public void onCreate(final IMvp.IModelOperations<Entity> pModel) {
         mModel = pModel;
     }
 
@@ -46,13 +46,13 @@ class BasePresenter<Entity> implements MVP.IPresenterOperations<Entity> {
 
     @Override
     public void synchronizeModel(final Uri pUri, final IHttpClient.IRequest<String> pRequest) {
-        mThreadWorker.execute(
+        mThreadManager.execute(
                 new Runnable() {
 
                     @Override
                     public void run() {
                         try {
-                            final String response = HttpClientFactory
+                            final String response = HttpFactory
                                     .getDefaultClient()
                                     .executeRequest(pRequest);
                             final List<Entity> entities = ObserverCallback.onResponseReceived(
@@ -79,7 +79,7 @@ class BasePresenter<Entity> implements MVP.IPresenterOperations<Entity> {
     }
 
     private void notifyViewDataChange() {
-        mThreadWorker.post(new Runnable() {
+        mThreadManager.post(new Runnable() {
 
             @Override
             public void run() {

@@ -10,10 +10,10 @@ import android.widget.TextView;
 
 import observer.zagart.by.client.App;
 import observer.zagart.by.client.R;
-import observer.zagart.by.client.constants.Constants;
-import observer.zagart.by.client.utils.SharedPreferencesUtil;
+import observer.zagart.by.client.application.constants.Constants;
+import observer.zagart.by.client.application.utils.SharedPreferencesUtil;
 
-import static observer.zagart.by.client.constants.Constants.EMPTY_STRING;
+import static observer.zagart.by.client.application.constants.Constants.EMPTY_STRING;
 
 /**
  * Activity for user account.

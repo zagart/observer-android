@@ -3,14 +3,14 @@ package observer.zagart.by.client.mvp.views;
 import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
 
-import observer.zagart.by.client.mvp.MVP;
+import observer.zagart.by.client.mvp.IMvp;
 
 /**
  * Base activity of application.
  *
  * @author zagart
  */
-public class BaseActivity extends AppCompatActivity implements MVP.IViewOperations {
+public class BaseActivity extends AppCompatActivity implements IMvp.IViewOperations {
 
     @Override
     public Context getViewContext() {
