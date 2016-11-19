@@ -3,7 +3,6 @@ package observer.zagart.by.client.mvp.presenters;
 import android.accounts.Account;
 import android.accounts.AccountAuthenticatorActivity;
 import android.accounts.AccountManager;
-import android.annotation.TargetApi;
 import android.content.Context;
 import android.net.Uri;
 import android.text.TextUtils;
@@ -17,11 +16,11 @@ import observer.zagart.by.client.App;
 import observer.zagart.by.client.R;
 import observer.zagart.by.client.application.accounts.ObserverAccount;
 import observer.zagart.by.client.application.managers.ThreadManager;
+import observer.zagart.by.client.application.utils.IOUtil;
 import observer.zagart.by.client.mvp.IMvp;
 import observer.zagart.by.client.network.api.ObserverApi;
 import observer.zagart.by.client.network.api.ObserverCallback;
 import observer.zagart.by.client.network.http.interfaces.IHttpClient;
-import observer.zagart.by.client.application.utils.IOUtil;
 
 /**
  * Responsibility for creating and managing accounts lies on {@link AccountManager},
@@ -122,15 +121,13 @@ public class AccountPresenter implements IMvp.IPresenterOperations<Account> {
         //TODO sync adapter instead
     }
 
-    @SuppressWarnings("MissingPermission")
+    @SuppressWarnings({"MissingPermission", "deprecation"})
     @Override
-    @TargetApi(22)
-    //TODO crash on pre 22 api
     public void clearModel(final Uri pUri) {
         final AccountManager accountManager = AccountManager.get(mView.get().getViewContext());
         final Account[] accounts = accountManager.getAccounts();
         for (Account account : accounts) {
-            accountManager.removeAccount(account, null, null, null);
+            accountManager.removeAccount(account, null, null);
         }
     }
 }

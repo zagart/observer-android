@@ -1,6 +1,5 @@
 package observer.zagart.by.client.network.http.interfaces;
 
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
@@ -10,8 +9,6 @@ import java.net.HttpURLConnection;
  * use privileges of HTTP-client such as do HTTP-request.
  */
 public interface IHttpClient {
-
-    ByteArrayOutputStream downloadBytes(String pUrl) throws IOException;
 
     <Result> Result executeRequest(IRequest<Result> pRequest) throws IOException;
 

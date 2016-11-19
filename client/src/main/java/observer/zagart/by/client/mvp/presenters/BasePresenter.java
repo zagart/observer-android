@@ -12,11 +12,11 @@ import java.util.List;
 import observer.zagart.by.client.App;
 import observer.zagart.by.client.R;
 import observer.zagart.by.client.application.managers.ThreadManager;
+import observer.zagart.by.client.application.utils.IOUtil;
 import observer.zagart.by.client.mvp.IMvp;
 import observer.zagart.by.client.network.api.ObserverCallback;
 import observer.zagart.by.client.network.http.HttpFactory;
 import observer.zagart.by.client.network.http.interfaces.IHttpClient;
-import observer.zagart.by.client.application.utils.IOUtil;
 
 /**
  * Main presenter implementation.
@@ -61,8 +61,7 @@ class BasePresenter<Entity> implements IMvp.IPresenterOperations<Entity> {
                                 mModel.persistAll(entities);
                                 notifyViewDataChange();
                             }
-                            //TODO hande NullPoiterException very bad solution!
-                        } catch (IOException | JSONException | NullPointerException pEx) {
+                        } catch (IOException | JSONException pEx) {
                             final Context context = BasePresenter.this.mView.get().getViewContext();
                             IOUtil.showToast(
                                     context,

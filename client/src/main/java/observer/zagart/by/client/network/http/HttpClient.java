@@ -1,6 +1,5 @@
 package observer.zagart.by.client.network.http;
 
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
@@ -11,33 +10,13 @@ import java.util.Map;
 import java.util.Set;
 
 import observer.zagart.by.client.application.constants.Constants;
-import observer.zagart.by.client.network.http.interfaces.IHttpClient;
 import observer.zagart.by.client.application.utils.IOUtil;
+import observer.zagart.by.client.network.http.interfaces.IHttpClient;
 
 /**
  * Implementation of IHttpClient interface.
  */
 public class HttpClient implements IHttpClient {
-
-    //TODO implement method as IRequest object
-    //TODO fix your TODO
-    @Override
-    public ByteArrayOutputStream downloadBytes(final String pUrl) throws IOException {
-        final HttpURLConnection connection;
-        final InputStream inputStream;
-        final ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-        URL url = new URL(pUrl);
-        connection = (HttpURLConnection) url.openConnection();
-        connection.setRequestMethod(Method.GET.name());
-        inputStream = connection.getInputStream();
-        byte[] buffer = new byte[Constants.READ_BUFFER_SIZE];
-        int bytesRead;
-        while ((bytesRead = inputStream.read(buffer)) > 0) {
-            outputStream.write(buffer, 0, bytesRead);
-        }
-        inputStream.close();
-        return outputStream;
-    }
 
     @Override
     public <Result> Result executeRequest(final IRequest<Result> pRequest) throws IOException {

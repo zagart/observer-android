@@ -10,12 +10,13 @@ import java.io.IOException;
 import java.lang.ref.WeakReference;
 
 import observer.zagart.by.client.App;
-import observer.zagart.by.client.network.http.HttpFactory;
-import observer.zagart.by.client.network.http.interfaces.IHttpClient;
 import observer.zagart.by.client.application.interfaces.IAction;
 import observer.zagart.by.client.application.interfaces.ICallback;
 import observer.zagart.by.client.application.interfaces.IDrawable;
 import observer.zagart.by.client.application.managers.ThreadManager;
+import observer.zagart.by.client.network.http.HttpFactory;
+import observer.zagart.by.client.network.http.interfaces.IHttpClient;
+import observer.zagart.by.client.network.http.requests.DownloadBytesRequest;
 
 /**
  * Implementation of interface IDrawable.
@@ -23,7 +24,7 @@ import observer.zagart.by.client.application.managers.ThreadManager;
  *
  * @author zagart
  */
-@SuppressWarnings("unused") //TODO improve image-loader
+@SuppressWarnings("unused") //TODO thread manager behavior was changed, callbacks must be rewritten
 public class BitmapDrawer implements IDrawable<ImageView, String> {
 
     final private static float MEMORY_USE_COEFFICIENT = 0.125f; //12.5%
@@ -151,7 +152,8 @@ public class BitmapDrawer implements IDrawable<ImageView, String> {
         @Override
         public void onStart(final String pParam) {
             try {
-                final ByteArrayOutputStream resultStream = mHttpClient.downloadBytes(pParam);
+                final ByteArrayOutputStream resultStream = mHttpClient.executeRequest(
+                        new DownloadBytesRequest(pParam));
                 downloaded = resultStream.toByteArray();
             } catch (IOException pEx) {
                 onException(pParam, pEx);
