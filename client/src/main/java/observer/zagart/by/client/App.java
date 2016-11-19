@@ -1,31 +1,46 @@
 package observer.zagart.by.client;
 
+import android.accounts.Account;
 import android.app.Application;
+import android.content.Context;
 
 import observer.zagart.by.client.application.managers.DatabaseManager;
 import observer.zagart.by.client.application.managers.ThreadManager;
-import observer.zagart.by.client.application.singletons.State;
+import observer.zagart.by.client.application.singletons.AccountHolder;
+import observer.zagart.by.client.application.singletons.ContextHolder;
 import observer.zagart.by.client.application.utils.AccountManagerUtil;
 
 /**
- * Custom application file.
+ * Observer main application file.
+ *
+ * @author zagart
  */
 public class App extends Application {
 
-    //TODO singleton
-    private static State mState;
+    public static Account getAccount() {
+        return AccountHolder.get();
+    }
 
-    public static State getState() {
-        return mState;
+    public static void setAccount(final Account pAccount) {
+        AccountHolder.set(pAccount);
+    }
+
+    public static Context getContext() {
+        return ContextHolder.get();
+    }
+
+    public static DatabaseManager getDatabaseManager() {
+        return DatabaseManager.getDefaultInstance();
+    }
+
+    public static ThreadManager getThreadManager() {
+        return ThreadManager.getDefaultInstance();
     }
 
     @Override
     public void onCreate() {
         super.onCreate();
-        mState = new State(this);
-        mState
-                .setAccount(AccountManagerUtil.getPersistedAccount())
-                .setThreadManager(new ThreadManager())
-                .setDatabaseManager(new DatabaseManager(this));
+        ContextHolder.set(this);
+        setAccount(AccountManagerUtil.getPersistedAccount());
     }
 }

@@ -30,11 +30,5 @@
             android:onClick="onStandsClick"
             android:text="@string/stands"
             android:visibility="gone"/>
-
-        <Button
-            android:id="@+id/main_menu_btn_exit"
-            style="@style/Main.Button"
-            android:onClick="onExitClick"
-            android:text="@string/exit"/>
     </LinearLayout>
 </FrameLayout>

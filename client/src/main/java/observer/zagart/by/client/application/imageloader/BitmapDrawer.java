@@ -40,7 +40,7 @@ public class BitmapDrawer implements IDrawable<ImageView, String> {
                 return pImage.getByteCount() / 1024;
             }
         };
-        mThreadManager = App.getState().getThreadManager();
+        mThreadManager = App.getThreadManager();
     }
 
     /**

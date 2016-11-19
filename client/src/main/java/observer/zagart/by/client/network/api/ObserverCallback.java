@@ -65,10 +65,10 @@ public class ObserverCallback {
                     pActivity.getString(R.string.error_account_exists));
         }
         SharedPreferencesUtil.persistStringValue(
-                App.getState().getContext(),
+                App.getContext(),
                 Constants.CURRENT_ACCOUNT_NAME,
                 pAccount.name);
-        App.getState().setAccount(pAccount);
+        App.setAccount(pAccount);
         pActivity.setAccountAuthenticatorResult(result);
         pActivity.setResult(RESULT_OK);
         final Intent intent = new Intent(pActivity, MyAccountActivity.class);

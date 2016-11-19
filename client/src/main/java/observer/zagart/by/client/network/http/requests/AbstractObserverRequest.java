@@ -27,7 +27,7 @@ public abstract class AbstractObserverRequest implements IHttpClient.IRequest<St
 
     @Override
     public String getUrl() {
-        return App.getState().getContext().getString(R.string.observer_url);
+        return App.getContext().getString(R.string.observer_url);
     }
 
     @Override
@@ -37,7 +37,7 @@ public abstract class AbstractObserverRequest implements IHttpClient.IRequest<St
         if (BuildConfig.DEBUG) {
             String errorMessage = String.format(
                     Locale.getDefault(),
-                    App.getState().getContext().getString(R.string.err_code_server_response),
+                    App.getContext().getString(R.string.err_code_server_response),
                     pConnection.getResponseCode());
             Log.e(AbstractObserverRequest.class.getSimpleName(), errorMessage);
         }

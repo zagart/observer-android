@@ -29,7 +29,7 @@ public class StandTableAdapter extends RecyclerView.Adapter<StandTableAdapter.Ro
             final int pViewType) {
         final Context context = pParent.getContext();
         final LayoutInflater inflater = LayoutInflater.from(context);
-        final View standRowView = inflater.inflate(R.layout.stand_table_row, pParent, false);
+        final View standRowView = inflater.inflate(R.layout.view_stand_adapter_row, pParent, false);
         return new RowHolder(standRowView);
     }
 

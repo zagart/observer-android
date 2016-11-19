@@ -8,9 +8,9 @@ import java.util.List;
 
 import observer.zagart.by.client.App;
 import observer.zagart.by.client.application.constants.Constants;
+import observer.zagart.by.client.application.utils.URIUtil;
 import observer.zagart.by.client.mvp.IMvp;
 import observer.zagart.by.client.mvp.models.repository.entities.Stand;
-import observer.zagart.by.client.application.utils.URIUtil;
 
 /**
  * IMvp model implementation for stand.
@@ -28,7 +28,7 @@ public class StandModel implements IMvp.IModelOperations<Stand> {
 
     @Override
     public List<Stand> retrieveAll() {
-        final ContentResolver resolver = App.getState().getContext().getContentResolver();
+        final ContentResolver resolver = App.getContext().getContentResolver();
         final List<Stand> stands = new ArrayList<>();
         final Cursor cursor = resolver.query(
                 URIUtil.getStandUri(),
@@ -50,7 +50,7 @@ public class StandModel implements IMvp.IModelOperations<Stand> {
     public void persistAll(final List<Stand> pStands) {
         for (Stand stand : pStands) {
             if (!isStandCached(stand)) {
-                final ContentResolver resolver = App.getState().getContext().getContentResolver();
+                final ContentResolver resolver = App.getContext().getContentResolver();
                 resolver.insert(URIUtil.getStandUri(), stand.convert());
             }
         }
@@ -58,12 +58,12 @@ public class StandModel implements IMvp.IModelOperations<Stand> {
 
     @Override
     public void deleteAll() {
-        final ContentResolver resolver = App.getState().getContext().getContentResolver();
+        final ContentResolver resolver = App.getContext().getContentResolver();
         resolver.delete(URIUtil.getStandUri(), null, null);
     }
 
     private boolean isStandCached(final Stand pStand) {
-        final ContentResolver resolver = App.getState().getContext().getContentResolver();
+        final ContentResolver resolver = App.getContext().getContentResolver();
         final String[] args = {pStand.getId().toString()};
         final Cursor cursor = resolver.query(
                 URIUtil.getStandUri(),

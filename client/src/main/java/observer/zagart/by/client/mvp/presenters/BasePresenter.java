@@ -31,7 +31,7 @@ class BasePresenter<Entity> implements IMvp.IPresenterOperations<Entity> {
 
     BasePresenter(final IMvp.IViewOperations pView) {
         mView = new WeakReference<>(pView);
-        mThreadManager = App.getState().getThreadManager();
+        mThreadManager = App.getThreadManager();
     }
 
     @Override

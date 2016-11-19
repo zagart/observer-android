@@ -11,10 +11,10 @@ import android.os.Bundle;
 import android.text.TextUtils;
 
 import observer.zagart.by.client.App;
-import observer.zagart.by.client.network.api.ObserverApi;
 import observer.zagart.by.client.application.constants.Constants;
-import observer.zagart.by.client.mvp.views.AuthenticationActivity;
 import observer.zagart.by.client.application.utils.SharedPreferencesUtil;
+import observer.zagart.by.client.mvp.views.AuthenticationActivity;
+import observer.zagart.by.client.network.api.ObserverApi;
 
 /**
  * Authenticator to ObserverApi HTTP-server.
@@ -120,10 +120,10 @@ class ObserverAuthenticator extends AbstractAccountAuthenticator {
             final AccountAuthenticatorResponse response,
             final Account account) throws NetworkErrorException {
         SharedPreferencesUtil.persistStringValue(
-                App.getState().getContext(),
+                App.getContext(),
                 Constants.CURRENT_ACCOUNT_NAME,
                 null);
-        App.getState().setAccount(null);
+        App.setAccount(null);
         return super.getAccountRemovalAllowed(response, account);
     }
 }

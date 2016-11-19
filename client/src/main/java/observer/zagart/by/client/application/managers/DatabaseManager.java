@@ -32,7 +32,7 @@ public class DatabaseManager extends SQLiteOpenHelper implements IDatabaseOperat
     }
 
     @SuppressWarnings("unused")
-    public static DatabaseManager getInstance() {
+    public static DatabaseManager getDefaultInstance() {
         return SingletonHolder.DB_HELPER_INSTANCE;
     }
 
@@ -138,6 +138,6 @@ public class DatabaseManager extends SQLiteOpenHelper implements IDatabaseOperat
     private static class SingletonHolder {
 
         private static final DatabaseManager DB_HELPER_INSTANCE = new DatabaseManager(
-                App.getState().getContext());
+                App.getContext());
     }
 }

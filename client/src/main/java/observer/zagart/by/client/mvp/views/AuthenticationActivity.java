@@ -1,8 +1,6 @@
 package observer.zagart.by.client.mvp.views;
 
-import android.accounts.AccountAuthenticatorActivity;
 import android.app.ActionBar;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -11,15 +9,14 @@ import android.view.View;
 import android.widget.TextView;
 
 import observer.zagart.by.client.R;
-import observer.zagart.by.client.mvp.IMvp;
-import observer.zagart.by.client.mvp.presenters.AccountPresenter;
 import observer.zagart.by.client.application.utils.IOUtil;
+import observer.zagart.by.client.mvp.presenters.AccountPresenter;
+import observer.zagart.by.client.mvp.views.base.BaseAuthenticatorActivity;
 
 /**
  * Activity that provides UI for user authorization.
  */
-public class AuthenticationActivity
-        extends AccountAuthenticatorActivity implements IMvp.IViewOperations {
+public class AuthenticationActivity extends BaseAuthenticatorActivity {
 
     private AccountPresenter mPresenter = new AccountPresenter(this);
     private TextView mLoginView;
@@ -46,26 +43,13 @@ public class AuthenticationActivity
     }
 
     @Override
-    public Context getViewContext() {
-        return this;
-    }
-
-    @Override
-    public void onViewsVisibilityCheck() {
-    }
-
-    @Override
-    public void onDataChanged() {
-    }
-
-    @Override
     protected void onCreate(@Nullable final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         final ActionBar bar = getActionBar();
         if (bar != null) {
             bar.hide();
         }
-        setContentView(R.layout.login_activity);
+        setContentView(R.layout.activity_authentication);
         mLoginView = (TextView) findViewById(R.id.login_login);
         mPasswordView = (TextView) findViewById(R.id.login_password);
     }

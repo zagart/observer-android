@@ -17,8 +17,6 @@ public interface IMvp {
 
         Context getViewContext();
 
-        void onViewsVisibilityCheck();
-
         void onDataChanged();
     }
 

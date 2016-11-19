@@ -12,10 +12,11 @@ import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 import observer.zagart.by.client.R;
-import observer.zagart.by.client.mvp.views.adapters.ModuleTableAdapter;
-import observer.zagart.by.client.mvp.presenters.ModulePresenter;
-import observer.zagart.by.client.mvp.models.repository.entities.Module;
 import observer.zagart.by.client.application.utils.URIUtil;
+import observer.zagart.by.client.mvp.models.repository.entities.Module;
+import observer.zagart.by.client.mvp.presenters.ModulePresenter;
+import observer.zagart.by.client.mvp.views.adapters.ModuleTableAdapter;
+import observer.zagart.by.client.mvp.views.base.BaseActivity;
 
 /**
  * Activity for showing cached module objects.
@@ -38,14 +39,13 @@ public class ModulesActivity extends BaseActivity {
 
     @Override
     public void onDataChanged() {
-        super.onDataChanged();
         setAdapter();
     }
 
     @Override
     protected void onCreate(@Nullable final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.modules_activity);
+        setContentView(R.layout.activity_modules);
         mRecyclerView = (RecyclerView) findViewById(R.id.modules_recycler_view);
         setAdapter();
     }

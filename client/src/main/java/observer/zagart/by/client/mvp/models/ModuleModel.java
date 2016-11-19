@@ -24,7 +24,7 @@ public class ModuleModel implements IMvp.IModelOperations<Module> {
 
     public ModuleModel(final IMvp.IPresenterOperations pPresenter) {
         mPresenter = pPresenter;
-        mHelper = App.getState().getDatabaseManager();
+        mHelper = App.getDatabaseManager();
     }
 
     @Override

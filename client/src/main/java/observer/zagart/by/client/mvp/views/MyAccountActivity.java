@@ -12,6 +12,7 @@ import observer.zagart.by.client.App;
 import observer.zagart.by.client.R;
 import observer.zagart.by.client.application.constants.Constants;
 import observer.zagart.by.client.application.utils.SharedPreferencesUtil;
+import observer.zagart.by.client.mvp.views.base.BaseActivity;
 
 import static observer.zagart.by.client.application.constants.Constants.EMPTY_STRING;
 
@@ -34,19 +35,19 @@ public class MyAccountActivity extends BaseActivity {
     }
 
     public void onLogoutClick(View pView) {
-        App.getState().setAccount(null);
+        App.setAccount(null);
         SharedPreferencesUtil.persistStringValue(this, Constants.CURRENT_ACCOUNT_NAME, null);
-        onViewsVisibilityCheck();
+        onAccountCheck();
     }
 
     @Override
-    public void onViewsVisibilityCheck() {
-        if (App.getState().getAccount() != null) {
+    public void onAccountCheck() {
+        if (App.getAccount() != null) {
             mLogInView.setVisibility(View.GONE);
             mLogOutView.setVisibility(View.VISIBLE);
             mUserLabel.setVisibility(View.VISIBLE);
             mUserLogin.setVisibility(View.VISIBLE);
-            mUserLogin.setText(App.getState().getAccount().name);
+            mUserLogin.setText(App.getAccount().name);
         } else {
             mLogInView.setVisibility(View.VISIBLE);
             mLogOutView.setVisibility(View.GONE);
@@ -57,13 +58,18 @@ public class MyAccountActivity extends BaseActivity {
     }
 
     @Override
+    public void onDataChanged() {
+        onAccountCheck();
+    }
+
+    @Override
     protected void onCreate(@Nullable final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         final ActionBar bar = getSupportActionBar();
         if (bar != null) {
             bar.hide();
         }
-        setContentView(R.layout.my_account_activity);
+        setContentView(R.layout.activity_my_account);
         mLogInView = (Button) findViewById(R.id.my_account_btn_log_in);
         mLogOutView = (Button) findViewById(R.id.my_account_btn_log_out);
         mUserLabel = (TextView) findViewById(R.id.my_account_login_label);

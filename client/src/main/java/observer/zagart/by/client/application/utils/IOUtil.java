@@ -23,7 +23,7 @@ import observer.zagart.by.client.application.managers.ThreadManager;
  */
 public class IOUtil {
 
-    private static ThreadManager sThreadManager = App.getState().getThreadManager();
+    private static ThreadManager sThreadManager = App.getThreadManager();
 
     public static void close(final Closeable pCloseable) {
         if (pCloseable != null) {

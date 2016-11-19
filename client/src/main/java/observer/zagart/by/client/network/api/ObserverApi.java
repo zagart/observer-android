@@ -26,7 +26,7 @@ import observer.zagart.by.client.network.http.requests.RegistrationRequest;
 public class ObserverApi {
 
     private final String TAG = ObserverApi.class.getSimpleName();
-    private ThreadManager mWorker = App.getState().getThreadManager();
+    private ThreadManager mWorker = App.getThreadManager();
     private IHttpClient mClient = HttpFactory.getDefaultClient();
 
     @Nullable

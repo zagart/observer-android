@@ -37,7 +37,7 @@ public class AccountPresenter implements IMvp.IPresenterOperations<Account> {
 
     public AccountPresenter(final IMvp.IViewOperations pView) {
         mView = new WeakReference<>(pView);
-        mThreadManager = App.getState().getThreadManager();
+        mThreadManager = App.getThreadManager();
     }
 
     public void executeRegistration(

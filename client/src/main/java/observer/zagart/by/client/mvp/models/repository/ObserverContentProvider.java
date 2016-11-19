@@ -84,7 +84,7 @@ public class ObserverContentProvider extends ContentProvider {
     }
 
     private void onDataChanged(Uri pUri) {
-        App.getState().getContext().getContentResolver().notifyChange(pUri, null);
+        App.getContext().getContentResolver().notifyChange(pUri, null);
     }
 
     private Class<?> getTable(Uri pUri) {

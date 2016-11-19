@@ -16,9 +16,9 @@ public class AccountManagerUtil {
     @SuppressWarnings("MissingPermission")
     public static Account getPersistedAccount() {
         final String accountName = SharedPreferencesUtil.retrieveStringValue(
-                App.getState().getContext(),
+                App.getContext(),
                 Constants.CURRENT_ACCOUNT_NAME);
-        AccountManager accountManager = AccountManager.get(App.getState().getContext());
+        final AccountManager accountManager = AccountManager.get(App.getContext());
         for (Account account : accountManager.getAccounts()) {
             if (account.name.equals(accountName)) {
                 return account;
