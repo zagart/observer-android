@@ -100,9 +100,7 @@ public class DbHelper extends SQLiteOpenHelper implements IDbOperations {
                                         Locale.US,
                                         SQL_TABLE_CREATE_FIELD_TEMPLATE,
                                         value,
-                                        type
-                                )
-                        );
+                                        type));
                         hits++;
                     }
                 }
@@ -110,19 +108,14 @@ public class DbHelper extends SQLiteOpenHelper implements IDbOperations {
                         Locale.US,
                         SQL_TABLE_CREATE_TEMPLATE,
                         name,
-                        builder
-                );
+                        builder);
                 if (BuildConfig.DEBUG) {
                     Log.d(TAG, template);
                 }
                 return template;
-                //TODO nullpointerexception
-            } catch (
-                    NullPointerException |
-                            ExceptionInInitializerError |
-                            IllegalAccessException |
-                            IllegalArgumentException pEx
-                    ) {
+            } catch (ExceptionInInitializerError |
+                    IllegalAccessException |
+                    IllegalArgumentException pEx) {
                 if (BuildConfig.DEBUG) {
                     Log.e(TAG, pEx.getMessage(), pEx);
                 }
@@ -158,7 +151,7 @@ public class DbHelper extends SQLiteOpenHelper implements IDbOperations {
                 database.setTransactionSuccessful();
                 //TODO bad solution
             } catch (Exception pEx) {
-                throw new RuntimeException(Constants.TRANSACTION_FAILED);
+                Log.e(TAG, Constants.TRANSACTION_FAILED, pEx);
             } finally {
                 database.endTransaction();
                 database.close();
@@ -171,7 +164,7 @@ public class DbHelper extends SQLiteOpenHelper implements IDbOperations {
 
     @Override
     public long delete(final Class<?> pTable, final String pSql, final String... pParams) {
-        SQLiteDatabase database = getWritableDatabase();
+        final SQLiteDatabase database = getWritableDatabase();
         final String name = getTableName(pTable);
         long count = 0;
         if (name != null) {
@@ -192,7 +185,7 @@ public class DbHelper extends SQLiteOpenHelper implements IDbOperations {
     @Override
     public long insert(final Class<?> pTable, final ContentValues pValues) {
         final String name = getTableName(pTable);
-        SQLiteDatabase database = getWritableDatabase();
+        final SQLiteDatabase database = getWritableDatabase();
         if (name != null) {
             long id = 0;
             try {
@@ -207,8 +200,7 @@ public class DbHelper extends SQLiteOpenHelper implements IDbOperations {
             }
             return id;
         } else {
-            throw new IllegalStateException("Db name should't be null")
-//            throw new RuntimeException();
+            throw new IllegalStateException(Constants.TABLE_NAME_NULL_EXCEPTION);
         }
     }
 
@@ -231,14 +223,12 @@ public class DbHelper extends SQLiteOpenHelper implements IDbOperations {
     public void onUpgrade(
             final SQLiteDatabase pDatabase,
             final int pOldVersion,
-            final int pNewVersion
-    ) {
+            final int pNewVersion) {
     }
 
     private static class SingletonHolder {
 
         private static final DbHelper DB_HELPER_INSTANCE = new DbHelper(
-                App.getState().getContext()
-        );
+                App.getState().getContext());
     }
 }

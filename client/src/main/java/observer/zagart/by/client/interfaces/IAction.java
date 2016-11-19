@@ -7,6 +7,7 @@ package observer.zagart.by.client.interfaces;
  */
 public interface IAction<Param, Progress, Result> {
 
-    Result process(final ICallback<Progress, Result> pCallback, final Param... pParam)
-            throws InterruptedException;
+    Result process(
+            final ICallback<Progress, Result> pCallback,
+            final Param... pParam) throws InterruptedException;
 }

@@ -6,10 +6,7 @@ import android.database.Cursor;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
-import java.util.Random;
 
 import observer.zagart.by.client.interfaces.IConvertible;
 import observer.zagart.by.client.repository.entities.contracts.ModuleContract;
@@ -18,36 +15,14 @@ import observer.zagart.by.client.repository.entities.contracts.ModuleContract;
  * StandModel for module.
  */
 public class Module implements IConvertible<ContentValues> {
-
-    public static final int MODULE_VALUE_LIMIT = 99;
-    public static final int MODULE_ID_LIMIT = 9;
+ 
     private Long mId;
     private String mName;
     private Long mStandId;
     private String mStatus;
     private Date mStatusChangeDate;
     private String mValue;
-    //TODO remove
-    public static List<Module> createModuleList(int pSize) {
-        List<Module> stands = new ArrayList<>();
-        while (pSize > 0) {
-            stands.add(createRandomModule());
-            pSize--;
-        }
-        return stands;
-    }
 
-    public static Module createRandomModule() {
-        Random random = new Random();
-        Module module = new Module();
-        module.setId((long) random.nextInt(MODULE_ID_LIMIT));
-        module.setName("Module" + module.getId());
-        module.setStandId((long) random.nextInt(Stand.STAND_ID_LIMIT));
-        module.setStatus("Status" + module.getName());
-        module.setValue(String.valueOf(random.nextInt(MODULE_VALUE_LIMIT)));
-        module.setStatusChangeDate(new Date());
-        return module;
-    }
     //TODO static is evil.
     public static Module parseCursorRow(final Cursor pCursor) {
         Module module = new Module();

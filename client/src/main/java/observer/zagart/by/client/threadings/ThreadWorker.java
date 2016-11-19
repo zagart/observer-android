@@ -1,7 +1,7 @@
 package observer.zagart.by.client.threadings;
 
 import android.os.Handler;
-import android.util.Log;
+import android.os.Looper;
 
 import java.util.Locale;
 import java.util.concurrent.ArrayBlockingQueue;
@@ -12,26 +12,24 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
-import observer.zagart.by.client.BuildConfig;
 import observer.zagart.by.client.interfaces.IAction;
 import observer.zagart.by.client.interfaces.ICallback;
 
 /**
  * My class for asynchronous background tasks.
  */
+@SuppressWarnings("unused")
 public class ThreadWorker<Result> {
 
-    public static final String TAG = ThreadWorker.class.getSimpleName();
+    private static final String TAG = ThreadWorker.class.getSimpleName();
     private static final int COUNT_CORE = Runtime.getRuntime().availableProcessors();
     private static final int DEFAULT_THREADS_NUMBER = 3;
     private static final int MAX_THREADS_NUMBER = Math.max(COUNT_CORE, DEFAULT_THREADS_NUMBER);
-    private static final String STR_ROTATE = "Screen orientation changed.";
     private static int sCounter = 0;
     private final ExecutorService mPool;
     private final String mName;
     private final BlockingQueue<IAction> mActions = new ArrayBlockingQueue<>(
-            MAX_THREADS_NUMBER
-    );
+            MAX_THREADS_NUMBER);
     private Handler mHandler;
 
     public ThreadWorker() {
@@ -41,8 +39,7 @@ public class ThreadWorker<Result> {
     public ThreadWorker(String pName) {
         mName = pName;
         mPool = Executors.newFixedThreadPool(MAX_THREADS_NUMBER);
-        //TODO use looper
-        mHandler = new Handler();
+        mHandler = new Handler(Looper.getMainLooper());
     }
 
     public static ThreadWorker getDefaultInstance() {
@@ -73,9 +70,6 @@ public class ThreadWorker<Result> {
     }
 
     public void onRotate() {
-        if (BuildConfig.DEBUG) {
-            Log.d(mName, STR_ROTATE);
-        }
         //saving pool state
     }
 
@@ -94,10 +88,9 @@ public class ThreadWorker<Result> {
     public <Param, Progress> void performAction(
             final IAction<Param, Progress, Result> pAction,
             final ICallback<Progress, Result> pCallback,
-            final Param... pParam
-    ) {
+            final Param... pParam) {
         mHandler = new Handler();
-        final String name = String.format(Locale.ENGLISH, "%s-%d", mName, ++sCounter);
+        final String name = String.format(Locale.getDefault(), "%s-%d", mName, ++sCounter);
         mPool.execute(
                 new Runnable() {
 
@@ -114,8 +107,7 @@ public class ThreadWorker<Result> {
                                             public void run() {
                                                 onResult(result);
                                             }
-                                        }
-                                );
+                                        });
                             }
                         } catch (Exception pEx) {
                             pCallback.onException(name, pEx);
@@ -137,9 +129,9 @@ public class ThreadWorker<Result> {
     /**
      * Executes callable in pool.
      *
-     * @param pCallable
-     * @param <CR>
-     * @return
+     * @param pCallable Callable to execute
+     * @param <CR>      Result data type
+     * @return Handled data
      * @throws ExecutionException
      * @throws InterruptedException
      */
@@ -148,8 +140,8 @@ public class ThreadWorker<Result> {
         return result.get();
     }
 
-    public static class SingletonHolder {
+    private static class SingletonHolder {
 
-        public static final ThreadWorker WORKER_INSTANCE = new ThreadWorker(TAG);
+        private static final ThreadWorker WORKER_INSTANCE = new ThreadWorker(TAG);
     }
 }

@@ -20,15 +20,7 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-    testOptions {
-        unitTests.returnDefaultValues = true
-    }
-    sourceSets {
-        //todo remove that
-        main {
-            manifest.srcFile 'src/main/AndroidManifest.xml'
-        }
-    }
+    return void
 }
 ext {
     supportLibraryVersion = '25.0.1'

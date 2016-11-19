@@ -22,11 +22,9 @@ public class GetModulesRequest extends AbstractObserverRequest {
     public void handleRequestConnection(final HttpURLConnection pConnection) {
         pConnection.addRequestProperty(
                 IHttpClient.IHttpData.Header.ACTION,
-                IHttpClient.IHttpData.Actions.GET_DATA
-        );
+                IHttpClient.IHttpData.Actions.GET_DATA);
         pConnection.addRequestProperty(
                 IHttpClient.IHttpData.Header.CRITERIA,
-                Criteria.getModulesCriteria()
-        );
+                Criteria.getModulesCriteria());
     }
 }

@@ -5,7 +5,6 @@ package observer.zagart.by.client.constants;
  *
  * @author zagart
  */
-
 //TODO group constants
 public class Constants {
 
@@ -34,4 +33,5 @@ public class Constants {
     public static final String STANDS_KEY = "stands";
     public static final String MODULES_KEY = "modules";
     public static final String REFLECTION = "reflection";
+    public static final String TABLE_NAME_NULL_EXCEPTION = "Table name should't be null";
 }

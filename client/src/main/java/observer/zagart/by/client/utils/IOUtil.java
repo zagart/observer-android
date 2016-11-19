@@ -13,7 +13,6 @@ import java.io.Reader;
 import java.nio.charset.Charset;
 
 import observer.zagart.by.client.App;
-import observer.zagart.by.client.BuildConfig;
 import observer.zagart.by.client.constants.Constants;
 import observer.zagart.by.client.threadings.ThreadWorker;
 
@@ -24,20 +23,14 @@ import observer.zagart.by.client.threadings.ThreadWorker;
  */
 public class IOUtil {
 
-    private static ThreadWorker sThreadWorker;
-
-    static {
-        sThreadWorker = App.getState().getThreadWorker();
-    }
+    private static ThreadWorker sThreadWorker = App.getState().getThreadWorker();
 
     public static void close(final Closeable pCloseable) {
         if (pCloseable != null) {
             try {
                 pCloseable.close();
             } catch (IOException pEx) {
-                if (BuildConfig.DEBUG) {
-                    Log.e(IOUtil.class.getSimpleName(), Constants.FAILED_TO_EXECUTE_CLOSING, pEx);
-                }
+                Log.e(IOUtil.class.getSimpleName(), Constants.FAILED_TO_EXECUTE_CLOSING, pEx);
             }
         }
     }
@@ -53,8 +46,7 @@ public class IOUtil {
                         public void run() {
                             showNotNullMessage(pContext, pMessage);
                         }
-                    }
-            );
+                    });
         }
     }
 

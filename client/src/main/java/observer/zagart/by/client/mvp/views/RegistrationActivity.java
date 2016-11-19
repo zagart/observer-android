@@ -22,13 +22,9 @@ import observer.zagart.by.client.utils.IOUtil;
 public class RegistrationActivity
         extends AccountAuthenticatorActivity implements MVP.IViewOperations {
 
-    private AccountPresenter mPresenter;
+    private AccountPresenter mPresenter = new AccountPresenter(this);
     private EditText mPasswordView;
     private EditText mLoginView;
-
-    {
-        mPresenter = new AccountPresenter(this);
-    }
 
     public void onConfirmClick(View pView) {
         final CharSequence charLogin = mLoginView.getText();

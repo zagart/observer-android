@@ -41,8 +41,7 @@ class ObserverAuthenticator extends AbstractAccountAuthenticator {
             String pAccountType,
             String pAuthTokenType,
             String[] pRequiredFeatures,
-            Bundle pOptions
-    ) throws NetworkErrorException {
+            Bundle pOptions) throws NetworkErrorException {
         final Intent intent = new Intent(mContext, AuthenticationActivity.class);
         intent.putExtra(ObserverAccount.EXTRA_TOKEN_TYPE, pAccountType);
         intent.putExtra(AccountManager.KEY_ACCOUNT_AUTHENTICATOR_RESPONSE, pResponse);
@@ -58,8 +57,7 @@ class ObserverAuthenticator extends AbstractAccountAuthenticator {
     public Bundle confirmCredentials(
             AccountAuthenticatorResponse response,
             Account account,
-            Bundle options
-    ) throws NetworkErrorException {
+            Bundle options) throws NetworkErrorException {
         return null;
     }
 
@@ -68,8 +66,7 @@ class ObserverAuthenticator extends AbstractAccountAuthenticator {
             AccountAuthenticatorResponse pResponse,
             Account pAccount,
             String pAuthTokenType,
-            Bundle pOptions
-    ) throws NetworkErrorException {
+            Bundle pOptions) throws NetworkErrorException {
         final Bundle result = new Bundle();
         final AccountManager accountManager = AccountManager.get(mContext.getApplicationContext());
         String authToken = accountManager.peekAuthToken(pAccount, pAuthTokenType);
@@ -106,8 +103,7 @@ class ObserverAuthenticator extends AbstractAccountAuthenticator {
     public Bundle updateCredentials(
             AccountAuthenticatorResponse response,
             Account account,
-            String authTokenType, Bundle options
-    ) throws NetworkErrorException {
+            String authTokenType, Bundle options) throws NetworkErrorException {
         return null;
     }
 
@@ -115,21 +111,18 @@ class ObserverAuthenticator extends AbstractAccountAuthenticator {
     public Bundle hasFeatures(
             AccountAuthenticatorResponse response,
             Account account,
-            String[] features
-    ) throws NetworkErrorException {
+            String[] features) throws NetworkErrorException {
         return null;
     }
 
     @Override
     public Bundle getAccountRemovalAllowed(
             final AccountAuthenticatorResponse response,
-            final Account account
-    ) throws NetworkErrorException {
+            final Account account) throws NetworkErrorException {
         SharedPreferencesUtil.persistStringValue(
                 App.getState().getContext(),
                 Constants.CURRENT_ACCOUNT_NAME,
-                null
-        );
+                null);
         App.getState().setAccount(null);
         return super.getAccountRemovalAllowed(response, account);
     }

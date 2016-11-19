@@ -6,10 +6,6 @@ import android.database.Cursor;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-
 import observer.zagart.by.client.interfaces.IConvertible;
 import observer.zagart.by.client.repository.entities.contracts.StandContract;
 
@@ -18,30 +14,9 @@ import observer.zagart.by.client.repository.entities.contracts.StandContract;
  */
 public class Stand implements IConvertible<ContentValues> {
 
-    public static final int STAND_ID_LIMIT = 100;
-    public static final int STAND_NUMBER_LIMIT = 1000;
     private Long mId;
     private String mNumber;
     private String mDescription;
-
-    //TODO remove
-    public static Stand createRandomStand() {
-        Random random = new Random();
-        Stand stand = new Stand();
-        stand.setId((long) random.nextInt(STAND_ID_LIMIT));
-        stand.setNumber(String.valueOf(random.nextInt(STAND_NUMBER_LIMIT)));
-        stand.setDescription(stand.getNumber() + stand.getId());
-        return stand;
-    }
-
-    public static List<Stand> createStandList(int pSize) {
-        List<Stand> stands = new ArrayList<>();
-        while (pSize > 0) {
-            stands.add(createRandomStand());
-            pSize--;
-        }
-        return stands;
-    }
 
     public static Stand parseJsonObject(JSONObject pJsonStand) throws JSONException {
         final Stand stand = new Stand();

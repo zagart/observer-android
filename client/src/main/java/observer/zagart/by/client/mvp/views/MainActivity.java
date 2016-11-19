@@ -40,6 +40,17 @@ public class MainActivity extends BaseActivity {
     }
 
     @Override
+    public void onViewsVisibilityCheck() {
+        if (App.getState().getAccount() != null) {
+            mModulesButton.setVisibility(View.VISIBLE);
+            mStandsButton.setVisibility(View.VISIBLE);
+        } else {
+            mModulesButton.setVisibility(View.GONE);
+            mStandsButton.setVisibility(View.GONE);
+        }
+    }
+
+    @Override
     protected void onCreate(@Nullable final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         final ActionBar bar = getSupportActionBar();
@@ -49,16 +60,5 @@ public class MainActivity extends BaseActivity {
         setContentView(R.layout.main_activity);
         mModulesButton = (Button) findViewById(R.id.main_menu_btn_modules);
         mStandsButton = (Button) findViewById(R.id.main_menu_btn_stands);
-    }
-
-    @Override
-    public void onViewsVisibilityCheck() {
-        if (App.getState().getAccount() != null) {
-            mModulesButton.setVisibility(View.VISIBLE);
-            mStandsButton.setVisibility(View.VISIBLE);
-        } else {
-            mModulesButton.setVisibility(View.GONE);
-            mStandsButton.setVisibility(View.GONE);
-        }
     }
 }

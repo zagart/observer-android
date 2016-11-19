@@ -24,12 +24,8 @@ import observer.zagart.by.client.utils.URIUtil;
  */
 public class ModulesActivity extends BaseActivity {
 
-    private ModulePresenter mPresenter;
+    private ModulePresenter mPresenter = new ModulePresenter(this);
     private RecyclerView mRecyclerView;
-
-    {
-        mPresenter = new ModulePresenter(this);
-    }
 
     public void onClearClick(View pView) {
         mPresenter.clearModel(URIUtil.getModuleUri());
@@ -39,8 +35,6 @@ public class ModulesActivity extends BaseActivity {
             throws InterruptedException, ExecutionException, JSONException {
         mPresenter.synchronizeModel(URIUtil.getModuleUri(), null);
     }
-
-
 
     @Override
     public void onDataChanged() {

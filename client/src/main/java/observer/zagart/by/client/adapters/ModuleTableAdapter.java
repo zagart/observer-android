@@ -35,19 +35,13 @@ public class ModuleTableAdapter extends RecyclerView.Adapter<ModuleTableAdapter.
 
     @Override
     public void onBindViewHolder(final RowHolder pHolder, final int pPosition) {
-        //TODO don't save view to local variable
         final Module module = mModules.get(pPosition);
-        final TextView id = pHolder.mId;
-        id.setText(String.valueOf(module.getId()));
+        pHolder.mId.setText(String.valueOf(module.getId()));
         pHolder.mName.setText(module.getName());
-        final TextView status = pHolder.mStatus;
-        status.setText(module.getStatus());
-        final TextView value = pHolder.mValue;
-        value.setText(module.getValue());
-        final TextView statusChangeDate = pHolder.mStatusChangeDate;
-        statusChangeDate.setText(module.getStatusChangeDate().toString());
-        final TextView standId = pHolder.mStandId;
-        standId.setText(String.valueOf(module.getStandId()));
+        pHolder.mStatus.setText(module.getStatus());
+        pHolder.mValue.setText(module.getValue());
+        pHolder.mStatusChangeDate.setText(module.getStatusChangeDate().toString());
+        pHolder.mStandId.setText(String.valueOf(module.getStandId()));
     }
 
     @Override

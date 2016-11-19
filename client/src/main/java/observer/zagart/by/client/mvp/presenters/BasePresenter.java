@@ -56,8 +56,7 @@ class BasePresenter<Entity> implements MVP.IPresenterOperations<Entity> {
                                     .getDefaultClient()
                                     .executeRequest(pRequest);
                             final List<Entity> entities = ObserverCallback.onResponseReceived(
-                                    response
-                            );
+                                    response);
                             if (entities != null && entities.size() > 0) {
                                 mModel.persistAll(entities);
                                 notifyViewDataChange();
@@ -67,12 +66,10 @@ class BasePresenter<Entity> implements MVP.IPresenterOperations<Entity> {
                             final Context context = BasePresenter.this.mView.get().getViewContext();
                             IOUtil.showToast(
                                     context,
-                                    context.getString(R.string.msg_failed_download_stands)
-                            );
+                                    context.getString(R.string.msg_failed_download_stands));
                         }
                     }
-                }
-        );
+                });
     }
 
     @Override
@@ -82,14 +79,12 @@ class BasePresenter<Entity> implements MVP.IPresenterOperations<Entity> {
     }
 
     private void notifyViewDataChange() {
-        mThreadWorker.post(
-                new Runnable() {
+        mThreadWorker.post(new Runnable() {
 
-                    @Override
-                    public void run() {
-                        mView.get().onDataChanged();
-                    }
-                }
-        );
+            @Override
+            public void run() {
+                mView.get().onDataChanged();
+            }
+        });
     }
 }

@@ -33,14 +33,12 @@ public abstract class AbstractObserverRequest implements IHttpClient.IRequest<St
     @Override
     public String onErrorStream(
             final HttpURLConnection pConnection,
-            final InputStream pInputStream
-    ) throws IOException {
+            final InputStream pInputStream) throws IOException {
         if (BuildConfig.DEBUG) {
             String errorMessage = String.format(
                     Locale.getDefault(),
                     App.getState().getContext().getString(R.string.err_code_server_response),
-                    pConnection.getResponseCode()
-            );
+                    pConnection.getResponseCode());
             Log.e(AbstractObserverRequest.class.getSimpleName(), errorMessage);
         }
         return null;

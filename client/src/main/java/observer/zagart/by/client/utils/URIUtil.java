@@ -18,8 +18,7 @@ public class URIUtil {
         final String stringUri = uriBuilder(
                 pUri.getAuthority(),
                 getClearUriPath(pUri),
-                String.valueOf(pId)
-        );
+                String.valueOf(pId));
         return Uri.parse(stringUri);
     }
 
@@ -32,8 +31,7 @@ public class URIUtil {
         final String stringUri = uriBuilder(
                 Constants.AUTHORITY,
                 Constants.MODULE,
-                Constants.EMPTY_STRING
-        );
+                Constants.EMPTY_STRING);
         return Uri.parse(stringUri);
     }
 
@@ -41,8 +39,7 @@ public class URIUtil {
         final String stringUri = uriBuilder(
                 Constants.AUTHORITY,
                 Constants.STAND,
-                Constants.EMPTY_STRING
-        );
+                Constants.EMPTY_STRING);
         return Uri.parse(stringUri);
     }
 
@@ -53,7 +50,6 @@ public class URIUtil {
                 Constants.CONTENT,
                 pAuthority,
                 pPath,
-                pId
-        );
+                pId);
     }
 }

@@ -11,7 +11,6 @@ import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 
 import observer.zagart.by.client.App;
-import observer.zagart.by.client.BuildConfig;
 import observer.zagart.by.client.backend.requests.AuthenticationRequest;
 import observer.zagart.by.client.backend.requests.RegistrationRequest;
 import observer.zagart.by.client.constants.Constants;
@@ -41,8 +40,7 @@ public class ObserverApi {
     @Nullable
     public static String signUp(
             final String pLogin,
-            final String pPassword
-    ) {
+            final String pPassword) {
         return new ObserverApi().requestSignUp(pLogin, pPassword);
     }
 
@@ -67,8 +65,7 @@ public class ObserverApi {
     @Nullable
     private String requestLogIn(final String pLogin, final String pPassword) {
         return getTokenFromResponseString(
-                requestToServer(new AuthenticationRequest(pLogin, pPassword))
-        );
+                requestToServer(new AuthenticationRequest(pLogin, pPassword)));
     }
 
     @Nullable
@@ -85,8 +82,7 @@ public class ObserverApi {
                                 return null;
                             }
                         }
-                    }
-            );
+                    });
         } catch (ExecutionException | InterruptedException pEx) {
             return null;
         }
@@ -95,7 +91,6 @@ public class ObserverApi {
     @Nullable
     private String requestSignUp(final String pLogin, final String pPassword) {
         return getTokenFromResponseString(
-                requestToServer(new RegistrationRequest(pLogin, pPassword))
-        );
+                requestToServer(new RegistrationRequest(pLogin, pPassword)));
     }
 }

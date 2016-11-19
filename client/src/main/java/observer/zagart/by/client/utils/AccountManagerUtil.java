@@ -17,8 +17,7 @@ public class AccountManagerUtil {
     public static Account getPersistedAccount() {
         final String accountName = SharedPreferencesUtil.retrieveStringValue(
                 App.getState().getContext(),
-                Constants.CURRENT_ACCOUNT_NAME
-        );
+                Constants.CURRENT_ACCOUNT_NAME);
         AccountManager accountManager = AccountManager.get(App.getState().getContext());
         for (Account account : accountManager.getAccounts()) {
             if (account.name.equals(accountName)) {

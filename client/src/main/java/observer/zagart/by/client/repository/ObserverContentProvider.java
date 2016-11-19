@@ -41,8 +41,7 @@ public class ObserverContentProvider extends ContentProvider {
             final String[] pProjection,
             final String pSelection,
             final String[] pSelectionArgs,
-            final String pSortOrder
-    ) {
+            final String pSortOrder) {
         return mHelper.query(pSelection, pSelectionArgs);
     }
 
@@ -66,8 +65,7 @@ public class ObserverContentProvider extends ContentProvider {
     public int delete(
             @NonNull final Uri pUri,
             final String pSelection,
-            final String[] pSelectionArgs
-    ) {
+            final String[] pSelectionArgs) {
         final int id = (int) mHelper.delete(getTable(pUri), pSelection, pSelectionArgs);
         onDataChanged(pUri);
         return id;
@@ -87,8 +85,7 @@ public class ObserverContentProvider extends ContentProvider {
             @NonNull final Uri pUri,
             final ContentValues pContentValues,
             final String pSelection,
-            final String[] pSelectionArgs
-    ) {
+            final String[] pSelectionArgs) {
         return 0;
     }
 

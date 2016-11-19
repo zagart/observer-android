@@ -25,8 +25,8 @@ import static android.app.Activity.RESULT_OK;
  * @author zagart
  */
 //TODO it's not callback
-    //TODO move working with json to another class
-    //ObserverCallback shouln't work with accountManager
+//TODO move working with json to another class
+//ObserverCallback shouln't work with accountManager
 public class ObserverCallback {
 
     @SuppressWarnings("unchecked")
@@ -52,8 +52,7 @@ public class ObserverCallback {
             final AccountAuthenticatorActivity pActivity,
             final Account pAccount,
             final String pPassword,
-            final String pToken
-    ) {
+            final String pToken) {
         final AccountManager accountManager = AccountManager.get(pActivity);
         final Bundle result = new Bundle();
         if (accountManager.addAccountExplicitly(pAccount, pPassword, new Bundle())) {
@@ -64,14 +63,12 @@ public class ObserverCallback {
         } else {
             result.putString(
                     AccountManager.KEY_ERROR_MESSAGE,
-                    pActivity.getString(R.string.error_account_exists)
-            );
+                    pActivity.getString(R.string.error_account_exists));
         }
         SharedPreferencesUtil.persistStringValue(
                 App.getState().getContext(),
                 Constants.CURRENT_ACCOUNT_NAME,
-                pAccount.name
-        );
+                pAccount.name);
         App.getState().setAccount(pAccount);
         pActivity.setAccountAuthenticatorResult(result);
         pActivity.setResult(RESULT_OK);

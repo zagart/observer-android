@@ -19,8 +19,7 @@ public class ObserverAuthenticatorService extends Service {
     public ObserverAuthenticatorService() {
         super.onCreate();
         mAuthenticator = new ObserverAuthenticator(
-                App.getState().getContext().getApplicationContext()
-        );
+                App.getState().getContext().getApplicationContext());
     }
 
     @Nullable

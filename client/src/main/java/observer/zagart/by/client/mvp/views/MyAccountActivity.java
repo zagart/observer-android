@@ -40,20 +40,6 @@ public class MyAccountActivity extends BaseActivity {
     }
 
     @Override
-    protected void onCreate(@Nullable final Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        final ActionBar bar = getSupportActionBar();
-        if (bar != null) {
-            bar.hide();
-        }
-        setContentView(R.layout.my_account_activity);
-        mLogInView = (Button) findViewById(R.id.my_account_btn_log_in);
-        mLogOutView = (Button) findViewById(R.id.my_account_btn_log_out);
-        mUserLabel = (TextView) findViewById(R.id.my_account_login_label);
-        mUserLogin = (TextView) findViewById(R.id.my_account_login);
-    }
-
-    @Override
     public void onViewsVisibilityCheck() {
         if (App.getState().getAccount() != null) {
             mLogInView.setVisibility(View.GONE);
@@ -68,5 +54,19 @@ public class MyAccountActivity extends BaseActivity {
             mUserLogin.setVisibility(View.GONE);
             mUserLogin.setText(EMPTY_STRING);
         }
+    }
+
+    @Override
+    protected void onCreate(@Nullable final Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        final ActionBar bar = getSupportActionBar();
+        if (bar != null) {
+            bar.hide();
+        }
+        setContentView(R.layout.my_account_activity);
+        mLogInView = (Button) findViewById(R.id.my_account_btn_log_in);
+        mLogOutView = (Button) findViewById(R.id.my_account_btn_log_out);
+        mUserLabel = (TextView) findViewById(R.id.my_account_login_label);
+        mUserLogin = (TextView) findViewById(R.id.my_account_login);
     }
 }

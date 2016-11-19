@@ -8,6 +8,7 @@ import observer.zagart.by.client.http.interfaces.IHttpClient;
  * Factory of HTTP-clients.
  */
 public class HttpClientFactory {
+    //TODO singleton
 
     @Nullable
     public static IHttpClient get(final Type pType) {

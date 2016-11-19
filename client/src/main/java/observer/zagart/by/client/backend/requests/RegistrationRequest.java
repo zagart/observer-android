@@ -1,4 +1,5 @@
 package observer.zagart.by.client.backend.requests;
+
 import java.net.HttpURLConnection;
 
 import observer.zagart.by.client.http.interfaces.IHttpClient;
@@ -11,6 +12,7 @@ import observer.zagart.by.client.http.interfaces.IHttpClient;
  * @see IHttpClient.IRequest
  */
 public class RegistrationRequest extends AbstractObserverRequest {
+
     private String mLogin;
     private String mPassword;
 
@@ -28,15 +30,12 @@ public class RegistrationRequest extends AbstractObserverRequest {
     public void handleRequestConnection(final HttpURLConnection pConnection) {
         pConnection.addRequestProperty(
                 IHttpClient.IHttpData.Header.ACTION,
-                IHttpClient.IHttpData.Actions.REGISTER
-        );
+                IHttpClient.IHttpData.Actions.REGISTER);
         pConnection.addRequestProperty(
                 IHttpClient.IHttpData.Header.LOGIN,
-                mLogin
-        );
+                mLogin);
         pConnection.addRequestProperty(
                 IHttpClient.IHttpData.Header.PASSWORD,
-                mPassword
-        );
+                mPassword);
     }
 }

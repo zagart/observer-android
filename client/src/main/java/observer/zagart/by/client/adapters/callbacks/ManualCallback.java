@@ -19,8 +19,7 @@ public class ManualCallback extends ItemTouchHelper.Callback {
     @Override
     public int getMovementFlags(
             final RecyclerView pRecyclerView,
-            final RecyclerView.ViewHolder pViewHolder
-    ) {
+            final RecyclerView.ViewHolder pViewHolder) {
         int dragFlags = ItemTouchHelper.UP | ItemTouchHelper.DOWN;
         int swipeFlags = ItemTouchHelper.START | ItemTouchHelper.END;
         return makeMovementFlags(dragFlags, swipeFlags);
@@ -30,8 +29,7 @@ public class ManualCallback extends ItemTouchHelper.Callback {
     public boolean onMove(
             final RecyclerView pRecyclerView,
             final RecyclerView.ViewHolder pViewHolder,
-            final RecyclerView.ViewHolder pTarget
-    ) {
+            final RecyclerView.ViewHolder pTarget) {
         mContent.onItemLock(pViewHolder.getAdapterPosition(), pTarget.getAdapterPosition());
         return true;
     }

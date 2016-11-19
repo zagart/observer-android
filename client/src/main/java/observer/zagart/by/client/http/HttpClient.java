@@ -41,18 +41,17 @@ public class HttpClient implements IHttpClient {
 
     @Override
     public <Result> Result executeRequest(final IRequest<Result> pRequest) throws IOException {
-        Result result;
-        HttpURLConnection connection;
+        final Result result;
+        final HttpURLConnection connection;
         InputStream errorStream = null;
         InputStream standardStream = null;
-        URL reqUrl = new URL(pRequest.getUrl());
+        final URL reqUrl = new URL(pRequest.getUrl());
         connection = ((HttpURLConnection) reqUrl.openConnection());
         connection.setConnectTimeout(Constants.TIMEOUT);
         connection.setRequestMethod(pRequest.getMethodType().name());
         connection.setRequestProperty(
                 IHttpClient.IHttpData.Header.CONTENT_TYPE,
-                pRequest.getContentType()
-        );
+                pRequest.getContentType());
         pRequest.handleRequestConnection(connection);
         try {
             errorStream = connection.getErrorStream();

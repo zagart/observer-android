@@ -24,12 +24,8 @@ import observer.zagart.by.client.utils.URIUtil;
  */
 public class StandsActivity extends BaseActivity {
 
-    private StandPresenter mPresenter;
+    private StandPresenter mPresenter = new StandPresenter(this);
     private RecyclerView mRecyclerViewStands;
-
-    {
-        mPresenter = new StandPresenter(this);
-    }
 
     public void onClearClick(View pView) {
         mPresenter.clearModel(URIUtil.getStandUri());

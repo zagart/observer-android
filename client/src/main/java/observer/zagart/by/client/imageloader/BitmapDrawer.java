@@ -23,9 +23,10 @@ import observer.zagart.by.client.threadings.ThreadWorker;
  *
  * @author zagart
  */
+@SuppressWarnings("unused") //TODO improve image-loader
 public class BitmapDrawer implements IDrawable<ImageView, String> {
 
-    private static final float MEMORY_USE_COEFFICIENT = 0.125f; //12.5%
+    final private static float MEMORY_USE_COEFFICIENT = 0.125f; //12.5%
     private final LruCache<String, Bitmap> mCache;
     private ThreadWorker mThreadWorker;
 
@@ -35,7 +36,7 @@ public class BitmapDrawer implements IDrawable<ImageView, String> {
         mCache = new LruCache<String, Bitmap>(mCacheSize) {
 
             @Override
-            protected int sizeOf(final String pKey, final android.graphics.Bitmap pImage) {
+            protected int sizeOf(final String pKey, final Bitmap pImage) {
                 return pImage.getByteCount() / 1024;
             }
         };
@@ -58,8 +59,7 @@ public class BitmapDrawer implements IDrawable<ImageView, String> {
             mThreadWorker.performAction(
                     new BitmapDownloadAction(),
                     new BitmapDownloadCallback(pImageView),
-                    pUrl
-            );
+                    pUrl);
         }
     }
 
@@ -128,8 +128,7 @@ public class BitmapDrawer implements IDrawable<ImageView, String> {
             final Bitmap bitmap = BitmapFactory.decodeByteArray(
                     downloaded,
                     0,
-                    downloaded.length
-            );
+                    downloaded.length);
             downloaded = null;
             if (pParam != null && bitmap != null) {
                 putInCache(pParam, bitmap);
@@ -140,8 +139,7 @@ public class BitmapDrawer implements IDrawable<ImageView, String> {
                             public void run() {
                                 setImageBitmap(mImageView.get(), pParam);
                             }
-                        }
-                );
+                        });
             }
         }
 

@@ -35,8 +35,7 @@ public class StandModel implements MVP.IModelOperations<Stand> {
                 null,
                 Constants.SELECT_ALL_STANDS,
                 null,
-                null
-        );
+                null);
         if (cursor != null && cursor.moveToFirst()) {
             while (!cursor.isAfterLast()) {
                 stands.add(Stand.parseCursorRow(cursor));
@@ -71,8 +70,7 @@ public class StandModel implements MVP.IModelOperations<Stand> {
                 null,
                 Constants.SELECT_FROM_STAND_WHERE_ID,
                 args,
-                null
-        );
+                null);
         if (cursor == null) {
             return false;
         } else {

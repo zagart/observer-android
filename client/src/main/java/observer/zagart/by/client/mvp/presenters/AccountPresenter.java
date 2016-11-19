@@ -43,8 +43,7 @@ public class AccountPresenter implements MVP.IPresenterOperations<Account> {
     public void executeRegistration(
             final AccountAuthenticatorActivity pActivity,
             final CharSequence pCharLogin,
-            final CharSequence pCharPassword
-    ) {
+            final CharSequence pCharPassword) {
         mThreadWorker.execute(
                 new Runnable() {
 
@@ -54,26 +53,22 @@ public class AccountPresenter implements MVP.IPresenterOperations<Account> {
                         final String password = pCharPassword.toString();
                         final String token = ObserverApi.signUp(
                                 login,
-                                password
-                        );
+                                password);
                         if (!TextUtils.isEmpty(token)) {
                             final ObserverAccount account = new ObserverAccount(login);
                             ObserverCallback.onTokenReceived(
                                     pActivity,
                                     account,
                                     password,
-                                    token
-                            );
+                                    token);
                         } else {
                             final Context viewContext = mView.get().getViewContext();
                             IOUtil.showToast(
                                     viewContext,
-                                    viewContext.getString(R.string.err_registration_failed)
-                            );
+                                    viewContext.getString(R.string.err_registration_failed));
                         }
                     }
-                }
-        );
+                });
     }
 
     public void executeAuthentication(
@@ -90,26 +85,22 @@ public class AccountPresenter implements MVP.IPresenterOperations<Account> {
                         final String password = pPassword.toString();
                         final String token = ObserverApi.logIn(
                                 login,
-                                password
-                        );
+                                password);
                         if (!TextUtils.isEmpty(token)) {
                             final ObserverAccount account = new ObserverAccount(login);
                             ObserverCallback.onTokenReceived(
                                     pActivity,
                                     account,
                                     password,
-                                    token
-                            );
+                                    token);
                         } else {
                             final Context viewContext = mView.get().getViewContext();
                             IOUtil.showToast(
                                     viewContext,
-                                    viewContext.getString(R.string.msg_failed_authentication)
-                            );
+                                    viewContext.getString(R.string.msg_failed_authentication));
                         }
                     }
-                }
-        );
+                });
     }
 
     @Override

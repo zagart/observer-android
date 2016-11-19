@@ -21,14 +21,9 @@ import observer.zagart.by.client.utils.IOUtil;
 public class AuthenticationActivity
         extends AccountAuthenticatorActivity implements MVP.IViewOperations {
 
-    private AccountPresenter mPresenter;
-
+    private AccountPresenter mPresenter = new AccountPresenter(this);
     private TextView mLoginView;
     private TextView mPasswordView;
-
-    {
-        mPresenter = new AccountPresenter(this);
-    }
 
     public void onGuestClick(View view) {
         //TODO guest log in
