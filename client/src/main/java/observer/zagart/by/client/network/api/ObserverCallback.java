@@ -5,6 +5,7 @@ import android.accounts.AccountAuthenticatorActivity;
 import android.accounts.AccountManager;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Keep;
 import android.support.annotation.Nullable;
 
 import org.json.JSONException;
@@ -15,8 +16,8 @@ import java.util.List;
 import observer.zagart.by.client.App;
 import observer.zagart.by.client.R;
 import observer.zagart.by.client.application.constants.Constants;
-import observer.zagart.by.client.mvp.views.MyAccountActivity;
 import observer.zagart.by.client.application.utils.SharedPreferencesUtil;
+import observer.zagart.by.client.mvp.views.MyAccountActivity;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -26,15 +27,19 @@ import static android.app.Activity.RESULT_OK;
 //TODO it's not callback
 //TODO move working with json to another class
 //ObserverCallback shouln't work with accountManager
+@Keep
 public class ObserverCallback {
 
     @SuppressWarnings("unchecked")
     @Nullable
     public static <Entity> List<Entity> onResponseReceived(final String pServerResponse)
             throws JSONException {
+        if (pServerResponse == null) {
+            return null;
+        }
         final JSONObject jsonObjectResponse = new JSONObject(pServerResponse);
         final String reflectedAction = jsonObjectResponse.getString(Constants.REFLECTION);
-        if (pServerResponse == null || reflectedAction == null) {
+        if (reflectedAction == null) {
             return null;
         }
         switch (reflectedAction) {

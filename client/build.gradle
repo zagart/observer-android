@@ -16,12 +16,26 @@ android {
             minifyEnabled false
         }
         release {
+            shrinkResources true
             minifyEnabled true
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'),
+                    'proguard-rules.pro'
+        }
+    }
+    applicationVariants.all { variant ->
+        variant.outputs.each { output ->
+            def file = output.outputFile
+            def fileName = getParent().getName()
+            def build = variant.getBuildType().getName()
+            build = build.substring(0, 1).toUpperCase() + build.substring(1);
+            fileName = fileName + build + "_" + versionName + ".apk"
+            output.outputFile = new File(file.parent, fileName)
         }
     }
     return void
 }
+
+
 ext {
     supportLibraryVersion = '25.0.1'
     junitVersion = '4.12'

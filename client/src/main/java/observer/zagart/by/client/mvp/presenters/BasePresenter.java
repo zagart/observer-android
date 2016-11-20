@@ -51,6 +51,7 @@ class BasePresenter<Entity> implements IMvp.IPresenterOperations<Entity> {
 
                     @Override
                     public void run() {
+                        final Context context = BasePresenter.this.mView.get().getViewContext();
                         try {
                             final String response = HttpFactory
                                     .getDefaultClient()
@@ -60,12 +61,14 @@ class BasePresenter<Entity> implements IMvp.IPresenterOperations<Entity> {
                             if (entities != null && entities.size() > 0) {
                                 mModel.persistAll(entities);
                                 notifyViewDataChange();
+                            } else {
+                                IOUtil.showToast(context,
+                                        context.getString(R.string.msg_no_server_response));
                             }
                         } catch (IOException | JSONException pEx) {
-                            final Context context = BasePresenter.this.mView.get().getViewContext();
                             IOUtil.showToast(
                                     context,
-                                    context.getString(R.string.msg_failed_download_stands));
+                                    context.getString(R.string.msg_failed_parse_stands));
                         }
                     }
                 });
