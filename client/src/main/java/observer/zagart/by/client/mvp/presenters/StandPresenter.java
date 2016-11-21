@@ -1,9 +1,8 @@
 package observer.zagart.by.client.mvp.presenters;
 
-import android.net.Uri;
-
 import java.util.List;
 
+import observer.zagart.by.client.application.utils.URIUtil;
 import observer.zagart.by.client.mvp.IMvp;
 import observer.zagart.by.client.mvp.models.StandModel;
 import observer.zagart.by.client.mvp.models.repository.entities.Stand;
@@ -20,22 +19,21 @@ import observer.zagart.by.client.network.http.requests.GetStandsRequest;
 public class StandPresenter extends BasePresenter<Stand> {
 
     public StandPresenter(final IMvp.IViewOperations pView) {
-        super(pView);
-        onCreate(new StandModel());
+        super(pView, new StandModel(), URIUtil.getStandUri());
     }
 
     @Override
-    public List<Stand> getElementsFromModel(final Uri pUri) {
-        return super.getElementsFromModel(pUri);
+    public List<Stand> getElementsFromModel() {
+        return super.getElementsFromModel();
     }
 
     @Override
-    public void synchronizeModel(final Uri pUri, final IHttpClient.IRequest<String> pRequest) {
-        super.synchronizeModel(pUri, new GetStandsRequest());
+    public void synchronizeModel(final IHttpClient.IRequest<String> pRequest) {
+        super.synchronizeModel(new GetStandsRequest());
     }
 
     @Override
-    public void clearModel(final Uri pUri) {
-        super.clearModel(pUri);
+    public void clearModel() {
+        super.clearModel();
     }
 }

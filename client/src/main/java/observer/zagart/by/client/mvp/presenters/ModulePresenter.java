@@ -1,9 +1,8 @@
 package observer.zagart.by.client.mvp.presenters;
 
-import android.net.Uri;
-
 import java.util.List;
 
+import observer.zagart.by.client.application.utils.URIUtil;
 import observer.zagart.by.client.mvp.IMvp;
 import observer.zagart.by.client.mvp.models.ModuleModel;
 import observer.zagart.by.client.mvp.models.repository.entities.Module;
@@ -20,22 +19,21 @@ import observer.zagart.by.client.network.http.requests.GetModulesRequest;
 public class ModulePresenter extends BasePresenter<Module> {
 
     public ModulePresenter(final IMvp.IViewOperations pView) {
-        super(pView);
-        onCreate(new ModuleModel());
+        super(pView, new ModuleModel(), URIUtil.getModuleUri());
     }
 
     @Override
-    public List<Module> getElementsFromModel(final Uri pUri) {
-        return super.getElementsFromModel(pUri);
+    public List<Module> getElementsFromModel() {
+        return super.getElementsFromModel();
     }
 
     @Override
-    public void synchronizeModel(final Uri pUri, final IHttpClient.IRequest<String> pRequest) {
-        super.synchronizeModel(pUri, new GetModulesRequest());
+    public void synchronizeModel(final IHttpClient.IRequest<String> pRequest) {
+        super.synchronizeModel(new GetModulesRequest());
     }
 
     @Override
-    public void clearModel(final Uri pUri) {
-        super.clearModel(pUri);
+    public void clearModel() {
+        super.clearModel();
     }
 }

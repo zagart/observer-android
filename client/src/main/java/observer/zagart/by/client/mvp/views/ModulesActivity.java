@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 import observer.zagart.by.client.R;
-import observer.zagart.by.client.application.utils.URIUtil;
+import observer.zagart.by.client.mvp.IMvp;
 import observer.zagart.by.client.mvp.models.repository.entities.Module;
 import observer.zagart.by.client.mvp.presenters.ModulePresenter;
 import observer.zagart.by.client.mvp.views.adapters.ModuleTableAdapter;
@@ -29,12 +29,12 @@ public class ModulesActivity extends BaseActivity {
     private RecyclerView mRecyclerView;
 
     public void onClearClick(View pView) {
-        mPresenter.clearModel(URIUtil.getModuleUri());
+        mPresenter.clearModel();
     }
 
     public void onReloadClick(View pView)
             throws InterruptedException, ExecutionException, JSONException {
-        mPresenter.synchronizeModel(URIUtil.getModuleUri(), null);
+        mPresenter.synchronizeModel(null);
     }
 
     @Override
@@ -50,8 +50,13 @@ public class ModulesActivity extends BaseActivity {
         setAdapter();
     }
 
+    @Override
+    protected IMvp.IPresenterOperations getPresenter() {
+        return mPresenter;
+    }
+
     private void setAdapter() {
-        final List<Module> modules = mPresenter.getElementsFromModel(URIUtil.getModuleUri());
+        final List<Module> modules = mPresenter.getElementsFromModel();
         final ModuleTableAdapter adapter = new ModuleTableAdapter(modules);
         mRecyclerView.setAdapter(adapter);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));

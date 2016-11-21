@@ -9,6 +9,7 @@ import android.widget.Button;
 
 import observer.zagart.by.client.App;
 import observer.zagart.by.client.R;
+import observer.zagart.by.client.mvp.IMvp;
 import observer.zagart.by.client.mvp.views.base.BaseActivity;
 
 /**
@@ -47,6 +48,11 @@ public class MainActivity extends BaseActivity {
     @Override
     public void onDataChanged(final Bundle pParameters) {
         onAccountCheck();
+    }
+
+    @Override
+    protected IMvp.IPresenterOperations getPresenter() {
+        return null;
     }
 
     @Override

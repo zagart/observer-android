@@ -25,13 +25,13 @@ public interface IMvp {
 
     interface IPresenterOperations<Entity> {
 
-        void onCreate(final IModelOperations<Entity> pModel);
+        Uri getEntityUri();
 
-        List<Entity> getElementsFromModel(final Uri pUri);
+        List<Entity> getElementsFromModel();
 
-        void synchronizeModel(final Uri pUri, final IHttpClient.IRequest<String> pRequest);
+        void synchronizeModel(final IHttpClient.IRequest<String> pRequest);
 
-        void clearModel(final Uri pUri);
+        void clearModel();
     }
 
     interface IModelOperations<Entity> {

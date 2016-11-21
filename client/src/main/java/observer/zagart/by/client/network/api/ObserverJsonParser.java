@@ -14,6 +14,8 @@ import observer.zagart.by.client.mvp.models.repository.entities.Module;
 import observer.zagart.by.client.mvp.models.repository.entities.Stand;
 
 /**
+ * JSON data parser for responses from Observer server.
+ *
  * @author zagart
  */
 

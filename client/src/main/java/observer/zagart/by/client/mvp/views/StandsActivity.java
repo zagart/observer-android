@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 import observer.zagart.by.client.R;
-import observer.zagart.by.client.application.utils.URIUtil;
+import observer.zagart.by.client.mvp.IMvp;
 import observer.zagart.by.client.mvp.models.repository.entities.Stand;
 import observer.zagart.by.client.mvp.presenters.StandPresenter;
 import observer.zagart.by.client.mvp.views.adapters.StandTableAdapter;
@@ -29,12 +29,12 @@ public class StandsActivity extends BaseActivity {
     private RecyclerView mRecyclerViewStands;
 
     public void onClearClick(View pView) {
-        mPresenter.clearModel(URIUtil.getStandUri());
+        mPresenter.clearModel();
     }
 
     public void onReloadClick(View pView)
             throws InterruptedException, ExecutionException, JSONException {
-        mPresenter.synchronizeModel(URIUtil.getStandUri(), null);
+        mPresenter.synchronizeModel(null);
     }
 
     @Override
@@ -50,8 +50,13 @@ public class StandsActivity extends BaseActivity {
         setAdapter();
     }
 
+    @Override
+    protected IMvp.IPresenterOperations getPresenter() {
+        return mPresenter;
+    }
+
     private void setAdapter() {
-        final List<Stand> stands = mPresenter.getElementsFromModel(URIUtil.getStandUri());
+        final List<Stand> stands = mPresenter.getElementsFromModel();
         final StandTableAdapter adapter = new StandTableAdapter(stands);
         mRecyclerViewStands.setAdapter(adapter);
         mRecyclerViewStands.setLayoutManager(new LinearLayoutManager(this));

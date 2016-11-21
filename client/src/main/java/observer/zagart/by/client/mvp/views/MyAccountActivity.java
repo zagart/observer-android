@@ -12,6 +12,7 @@ import observer.zagart.by.client.App;
 import observer.zagart.by.client.R;
 import observer.zagart.by.client.application.constants.Constants;
 import observer.zagart.by.client.application.utils.SharedPreferencesUtil;
+import observer.zagart.by.client.mvp.IMvp;
 import observer.zagart.by.client.mvp.views.base.BaseActivity;
 
 import static observer.zagart.by.client.application.constants.Constants.EMPTY_STRING;
@@ -55,6 +56,11 @@ public class MyAccountActivity extends BaseActivity {
             mUserLogin.setVisibility(View.GONE);
             mUserLogin.setText(EMPTY_STRING);
         }
+    }
+
+    @Override
+    protected IMvp.IPresenterOperations getPresenter() {
+        return null;
     }
 
     @Override

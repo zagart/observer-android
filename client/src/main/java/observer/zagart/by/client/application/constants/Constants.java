@@ -20,6 +20,7 @@ public class Constants {
     public static final short READ_BUFFER_SIZE = 4096;
     public static final int TIMEOUT = 3000;
     public static final String PREF_FILE = "SharedFile";
+    public static final String ACCOUNT = "Account";
     public static final String MODULE = "Module";
     public static final String STAND = "Stand";
     public static final String CONTENT = "content";

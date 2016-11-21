@@ -27,6 +27,14 @@ public class URIUtil {
         return Uri.parse(stringUri);
     }
 
+    public static Uri getAccountUri() {
+        final String stringUri = uriBuilder(
+                Constants.AUTHORITY,
+                Constants.ACCOUNT,
+                Constants.EMPTY_STRING);
+        return Uri.parse(stringUri);
+    }
+
     public static Uri getStandUri() {
         final String stringUri = uriBuilder(
                 Constants.AUTHORITY,

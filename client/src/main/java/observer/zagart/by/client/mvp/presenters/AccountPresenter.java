@@ -1,7 +1,5 @@
 package observer.zagart.by.client.mvp.presenters;
 
-import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
 
@@ -12,6 +10,7 @@ import observer.zagart.by.client.R;
 import observer.zagart.by.client.application.accounts.ObserverAccount;
 import observer.zagart.by.client.application.managers.ThreadManager;
 import observer.zagart.by.client.application.utils.IOUtil;
+import observer.zagart.by.client.application.utils.URIUtil;
 import observer.zagart.by.client.mvp.IMvp;
 import observer.zagart.by.client.mvp.models.AccountModel;
 import observer.zagart.by.client.network.api.ObserverApi;
@@ -29,8 +28,7 @@ public class AccountPresenter extends BasePresenter<ObserverAccount> {
     final private ThreadManager mThreadManager = App.getThreadManager();
 
     public AccountPresenter(final IMvp.IViewOperations pView) {
-        super(pView);
-        onCreate(new AccountModel());
+        super(pView, new AccountModel(), URIUtil.getAccountUri());
     }
 
     public void executeRegistration(final CharSequence pCharLogin,
@@ -45,10 +43,9 @@ public class AccountPresenter extends BasePresenter<ObserverAccount> {
                     if (!TextUtils.isEmpty(token)) {
                         logInOrAddAccount(login, password, token);
                     } else {
-                        final Context viewContext = getView().get().getViewContext();
                         IOUtil.showToast(
-                                viewContext,
-                                viewContext.getString(R.string.err_registration_failed));
+                                getContext(),
+                                getContext().getString(R.string.err_registration_failed));
                     }
                 });
     }
@@ -64,26 +61,24 @@ public class AccountPresenter extends BasePresenter<ObserverAccount> {
                     if (!TextUtils.isEmpty(token)) {
                         logInOrAddAccount(login, password, token);
                     } else {
-                        final Context viewContext = getView().get().getViewContext();
-                        IOUtil.showToast(
-                                viewContext,
-                                viewContext.getString(R.string.msg_failed_authentication));
+                        IOUtil.showToast(getContext(),
+                                getContext().getString(R.string.msg_failed_authentication));
                     }
                 });
     }
 
     @Override
-    public List<ObserverAccount> getElementsFromModel(final Uri pUri) {
+    public List<ObserverAccount> getElementsFromModel() {
         return getModel().retrieveAll();
     }
 
     @Override
-    public void synchronizeModel(final Uri pUri, final IHttpClient.IRequest<String> pRequest) {
+    public void synchronizeModel(final IHttpClient.IRequest<String> pRequest) {
         //TODO sync adapter instead
     }
 
     @Override
-    public void clearModel(final Uri pUri) {
+    public void clearModel() {
         getModel().deleteAll();
     }
 

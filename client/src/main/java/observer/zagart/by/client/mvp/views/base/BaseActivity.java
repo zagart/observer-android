@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 
 import observer.zagart.by.client.App;
 import observer.zagart.by.client.mvp.IMvp;
+import observer.zagart.by.client.mvp.models.repository.DatabaseContentObserver;
 import observer.zagart.by.client.mvp.views.MainActivity;
 
 /**
@@ -14,6 +15,8 @@ import observer.zagart.by.client.mvp.views.MainActivity;
  * @author zagart
  */
 abstract public class BaseActivity extends AppCompatActivity implements IMvp.IViewOperations {
+
+    private DatabaseContentObserver mObserver = new DatabaseContentObserver(this);
 
     public void onAccountCheck() {
         if (App.getAccount() == null) {
@@ -28,9 +31,29 @@ abstract public class BaseActivity extends AppCompatActivity implements IMvp.IVi
         return this;
     }
 
+    protected abstract IMvp.IPresenterOperations getPresenter();
+
     @Override
     protected void onStart() {
         super.onStart();
         onAccountCheck();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (getPresenter() != null && getPresenter().getEntityUri() != null) {
+            getContentResolver().registerContentObserver(
+                    getPresenter().getEntityUri(),
+                    true,
+                    mObserver
+            );
+        }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        getContentResolver().unregisterContentObserver(mObserver);
     }
 }

@@ -25,30 +25,34 @@ import observer.zagart.by.client.network.http.interfaces.IHttpClient;
  */
 abstract class BasePresenter<Entity> implements IMvp.IPresenterOperations<Entity> {
 
-    private WeakReference<IMvp.IViewOperations> mView;
-    private ThreadManager mThreadManager;
-    private IMvp.IModelOperations<Entity> mModel;
+    final private WeakReference<IMvp.IViewOperations> mView;
+    final private ThreadManager mThreadManager;
+    final private IMvp.IModelOperations<Entity> mModel;
+    final private Uri mUri;
 
-    BasePresenter(final IMvp.IViewOperations pView) {
+    BasePresenter(final IMvp.IViewOperations pView,
+                  final IMvp.IModelOperations<Entity> pModel,
+                  final Uri pUri) {
         mView = new WeakReference<>(pView);
+        mModel = pModel;
+        mUri = pUri;
         mThreadManager = App.getThreadManager();
     }
 
-    @Override
-    public void onCreate(final IMvp.IModelOperations<Entity> pModel) {
-        mModel = pModel;
+    public Uri getEntityUri() {
+        return mUri;
     }
 
     @Override
-    public List<Entity> getElementsFromModel(final Uri pUri) {
+    public List<Entity> getElementsFromModel() {
         return mModel.retrieveAll();
     }
 
     @Override
-    public void synchronizeModel(final Uri pUri, final IHttpClient.IRequest<String> pRequest) {
+    public void synchronizeModel(final IHttpClient.IRequest<String> pRequest) {
         mThreadManager.execute(
                 () -> {
-                    final Context context = BasePresenter.this.mView.get().getViewContext();
+                    final Context context = getContext();
                     try {
                         final String response = HttpFactory
                                 .getDefaultClient()
@@ -57,7 +61,6 @@ abstract class BasePresenter<Entity> implements IMvp.IPresenterOperations<Entity
                                 response);
                         if (entities != null && entities.size() > 0) {
                             mModel.persistAll(entities);
-                            notifyViewDataChange();
                         } else {
                             IOUtil.showToast(context,
                                     context.getString(R.string.msg_no_server_response));
@@ -71,9 +74,12 @@ abstract class BasePresenter<Entity> implements IMvp.IPresenterOperations<Entity
     }
 
     @Override
-    public void clearModel(final Uri pUri) {
+    public void clearModel() {
         mModel.deleteAll();
-        notifyViewDataChange();
+    }
+
+    protected Context getContext() {
+        return mView.get().getViewContext();
     }
 
     protected IMvp.IModelOperations<Entity> getModel() {
@@ -82,9 +88,5 @@ abstract class BasePresenter<Entity> implements IMvp.IPresenterOperations<Entity
 
     protected WeakReference<IMvp.IViewOperations> getView() {
         return mView;
-    }
-
-    private void notifyViewDataChange() {
-        mThreadManager.post(() -> mView.get().onDataChanged(null));
     }
 }

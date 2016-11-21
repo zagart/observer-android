@@ -23,7 +23,7 @@ import observer.zagart.by.client.mvp.models.repository.entities.IEntity;
  */
 abstract class BaseModel<Entity extends IEntity<Entity, ContentValues, Long>> {
 
-    public static final int PARAMETER_POSITION = 0; //Position of Entity in parameter
+    private static final int PARAMETER_POSITION = 0; //Position of Entity in parameter
     final private Entity mEmptyEntity = ReflectionUtil.getGenericObject(this, PARAMETER_POSITION);
     final private Uri mEntityTableUri;
 
@@ -36,8 +36,7 @@ abstract class BaseModel<Entity extends IEntity<Entity, ContentValues, Long>> {
         final List<Entity> entities = new ArrayList<>();
         final Cursor cursor = resolver.query(
                 mEntityTableUri,
-                null,
-                pEntitiesSelection,
+                null, pEntitiesSelection,
                 null,
                 null);
         if (cursor != null && cursor.moveToFirst()) {
