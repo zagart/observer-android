@@ -35,7 +35,7 @@ public interface IMvp {
 
         List<Entity> retrieveAll();
 
-        void persistAll(final List<Entity> pEntities);
+        void persistAll(List<Entity> pEntities);
 
         void deleteAll();
     }

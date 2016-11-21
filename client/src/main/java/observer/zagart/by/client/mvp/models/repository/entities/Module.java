@@ -8,14 +8,13 @@ import org.json.JSONObject;
 
 import java.util.Date;
 
-import observer.zagart.by.client.application.interfaces.IConvertible;
-import observer.zagart.by.client.mvp.models.repository.contracts.ModuleContract;
 import observer.zagart.by.client.application.utils.CursorUtil;
+import observer.zagart.by.client.mvp.models.repository.contracts.ModuleContract;
 
 /**
  * Model for module.
  */
-public class Module implements IConvertible<ContentValues> {
+public class Module implements IEntity<Module, ContentValues, Long> {
 
     private Long mId;
     private String mName;
@@ -57,51 +56,63 @@ public class Module implements IConvertible<ContentValues> {
         return module;
     }
 
+    @Override
+    public Module getNewEntity() {
+        return new Module();
+    }
+
+    @Override
     public Long getId() {
         return mId;
     }
 
-    public void setId(final Long id) {
+    public Module setId(final Long id) {
         mId = id;
+        return this;
     }
 
     public String getName() {
         return mName;
     }
 
-    public void setName(final String name) {
+    public Module setName(final String name) {
         mName = name;
+        return this;
     }
 
     public Long getStandId() {
         return mStandId;
     }
 
-    public void setStandId(final Long standId) {
+    public Module setStandId(final Long standId) {
         mStandId = standId;
+        return this;
     }
 
     public String getStatus() {
         return mStatus;
     }
 
-    public void setStatus(final String status) {
+    public Module setStatus(final String status) {
         mStatus = status;
+        return this;
     }
 
     public Date getStatusChangeDate() {
         return mStatusChangeDate;
     }
 
-    public void setStatusChangeDate(final Date statusChangeDate) {
+    public Module setStatusChangeDate(final Date statusChangeDate) {
         mStatusChangeDate = statusChangeDate;
+        return this;
     }
 
     public String getValue() {
         return mValue;
     }
 
-    public void setValue(final String value) {
+    public Module setValue(final String value) {
         mValue = value;
+        return this;
     }
 }

@@ -17,6 +17,7 @@ import observer.zagart.by.client.application.utils.AccountManagerUtil;
  */
 public class App extends Application {
 
+    //TODO configuration of ProGuard
     //TODO should be a singletons..?
     public static Account getAccount() {
         return AccountHolder.get();

@@ -6,14 +6,13 @@ import android.database.Cursor;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import observer.zagart.by.client.application.interfaces.IConvertible;
-import observer.zagart.by.client.mvp.models.repository.contracts.StandContract;
 import observer.zagart.by.client.application.utils.CursorUtil;
+import observer.zagart.by.client.mvp.models.repository.contracts.StandContract;
 
 /**
  * Model for stand.
  */
-public class Stand implements IConvertible<ContentValues> {
+public class Stand implements IEntity<Stand, ContentValues, Long> {
 
     private Long mId;
     private String mNumber;
@@ -46,23 +45,32 @@ public class Stand implements IConvertible<ContentValues> {
         return mDescription;
     }
 
-    public void setDescription(final String description) {
+    public Stand setDescription(final String description) {
         mDescription = description;
+        return this;
     }
 
+    @Override
+    public Stand getNewEntity() {
+        return new Stand();
+    }
+
+    @Override
     public Long getId() {
         return mId;
     }
 
-    public void setId(final Long id) {
+    public Stand setId(final Long id) {
         mId = id;
+        return this;
     }
 
     public String getNumber() {
         return mNumber;
     }
 
-    public void setNumber(final String number) {
+    public Stand setNumber(final String number) {
         mNumber = number;
+        return this;
     }
 }
