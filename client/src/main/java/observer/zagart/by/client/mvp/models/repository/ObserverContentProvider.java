@@ -1,6 +1,7 @@
 package observer.zagart.by.client.mvp.models.repository;
 
 import android.content.ContentProvider;
+import android.content.ContentUris;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.net.Uri;
@@ -52,7 +53,7 @@ public class ObserverContentProvider extends ContentProvider {
     public Uri insert(@NonNull final Uri pUri, final ContentValues pContentValues) {
         final Class<?> table = getTable(pUri);
         final long id = mHelper.insert(table, pContentValues);
-        final Uri newUri = URIUtil.addId(pUri, id);
+        final Uri newUri = ContentUris.withAppendedId(pUri, id);
         onDataChanged(newUri);
         return newUri;
     }

@@ -29,7 +29,7 @@ public class RegistrationActivity extends BaseAuthenticatorActivity {
         if (TextUtils.isEmpty(charLogin) || TextUtils.isEmpty(charPassword)) {
             IOUtil.showToast(this, getString(R.string.error_login_fields_empty));
         } else {
-            mPresenter.executeRegistration(this, charLogin, charPassword);
+            mPresenter.executeRegistration(charLogin, charPassword);
         }
     }
 

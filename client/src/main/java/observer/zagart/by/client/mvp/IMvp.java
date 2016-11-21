@@ -2,12 +2,15 @@ package observer.zagart.by.client.mvp;
 
 import android.content.Context;
 import android.net.Uri;
+import android.os.Bundle;
 
 import java.util.List;
 
 import observer.zagart.by.client.network.http.interfaces.IHttpClient;
 
 /**
+ * MVP pattern interface hierarchy for Observer project.
+ *
  * @author zagart
  */
 
@@ -17,7 +20,7 @@ public interface IMvp {
 
         Context getViewContext();
 
-        void onDataChanged();
+        void onDataChanged(final Bundle pParameters);
     }
 
     interface IPresenterOperations<Entity> {
@@ -33,9 +36,11 @@ public interface IMvp {
 
     interface IModelOperations<Entity> {
 
+        Long persist(final Entity pEntity);
+
         List<Entity> retrieveAll();
 
-        void persistAll(List<Entity> pEntities);
+        void persistAll(final List<Entity> pEntities);
 
         void deleteAll();
     }

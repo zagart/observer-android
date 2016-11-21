@@ -15,11 +15,13 @@ import observer.zagart.by.client.mvp.models.repository.entities.Module;
 
 public class ModuleModel extends BaseModel<Module> implements IMvp.IModelOperations<Module> {
 
-    final private IMvp.IPresenterOperations mPresenter;
-
-    public ModuleModel(final IMvp.IPresenterOperations pPresenter) {
+    public ModuleModel() {
         super(URIUtil.getModuleUri());
-        mPresenter = pPresenter;
+    }
+
+    @Override
+    public Long persist(final Module pModule) {
+        return super.persist(pModule, Constants.SELECT_FROM_MODULE_WHERE_ID);
     }
 
     @Override

@@ -19,11 +19,11 @@ import observer.zagart.by.client.network.http.HttpFactory;
 import observer.zagart.by.client.network.http.interfaces.IHttpClient;
 
 /**
- * Main presenter implementation.
+ * Base presenter implementation.
  *
  * @author zagart
  */
-class BasePresenter<Entity> implements IMvp.IPresenterOperations<Entity> {
+abstract class BasePresenter<Entity> implements IMvp.IPresenterOperations<Entity> {
 
     private WeakReference<IMvp.IViewOperations> mView;
     private ThreadManager mThreadManager;
@@ -47,29 +47,25 @@ class BasePresenter<Entity> implements IMvp.IPresenterOperations<Entity> {
     @Override
     public void synchronizeModel(final Uri pUri, final IHttpClient.IRequest<String> pRequest) {
         mThreadManager.execute(
-                new Runnable() {
-
-                    @Override
-                    public void run() {
-                        final Context context = BasePresenter.this.mView.get().getViewContext();
-                        try {
-                            final String response = HttpFactory
-                                    .getDefaultClient()
-                                    .executeRequest(pRequest);
-                            final List<Entity> entities = ObserverCallback.onResponseReceived(
-                                    response);
-                            if (entities != null && entities.size() > 0) {
-                                mModel.persistAll(entities);
-                                notifyViewDataChange();
-                            } else {
-                                IOUtil.showToast(context,
-                                        context.getString(R.string.msg_no_server_response));
-                            }
-                        } catch (IOException | JSONException pEx) {
-                            IOUtil.showToast(
-                                    context,
-                                    context.getString(R.string.msg_failed_parse_stands));
+                () -> {
+                    final Context context = BasePresenter.this.mView.get().getViewContext();
+                    try {
+                        final String response = HttpFactory
+                                .getDefaultClient()
+                                .executeRequest(pRequest);
+                        final List<Entity> entities = ObserverCallback.onResponseReceived(
+                                response);
+                        if (entities != null && entities.size() > 0) {
+                            mModel.persistAll(entities);
+                            notifyViewDataChange();
+                        } else {
+                            IOUtil.showToast(context,
+                                    context.getString(R.string.msg_no_server_response));
                         }
+                    } catch (IOException | JSONException pEx) {
+                        IOUtil.showToast(
+                                context,
+                                context.getString(R.string.msg_failed_parse_stands));
                     }
                 });
     }
@@ -80,13 +76,15 @@ class BasePresenter<Entity> implements IMvp.IPresenterOperations<Entity> {
         notifyViewDataChange();
     }
 
-    private void notifyViewDataChange() {
-        mThreadManager.post(new Runnable() {
+    protected IMvp.IModelOperations<Entity> getModel() {
+        return mModel;
+    }
 
-            @Override
-            public void run() {
-                mView.get().onDataChanged();
-            }
-        });
+    protected WeakReference<IMvp.IViewOperations> getView() {
+        return mView;
+    }
+
+    private void notifyViewDataChange() {
+        mThreadManager.post(() -> mView.get().onDataChanged(null));
     }
 }

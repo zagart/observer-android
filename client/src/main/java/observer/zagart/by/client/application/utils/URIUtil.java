@@ -14,15 +14,7 @@ public class URIUtil {
 
     private static final String URI_FORMAT = "%s://%s/%s/%s";
 
-    public static Uri addId(Uri pUri, long pId) {
-        final String stringUri = uriBuilder(
-                pUri.getAuthority(),
-                getClearUriPath(pUri),
-                String.valueOf(pId));
-        return Uri.parse(stringUri);
-    }
-
-    public static String getClearUriPath(Uri pUri) {
+    public static String getClearUriPath(final Uri pUri) {
         String path = pUri.getPath();
         return path.replace(Constants.URI_SEPARATOR, Constants.EMPTY_STRING);
     }
@@ -43,7 +35,9 @@ public class URIUtil {
         return Uri.parse(stringUri);
     }
 
-    private static String uriBuilder(String pAuthority, String pPath, String pId) {
+    private static String uriBuilder(final String pAuthority,
+                                     final String pPath,
+                                     final String pId) {
         return String.format(
                 Locale.getDefault(),
                 URI_FORMAT,

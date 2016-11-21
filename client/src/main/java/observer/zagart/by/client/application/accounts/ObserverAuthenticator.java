@@ -83,7 +83,7 @@ class ObserverAuthenticator extends AbstractAccountAuthenticator {
         } else {
             accountManager.invalidateAuthToken(
                     pAccount.type,
-                    accountManager.peekAuthToken(pAccount, ObserverAccount.AUTH_TOKEN_TYPE)
+                    accountManager.peekAuthToken(pAccount, ObserverAccount.TOKEN)
             );
             final Intent intent = new Intent(mContext, AuthenticationActivity.class);
             intent.putExtra(AccountManager.KEY_ACCOUNT_AUTHENTICATOR_RESPONSE, pResponse);

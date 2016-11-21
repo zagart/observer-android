@@ -32,7 +32,7 @@ public class AuthenticationActivity extends BaseAuthenticatorActivity {
         if (TextUtils.isEmpty(charLogin) || TextUtils.isEmpty(charPassword)) {
             IOUtil.showToast(this, getString(R.string.error_login_fields_empty));
         } else {
-            mPresenter.executeAuthentication(this, charLogin, charPassword);
+            mPresenter.executeAuthentication(charLogin, charPassword);
         }
     }
 

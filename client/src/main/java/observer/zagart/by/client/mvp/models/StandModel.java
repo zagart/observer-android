@@ -15,11 +15,13 @@ import observer.zagart.by.client.mvp.models.repository.entities.Stand;
 
 public class StandModel extends BaseModel<Stand> implements IMvp.IModelOperations<Stand> {
 
-    final private IMvp.IPresenterOperations mPresenter;
-
-    public StandModel(final IMvp.IPresenterOperations pPresenter) {
+    public StandModel() {
         super(URIUtil.getStandUri());
-        mPresenter = pPresenter;
+    }
+
+    @Override
+    public Long persist(final Stand pStand) {
+        return super.persist(pStand, Constants.SELECT_FROM_STAND_WHERE_ID);
     }
 
     @Override

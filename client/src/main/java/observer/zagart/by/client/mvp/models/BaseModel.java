@@ -1,9 +1,11 @@
 package observer.zagart.by.client.mvp.models;
 
 import android.content.ContentResolver;
+import android.content.ContentUris;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.net.Uri;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +23,8 @@ import observer.zagart.by.client.mvp.models.repository.entities.IEntity;
  */
 abstract class BaseModel<Entity extends IEntity<Entity, ContentValues, Long>> {
 
-    final private Entity mEmptyEntity = ReflectionUtil.getGenericObject(this, 0);
+    public static final int PARAMETER_POSITION = 0; //Position of Entity in parameter
+    final private Entity mEmptyEntity = ReflectionUtil.getGenericObject(this, PARAMETER_POSITION);
     final private Uri mEntityTableUri;
 
     BaseModel(final Uri pEntityTableUri) {
@@ -48,12 +51,22 @@ abstract class BaseModel<Entity extends IEntity<Entity, ContentValues, Long>> {
     }
 
     void persistAll(final List<Entity> pEntities, final String pSelectionById) {
+        //TODO correct bulk insert
         for (Entity entity : pEntities) {
-            if (!isEntityCached(entity, pSelectionById)) {
-                final ContentResolver resolver = App.getContext().getContentResolver();
-                resolver.insert(mEntityTableUri, entity.convert());
+            persist(entity, pSelectionById);
+        }
+    }
+
+    Long persist(final Entity pEntity, final String pSelectionById) {
+        if (!isEntityCached(pEntity, pSelectionById)) {
+            final ContentResolver resolver = App.getContext().getContentResolver();
+            final Uri entityUri = resolver.insert(mEntityTableUri, pEntity.convert());
+            if (entityUri != null) {
+                Log.i(BaseModel.class.getSimpleName(), entityUri.toString());
+                return ContentUris.parseId(entityUri);
             }
         }
+        return null;
     }
 
     void deleteAll() {

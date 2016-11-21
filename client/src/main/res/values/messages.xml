@@ -2,13 +2,13 @@
 <resources>
     <string name="error_login_fields_empty">Fields must not be empty!</string>
     <string name="error_account_exists">Account already exists</string>
-    <string name="msg_failed_authentication">Authentication failed! Maybe you want create new account?</string>
+    <string name="msg_failed_authentication">Authentication failed or server not response</string>
     <string name="err_code_server_response">Server returned error code #%d</string>
     <string name="err_on_load_account">Failed to load saved account</string>
     <string name="msg_no_accounts">No accounts found.</string>
     <string name="msg_sp_value_persisted">Value %s persisted</string>
     <string name="err_timeout">Timeout exception!</string>
     <string name="err_failed_get_data">Failed to get data from server</string>
-    <string name="msg_failed_parse_stands"> Failed to parse requested entities</string>
+    <string name="msg_failed_parse_stands">Failed to parse requested entities</string>
     <string name="msg_no_server_response">No server response or no parsed entities</string>
 </resources>

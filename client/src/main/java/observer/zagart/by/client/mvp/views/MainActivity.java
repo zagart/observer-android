@@ -45,7 +45,7 @@ public class MainActivity extends BaseActivity {
     }
 
     @Override
-    public void onDataChanged() {
+    public void onDataChanged(final Bundle pParameters) {
         onAccountCheck();
     }
 
