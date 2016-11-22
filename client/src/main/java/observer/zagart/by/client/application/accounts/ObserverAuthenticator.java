@@ -15,8 +15,8 @@ import java.io.IOException;
 import observer.zagart.by.client.application.utils.AccountUtil;
 import observer.zagart.by.client.mvp.views.AuthenticationActivity;
 import observer.zagart.by.client.network.http.HttpFactory;
-import observer.zagart.by.client.network.http.requests.AuthenticationRequest;
-import observer.zagart.by.client.network.http.requests.parser.ObserverJsonParser;
+import observer.zagart.by.client.network.http.requests.observer.AuthenticationRequest;
+import observer.zagart.by.client.network.http.responses.ObserverJsonResponse;
 
 /**
  * Application authenticator.
@@ -79,7 +79,7 @@ class ObserverAuthenticator extends AbstractAccountAuthenticator {
                     final String response = HttpFactory.getDefaultClient().executeRequest(
                             new AuthenticationRequest(pAccount.name, password)
                     );
-                    authToken = ObserverJsonParser.getTokenFromResponseString(response);
+                    authToken = new ObserverJsonResponse(response).extractToken();
                 } catch (IOException pE) {
                     authToken = null;
                 }

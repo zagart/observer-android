@@ -19,9 +19,9 @@ import observer.zagart.by.client.mvp.IMvp;
 import observer.zagart.by.client.mvp.models.base.BaseModel;
 import observer.zagart.by.client.mvp.models.repository.ModelContentObserver;
 import observer.zagart.by.client.mvp.models.repository.entities.IEntity;
-import observer.zagart.by.client.network.http.requests.parser.ObserverJsonParser;
 import observer.zagart.by.client.network.http.HttpFactory;
 import observer.zagart.by.client.network.http.interfaces.IHttpClient;
+import observer.zagart.by.client.network.http.responses.ObserverJsonResponse;
 
 /**
  * Base presenter implementation.
@@ -37,7 +37,7 @@ public abstract class BasePresenter<Entity extends IEntity<Entity, ContentValues
     final private ContentObserver mObserver;
 
     protected BasePresenter(final IMvp.IViewOperations pView,
-                  final BaseModel<Entity> pModel) {
+                            final BaseModel<Entity> pModel) {
         mView = new WeakReference<>(pView);
         mModel = pModel;
         mThreadManager = App.getThreadManager();
@@ -58,8 +58,8 @@ public abstract class BasePresenter<Entity extends IEntity<Entity, ContentValues
                         final String response = HttpFactory
                                 .getDefaultClient()
                                 .executeRequest(pRequest);
-                        final List<Entity> entities = ObserverJsonParser.parseServerResponse(
-                                response);
+                        final List<Entity> entities = new ObserverJsonResponse(response)
+                                .extractEntities();
                         if (entities != null && entities.size() > 0) {
                             mModel.persistAll(entities);
                         } else {

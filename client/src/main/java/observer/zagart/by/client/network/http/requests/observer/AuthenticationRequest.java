@@ -1,22 +1,22 @@
-package observer.zagart.by.client.network.http.requests;
+package observer.zagart.by.client.network.http.requests.observer;
 
 import java.net.HttpURLConnection;
 
 import observer.zagart.by.client.network.http.interfaces.IHttpClient;
+import observer.zagart.by.client.network.http.requests.observer.base.BaseObserverRequest;
 
 /**
- * AbstractObserverRequest implementation that is responsible for registration at
- * HTTP-server ObserverApi.
+ * BaseObserverRequest implementation that is responsible for authorization at
+ * HTTP-server Observer.
  *
  * @author zagart
- * @see IHttpClient.IRequest
  */
-public class RegistrationRequest extends AbstractObserverRequest {
+public class AuthenticationRequest extends BaseObserverRequest {
 
     private String mLogin;
     private String mPassword;
 
-    public RegistrationRequest(final String pLogin, final String pPassword) {
+    public AuthenticationRequest(final String pLogin, final String pPassword) {
         mLogin = pLogin;
         mPassword = pPassword;
     }
@@ -30,7 +30,7 @@ public class RegistrationRequest extends AbstractObserverRequest {
     public void handleRequestConnection(final HttpURLConnection pConnection) {
         pConnection.addRequestProperty(
                 IHttpClient.IHttpData.Header.ACTION,
-                IHttpClient.IHttpData.Actions.REGISTER);
+                IHttpClient.IHttpData.Actions.AUTHENTICATE);
         pConnection.addRequestProperty(
                 IHttpClient.IHttpData.Header.LOGIN,
                 mLogin);

@@ -10,7 +10,7 @@ import org.json.JSONObject;
 import observer.zagart.by.client.mvp.models.repository.entities.IEntity;
 
 /**
- * Account entity for Observer HTTP-server.
+ * Account entity for Android application.
  *
  * @author zagart
  */

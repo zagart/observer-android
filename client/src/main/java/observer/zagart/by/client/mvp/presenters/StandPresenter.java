@@ -7,7 +7,7 @@ import observer.zagart.by.client.mvp.models.StandModel;
 import observer.zagart.by.client.mvp.models.repository.entities.Stand;
 import observer.zagart.by.client.mvp.presenters.base.BasePresenter;
 import observer.zagart.by.client.network.http.interfaces.IHttpClient;
-import observer.zagart.by.client.network.http.requests.GetStandsRequest;
+import observer.zagart.by.client.network.http.requests.observer.GetStandsRequest;
 
 /**
  * Presenter implementation for {@link observer.zagart.by.client.mvp.views.StandsActivity} view

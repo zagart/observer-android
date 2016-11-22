@@ -18,8 +18,9 @@ import observer.zagart.by.client.mvp.models.AccountModel;
 import observer.zagart.by.client.mvp.presenters.base.BasePresenter;
 import observer.zagart.by.client.network.http.HttpFactory;
 import observer.zagart.by.client.network.http.interfaces.IHttpClient;
-import observer.zagart.by.client.network.http.requests.AuthenticationRequest;
-import observer.zagart.by.client.network.http.requests.parser.ObserverJsonParser;
+import observer.zagart.by.client.network.http.requests.observer.AuthenticationRequest;
+import observer.zagart.by.client.network.http.requests.observer.RegistrationRequest;
+import observer.zagart.by.client.network.http.responses.ObserverJsonResponse;
 
 /**
  * Presenter implementation for authentication views that use
@@ -46,15 +47,15 @@ public class AccountPresenter extends BasePresenter<ObserverAccount> {
     }
 
     public void executeRegistration(final CharSequence pLogin, final CharSequence pPassword) {
-        executeAuthRequest(
+        executeUserRequest(
                 pLogin,
                 pPassword,
-                new AuthenticationRequest(pLogin.toString(), pPassword.toString()),
+                new RegistrationRequest(pLogin.toString(), pPassword.toString()),
                 R.string.err_registration_failed);
     }
 
     public void executeAuthentication(final CharSequence pLogin, final CharSequence pPassword) {
-        executeAuthRequest(
+        executeUserRequest(
                 pLogin,
                 pPassword,
                 new AuthenticationRequest(pLogin.toString(), pPassword.toString()),
@@ -76,7 +77,7 @@ public class AccountPresenter extends BasePresenter<ObserverAccount> {
         getModel().deleteAll();
     }
 
-    private void executeAuthRequest(final CharSequence pLogin,
+    private void executeUserRequest(final CharSequence pLogin,
                                     final CharSequence pPassword,
                                     final IHttpClient.IRequest<String> pRequest,
                                     final int pErrorMessageResId) {
@@ -87,7 +88,7 @@ public class AccountPresenter extends BasePresenter<ObserverAccount> {
                     String token;
                     try {
                         final String response = mHttpClient.executeRequest(pRequest);
-                        token = ObserverJsonParser.getTokenFromResponseString(response);
+                        token = new ObserverJsonResponse(response).extractToken();
                     } catch (IOException pEx) {
                         token = null;
                     }

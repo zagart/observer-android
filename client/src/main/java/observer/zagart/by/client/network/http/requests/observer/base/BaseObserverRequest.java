@@ -1,4 +1,4 @@
-package observer.zagart.by.client.network.http.requests;
+package observer.zagart.by.client.network.http.requests.observer.base;
 
 import android.util.Log;
 
@@ -10,15 +10,16 @@ import java.util.Locale;
 import observer.zagart.by.client.App;
 import observer.zagart.by.client.BuildConfig;
 import observer.zagart.by.client.R;
-import observer.zagart.by.client.network.http.interfaces.IHttpClient;
 import observer.zagart.by.client.application.utils.IOUtil;
+import observer.zagart.by.client.network.http.interfaces.IHttpClient;
 
 /**
- * Abstract class with main data for connecting ObserverApi HTTP-server.
+ * Abstract request-class with main settings for connecting Observer HTTP-server.
  *
  * @author zagart
+ * @see  IHttpClient.IRequest
  */
-public abstract class AbstractObserverRequest implements IHttpClient.IRequest<String> {
+public abstract class BaseObserverRequest implements IHttpClient.IRequest<String> {
 
     @Override
     public String getContentType() {
@@ -39,7 +40,7 @@ public abstract class AbstractObserverRequest implements IHttpClient.IRequest<St
                     Locale.getDefault(),
                     App.getContext().getString(R.string.err_code_server_response),
                     pConnection.getResponseCode());
-            Log.e(AbstractObserverRequest.class.getSimpleName(), errorMessage);
+            Log.e(BaseObserverRequest.class.getSimpleName(), errorMessage);
         }
         return null;
     }

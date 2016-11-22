@@ -7,7 +7,7 @@ import observer.zagart.by.client.mvp.models.ModuleModel;
 import observer.zagart.by.client.mvp.models.repository.entities.Module;
 import observer.zagart.by.client.mvp.presenters.base.BasePresenter;
 import observer.zagart.by.client.network.http.interfaces.IHttpClient;
-import observer.zagart.by.client.network.http.requests.GetModulesRequest;
+import observer.zagart.by.client.network.http.requests.observer.GetModulesRequest;
 
 /**
  * Presenter implementation for {@link observer.zagart.by.client.mvp.views.ModulesActivity} view

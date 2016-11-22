@@ -36,6 +36,7 @@ public interface IHttpClient {
         void onTimeoutException();
     }
 
+    //TODO refactor constants
     interface IHttpData {
 
         class ContentType {

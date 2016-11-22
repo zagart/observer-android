@@ -1,4 +1,4 @@
-package observer.zagart.by.client.network.http.requests.parser;
+package observer.zagart.by.client.network.http.responses;
 
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -17,50 +17,17 @@ import observer.zagart.by.client.mvp.models.repository.entities.Stand;
 import observer.zagart.by.client.network.Criteria;
 
 /**
- * JSON data parser for responses from Observer server.
+ * JSON data parser for results from Observer's server requests.
  *
  * @author zagart
+ * @see observer.zagart.by.client.network.http.requests.observer.base.BaseObserverRequest
  */
-public class ObserverJsonParser {
+public class ObserverJsonResponse {
 
-    @Nullable
-    public static String getTokenFromResponseString(final String pResponse) {
-        if (pResponse == null) {
-            return null;
-        }
-        try {
-            JSONObject jsonResponse = new JSONObject(pResponse);
-            if (jsonResponse.has(Constants.TOKEN)) {
-                return jsonResponse.getString(Constants.TOKEN);
-            }
-            return null;
-        } catch (JSONException pEx) {
-            //TODO remove all logs by proguard
-            Log.e(ObserverJsonParser.class.getSimpleName(), pEx.getMessage(), pEx);
-            return null;
-        }
-    }
+    final private String mResponse;
 
-    @SuppressWarnings("unchecked")
-    @Nullable
-    public static <Entity> List<Entity> parseServerResponse(final String pServerResponse)
-            throws JSONException {
-        if (pServerResponse == null) {
-            return null;
-        }
-        final JSONObject jsonObjectResponse = new JSONObject(pServerResponse);
-        final String reflectedAction = jsonObjectResponse.getString(Constants.REFLECTION);
-        if (reflectedAction == null) {
-            return null;
-        }
-        switch (reflectedAction) {
-            case Criteria.GET_STANDS:
-                return (List<Entity>) ObserverJsonParser.parseStandsResponse(jsonObjectResponse);
-            case Criteria.GET_MODULES:
-                return (List<Entity>) ObserverJsonParser.parseModulesResponse(jsonObjectResponse);
-            default:
-                return null;
-        }
+    public ObserverJsonResponse(final String pResponse) {
+        mResponse = pResponse;
     }
 
     @NonNull
@@ -89,5 +56,43 @@ public class ObserverJsonParser {
             }
         }
         return standList;
+    }
+
+    @Nullable
+    public String extractToken() {
+        if (mResponse == null) {
+            return null;
+        }
+        try {
+            JSONObject jsonResponse = new JSONObject(mResponse);
+            if (jsonResponse.has(Constants.TOKEN)) {
+                return jsonResponse.getString(Constants.TOKEN);
+            }
+            return null;
+        } catch (JSONException pEx) {
+            Log.e(ObserverJsonResponse.class.getSimpleName(), pEx.getMessage(), pEx);
+            return null;
+        }
+    }
+
+    @SuppressWarnings("unchecked")
+    @Nullable
+    public <Entity> List<Entity> extractEntities() throws JSONException {
+        if (mResponse == null) {
+            return null;
+        }
+        final JSONObject jsonObjectResponse = new JSONObject(mResponse);
+        final String reflectedAction = jsonObjectResponse.getString(Constants.REFLECTION);
+        if (reflectedAction == null) {
+            return null;
+        }
+        switch (reflectedAction) {
+            case Criteria.GET_STANDS:
+                return (List<Entity>) ObserverJsonResponse.parseStandsResponse(jsonObjectResponse);
+            case Criteria.GET_MODULES:
+                return (List<Entity>) ObserverJsonResponse.parseModulesResponse(jsonObjectResponse);
+            default:
+                return null;
+        }
     }
 }

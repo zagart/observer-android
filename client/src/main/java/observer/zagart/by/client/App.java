@@ -17,6 +17,7 @@ import observer.zagart.by.client.application.utils.AccountUtil;
  */
 public class App extends Application {
 
+    //TODO remove all logs by proguard
     //TODO configuration of ProGuard
     //TODO should be a singletons..?
     public static Account getAccount() {

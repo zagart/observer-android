@@ -1,17 +1,18 @@
-package observer.zagart.by.client.network.http.requests;
+package observer.zagart.by.client.network.http.requests.observer;
 
 import java.net.HttpURLConnection;
 
 import observer.zagart.by.client.network.Criteria;
 import observer.zagart.by.client.network.http.interfaces.IHttpClient;
+import observer.zagart.by.client.network.http.requests.observer.base.BaseObserverRequest;
 
 /**
- * AbstractObserverRequest implementation that is responsible for getting
- * all stands data that satisfy criteria from HTTP-server ObserverApi.
+ * BaseObserverRequest implementation that is responsible for getting
+ * all modules data (that satisfy criteria) from HTTP-server Observer.
  *
  * @author zagart
  */
-public class GetStandsRequest extends AbstractObserverRequest {
+public class GetModulesRequest extends BaseObserverRequest {
 
     @Override
     public IHttpClient.Method getMethodType() {
@@ -25,6 +26,6 @@ public class GetStandsRequest extends AbstractObserverRequest {
                 IHttpClient.IHttpData.Actions.GET_DATA);
         pConnection.addRequestProperty(
                 IHttpClient.IHttpData.Header.CRITERIA,
-                Criteria.getStandsCriteria());
+                Criteria.getModulesCriteria());
     }
 }
