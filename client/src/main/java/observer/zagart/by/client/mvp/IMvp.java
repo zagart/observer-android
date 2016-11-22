@@ -1,7 +1,6 @@
 package observer.zagart.by.client.mvp;
 
 import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 
 import java.util.List;
@@ -24,8 +23,6 @@ public interface IMvp {
     }
 
     interface IPresenterOperations<Entity> {
-
-        Uri getEntityUri();
 
         List<Entity> getElementsFromModel();
 

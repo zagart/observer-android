@@ -2,7 +2,7 @@ package observer.zagart.by.client.network.http.requests;
 
 import java.net.HttpURLConnection;
 
-import observer.zagart.by.client.network.api.Criteria;
+import observer.zagart.by.client.network.Criteria;
 import observer.zagart.by.client.network.http.interfaces.IHttpClient;
 
 /**

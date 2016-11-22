@@ -8,7 +8,7 @@ import observer.zagart.by.client.application.managers.DatabaseManager;
 import observer.zagart.by.client.application.managers.ThreadManager;
 import observer.zagart.by.client.application.singletons.AccountHolder;
 import observer.zagart.by.client.application.singletons.ContextHolder;
-import observer.zagart.by.client.application.utils.AccountManagerUtil;
+import observer.zagart.by.client.application.utils.AccountUtil;
 
 /**
  * Observer main application file.
@@ -43,6 +43,6 @@ public class App extends Application {
     public void onCreate() {
         super.onCreate();
         ContextHolder.set(this);
-        setAccount(AccountManagerUtil.getPersistedAccount());
+        setAccount(AccountUtil.getPersistedAccount());
     }
 }

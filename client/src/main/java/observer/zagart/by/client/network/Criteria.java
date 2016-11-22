@@ -1,6 +1,8 @@
-package observer.zagart.by.client.network.api;
+package observer.zagart.by.client.network;
 
 /**
+ * Class that describes rules for retrieving data from Observer server.
+ *
  * @author zagart
  */
 public class Criteria {

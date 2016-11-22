@@ -2,6 +2,7 @@ package observer.zagart.by.client.mvp.models;
 
 import android.accounts.Account;
 import android.accounts.AccountManager;
+import android.net.Uri;
 import android.os.Bundle;
 
 import java.util.ArrayList;
@@ -10,7 +11,7 @@ import java.util.List;
 import observer.zagart.by.client.App;
 import observer.zagart.by.client.R;
 import observer.zagart.by.client.application.accounts.ObserverAccount;
-import observer.zagart.by.client.mvp.IMvp;
+import observer.zagart.by.client.mvp.models.base.BaseModel;
 
 /**
  * IMvp model implementation for {@link ObserverAccount}.
@@ -18,7 +19,11 @@ import observer.zagart.by.client.mvp.IMvp;
  * @author zagart
  */
 
-public class AccountModel implements IMvp.IModelOperations<ObserverAccount> {
+public class AccountModel extends BaseModel<ObserverAccount> {
+
+    public AccountModel(final Uri pEntityTableUri) {
+        super(pEntityTableUri, false);
+    }
 
     @SuppressWarnings("MissingPermission")
     @Override
@@ -34,6 +39,7 @@ public class AccountModel implements IMvp.IModelOperations<ObserverAccount> {
         return accounts;
     }
 
+    @SuppressWarnings("Convert2streamapi")
     @Override
     public void persistAll(final List<ObserverAccount> pObserverAccounts) {
         for (ObserverAccount account : pObserverAccounts) {
@@ -50,6 +56,7 @@ public class AccountModel implements IMvp.IModelOperations<ObserverAccount> {
             result.putString(AccountManager.KEY_ACCOUNT_TYPE, pAccount.type);
             result.putString(AccountManager.KEY_AUTHTOKEN, pAccount.getToken());
             accountManager.setAuthToken(pAccount, pAccount.type, pAccount.getToken());
+            super.notifyChange();
         } else {
             result.putString(
                     AccountManager.KEY_ERROR_MESSAGE,
@@ -63,10 +70,13 @@ public class AccountModel implements IMvp.IModelOperations<ObserverAccount> {
     public void deleteAll() {
         final AccountManager accountManager = AccountManager.get(App.getContext());
         final Account[] accounts = accountManager.getAccounts();
-        for (Account account : accounts) {
-            if (account.type.equals(ObserverAccount.TYPE)) {
-                accountManager.removeAccount(account, null, null);
+        if (accounts.length > 0) {
+            for (Account account : accounts) {
+                if (account.type.equals(ObserverAccount.TYPE)) {
+                    accountManager.removeAccount(account, null, null);
+                }
             }
+            super.notifyChange();
         }
     }
 }

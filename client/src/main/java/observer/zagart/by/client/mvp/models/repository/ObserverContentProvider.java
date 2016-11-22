@@ -8,7 +8,6 @@ import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
-import observer.zagart.by.client.App;
 import observer.zagart.by.client.application.constants.Constants;
 import observer.zagart.by.client.application.managers.DatabaseManager;
 import observer.zagart.by.client.application.utils.URIUtil;
@@ -53,9 +52,7 @@ public class ObserverContentProvider extends ContentProvider {
     public Uri insert(@NonNull final Uri pUri, final ContentValues pContentValues) {
         final Class<?> table = getTable(pUri);
         final long id = mDatabaseManager.insert(table, pContentValues);
-        final Uri newUri = ContentUris.withAppendedId(pUri, id);
-        onDataChanged(newUri);
-        return newUri;
+        return ContentUris.withAppendedId(pUri, id);
     }
 
     @Override
@@ -63,16 +60,13 @@ public class ObserverContentProvider extends ContentProvider {
             @NonNull final Uri pUri,
             final String pSelection,
             final String[] pSelectionArgs) {
-        final int id = (int) mDatabaseManager.delete(getTable(pUri), pSelection, pSelectionArgs);
-        onDataChanged(pUri);
-        return id;
+        return (int) mDatabaseManager.delete(getTable(pUri), pSelection,
+                pSelectionArgs);
     }
 
     @Override
     public int bulkInsert(@NonNull final Uri pUri, @NonNull final ContentValues[] pValues) {
-        final int affected = mDatabaseManager.bulkInsert(getTable(pUri), pValues);
-        onDataChanged(pUri);
-        return affected;
+        return mDatabaseManager.bulkInsert(getTable(pUri), pValues);
     }
 
     @Override
@@ -82,10 +76,6 @@ public class ObserverContentProvider extends ContentProvider {
             final String pSelection,
             final String[] pSelectionArgs) {
         return 0;
-    }
-
-    private void onDataChanged(Uri pUri) {
-        App.getContext().getContentResolver().notifyChange(pUri, null);
     }
 
     private Class<?> getTable(Uri pUri) {

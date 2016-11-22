@@ -1,4 +1,4 @@
-package observer.zagart.by.client.mvp.models;
+package observer.zagart.by.client.mvp.models.base;
 
 import android.content.ContentResolver;
 import android.content.ContentUris;
@@ -12,6 +12,7 @@ import java.util.List;
 
 import observer.zagart.by.client.App;
 import observer.zagart.by.client.application.utils.ReflectionUtil;
+import observer.zagart.by.client.mvp.IMvp;
 import observer.zagart.by.client.mvp.models.repository.entities.IEntity;
 
 /**
@@ -21,17 +22,35 @@ import observer.zagart.by.client.mvp.models.repository.entities.IEntity;
  *
  * @author zagart
  */
-abstract class BaseModel<Entity extends IEntity<Entity, ContentValues, Long>> {
+public abstract class BaseModel<Entity extends IEntity<Entity, ContentValues, Long>>
+        implements IMvp.IModelOperations<Entity> {
 
-    private static final int PARAMETER_POSITION = 0; //Position of Entity in parameter
-    final private Entity mEmptyEntity = ReflectionUtil.getGenericObject(this, PARAMETER_POSITION);
+    final private static int PARAMETER_POSITION = 0; //Position of Entity in parameter
+
+    final private Entity mEmptyEntity;
     final private Uri mEntityTableUri;
 
-    BaseModel(final Uri pEntityTableUri) {
+    protected BaseModel(final Uri pEntityTableUri, final boolean pUseReflection) {
         mEntityTableUri = pEntityTableUri;
+        if (pUseReflection) {
+            mEmptyEntity = ReflectionUtil.getGenericObject(this, PARAMETER_POSITION);
+        } else {
+            mEmptyEntity = null;
+        }
     }
 
-    List<Entity> retrieveAll(final String pEntitiesSelection) {
+    public Uri getUri() {
+        return mEntityTableUri;
+    }
+
+    public void deleteAll() {
+        final ContentResolver resolver = App.getContext().getContentResolver();
+        resolver.delete(mEntityTableUri, null, null);
+        Log.i(BaseModel.class.getSimpleName(), mEntityTableUri.toString());
+        notifyChange();
+    }
+
+    protected List<Entity> retrieveAll(final String pEntitiesSelection) {
         final ContentResolver resolver = App.getContext().getContentResolver();
         final List<Entity> entities = new ArrayList<>();
         final Cursor cursor = resolver.query(
@@ -49,28 +68,29 @@ abstract class BaseModel<Entity extends IEntity<Entity, ContentValues, Long>> {
         return entities;
     }
 
-    void persistAll(final List<Entity> pEntities, final String pSelectionById) {
+    protected void persistAll(final List<Entity> pEntities, final String pSelectionById) {
         //TODO correct bulk insert
         for (Entity entity : pEntities) {
             persist(entity, pSelectionById);
         }
     }
 
-    Long persist(final Entity pEntity, final String pSelectionById) {
+    protected Long persist(final Entity pEntity, final String pSelectionById) {
         if (!isEntityCached(pEntity, pSelectionById)) {
             final ContentResolver resolver = App.getContext().getContentResolver();
             final Uri entityUri = resolver.insert(mEntityTableUri, pEntity.convert());
             if (entityUri != null) {
                 Log.i(BaseModel.class.getSimpleName(), entityUri.toString());
+                notifyChange();
                 return ContentUris.parseId(entityUri);
             }
         }
         return null;
     }
 
-    void deleteAll() {
-        final ContentResolver resolver = App.getContext().getContentResolver();
-        resolver.delete(mEntityTableUri, null, null);
+    protected void notifyChange() {
+        Log.i("Notify", mEntityTableUri.toString());
+        App.getContext().getContentResolver().notifyChange(mEntityTableUri, null);
     }
 
     private boolean isEntityCached(final Entity pEntity, final String pEntitySelection) {

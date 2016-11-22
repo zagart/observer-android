@@ -4,7 +4,7 @@ import java.util.List;
 
 import observer.zagart.by.client.application.constants.Constants;
 import observer.zagart.by.client.application.utils.URIUtil;
-import observer.zagart.by.client.mvp.IMvp;
+import observer.zagart.by.client.mvp.models.base.BaseModel;
 import observer.zagart.by.client.mvp.models.repository.entities.Module;
 
 /**
@@ -13,10 +13,10 @@ import observer.zagart.by.client.mvp.models.repository.entities.Module;
  * @author zagart
  */
 
-public class ModuleModel extends BaseModel<Module> implements IMvp.IModelOperations<Module> {
+public class ModuleModel extends BaseModel<Module> {
 
     public ModuleModel() {
-        super(URIUtil.getModuleUri());
+        super(URIUtil.getModuleUri(), true);
     }
 
     @Override

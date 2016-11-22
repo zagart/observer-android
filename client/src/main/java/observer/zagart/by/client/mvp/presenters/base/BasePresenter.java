@@ -1,7 +1,9 @@
-package observer.zagart.by.client.mvp.presenters;
+package observer.zagart.by.client.mvp.presenters.base;
 
+import android.content.ContentResolver;
+import android.content.ContentValues;
 import android.content.Context;
-import android.net.Uri;
+import android.database.ContentObserver;
 
 import org.json.JSONException;
 
@@ -14,7 +16,10 @@ import observer.zagart.by.client.R;
 import observer.zagart.by.client.application.managers.ThreadManager;
 import observer.zagart.by.client.application.utils.IOUtil;
 import observer.zagart.by.client.mvp.IMvp;
-import observer.zagart.by.client.network.api.ObserverCallback;
+import observer.zagart.by.client.mvp.models.base.BaseModel;
+import observer.zagart.by.client.mvp.models.repository.ModelContentObserver;
+import observer.zagart.by.client.mvp.models.repository.entities.IEntity;
+import observer.zagart.by.client.network.http.requests.parser.ObserverJsonParser;
 import observer.zagart.by.client.network.http.HttpFactory;
 import observer.zagart.by.client.network.http.interfaces.IHttpClient;
 
@@ -23,24 +28,20 @@ import observer.zagart.by.client.network.http.interfaces.IHttpClient;
  *
  * @author zagart
  */
-abstract class BasePresenter<Entity> implements IMvp.IPresenterOperations<Entity> {
+public abstract class BasePresenter<Entity extends IEntity<Entity, ContentValues, Long>>
+        implements IMvp.IPresenterOperations<Entity> {
 
     final private WeakReference<IMvp.IViewOperations> mView;
     final private ThreadManager mThreadManager;
-    final private IMvp.IModelOperations<Entity> mModel;
-    final private Uri mUri;
+    final private BaseModel<Entity> mModel;
+    final private ContentObserver mObserver;
 
-    BasePresenter(final IMvp.IViewOperations pView,
-                  final IMvp.IModelOperations<Entity> pModel,
-                  final Uri pUri) {
+    protected BasePresenter(final IMvp.IViewOperations pView,
+                  final BaseModel<Entity> pModel) {
         mView = new WeakReference<>(pView);
         mModel = pModel;
-        mUri = pUri;
         mThreadManager = App.getThreadManager();
-    }
-
-    public Uri getEntityUri() {
-        return mUri;
+        mObserver = new ModelContentObserver(mView.get());
     }
 
     @Override
@@ -57,7 +58,7 @@ abstract class BasePresenter<Entity> implements IMvp.IPresenterOperations<Entity
                         final String response = HttpFactory
                                 .getDefaultClient()
                                 .executeRequest(pRequest);
-                        final List<Entity> entities = ObserverCallback.onResponseReceived(
+                        final List<Entity> entities = ObserverJsonParser.parseServerResponse(
                                 response);
                         if (entities != null && entities.size() > 0) {
                             mModel.persistAll(entities);
@@ -78,6 +79,14 @@ abstract class BasePresenter<Entity> implements IMvp.IPresenterOperations<Entity
         mModel.deleteAll();
     }
 
+    public void registerObserver() {
+        getContentResolver().registerContentObserver(mModel.getUri(), true, mObserver);
+    }
+
+    public void unregisterObserver() {
+        getContentResolver().unregisterContentObserver(mObserver);
+    }
+
     protected Context getContext() {
         return mView.get().getViewContext();
     }
@@ -88,5 +97,11 @@ abstract class BasePresenter<Entity> implements IMvp.IPresenterOperations<Entity
 
     protected WeakReference<IMvp.IViewOperations> getView() {
         return mView;
+    }
+
+    private ContentResolver getContentResolver() {
+        return mView.get()
+                .getViewContext()
+                .getContentResolver();
     }
 }

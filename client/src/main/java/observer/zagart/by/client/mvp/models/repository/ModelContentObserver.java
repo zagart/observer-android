@@ -4,6 +4,7 @@ import android.database.ContentObserver;
 import android.net.Uri;
 import android.os.Handler;
 import android.os.Looper;
+import android.util.Log;
 
 import java.lang.ref.WeakReference;
 
@@ -16,17 +17,18 @@ import observer.zagart.by.client.mvp.IMvp;
  *
  * @author zagart
  */
-public class DatabaseContentObserver extends ContentObserver {
+public class ModelContentObserver extends ContentObserver {
 
     private WeakReference<IMvp.IViewOperations> mView;
 
-    public DatabaseContentObserver(final IMvp.IViewOperations pView) {
+    public ModelContentObserver(final IMvp.IViewOperations pView) {
         super(new Handler(Looper.getMainLooper()));
         mView = new WeakReference<>(pView);
     }
 
     @Override
     public void onChange(final boolean pSelfChange, final Uri pUri) {
+        Log.i("ContentObserver", "New event");
         final String standUri = URIUtil.getStandUri().toString();
         final String moduleUri = URIUtil.getModuleUri().toString();
         final String uri = pUri.toString();

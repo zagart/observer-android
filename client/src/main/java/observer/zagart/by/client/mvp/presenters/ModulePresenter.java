@@ -2,10 +2,10 @@ package observer.zagart.by.client.mvp.presenters;
 
 import java.util.List;
 
-import observer.zagart.by.client.application.utils.URIUtil;
 import observer.zagart.by.client.mvp.IMvp;
 import observer.zagart.by.client.mvp.models.ModuleModel;
 import observer.zagart.by.client.mvp.models.repository.entities.Module;
+import observer.zagart.by.client.mvp.presenters.base.BasePresenter;
 import observer.zagart.by.client.network.http.interfaces.IHttpClient;
 import observer.zagart.by.client.network.http.requests.GetModulesRequest;
 
@@ -19,7 +19,7 @@ import observer.zagart.by.client.network.http.requests.GetModulesRequest;
 public class ModulePresenter extends BasePresenter<Module> {
 
     public ModulePresenter(final IMvp.IViewOperations pView) {
-        super(pView, new ModuleModel(), URIUtil.getModuleUri());
+        super(pView, new ModuleModel());
     }
 
     @Override

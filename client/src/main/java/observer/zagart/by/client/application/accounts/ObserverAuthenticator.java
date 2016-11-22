@@ -10,14 +10,16 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 
-import observer.zagart.by.client.App;
-import observer.zagart.by.client.application.constants.Constants;
-import observer.zagart.by.client.application.utils.SharedPreferencesUtil;
+import java.io.IOException;
+
+import observer.zagart.by.client.application.utils.AccountUtil;
 import observer.zagart.by.client.mvp.views.AuthenticationActivity;
-import observer.zagart.by.client.network.api.ObserverApi;
+import observer.zagart.by.client.network.http.HttpFactory;
+import observer.zagart.by.client.network.http.requests.AuthenticationRequest;
+import observer.zagart.by.client.network.http.requests.parser.ObserverJsonParser;
 
 /**
- * Authenticator to ObserverApi HTTP-server.
+ * Application authenticator.
  *
  * @author zagart
  */
@@ -73,7 +75,14 @@ class ObserverAuthenticator extends AbstractAccountAuthenticator {
         if (TextUtils.isEmpty(authToken)) {
             final String password = accountManager.getPassword(pAccount);
             if (!TextUtils.isEmpty(password)) {
-                authToken = ObserverApi.logIn(pAccount.name, password);
+                try {
+                    final String response = HttpFactory.getDefaultClient().executeRequest(
+                            new AuthenticationRequest(pAccount.name, password)
+                    );
+                    authToken = ObserverJsonParser.getTokenFromResponseString(response);
+                } catch (IOException pE) {
+                    authToken = null;
+                }
             }
         }
         if (!TextUtils.isEmpty(authToken)) {
@@ -119,11 +128,7 @@ class ObserverAuthenticator extends AbstractAccountAuthenticator {
     public Bundle getAccountRemovalAllowed(
             final AccountAuthenticatorResponse response,
             final Account account) throws NetworkErrorException {
-        SharedPreferencesUtil.persistStringValue(
-                App.getContext(),
-                Constants.CURRENT_ACCOUNT_NAME,
-                null);
-        App.setAccount(null);
+        AccountUtil.setCurrentAccount(null);
         return super.getAccountRemovalAllowed(response, account);
     }
 }

@@ -12,18 +12,18 @@ import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 import observer.zagart.by.client.R;
-import observer.zagart.by.client.mvp.IMvp;
 import observer.zagart.by.client.mvp.models.repository.entities.Stand;
 import observer.zagart.by.client.mvp.presenters.StandPresenter;
+import observer.zagart.by.client.mvp.presenters.base.BasePresenter;
 import observer.zagart.by.client.mvp.views.adapters.StandTableAdapter;
-import observer.zagart.by.client.mvp.views.base.BaseActivity;
+import observer.zagart.by.client.mvp.views.base.BaseView;
 
 /**
  * Activity for showing cached stand objects.
  *
  * @author zagart
  */
-public class StandsActivity extends BaseActivity {
+public class StandsActivity extends BaseView {
 
     private StandPresenter mPresenter = new StandPresenter(this);
     private RecyclerView mRecyclerViewStands;
@@ -43,6 +43,12 @@ public class StandsActivity extends BaseActivity {
     }
 
     @Override
+    protected void onStart() {
+        super.onStart();
+        super.onAccountCheck();
+    }
+
+    @Override
     protected void onCreate(@Nullable final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stands);
@@ -51,7 +57,7 @@ public class StandsActivity extends BaseActivity {
     }
 
     @Override
-    protected IMvp.IPresenterOperations getPresenter() {
+    protected BasePresenter<Stand> getPresenter() {
         return mPresenter;
     }
 

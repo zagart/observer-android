@@ -11,12 +11,13 @@ import android.widget.TextView;
 import observer.zagart.by.client.R;
 import observer.zagart.by.client.application.utils.IOUtil;
 import observer.zagart.by.client.mvp.presenters.AccountPresenter;
-import observer.zagart.by.client.mvp.views.base.BaseAuthenticatorActivity;
+import observer.zagart.by.client.mvp.presenters.base.BasePresenter;
+import observer.zagart.by.client.mvp.views.base.BaseView;
 
 /**
  * Activity that provides UI for user authorization.
  */
-public class AuthenticationActivity extends BaseAuthenticatorActivity {
+public class AuthenticationActivity extends BaseView {
 
     private AccountPresenter mPresenter = new AccountPresenter(this);
     private TextView mLoginView;
@@ -43,6 +44,14 @@ public class AuthenticationActivity extends BaseAuthenticatorActivity {
     }
 
     @Override
+    public void onDataChanged(final Bundle pParameters) {
+        mPresenter.persistAccount(pParameters);
+        final Intent intent = new Intent(this, MyAccountActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_NO_HISTORY);
+        startActivity(intent);
+    }
+
+    @Override
     protected void onCreate(@Nullable final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         final ActionBar bar = getActionBar();
@@ -52,5 +61,10 @@ public class AuthenticationActivity extends BaseAuthenticatorActivity {
         setContentView(R.layout.activity_authentication);
         mLoginView = (TextView) findViewById(R.id.login_login);
         mPasswordView = (TextView) findViewById(R.id.login_password);
+    }
+
+    @Override
+    protected BasePresenter getPresenter() {
+        return mPresenter;
     }
 }

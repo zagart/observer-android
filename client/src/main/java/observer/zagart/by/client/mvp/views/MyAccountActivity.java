@@ -10,10 +10,9 @@ import android.widget.TextView;
 
 import observer.zagart.by.client.App;
 import observer.zagart.by.client.R;
-import observer.zagart.by.client.application.constants.Constants;
-import observer.zagart.by.client.application.utils.SharedPreferencesUtil;
-import observer.zagart.by.client.mvp.IMvp;
-import observer.zagart.by.client.mvp.views.base.BaseActivity;
+import observer.zagart.by.client.application.utils.AccountUtil;
+import observer.zagart.by.client.mvp.presenters.base.BasePresenter;
+import observer.zagart.by.client.mvp.views.base.BaseView;
 
 import static observer.zagart.by.client.application.constants.Constants.EMPTY_STRING;
 
@@ -22,22 +21,21 @@ import static observer.zagart.by.client.application.constants.Constants.EMPTY_ST
  *
  * @author zagart
  */
-public class MyAccountActivity extends BaseActivity {
+public class MyAccountActivity extends BaseView {
 
     private Button mLogInView;
     private Button mLogOutView;
     private TextView mUserLabel;
     private TextView mUserLogin;
 
-    public void onLoginClick(View view) {
+    public void onLoginClick(View pView) {
         Intent intent = new Intent(this, AuthenticationActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_NO_HISTORY);
         startActivity(intent);
     }
 
     public void onLogoutClick(View pView) {
-        App.setAccount(null);
-        SharedPreferencesUtil.persistStringValue(this, Constants.CURRENT_ACCOUNT_NAME, null);
+        AccountUtil.setCurrentAccount(null);
         onAccountCheck();
     }
 
@@ -59,13 +57,19 @@ public class MyAccountActivity extends BaseActivity {
     }
 
     @Override
-    protected IMvp.IPresenterOperations getPresenter() {
-        return null;
+    public void onDataChanged(final Bundle pParameters) {
+        onAccountCheck();
     }
 
     @Override
-    public void onDataChanged(final Bundle pParameters) {
+    protected void onStart() {
+        super.onStart();
         onAccountCheck();
+    }
+
+    @Override
+    protected BasePresenter getPresenter() {
+        return null;
     }
 
     @Override

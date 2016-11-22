@@ -6,7 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 
 import observer.zagart.by.client.App;
 import observer.zagart.by.client.mvp.IMvp;
-import observer.zagart.by.client.mvp.models.repository.DatabaseContentObserver;
+import observer.zagart.by.client.mvp.presenters.base.BasePresenter;
 import observer.zagart.by.client.mvp.views.MainActivity;
 
 /**
@@ -14,9 +14,7 @@ import observer.zagart.by.client.mvp.views.MainActivity;
  *
  * @author zagart
  */
-abstract public class BaseActivity extends AppCompatActivity implements IMvp.IViewOperations {
-
-    private DatabaseContentObserver mObserver = new DatabaseContentObserver(this);
+abstract public class BaseView extends AppCompatActivity implements IMvp.IViewOperations {
 
     public void onAccountCheck() {
         if (App.getAccount() == null) {
@@ -31,29 +29,23 @@ abstract public class BaseActivity extends AppCompatActivity implements IMvp.IVi
         return this;
     }
 
-    protected abstract IMvp.IPresenterOperations getPresenter();
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        onAccountCheck();
-    }
+    abstract protected BasePresenter getPresenter();
 
     @Override
     protected void onResume() {
         super.onResume();
-        if (getPresenter() != null && getPresenter().getEntityUri() != null) {
-            getContentResolver().registerContentObserver(
-                    getPresenter().getEntityUri(),
-                    true,
-                    mObserver
-            );
+        final BasePresenter presenter = getPresenter();
+        if (presenter != null) {
+            presenter.registerObserver();
         }
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        getContentResolver().unregisterContentObserver(mObserver);
+        final BasePresenter presenter = getPresenter();
+        if (presenter != null) {
+            getPresenter().unregisterObserver();
+        }
     }
 }

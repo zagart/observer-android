@@ -14,14 +14,18 @@ import static observer.zagart.by.client.application.constants.Constants.PREF_FIL
 /**
  * Utility class with methods for persisting activity's data as Shared References.
  */
+@SuppressWarnings("WeakerAccess")
 public class SharedPreferencesUtil {
 
-    private static SharedPreferences.Editor getSharedPreferencesEditor(Context pContext) {
-        SharedPreferences replies = pContext.getSharedPreferences(PREF_FILE, Context.MODE_PRIVATE);
+    private static SharedPreferences.Editor getSharedPreferencesEditor(final Context pContext) {
+        final SharedPreferences replies = pContext.getSharedPreferences(
+                PREF_FILE, Context.MODE_PRIVATE);
         return replies.edit();
     }
 
-    public static void persistStringValue(Context pContext, String pName, String pInput) {
+    public static void persistStringValue(final Context pContext,
+                                          final String pName,
+                                          final String pInput) {
         final SharedPreferences.Editor editor = getSharedPreferencesEditor(pContext);
         editor.putString(pName, pInput);
         editor.apply();
