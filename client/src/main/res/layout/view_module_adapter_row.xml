@@ -6,25 +6,25 @@
 
     <TextView
         android:id="@+id/module_id"
-        style="@style/RecyclerViewTableCell"/>
+        style="@style/RecyclerViewTableCell.Module"/>
 
     <TextView
         android:id="@+id/module_name"
-        style="@style/RecyclerViewTableCell"/>
+        style="@style/RecyclerViewTableCell.Module"/>
 
     <TextView
         android:id="@+id/module_status"
-        style="@style/RecyclerViewTableCell"/>
+        style="@style/RecyclerViewTableCell.Module"/>
 
     <TextView
         android:id="@+id/module_value"
-        style="@style/RecyclerViewTableCell"/>
+        style="@style/RecyclerViewTableCell.Module"/>
 
     <TextView
         android:id="@+id/module_status_change_date"
-        style="@style/RecyclerViewTableCell"/>
+        style="@style/RecyclerViewTableCell.Module"/>
 
     <TextView
         android:id="@+id/module_stand_id"
-        style="@style/RecyclerViewTableCell"/>
+        style="@style/RecyclerViewTableCell.Module"/>
 </LinearLayout>

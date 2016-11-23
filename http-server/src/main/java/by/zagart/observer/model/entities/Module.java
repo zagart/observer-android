@@ -136,9 +136,9 @@ public class Module implements Identifiable<Long>, Serializable {
         JSONObject module = new JSONObject();
         module.put(ID, mId);
         module.put(NAME, mName);
-        module.put(STAND_ID, mStand);
+        module.put(STAND_ID, mStand.getId());
         module.put(STATUS, mStatus);
-        module.put(STATUS_CHANGE_DATE, mStatusChangeDate);
+        module.put(STATUS_CHANGE_DATE, mStatusChangeDate.getTime());
         module.put(VALUE, mValue);
         return module;
     }

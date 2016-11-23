@@ -30,34 +30,6 @@ public class ObserverJsonResponse {
         mResponse = pResponse;
     }
 
-    @NonNull
-    private static List<Module> parseModulesResponse(final JSONObject pJSONObject)
-            throws JSONException {
-        final List<Module> moduleList = new ArrayList<>();
-        if (pJSONObject.has(Constants.MODULES_KEY)) {
-            final JSONArray modules = pJSONObject.getJSONArray(Constants.STANDS_KEY);
-            for (int i = 0; i < modules.length(); i++) {
-                final JSONObject jsonStand = modules.getJSONObject(i);
-                moduleList.add(new Module().extractFromJsonObject(jsonStand));
-            }
-        }
-        return moduleList;
-    }
-
-    @NonNull
-    private static List<Stand> parseStandsResponse(final JSONObject pJSONObject)
-            throws JSONException {
-        final List<Stand> standList = new ArrayList<>();
-        if (pJSONObject.has(Constants.STANDS_KEY)) {
-            final JSONArray stands = pJSONObject.getJSONArray(Constants.STANDS_KEY);
-            for (int i = 0; i < stands.length(); i++) {
-                final JSONObject jsonStand = stands.getJSONObject(i);
-                standList.add(new Stand().extractFromJsonObject(jsonStand));
-            }
-        }
-        return standList;
-    }
-
     @Nullable
     public String extractToken() {
         if (mResponse == null) {
@@ -88,11 +60,39 @@ public class ObserverJsonResponse {
         }
         switch (reflectedAction) {
             case Criteria.GET_STANDS:
-                return (List<Entity>) ObserverJsonResponse.parseStandsResponse(jsonObjectResponse);
+                return (List<Entity>) parseStandsResponse(jsonObjectResponse);
             case Criteria.GET_MODULES:
-                return (List<Entity>) ObserverJsonResponse.parseModulesResponse(jsonObjectResponse);
+                return (List<Entity>) parseModulesResponse(jsonObjectResponse);
             default:
                 return null;
         }
+    }
+
+    @NonNull
+    private List<Module> parseModulesResponse(final JSONObject pJSONObject)
+            throws JSONException {
+        final List<Module> moduleList = new ArrayList<>();
+        if (pJSONObject.has(Constants.MODULES_KEY)) {
+            final JSONArray modules = pJSONObject.getJSONArray(Constants.MODULES_KEY);
+            for (int i = 0; i < modules.length(); i++) {
+                final JSONObject jsonStand = modules.getJSONObject(i);
+                moduleList.add(new Module().extractFromJsonObject(jsonStand));
+            }
+        }
+        return moduleList;
+    }
+
+    @NonNull
+    private List<Stand> parseStandsResponse(final JSONObject pJSONObject)
+            throws JSONException {
+        final List<Stand> standList = new ArrayList<>();
+        if (pJSONObject.has(Constants.STANDS_KEY)) {
+            final JSONArray stands = pJSONObject.getJSONArray(Constants.STANDS_KEY);
+            for (int i = 0; i < stands.length(); i++) {
+                final JSONObject jsonStand = stands.getJSONObject(i);
+                standList.add(new Stand().extractFromJsonObject(jsonStand));
+            }
+        }
+        return standList;
     }
 }

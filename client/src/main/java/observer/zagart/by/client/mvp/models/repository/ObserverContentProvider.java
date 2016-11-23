@@ -70,15 +70,14 @@ public class ObserverContentProvider extends ContentProvider {
     }
 
     @Override
-    public int update(
-            @NonNull final Uri pUri,
-            final ContentValues pContentValues,
-            final String pSelection,
-            final String[] pSelectionArgs) {
+    public int update(@NonNull final Uri pUri,
+                      final ContentValues pContentValues,
+                      final String pSelection,
+                      final String[] pSelectionArgs) {
         return 0;
     }
 
-    private Class<?> getTable(Uri pUri) {
+    private Class<?> getTable(final Uri pUri) {
         final String table = URIUtil.getClearUriPath(pUri);
         switch (table) {
             case Constants.MODULE:

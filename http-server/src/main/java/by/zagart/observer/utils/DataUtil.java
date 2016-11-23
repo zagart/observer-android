@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Properties;
+import java.util.Random;
 
 /**
  * Утилитный класс с методами для более удобного манипулирования
@@ -28,6 +29,7 @@ public class DataUtil {
         module.setName(RandomStringUtils.randomAlphabetic(10));
         module.setStatus(RandomStringUtils.randomAlphabetic(20));
         module.setStatusChangeDate(new Date());
+        module.setValue(String.valueOf(new Random().nextInt(99)));
         return module;
     }
 

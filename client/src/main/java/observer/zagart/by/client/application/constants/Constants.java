@@ -34,4 +34,6 @@ public class Constants {
     public static final String MODULES_KEY = "modules";
     public static final String REFLECTION = "reflection";
     public static final String TABLE_NAME_NULL_EXCEPTION = "Table name should't be null";
+    public static final String INSERT_FAILED = "Failed to insert row";
+    public static final String DELETE_FAILED = "Deletion failed";
 }

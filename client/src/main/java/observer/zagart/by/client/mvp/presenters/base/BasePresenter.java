@@ -4,6 +4,7 @@ import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.ContentObserver;
+import android.util.Log;
 
 import org.json.JSONException;
 
@@ -67,6 +68,7 @@ public abstract class BasePresenter<Entity extends IEntity<Entity, ContentValues
                                     context.getString(R.string.msg_no_server_response));
                         }
                     } catch (IOException | JSONException pEx) {
+                        Log.e(BasePresenter.class.getSimpleName(), pEx.getMessage(), pEx);
                         IOUtil.showToast(
                                 context,
                                 context.getString(R.string.msg_failed_parse_stands));

@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import observer.zagart.by.client.App;
+import observer.zagart.by.client.application.utils.IOUtil;
 import observer.zagart.by.client.application.utils.ReflectionUtil;
 import observer.zagart.by.client.mvp.IMvp;
 import observer.zagart.by.client.mvp.models.repository.entities.IEntity;
@@ -55,7 +56,8 @@ public abstract class BaseModel<Entity extends IEntity<Entity, ContentValues, Lo
         final List<Entity> entities = new ArrayList<>();
         final Cursor cursor = resolver.query(
                 mEntityTableUri,
-                null, pEntitiesSelection,
+                null,
+                pEntitiesSelection,
                 null,
                 null);
         if (cursor != null && cursor.moveToFirst()) {
@@ -63,8 +65,8 @@ public abstract class BaseModel<Entity extends IEntity<Entity, ContentValues, Lo
                 entities.add(mEmptyEntity.getNewEntity().extractFromCursor(cursor));
                 cursor.moveToNext();
             }
-            cursor.close();
         }
+        IOUtil.close(cursor);
         return entities;
     }
 

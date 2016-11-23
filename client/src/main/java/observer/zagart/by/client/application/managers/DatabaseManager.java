@@ -9,6 +9,7 @@ import android.support.annotation.Nullable;
 import android.util.Log;
 
 import observer.zagart.by.client.App;
+import observer.zagart.by.client.BuildConfig;
 import observer.zagart.by.client.application.constants.Constants;
 import observer.zagart.by.client.application.interfaces.IDatabaseOperations;
 import observer.zagart.by.client.application.utils.ReflectionUtil;
@@ -63,7 +64,6 @@ public class DatabaseManager extends SQLiteOpenHelper implements IDatabaseOperat
                 Log.e(TAG, Constants.TRANSACTION_FAILED, pEx);
             } finally {
                 database.endTransaction();
-                database.close();
             }
             return count;
         } else {
@@ -82,10 +82,11 @@ public class DatabaseManager extends SQLiteOpenHelper implements IDatabaseOperat
                 count = database.delete(name, pSql, pParams);
                 database.setTransactionSuccessful();
             } catch (Exception pEx) {
-                pEx.printStackTrace();
+                if (BuildConfig.DEBUG) {
+                    Log.e(TAG, Constants.DELETE_FAILED, pEx);
+                }
             } finally {
                 database.endTransaction();
-                database.close();
             }
         }
         return count;
@@ -101,11 +102,12 @@ public class DatabaseManager extends SQLiteOpenHelper implements IDatabaseOperat
                 database.beginTransaction();
                 id = database.insert(name, null, pValues);
                 database.setTransactionSuccessful();
-            } catch (Exception pE) {
-                pE.printStackTrace();
+            } catch (Exception pEx) {
+                if (BuildConfig.DEBUG) {
+                    Log.e(TAG, Constants.INSERT_FAILED, pEx);
+                }
             } finally {
                 database.endTransaction();
-                database.close();
             }
             return id;
         } else {
@@ -115,7 +117,8 @@ public class DatabaseManager extends SQLiteOpenHelper implements IDatabaseOperat
 
     @Override
     public Cursor query(final String pSql, final String... pParams) {
-        return getReadableDatabase().rawQuery(pSql, pParams);
+        final SQLiteDatabase database = getReadableDatabase();
+        return database.rawQuery(pSql, pParams);
     }
 
     @Override

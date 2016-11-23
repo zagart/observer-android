@@ -19,6 +19,7 @@ import observer.zagart.by.client.mvp.IMvp;
  */
 public class ModelContentObserver extends ContentObserver {
 
+    private static final String LOG_MESSAGE = "New event";
     private WeakReference<IMvp.IViewOperations> mView;
 
     public ModelContentObserver(final IMvp.IViewOperations pView) {
@@ -28,7 +29,7 @@ public class ModelContentObserver extends ContentObserver {
 
     @Override
     public void onChange(final boolean pSelfChange, final Uri pUri) {
-        Log.i("ContentObserver", "New event");
+        Log.i(ModelContentObserver.class.getSimpleName(), LOG_MESSAGE);
         final String standUri = URIUtil.getStandUri().toString();
         final String moduleUri = URIUtil.getModuleUri().toString();
         final String uri = pUri.toString();

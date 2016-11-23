@@ -134,4 +134,9 @@
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
     </style>
+
+    <style name="RecyclerViewTableCell.Module">
+        <item name="android:maxWidth">65dp</item>
+        <item name="android:minWidth">65dp</item>
+    </style>
 </resources>

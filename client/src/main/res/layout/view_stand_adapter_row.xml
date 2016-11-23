@@ -6,34 +6,20 @@
 
     <TextView
         android:id="@+id/stand_id"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="5dp"
-        android:layout_weight="0.2"
-        android:background="@android:color/white"
-        android:gravity="center"
-        android:textColor="@android:color/black"
-        android:textSize="@dimen/default_button_text_size"/>
+        style="@style/RecyclerViewTableCell"
+        android:maxWidth="50dp"
+        android:minWidth="50dp"
+        />
 
     <TextView
         android:id="@+id/stand_number"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="5dp"
-        android:layout_weight="0.3"
-        android:background="@android:color/white"
-        android:gravity="center"
-        android:textColor="@android:color/black"
-        android:textSize="@dimen/default_button_text_size"/>
+        style="@style/RecyclerViewTableCell"
+        android:maxWidth="50dp"
+        android:minWidth="50dp"/>
 
     <TextView
         android:id="@+id/stand_description"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="5dp"
-        android:layout_weight="0.5"
-        android:background="@android:color/white"
-        android:gravity="center"
-        android:textColor="@android:color/black"
-        android:textSize="@dimen/default_button_text_size"/>
+        style="@style/RecyclerViewTableCell"
+        android:maxWidth="260dp"
+        android:minWidth="260dp"/>
 </LinearLayout>

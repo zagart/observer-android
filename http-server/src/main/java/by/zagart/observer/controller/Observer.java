@@ -31,12 +31,16 @@ public class Observer extends HttpServlet {
     @Override
     public void init() throws ServletException {
         mHandler = new Handler();
-        DataUtil.persistPairStandModule(
-                DataUtil.getNewStand(),
-                DataUtil.getNewModule(),
-                new StandServiceImpl(),
-                new ModuleServiceImpl()
-        );
+        for (int i = 0; i < 20; i++) {
+            final StandServiceImpl standService = new StandServiceImpl();
+            final ModuleServiceImpl moduleService = new ModuleServiceImpl();
+            DataUtil.persistPairStandModule(
+                    DataUtil.getNewStand(),
+                    DataUtil.getNewModule(),
+                    standService,
+                    moduleService
+            );
+        }
     }
 }
 
