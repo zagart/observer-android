@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import observer.zagart.by.client.application.constants.Constants;
+import observer.zagart.by.client.application.constants.ApplicationConstants;
 import observer.zagart.by.client.application.utils.IOUtil;
 import observer.zagart.by.client.network.http.interfaces.IHttpClient;
 
@@ -17,6 +17,8 @@ import observer.zagart.by.client.network.http.interfaces.IHttpClient;
  * Implementation of IHttpClient interface.
  */
 public class HttpClient implements IHttpClient {
+
+    private static final int TIMEOUT = 3000;
 
     @Override
     public <Result> Result executeRequest(final IRequest<Result> pRequest) throws IOException {
@@ -26,7 +28,7 @@ public class HttpClient implements IHttpClient {
         InputStream standardStream = null;
         final URL reqUrl = new URL(pRequest.getUrl());
         connection = ((HttpURLConnection) reqUrl.openConnection());
-        connection.setConnectTimeout(Constants.TIMEOUT);
+        connection.setConnectTimeout(TIMEOUT);
         connection.setRequestMethod(pRequest.getMethodType().name());
         connection.setRequestProperty(
                 IHttpClient.IHttpData.Header.CONTENT_TYPE,

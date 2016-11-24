@@ -2,7 +2,7 @@ package observer.zagart.by.client.mvp.models;
 
 import java.util.List;
 
-import observer.zagart.by.client.application.constants.Constants;
+import observer.zagart.by.client.application.constants.DatabaseConstants;
 import observer.zagart.by.client.application.utils.URIUtil;
 import observer.zagart.by.client.mvp.models.base.BaseModel;
 import observer.zagart.by.client.mvp.models.repository.entities.Stand;
@@ -21,17 +21,17 @@ public class StandModel extends BaseModel<Stand> {
 
     @Override
     public Long persist(final Stand pStand) {
-        return super.persist(pStand, Constants.SELECT_FROM_STAND_WHERE_ID);
+        return super.persist(pStand, DatabaseConstants.SELECT_FROM_STAND_WHERE_ID);
     }
 
     @Override
     public List<Stand> retrieveAll() {
-        return super.retrieveAll(Constants.SELECT_ALL_STANDS);
+        return super.retrieveAll(DatabaseConstants.SELECT_ALL_STANDS);
     }
 
     @Override
     public void persistAll(final List<Stand> pStands) {
-        super.persistAll(pStands, Constants.SELECT_FROM_STAND_WHERE_ID);
+        super.persistAll(pStands, DatabaseConstants.SELECT_FROM_STAND_WHERE_ID);
     }
 
     @Override

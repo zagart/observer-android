@@ -6,7 +6,7 @@ import android.os.Bundle;
 
 import observer.zagart.by.client.App;
 import observer.zagart.by.client.application.accounts.ObserverAccount;
-import observer.zagart.by.client.application.constants.Constants;
+import observer.zagart.by.client.application.constants.ApplicationConstants;
 
 /**
  * Utility class with methods for work with accounts.
@@ -19,7 +19,7 @@ public class AccountUtil {
     public static Account getPersistedAccount() {
         final String accountName = SharedPreferencesUtil.retrieveStringValue(
                 App.getContext(),
-                Constants.CURRENT_ACCOUNT_NAME);
+                ApplicationConstants.CURRENT_ACCOUNT_NAME);
         final AccountManager accountManager = AccountManager.get(App.getContext());
         for (Account account : accountManager.getAccounts()) {
             if (account.name.equals(accountName)) {
@@ -52,13 +52,13 @@ public class AccountUtil {
         if (pAccount != null) {
             SharedPreferencesUtil.persistStringValue(
                     App.getContext(),
-                    Constants.CURRENT_ACCOUNT_NAME,
+                    ApplicationConstants.CURRENT_ACCOUNT_NAME,
                     pAccount.name);
             App.setAccount(pAccount);
         } else {
             SharedPreferencesUtil.persistStringValue(
                     App.getContext(),
-                    Constants.CURRENT_ACCOUNT_NAME,
+                    ApplicationConstants.CURRENT_ACCOUNT_NAME,
                     null);
             App.setAccount(null);
         }

@@ -14,6 +14,9 @@ import observer.zagart.by.client.mvp.models.repository.annotations.dbString;
 @Table(name = "MODULE")
 public class ModuleContract {
 
+    public static final String SELECT_FROM_MODULE_WHERE_ID = "SELECT * FROM MODULE WHERE id=?";
+    public static final String SELECT_ALL_MODULES = "SELECT * FROM MODULE;";
+
     @dbId
     @dbInteger
     @dbNotNull

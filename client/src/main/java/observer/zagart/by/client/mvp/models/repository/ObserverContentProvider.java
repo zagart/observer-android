@@ -8,7 +8,7 @@ import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
-import observer.zagart.by.client.application.constants.Constants;
+import observer.zagart.by.client.application.constants.URIConstants;
 import observer.zagart.by.client.application.managers.DatabaseManager;
 import observer.zagart.by.client.application.utils.URIUtil;
 import observer.zagart.by.client.mvp.models.repository.contracts.ModuleContract;
@@ -80,9 +80,9 @@ public class ObserverContentProvider extends ContentProvider {
     private Class<?> getTable(final Uri pUri) {
         final String table = URIUtil.getClearUriPath(pUri);
         switch (table) {
-            case Constants.MODULE:
+            case URIConstants.MODULE:
                 return ModuleContract.class;
-            case Constants.STAND:
+            case URIConstants.STAND:
                 return StandContract.class;
             default:
                 return null;

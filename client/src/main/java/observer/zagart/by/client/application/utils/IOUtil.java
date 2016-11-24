@@ -13,7 +13,6 @@ import java.io.Reader;
 import java.nio.charset.Charset;
 
 import observer.zagart.by.client.App;
-import observer.zagart.by.client.application.constants.Constants;
 import observer.zagart.by.client.application.managers.ThreadManager;
 
 /**
@@ -23,6 +22,9 @@ import observer.zagart.by.client.application.managers.ThreadManager;
  */
 public class IOUtil {
 
+    private static final byte EOF = -1;
+    private static final short READ_BUFFER_SIZE = 4096;
+    private static final String FAILED_TO_EXECUTE_CLOSING = "Failed to execute closing";
     private static ThreadManager sThreadManager = App.getThreadManager();
 
     public static void close(final Closeable pCloseable) {
@@ -30,7 +32,7 @@ public class IOUtil {
             try {
                 pCloseable.close();
             } catch (IOException pEx) {
-                Log.e(IOUtil.class.getSimpleName(), Constants.FAILED_TO_EXECUTE_CLOSING, pEx);
+                Log.e(IOUtil.class.getSimpleName(), FAILED_TO_EXECUTE_CLOSING, pEx);
             }
         }
     }
@@ -40,13 +42,7 @@ public class IOUtil {
             showNotNullMessage(pContext, pMessage);
         } else {
             sThreadManager.post(
-                    new Runnable() {
-
-                        @Override
-                        public void run() {
-                            showNotNullMessage(pContext, pMessage);
-                        }
-                    });
+                    () -> showNotNullMessage(pContext, pMessage));
         }
     }
 
@@ -59,10 +55,10 @@ public class IOUtil {
     public static String readStreamUsingBuffer(final InputStream pInputStream) throws IOException {
         final StringBuilder result = new StringBuilder();
         final Reader reader = new InputStreamReader(pInputStream, Charset.defaultCharset());
-        final char[] buffer = new char[Constants.READ_BUFFER_SIZE];
+        final char[] buffer = new char[READ_BUFFER_SIZE];
         try {
             int bytes;
-            while ((bytes = reader.read(buffer)) != Constants.EOF) {
+            while ((bytes = reader.read(buffer)) != EOF) {
                 result.append(buffer, 0, bytes);
             }
         } finally {

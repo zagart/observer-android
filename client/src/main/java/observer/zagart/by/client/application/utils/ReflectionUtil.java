@@ -13,7 +13,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.ParameterizedType;
 import java.util.Locale;
 
-import observer.zagart.by.client.application.constants.Constants;
+import observer.zagart.by.client.application.constants.ApplicationConstants;
 import observer.zagart.by.client.application.constants.DatabaseConstants;
 import observer.zagart.by.client.mvp.models.repository.annotations.Table;
 import observer.zagart.by.client.mvp.models.repository.annotations.dbId;
@@ -31,7 +31,7 @@ public class ReflectionUtil {
         for (final Annotation secondaryAnnotation : pAnnotations) {
             if (secondaryAnnotation instanceof dbId) {
                 final dbId id = (dbId) (secondaryAnnotation);
-                pType += Constants.SPACE_STRING + id.value();
+                pType += ApplicationConstants.SPACE_STRING + id.value();
                 if (id.autoincrement()) {
                     pType += DatabaseConstants.AUTOINCREMENT;
                 }
@@ -47,6 +47,16 @@ public class ReflectionUtil {
     }
 
     @Nullable
+    public static String getTableName(Class<?> pClass) {
+        final Table table = pClass.getAnnotation(Table.class);
+        if (table != null) {
+            return table.name();
+        } else {
+            return null;
+        }
+    }
+
+    @Nullable
     public static String getTableCreateQuery(final Class<?> pClass) {
         final Table table = pClass.getAnnotation(Table.class);
         if (table != null) {
@@ -57,7 +67,7 @@ public class ReflectionUtil {
                 for (int i = 0, hits = 0; i < fields.length; i++) {
                     final Field field = fields[i];
                     final Annotation[] annotations = field.getAnnotations();
-                    String type = Constants.EMPTY_STRING;
+                    String type = ApplicationConstants.EMPTY_STRING;
                     for (final Annotation annotation : annotations) {
                         type = addIfDatabaseType(annotations, type, annotation);
                     }

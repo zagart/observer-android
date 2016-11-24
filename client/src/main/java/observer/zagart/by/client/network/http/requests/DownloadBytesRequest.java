@@ -7,7 +7,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 
-import observer.zagart.by.client.application.constants.Constants;
+import observer.zagart.by.client.application.constants.ApplicationConstants;
 import observer.zagart.by.client.network.http.interfaces.IHttpClient;
 
 /**
@@ -56,7 +56,7 @@ public class DownloadBytesRequest implements IHttpClient.IRequest<ByteArrayOutpu
     @Override
     public ByteArrayOutputStream onStandardStream(final InputStream pInputStream) {
         final ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-        final byte[] buffer = new byte[Constants.READ_BUFFER_SIZE];
+        final byte[] buffer = new byte[ApplicationConstants.READ_BUFFER_SIZE];
         int bytesRead;
         try {
             while ((bytesRead = pInputStream.read(buffer)) > 0) {

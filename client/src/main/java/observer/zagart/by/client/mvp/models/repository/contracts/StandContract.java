@@ -13,6 +13,9 @@ import observer.zagart.by.client.mvp.models.repository.annotations.dbString;
 @Table(name = "STAND")
 public class StandContract {
 
+    public static final String SELECT_FROM_STAND_WHERE_ID = "SELECT * FROM STAND WHERE id=?";
+    public static final String SELECT_ALL_STANDS = "SELECT * FROM STAND;";
+
     @dbInteger
     @dbNotNull
     public static final String ID = "id";

@@ -4,42 +4,44 @@ import android.net.Uri;
 
 import java.util.Locale;
 
-import observer.zagart.by.client.application.constants.Constants;
+import observer.zagart.by.client.application.constants.ApplicationConstants;
+import observer.zagart.by.client.application.constants.URIConstants;
 
 /**
+ * Utility class with methods to work with URI.
+ *
  * @author zagart
  */
 
 public class URIUtil {
 
-    private static final String URI_FORMAT = "%s://%s/%s/%s";
 
     public static String getClearUriPath(final Uri pUri) {
         String path = pUri.getPath();
-        return path.replace(Constants.URI_SEPARATOR, Constants.EMPTY_STRING);
+        return path.replace(URIConstants.URI_SEPARATOR, ApplicationConstants.EMPTY_STRING);
     }
 
     public static Uri getModuleUri() {
         final String stringUri = uriBuilder(
-                Constants.AUTHORITY,
-                Constants.MODULE,
-                Constants.EMPTY_STRING);
+                URIConstants.AUTHORITY,
+                URIConstants.MODULE,
+                ApplicationConstants.EMPTY_STRING);
         return Uri.parse(stringUri);
     }
 
     public static Uri getAccountUri() {
         final String stringUri = uriBuilder(
-                Constants.AUTHORITY,
-                Constants.ACCOUNT,
-                Constants.EMPTY_STRING);
+                URIConstants.AUTHORITY,
+                URIConstants.ACCOUNT,
+                ApplicationConstants.EMPTY_STRING);
         return Uri.parse(stringUri);
     }
 
     public static Uri getStandUri() {
         final String stringUri = uriBuilder(
-                Constants.AUTHORITY,
-                Constants.STAND,
-                Constants.EMPTY_STRING);
+                URIConstants.AUTHORITY,
+                URIConstants.STAND,
+                ApplicationConstants.EMPTY_STRING);
         return Uri.parse(stringUri);
     }
 
@@ -48,8 +50,8 @@ public class URIUtil {
                                      final String pId) {
         return String.format(
                 Locale.getDefault(),
-                URI_FORMAT,
-                Constants.CONTENT,
+                URIConstants.URI_FORMAT,
+                URIConstants.CONTENT,
                 pAuthority,
                 pPath,
                 pId);

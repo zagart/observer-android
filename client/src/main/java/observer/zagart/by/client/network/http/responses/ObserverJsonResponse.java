@@ -11,7 +11,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-import observer.zagart.by.client.application.constants.Constants;
+import observer.zagart.by.client.application.constants.JSONConstants;
 import observer.zagart.by.client.mvp.models.repository.entities.Module;
 import observer.zagart.by.client.mvp.models.repository.entities.Stand;
 import observer.zagart.by.client.network.Criteria;
@@ -37,8 +37,8 @@ public class ObserverJsonResponse {
         }
         try {
             JSONObject jsonResponse = new JSONObject(mResponse);
-            if (jsonResponse.has(Constants.TOKEN)) {
-                return jsonResponse.getString(Constants.TOKEN);
+            if (jsonResponse.has(JSONConstants.TOKEN)) {
+                return jsonResponse.getString(JSONConstants.TOKEN);
             }
             return null;
         } catch (JSONException pEx) {
@@ -54,7 +54,7 @@ public class ObserverJsonResponse {
             return null;
         }
         final JSONObject jsonObjectResponse = new JSONObject(mResponse);
-        final String reflectedAction = jsonObjectResponse.getString(Constants.REFLECTION);
+        final String reflectedAction = jsonObjectResponse.getString(JSONConstants.REFLECTION);
         if (reflectedAction == null) {
             return null;
         }
@@ -72,8 +72,8 @@ public class ObserverJsonResponse {
     private List<Module> parseModulesResponse(final JSONObject pJSONObject)
             throws JSONException {
         final List<Module> moduleList = new ArrayList<>();
-        if (pJSONObject.has(Constants.MODULES_KEY)) {
-            final JSONArray modules = pJSONObject.getJSONArray(Constants.MODULES_KEY);
+        if (pJSONObject.has(JSONConstants.MODULES_KEY)) {
+            final JSONArray modules = pJSONObject.getJSONArray(JSONConstants.MODULES_KEY);
             for (int i = 0; i < modules.length(); i++) {
                 final JSONObject jsonStand = modules.getJSONObject(i);
                 moduleList.add(new Module().extractFromJsonObject(jsonStand));
@@ -86,8 +86,8 @@ public class ObserverJsonResponse {
     private List<Stand> parseStandsResponse(final JSONObject pJSONObject)
             throws JSONException {
         final List<Stand> standList = new ArrayList<>();
-        if (pJSONObject.has(Constants.STANDS_KEY)) {
-            final JSONArray stands = pJSONObject.getJSONArray(Constants.STANDS_KEY);
+        if (pJSONObject.has(JSONConstants.STANDS_KEY)) {
+            final JSONArray stands = pJSONObject.getJSONArray(JSONConstants.STANDS_KEY);
             for (int i = 0; i < stands.length(); i++) {
                 final JSONObject jsonStand = stands.getJSONObject(i);
                 standList.add(new Stand().extractFromJsonObject(jsonStand));

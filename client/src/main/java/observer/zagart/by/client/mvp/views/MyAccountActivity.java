@@ -14,7 +14,7 @@ import observer.zagart.by.client.application.utils.AccountUtil;
 import observer.zagart.by.client.mvp.presenters.base.BasePresenter;
 import observer.zagart.by.client.mvp.views.base.BaseView;
 
-import static observer.zagart.by.client.application.constants.Constants.EMPTY_STRING;
+import static observer.zagart.by.client.application.constants.ApplicationConstants.EMPTY_STRING;
 
 /**
  * Activity for user account.

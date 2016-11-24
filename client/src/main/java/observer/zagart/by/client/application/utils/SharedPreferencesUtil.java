@@ -9,7 +9,7 @@ import java.util.Locale;
 import observer.zagart.by.client.BuildConfig;
 import observer.zagart.by.client.R;
 
-import static observer.zagart.by.client.application.constants.Constants.PREF_FILE;
+import static observer.zagart.by.client.application.constants.ApplicationConstants.PREF_FILE;
 
 /**
  * Utility class with methods for persisting activity's data as Shared References.
