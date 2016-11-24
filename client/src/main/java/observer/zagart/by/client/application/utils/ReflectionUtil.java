@@ -15,6 +15,7 @@ import java.util.Locale;
 
 import observer.zagart.by.client.application.constants.ApplicationConstants;
 import observer.zagart.by.client.application.constants.DatabaseConstants;
+import observer.zagart.by.client.mvp.models.repository.QueryBuilder;
 import observer.zagart.by.client.mvp.models.repository.annotations.Table;
 import observer.zagart.by.client.mvp.models.repository.annotations.dbId;
 import observer.zagart.by.client.mvp.models.repository.annotations.dbInteger;
@@ -142,7 +143,7 @@ public class ReflectionUtil {
     private static String getTableCreateTemplate(final String pName, final StringBuilder pBuilder) {
         return String.format(
                 Locale.US,
-                DatabaseConstants.TABLE_CREATE_TEMPLATE,
+                new QueryBuilder(null).createTable(),
                 pName,
                 pBuilder);
     }

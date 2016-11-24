@@ -23,7 +23,7 @@ import observer.zagart.by.client.application.managers.ThreadManager;
 public class IOUtil {
 
     private static final byte EOF = -1;
-    private static final short READ_BUFFER_SIZE = 4096;
+    public static final short READ_BUFFER_SIZE = 4096;
     private static final String FAILED_TO_EXECUTE_CLOSING = "Failed to execute closing";
     private static ThreadManager sThreadManager = App.getThreadManager();
 
