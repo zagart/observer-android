@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 import observer.zagart.by.client.R;
+import observer.zagart.by.client.mvp.IMvp;
 import observer.zagart.by.client.mvp.models.repository.entities.Stand;
 import observer.zagart.by.client.mvp.presenters.StandPresenter;
 import observer.zagart.by.client.mvp.presenters.base.BasePresenter;
@@ -23,7 +24,7 @@ import observer.zagart.by.client.mvp.views.base.BaseView;
  *
  * @author zagart
  */
-public class StandsActivity extends BaseView {
+public class StandsActivity extends BaseView implements IMvp.IViewOperations<List<Stand>> {
 
     private StandPresenter mPresenter = new StandPresenter(this);
     private RecyclerView mRecyclerViewStands;
@@ -38,8 +39,8 @@ public class StandsActivity extends BaseView {
     }
 
     @Override
-    public void onDataChanged(final Bundle pParameters) {
-        setAdapter();
+    public void onDataChanged(final List<Stand> pStands) {
+        setAdapter(pStands);
     }
 
     @Override
@@ -53,18 +54,19 @@ public class StandsActivity extends BaseView {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stands);
         mRecyclerViewStands = (RecyclerView) findViewById(R.id.stands_recycler_view);
-        setAdapter();
+        mPresenter.startDataReload();
     }
 
     @Override
-    protected BasePresenter<Stand> getPresenter() {
+    protected BasePresenter getPresenter() {
         return mPresenter;
     }
 
-    private void setAdapter() {
-        final List<Stand> stands = mPresenter.getElementsFromModel();
-        final StandTableAdapter adapter = new StandTableAdapter(stands);
-        mRecyclerViewStands.setAdapter(adapter);
-        mRecyclerViewStands.setLayoutManager(new LinearLayoutManager(this));
+    private void setAdapter(final List<Stand> pStands) {
+        if (pStands != null) {
+            final StandTableAdapter adapter = new StandTableAdapter(pStands);
+            mRecyclerViewStands.setAdapter(adapter);
+            mRecyclerViewStands.setLayoutManager(new LinearLayoutManager(this));
+        }
     }
 }

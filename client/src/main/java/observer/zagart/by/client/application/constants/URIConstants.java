@@ -6,14 +6,14 @@ package observer.zagart.by.client.application.constants;
  * @author zagart
  */
 
-public class URIConstants {
+public interface URIConstants {
 
-    public static final String URI_FORMAT = "%s://%s/%s/%s";
-    public static final String URI_SEPARATOR = "/";
-    public static final String ACCOUNT = "Account";
-    public static final String MODULE = "Module";
-    public static final String STAND = "Stand";
-    public static final String CONTENT = "content";
-    public static final String AUTHORITY =
+    String URI_FORMAT = "%s://%s/%s/%s";
+    String URI_SEPARATOR = "/";
+    String ACCOUNT = "Account";
+    String MODULE = "Module";
+    String STAND = "Stand";
+    String CONTENT = "content";
+    String AUTHORITY =
             "observer.zagart.by.client.mvp.models.repository.ObserverContentProvider";
 }

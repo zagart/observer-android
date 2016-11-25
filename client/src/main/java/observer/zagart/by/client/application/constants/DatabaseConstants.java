@@ -6,17 +6,15 @@ package observer.zagart.by.client.application.constants;
  * @author zagart
  */
 
-public class DatabaseConstants {
+public interface DatabaseConstants {
 
-    //table creating
-    public static final String TABLE_FIELDS_SEPARATOR = ", ";
-    public static final String NOT_NULL = " NOT NULL";
-    public static final String AUTOINCREMENT = " AUTOINCREMENT";
+    String TABLE_FIELDS_SEPARATOR = ", ";
+    String NOT_NULL = " NOT NULL";
+    String AUTOINCREMENT = " AUTOINCREMENT";
 
-    //exception messages
-    public static final String TRANSACTION_FAILED = "Transaction failed";
-    public static final String INCORRECT_TABLE_NAME = "Incorrect table name";
-    public static final String TABLE_NAME_NULL_EXCEPTION = "Table name should't be null";
-    public static final String INSERT_FAILED = "Failed to insert row";
-    public static final String DELETE_FAILED = "Deletion failed";
+    String TRANSACTION_FAILED = "Transaction failed";
+    String INCORRECT_TABLE_NAME = "Incorrect table name";
+    String TABLE_NAME_NULL_EXCEPTION = "Table name should't be null";
+    String INSERT_FAILED = "Failed to insert row";
+    String DELETE_FAILED = "Deletion failed";
 }

@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 import observer.zagart.by.client.R;
+import observer.zagart.by.client.mvp.IMvp;
 import observer.zagart.by.client.mvp.models.repository.entities.Module;
 import observer.zagart.by.client.mvp.presenters.ModulePresenter;
 import observer.zagart.by.client.mvp.presenters.base.BasePresenter;
@@ -23,7 +24,7 @@ import observer.zagart.by.client.mvp.views.base.BaseView;
  *
  * @author zagart
  */
-public class ModulesActivity extends BaseView {
+public class ModulesActivity extends BaseView implements IMvp.IViewOperations<List<Module>> {
 
     private ModulePresenter mPresenter = new ModulePresenter(this);
     private RecyclerView mRecyclerView;
@@ -38,8 +39,8 @@ public class ModulesActivity extends BaseView {
     }
 
     @Override
-    public void onDataChanged(final Bundle pParameters) {
-        setAdapter();
+    public void onDataChanged(final List<Module> pModules) {
+        setAdapter(pModules);
     }
 
     @Override
@@ -53,18 +54,19 @@ public class ModulesActivity extends BaseView {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_modules);
         mRecyclerView = (RecyclerView) findViewById(R.id.modules_recycler_view);
-        setAdapter();
+        mPresenter.startDataReload();
     }
 
     @Override
-    protected BasePresenter<Module> getPresenter() {
+    protected BasePresenter<List<Module>, Module> getPresenter() {
         return mPresenter;
     }
 
-    private void setAdapter() {
-        final List<Module> modules = mPresenter.getElementsFromModel();
-        final ModuleTableAdapter adapter = new ModuleTableAdapter(modules);
-        mRecyclerView.setAdapter(adapter);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+    private void setAdapter(final List<Module> pModules) {
+        if (pModules != null) {
+            final ModuleTableAdapter adapter = new ModuleTableAdapter(pModules);
+            mRecyclerView.setAdapter(adapter);
+            mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        }
     }
 }

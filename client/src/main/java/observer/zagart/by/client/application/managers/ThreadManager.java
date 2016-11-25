@@ -28,8 +28,7 @@ public class ThreadManager<Result> {
     private static int sCounter = 0;
     private final ExecutorService mPool;
     private final String mName;
-    private final BlockingQueue<IAction> mActions = new ArrayBlockingQueue<>(
-            MAX_THREADS_NUMBER);
+    private final BlockingQueue<IAction> mActions = new ArrayBlockingQueue<>(MAX_THREADS_NUMBER);
     private Handler mHandler;
 
     public ThreadManager() {
@@ -92,26 +91,15 @@ public class ThreadManager<Result> {
         mHandler = new Handler();
         final String name = String.format(Locale.getDefault(), "%s-%d", mName, ++sCounter);
         mPool.execute(
-                new Runnable() {
-
-                    @Override
-                    public void run() {
-                        try {
-                            mActions.offer(pAction);
-                            final Result result = pAction.process(pCallback, pParam);
-                            if (result != null) {
-                                mHandler.post(
-                                        new Runnable() {
-
-                                            @Override
-                                            public void run() {
-                                                onResult(result);
-                                            }
-                                        });
-                            }
-                        } catch (Exception pEx) {
-                            pCallback.onException(name, pEx);
+                () -> {
+                    try {
+                        mActions.offer(pAction);
+                        final Result result = pAction.process(pCallback, pParam);
+                        if (result != null) {
+                            mHandler.post(() -> onResult(result));
                         }
+                    } catch (Exception pEx) {
+                        pCallback.onException(name, pEx);
                     }
                 }
         );

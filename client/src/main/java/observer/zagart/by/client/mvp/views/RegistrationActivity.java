@@ -9,6 +9,7 @@ import android.widget.EditText;
 
 import observer.zagart.by.client.R;
 import observer.zagart.by.client.application.utils.IOUtil;
+import observer.zagart.by.client.mvp.IMvp;
 import observer.zagart.by.client.mvp.presenters.AccountPresenter;
 import observer.zagart.by.client.mvp.presenters.base.BasePresenter;
 import observer.zagart.by.client.mvp.views.base.BaseView;
@@ -19,7 +20,7 @@ import observer.zagart.by.client.mvp.views.base.BaseView;
  *
  * @author zagart
  */
-public class RegistrationActivity extends BaseView {
+public class RegistrationActivity extends BaseView implements IMvp.IViewOperations<Bundle> {
 
     private AccountPresenter mPresenter = new AccountPresenter(this);
     private EditText mPasswordView;

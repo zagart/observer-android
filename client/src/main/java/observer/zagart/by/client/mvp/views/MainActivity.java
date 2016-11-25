@@ -9,13 +9,14 @@ import android.widget.Button;
 
 import observer.zagart.by.client.App;
 import observer.zagart.by.client.R;
+import observer.zagart.by.client.mvp.IMvp;
 import observer.zagart.by.client.mvp.presenters.base.BasePresenter;
 import observer.zagart.by.client.mvp.views.base.BaseView;
 
 /**
  * Application main activity.
  */
-public class MainActivity extends BaseView {
+public class MainActivity extends BaseView implements IMvp.IViewOperations<Void> {
 
     private Button mModulesButton;
     private Button mStandsButton;
@@ -46,7 +47,7 @@ public class MainActivity extends BaseView {
     }
 
     @Override
-    public void onDataChanged(final Bundle pParameters) {
+    public void onDataChanged(final Void pVoid) {
         onAccountCheck();
     }
 

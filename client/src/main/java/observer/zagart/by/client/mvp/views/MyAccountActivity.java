@@ -11,6 +11,7 @@ import android.widget.TextView;
 import observer.zagart.by.client.App;
 import observer.zagart.by.client.R;
 import observer.zagart.by.client.application.utils.AccountUtil;
+import observer.zagart.by.client.mvp.IMvp;
 import observer.zagart.by.client.mvp.presenters.base.BasePresenter;
 import observer.zagart.by.client.mvp.views.base.BaseView;
 
@@ -21,7 +22,7 @@ import static observer.zagart.by.client.application.constants.ApplicationConstan
  *
  * @author zagart
  */
-public class MyAccountActivity extends BaseView {
+public class MyAccountActivity extends BaseView implements IMvp.IViewOperations<Void> {
 
     private Button mLogInView;
     private Button mLogOutView;
@@ -57,7 +58,7 @@ public class MyAccountActivity extends BaseView {
     }
 
     @Override
-    public void onDataChanged(final Bundle pParameters) {
+    public void onDataChanged(final Void pVoid) {
         onAccountCheck();
     }
 

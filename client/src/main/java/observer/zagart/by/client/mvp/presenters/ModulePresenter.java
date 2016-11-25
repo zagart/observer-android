@@ -16,15 +16,20 @@ import observer.zagart.by.client.network.http.requests.observer.GetModulesReques
  * @author zagart
  */
 
-public class ModulePresenter extends BasePresenter<Module> {
+public class ModulePresenter extends BasePresenter<List<Module>, Module> {
 
-    public ModulePresenter(final IMvp.IViewOperations pView) {
+    public ModulePresenter(final IMvp.IViewOperations<List<Module>> pView) {
         super(pView, new ModuleModel());
     }
 
     @Override
     public List<Module> getElementsFromModel() {
         return super.getElementsFromModel();
+    }
+
+    @Override
+    public void startDataReload() {
+        getView().get().onDataChanged(getElementsFromModel());
     }
 
     @Override

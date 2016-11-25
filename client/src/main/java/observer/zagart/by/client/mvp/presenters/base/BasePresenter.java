@@ -29,15 +29,15 @@ import observer.zagart.by.client.network.http.responses.ObserverJsonResponse;
  *
  * @author zagart
  */
-public abstract class BasePresenter<Entity extends IEntity<Entity, ContentValues, Long>>
+public abstract class BasePresenter<Param, Entity extends IEntity<Entity, ContentValues, Long>>
         implements IMvp.IPresenterOperations<Entity> {
 
-    final private WeakReference<IMvp.IViewOperations> mView;
+    final private WeakReference<IMvp.IViewOperations<Param>> mView;
     final private ThreadManager mThreadManager;
     final private BaseModel<Entity> mModel;
     final private ContentObserver mObserver;
 
-    protected BasePresenter(final IMvp.IViewOperations pView,
+    protected BasePresenter(final IMvp.IViewOperations<Param> pView,
                             final BaseModel<Entity> pModel) {
         mView = new WeakReference<>(pView);
         mModel = pModel;
@@ -78,7 +78,7 @@ public abstract class BasePresenter<Entity extends IEntity<Entity, ContentValues
 
     @Override
     public void clearModel() {
-        mModel.deleteAll();
+        mThreadManager.execute(mModel::deleteAll);
     }
 
     public void registerObserver() {
@@ -97,7 +97,7 @@ public abstract class BasePresenter<Entity extends IEntity<Entity, ContentValues
         return mModel;
     }
 
-    protected WeakReference<IMvp.IViewOperations> getView() {
+    protected WeakReference<IMvp.IViewOperations<Param>> getView() {
         return mView;
     }
 

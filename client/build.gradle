@@ -11,6 +11,7 @@ android {
         vectorDrawables.useSupportLibrary = true
         jackOptions {
             enabled = true
+            additionalParameters("jack.incremental" : "true")
         }
     }
     compileOptions {

@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 
 import observer.zagart.by.client.App;
-import observer.zagart.by.client.mvp.IMvp;
 import observer.zagart.by.client.mvp.presenters.base.BasePresenter;
 import observer.zagart.by.client.mvp.views.MainActivity;
 
@@ -14,7 +13,7 @@ import observer.zagart.by.client.mvp.views.MainActivity;
  *
  * @author zagart
  */
-abstract public class BaseView extends AppCompatActivity implements IMvp.IViewOperations {
+abstract public class BaseView extends AppCompatActivity {
 
     public void onAccountCheck() {
         if (App.getAccount() == null) {
@@ -24,7 +23,6 @@ abstract public class BaseView extends AppCompatActivity implements IMvp.IViewOp
         }
     }
 
-    @Override
     public Context getViewContext() {
         return this;
     }

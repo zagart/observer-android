@@ -29,12 +29,12 @@ import observer.zagart.by.client.network.http.responses.ObserverJsonResponse;
  * @author zagart
  */
 
-public class AccountPresenter extends BasePresenter<ObserverAccount> {
+public class AccountPresenter extends BasePresenter<Bundle, ObserverAccount> {
 
     final private ThreadManager mThreadManager;
     final private IHttpClient mHttpClient;
 
-    public AccountPresenter(final IMvp.IViewOperations pView) {
+    public AccountPresenter(final IMvp.IViewOperations<Bundle> pView) {
         super(pView, new AccountModel(URIUtil.getAccountUri()));
         mThreadManager = App.getThreadManager();
         mHttpClient = HttpFactory.getDefaultClient();
@@ -65,6 +65,11 @@ public class AccountPresenter extends BasePresenter<ObserverAccount> {
     @Override
     public List<ObserverAccount> getElementsFromModel() {
         return getModel().retrieveAll();
+    }
+
+    @Override
+    public void startDataReload() {
+        getView().get().onDataChanged(null);
     }
 
     @Override

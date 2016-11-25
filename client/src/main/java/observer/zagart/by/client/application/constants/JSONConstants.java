@@ -6,11 +6,10 @@ package observer.zagart.by.client.application.constants;
  * @author zagart
  */
 
-public class JSONConstants {
+public interface JSONConstants {
 
-    public static final String TOKEN = "token";
-    public static final String STANDS_KEY = "stands";
-    public static final String MODULES_KEY = "modules";
-    public static final String REFLECTION = "reflection";
-
+    String TOKEN = "token";
+    String STANDS_KEY = "stands";
+    String MODULES_KEY = "modules";
+    String REFLECTION = "reflection";
 }

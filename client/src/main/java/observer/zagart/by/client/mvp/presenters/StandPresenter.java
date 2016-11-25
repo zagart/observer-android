@@ -16,9 +16,9 @@ import observer.zagart.by.client.network.http.requests.observer.GetStandsRequest
  * @author zagart
  */
 
-public class StandPresenter extends BasePresenter<Stand> {
+public class StandPresenter extends BasePresenter<List<Stand>, Stand> {
 
-    public StandPresenter(final IMvp.IViewOperations pView) {
+    public StandPresenter(final IMvp.IViewOperations<List<Stand>> pView) {
         super(pView, new StandModel());
     }
 
@@ -30,6 +30,10 @@ public class StandPresenter extends BasePresenter<Stand> {
     @Override
     public void synchronizeModel(final IHttpClient.IRequest<String> pRequest) {
         super.synchronizeModel(new GetStandsRequest());
+    }
+
+    public void startDataReload() {
+        getView().get().onDataChanged(getElementsFromModel());
     }
 
     @Override
