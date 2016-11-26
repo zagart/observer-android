@@ -8,6 +8,7 @@ import android.view.View;
 
 import org.json.JSONException;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
@@ -24,13 +25,14 @@ import observer.zagart.by.client.mvp.views.base.BaseView;
  *
  * @author zagart
  */
-public class ModulesActivity extends BaseView implements IMvp.IViewOperations<List<Module>> {
+public class ModulesActivity extends BaseView implements IMvp.IViewOperations<Module> {
 
     private ModulePresenter mPresenter = new ModulePresenter(this);
     private RecyclerView mRecyclerView;
 
     public void onClearClick(View pView) {
         mPresenter.clearModel();
+        onDataChanged(new ArrayList<>());
     }
 
     public void onReloadClick(View pView)
@@ -58,7 +60,7 @@ public class ModulesActivity extends BaseView implements IMvp.IViewOperations<Li
     }
 
     @Override
-    protected BasePresenter<List<Module>, Module> getPresenter() {
+    protected BasePresenter<Module> getPresenter() {
         return mPresenter;
     }
 

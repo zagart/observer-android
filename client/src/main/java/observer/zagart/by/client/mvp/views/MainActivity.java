@@ -7,8 +7,11 @@ import android.support.v7.app.ActionBar;
 import android.view.View;
 import android.widget.Button;
 
+import java.util.List;
+
 import observer.zagart.by.client.App;
 import observer.zagart.by.client.R;
+import observer.zagart.by.client.application.accounts.ObserverAccount;
 import observer.zagart.by.client.mvp.IMvp;
 import observer.zagart.by.client.mvp.presenters.base.BasePresenter;
 import observer.zagart.by.client.mvp.views.base.BaseView;
@@ -16,7 +19,7 @@ import observer.zagart.by.client.mvp.views.base.BaseView;
 /**
  * Application main activity.
  */
-public class MainActivity extends BaseView implements IMvp.IViewOperations<Void> {
+public class MainActivity extends BaseView implements IMvp.IViewOperations<ObserverAccount> {
 
     private Button mModulesButton;
     private Button mStandsButton;
@@ -47,7 +50,7 @@ public class MainActivity extends BaseView implements IMvp.IViewOperations<Void>
     }
 
     @Override
-    public void onDataChanged(final Void pVoid) {
+    public void onDataChanged(final List<ObserverAccount> pAccounts) {
         onAccountCheck();
     }
 

@@ -15,6 +15,8 @@ import observer.zagart.by.client.mvp.views.MainActivity;
  */
 abstract public class BaseView extends AppCompatActivity {
 
+    protected static final int ACTIVE_ACCOUNT = 0;
+
     public void onAccountCheck() {
         if (App.getAccount() == null) {
             final Intent intent = new Intent(this, MainActivity.class);

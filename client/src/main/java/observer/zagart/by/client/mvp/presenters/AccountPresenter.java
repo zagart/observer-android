@@ -1,9 +1,9 @@
 package observer.zagart.by.client.mvp.presenters;
 
-import android.os.Bundle;
 import android.text.TextUtils;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import observer.zagart.by.client.App;
@@ -29,21 +29,20 @@ import observer.zagart.by.client.network.http.responses.ObserverJsonResponse;
  * @author zagart
  */
 
-public class AccountPresenter extends BasePresenter<Bundle, ObserverAccount> {
+public class AccountPresenter extends BasePresenter<ObserverAccount> {
 
     final private ThreadManager mThreadManager;
     final private IHttpClient mHttpClient;
 
-    public AccountPresenter(final IMvp.IViewOperations<Bundle> pView) {
+    public AccountPresenter(final IMvp.IViewOperations<ObserverAccount> pView) {
         super(pView, new AccountModel(URIUtil.getAccountUri()));
         mThreadManager = App.getThreadManager();
         mHttpClient = HttpFactory.getDefaultClient();
     }
 
-    public void persistAccount(final Bundle pAccountBundle) {
-        final ObserverAccount account = AccountUtil.parseAccountBundle(pAccountBundle);
-        getModel().persist(account);
-        AccountUtil.setCurrentAccount(account);
+    public void persistAccount(final ObserverAccount pAccount) {
+        getModel().persist(pAccount);
+        AccountUtil.setCurrentAccount(pAccount);
     }
 
     public void executeRegistration(final CharSequence pLogin, final CharSequence pPassword) {
@@ -98,9 +97,12 @@ public class AccountPresenter extends BasePresenter<Bundle, ObserverAccount> {
                         token = null;
                     }
                     if (!TextUtils.isEmpty(token)) {
-                        final Bundle accountBundle = AccountUtil.createAccountBundle(
-                                login, password, token);
-                        getView().get().onDataChanged(accountBundle);
+                        final ObserverAccount account = new ObserverAccount(login);
+                        final ArrayList<ObserverAccount> accounts = new ArrayList<>();
+                        accounts.add(account);
+                        account.setToken(token);
+                        account.setPassword(password);
+                        getView().get().onDataChanged(accounts);
                     } else {
                         IOUtil.showToast(getContext(), getContext().getString(pErrorMessageResId));
                     }

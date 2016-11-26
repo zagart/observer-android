@@ -4,6 +4,7 @@ import android.content.Context;
 
 import java.util.List;
 
+import observer.zagart.by.client.mvp.models.repository.entities.IEntity;
 import observer.zagart.by.client.network.http.interfaces.IHttpClient;
 
 /**
@@ -14,18 +15,16 @@ import observer.zagart.by.client.network.http.interfaces.IHttpClient;
 
 public interface IMvp {
 
-    interface IViewOperations<Param> {
+    interface IViewOperations<Entity extends IEntity> {
 
         Context getViewContext();
 
-        void onDataChanged(final Param pParameters);
+        void onDataChanged(final List<Entity> pParameters);
     }
 
-    interface IPresenterOperations<Entity> {
+    interface IPresenterOperations<Entity extends IEntity> {
 
         List<Entity> getElementsFromModel();
-
-        void startDataReload();
 
         void synchronizeModel(final IHttpClient.IRequest<String> pRequest);
 

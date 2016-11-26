@@ -7,7 +7,10 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 
+import java.util.List;
+
 import observer.zagart.by.client.R;
+import observer.zagart.by.client.application.accounts.ObserverAccount;
 import observer.zagart.by.client.application.utils.IOUtil;
 import observer.zagart.by.client.mvp.IMvp;
 import observer.zagart.by.client.mvp.presenters.AccountPresenter;
@@ -20,7 +23,8 @@ import observer.zagart.by.client.mvp.views.base.BaseView;
  *
  * @author zagart
  */
-public class RegistrationActivity extends BaseView implements IMvp.IViewOperations<Bundle> {
+public class RegistrationActivity extends BaseView implements IMvp
+        .IViewOperations<ObserverAccount> {
 
     private AccountPresenter mPresenter = new AccountPresenter(this);
     private EditText mPasswordView;
@@ -37,8 +41,8 @@ public class RegistrationActivity extends BaseView implements IMvp.IViewOperatio
     }
 
     @Override
-    public void onDataChanged(final Bundle pParameters) {
-        mPresenter.persistAccount(pParameters);
+    public void onDataChanged(final List<ObserverAccount> pParameters) {
+        mPresenter.persistAccount(pParameters.get(ACTIVE_ACCOUNT));
         final Intent intent = new Intent(this, MyAccountActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_NO_HISTORY);
         startActivity(intent);

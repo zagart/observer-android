@@ -29,15 +29,15 @@ import observer.zagart.by.client.network.http.responses.ObserverJsonResponse;
  *
  * @author zagart
  */
-public abstract class BasePresenter<Param, Entity extends IEntity<Entity, ContentValues, Long>>
+public abstract class BasePresenter<Entity extends IEntity<Entity, ContentValues, Long>>
         implements IMvp.IPresenterOperations<Entity> {
 
-    final private WeakReference<IMvp.IViewOperations<Param>> mView;
+    final private WeakReference<IMvp.IViewOperations<Entity>> mView;
     final private ThreadManager mThreadManager;
     final private BaseModel<Entity> mModel;
     final private ContentObserver mObserver;
 
-    protected BasePresenter(final IMvp.IViewOperations<Param> pView,
+    protected BasePresenter(final IMvp.IViewOperations<Entity> pView,
                             final BaseModel<Entity> pModel) {
         mView = new WeakReference<>(pView);
         mModel = pModel;
@@ -63,6 +63,7 @@ public abstract class BasePresenter<Param, Entity extends IEntity<Entity, Conten
                                 .extractEntities();
                         if (entities != null && entities.size() > 0) {
                             mModel.persistAll(entities);
+                            startDataReload();
                         } else {
                             IOUtil.showToast(context,
                                     context.getString(R.string.msg_no_server_response));
@@ -89,6 +90,15 @@ public abstract class BasePresenter<Param, Entity extends IEntity<Entity, Conten
         getContentResolver().unregisterContentObserver(mObserver);
     }
 
+    public void startDataReload() {
+        mThreadManager.execute(
+                () -> {
+                    final List<Entity> entities = mModel.retrieveAll();
+                    mThreadManager.post(() -> getView().get().onDataChanged(entities));
+                }
+        );
+    }
+
     protected Context getContext() {
         return mView.get().getViewContext();
     }
@@ -97,7 +107,7 @@ public abstract class BasePresenter<Param, Entity extends IEntity<Entity, Conten
         return mModel;
     }
 
-    protected WeakReference<IMvp.IViewOperations<Param>> getView() {
+    protected WeakReference<IMvp.IViewOperations<Entity>> getView() {
         return mView;
     }
 

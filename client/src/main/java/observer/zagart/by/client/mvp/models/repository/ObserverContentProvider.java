@@ -24,8 +24,10 @@ public class ObserverContentProvider extends ContentProvider {
 
     private DatabaseManager mDatabaseManager;
 
+    @SuppressWarnings("WrongConstant")
     @Override
     public boolean onCreate() {
+        //TODO find out cause of unstable null pointer exception
         mDatabaseManager = new DatabaseManager(getContext());
         return true;
     }

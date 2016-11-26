@@ -31,9 +31,9 @@ public class Observer extends HttpServlet {
     @Override
     public void init() throws ServletException {
         mHandler = new Handler();
-        for (int i = 0; i < 10000; i++) {
-            final StandServiceImpl standService = new StandServiceImpl();
-            final ModuleServiceImpl moduleService = new ModuleServiceImpl();
+        final StandServiceImpl standService = new StandServiceImpl();
+        final ModuleServiceImpl moduleService = new ModuleServiceImpl();
+        for (int i = 0; i < 100; i++) {
             DataUtil.persistPairStandModule(
                     DataUtil.getNewStand(),
                     DataUtil.getNewModule(),
