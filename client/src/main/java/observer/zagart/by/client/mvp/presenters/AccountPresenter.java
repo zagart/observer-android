@@ -9,6 +9,7 @@ import java.util.List;
 import observer.zagart.by.client.App;
 import observer.zagart.by.client.R;
 import observer.zagart.by.client.application.accounts.ObserverAccount;
+import observer.zagart.by.client.application.constants.Services;
 import observer.zagart.by.client.application.managers.ThreadManager;
 import observer.zagart.by.client.application.utils.AccountUtil;
 import observer.zagart.by.client.application.utils.IOUtil;
@@ -34,9 +35,10 @@ public class AccountPresenter extends BasePresenter<ObserverAccount> {
     final private ThreadManager mThreadManager;
     final private IHttpClient mHttpClient;
 
+    @SuppressWarnings("WrongConstant")
     public AccountPresenter(final IMvp.IViewOperations<ObserverAccount> pView) {
         super(pView, new AccountModel(URIUtil.getAccountUri()));
-        mThreadManager = App.getThreadManager();
+        mThreadManager = (ThreadManager) App.getContext().getSystemService(Services.THREAD_MANAGER);
         mHttpClient = HttpFactory.getDefaultClient();
     }
 

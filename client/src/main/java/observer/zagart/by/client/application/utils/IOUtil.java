@@ -13,6 +13,7 @@ import java.io.Reader;
 import java.nio.charset.Charset;
 
 import observer.zagart.by.client.App;
+import observer.zagart.by.client.application.constants.Services;
 import observer.zagart.by.client.application.managers.ThreadManager;
 
 /**
@@ -20,12 +21,15 @@ import observer.zagart.by.client.application.managers.ThreadManager;
  *
  * @author zagart
  */
+@SuppressWarnings("WrongConstant")
 public class IOUtil {
 
-    private static final byte EOF = -1;
     public static final short READ_BUFFER_SIZE = 4096;
+    private static final byte EOF = -1;
     private static final String FAILED_TO_EXECUTE_CLOSING = "Failed to execute closing";
-    private static ThreadManager sThreadManager = App.getThreadManager();
+    private static ThreadManager sThreadManager = (ThreadManager) App
+            .getContext()
+            .getSystemService(Services.THREAD_MANAGER);
 
     public static void close(final Closeable pCloseable) {
         if (pCloseable != null) {

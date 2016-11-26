@@ -3,11 +3,17 @@ package observer.zagart.by.client.mvp.models.repository;
 import android.content.ContentProvider;
 import android.content.ContentUris;
 import android.content.ContentValues;
+import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.util.Log;
 
+import observer.zagart.by.client.App;
+import observer.zagart.by.client.BuildConfig;
+import observer.zagart.by.client.application.constants.LogConstants;
+import observer.zagart.by.client.application.constants.Services;
 import observer.zagart.by.client.application.constants.URIConstants;
 import observer.zagart.by.client.application.managers.DatabaseManager;
 import observer.zagart.by.client.application.utils.URIUtil;
@@ -28,7 +34,15 @@ public class ObserverContentProvider extends ContentProvider {
     @Override
     public boolean onCreate() {
         //TODO find out cause of unstable null pointer exception
-        mDatabaseManager = new DatabaseManager(getContext());
+        final Context context = App.getContext();
+        if (context != null) {
+            mDatabaseManager = (DatabaseManager) context.getSystemService(Services.THREAD_MANAGER);
+        } else {
+            if (BuildConfig.DEBUG) {
+                Log.e(ObserverContentProvider.class.getSimpleName(), LogConstants.NULL_CONTEXT);
+            }
+            mDatabaseManager = new DatabaseManager(getContext());
+        }
         return true;
     }
 

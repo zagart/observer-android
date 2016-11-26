@@ -9,6 +9,5 @@ package observer.zagart.by.client.application.constants;
 public interface Services {
 
     String DATABASE_MANAGER = "Database manager";
-    String CONTEXT = "Services";
     String THREAD_MANAGER = "Thread manager";
 }

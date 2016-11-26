@@ -19,6 +19,9 @@ import observer.zagart.by.client.application.utils.AccountUtil;
  *
  * @author zagart
  */
+//TODO remove all logs by proguard
+//TODO configuration of ProGuard
+//TODO should be a singletons..?
 public class App extends Application {
 
     final private Map<String, Object> mServices = new HashMap<String, Object>() {
@@ -29,9 +32,6 @@ public class App extends Application {
         }
     };
 
-    //TODO remove all logs by proguard
-    //TODO configuration of ProGuard
-    //TODO should be a singletons..?
     public static Account getAccount() {
         return AccountHolder.get();
     }
@@ -42,10 +42,6 @@ public class App extends Application {
 
     public static Context getContext() {
         return ContextHolder.get();
-    }
-
-    public static ThreadManager getThreadManager() {
-        return ThreadManager.getDefaultInstance();
     }
 
     @Override
@@ -59,8 +55,6 @@ public class App extends Application {
     @Override
     public Object getSystemService(final String pName) {
         switch (pName) {
-            case Services.CONTEXT:
-                return ContextHolder.get();
             case Services.DATABASE_MANAGER:
                 return mServices.get(Services.DATABASE_MANAGER);
             case Services.THREAD_MANAGER:

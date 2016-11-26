@@ -14,6 +14,7 @@ import java.util.List;
 
 import observer.zagart.by.client.App;
 import observer.zagart.by.client.R;
+import observer.zagart.by.client.application.constants.Services;
 import observer.zagart.by.client.application.managers.ThreadManager;
 import observer.zagart.by.client.application.utils.IOUtil;
 import observer.zagart.by.client.mvp.IMvp;
@@ -37,11 +38,12 @@ public abstract class BasePresenter<Entity extends IEntity<Entity, ContentValues
     final private BaseModel<Entity> mModel;
     final private ContentObserver mObserver;
 
+    @SuppressWarnings("WrongConstant")
     protected BasePresenter(final IMvp.IViewOperations<Entity> pView,
                             final BaseModel<Entity> pModel) {
         mView = new WeakReference<>(pView);
         mModel = pModel;
-        mThreadManager = App.getThreadManager();
+        mThreadManager = (ThreadManager) App.getContext().getSystemService(Services.THREAD_MANAGER);
         mObserver = new ModelContentObserver(mView.get());
     }
 

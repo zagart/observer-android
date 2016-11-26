@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.lang.ref.WeakReference;
 
 import observer.zagart.by.client.App;
+import observer.zagart.by.client.application.constants.Services;
 import observer.zagart.by.client.application.interfaces.IAction;
 import observer.zagart.by.client.application.interfaces.ICallback;
 import observer.zagart.by.client.application.interfaces.IDrawable;
@@ -41,7 +42,8 @@ public class BitmapDrawer implements IDrawable<ImageView, String> {
                 return pImage.getByteCount() / 1024;
             }
         };
-        mThreadManager = App.getThreadManager();
+        //noinspection WrongConstant
+        mThreadManager = (ThreadManager) App.getContext().getSystemService(Services.THREAD_MANAGER);
     }
 
     /**
