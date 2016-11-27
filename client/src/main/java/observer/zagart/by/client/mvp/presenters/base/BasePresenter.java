@@ -67,7 +67,8 @@ public abstract class BasePresenter<Entity extends IEntity<Entity, ContentValues
                             mModel.persistAll(entities);
                             startDataReload();
                         } else {
-                            IOUtil.showToast(context,
+                            IOUtil.showToast(
+                                    context,
                                     context.getString(R.string.msg_no_server_response));
                         }
                     } catch (IOException | JSONException pEx) {

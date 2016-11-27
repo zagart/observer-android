@@ -10,6 +10,7 @@ import java.util.Locale;
 import observer.zagart.by.client.App;
 import observer.zagart.by.client.BuildConfig;
 import observer.zagart.by.client.R;
+import observer.zagart.by.client.application.constants.LogConstants;
 import observer.zagart.by.client.application.utils.IOUtil;
 import observer.zagart.by.client.network.http.interfaces.IHttpClient;
 
@@ -17,7 +18,7 @@ import observer.zagart.by.client.network.http.interfaces.IHttpClient;
  * Abstract request-class with main settings for connecting Observer HTTP-server.
  *
  * @author zagart
- * @see  IHttpClient.IRequest
+ * @see IHttpClient.IRequest
  */
 public abstract class BaseObserverRequest implements IHttpClient.IRequest<String> {
 
@@ -50,12 +51,17 @@ public abstract class BaseObserverRequest implements IHttpClient.IRequest<String
         try {
             return IOUtil.readStreamUsingBuffer(pInputStream);
         } catch (IOException pEx) {
+            if (BuildConfig.DEBUG) {
+                Log.e(BaseObserverRequest.class.getSimpleName(), pEx.getMessage());
+            }
             return null;
         }
     }
 
     @Override
     public void onTimeoutException() {
-        //TODO connection timeout handling
+        if (BuildConfig.DEBUG) {
+            Log.e(BaseObserverRequest.class.getSimpleName(), LogConstants.TIMEOUT_EXCEPTION);
+        }
     }
 }

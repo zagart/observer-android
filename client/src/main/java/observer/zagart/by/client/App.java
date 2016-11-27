@@ -20,8 +20,7 @@ import observer.zagart.by.client.application.utils.AccountUtil;
  * @author zagart
  */
 //TODO remove all logs by proguard
-//TODO configuration of ProGuard
-//TODO should be a singletons..?
+//TODO |self| configuration of ProGuard
 public class App extends Application {
 
     final private Map<String, Object> mServices = new HashMap<String, Object>() {
