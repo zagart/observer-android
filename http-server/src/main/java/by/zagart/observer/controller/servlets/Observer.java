@@ -1,5 +1,7 @@
-package by.zagart.observer.controller;
+package by.zagart.observer.controller.servlets;
 
+import by.zagart.observer.controller.Handler;
+import by.zagart.observer.controller.Logger;
 import by.zagart.observer.model.services.impl.ModuleServiceImpl;
 import by.zagart.observer.model.services.impl.StandServiceImpl;
 import by.zagart.observer.utils.DataUtil;
@@ -14,6 +16,7 @@ import java.io.IOException;
 
 @WebServlet("/RequestHandler")
 public class Observer extends HttpServlet {
+    private static final int DATABASE_INITIAL_FILL_VALUE = 100;
     private Handler mHandler;
 
     protected void doGet(HttpServletRequest pRequest, HttpServletResponse pResponse)
@@ -33,7 +36,7 @@ public class Observer extends HttpServlet {
         mHandler = new Handler();
         final StandServiceImpl standService = new StandServiceImpl();
         final ModuleServiceImpl moduleService = new ModuleServiceImpl();
-        for (int i = 0; i < 100; i++) {
+        for (int i = 0; i < DATABASE_INITIAL_FILL_VALUE; i++) {
             DataUtil.persistPairStandModule(
                     DataUtil.getNewStand(),
                     DataUtil.getNewModule(),

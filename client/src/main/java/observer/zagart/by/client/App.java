@@ -21,6 +21,8 @@ import observer.zagart.by.client.application.utils.AccountUtil;
  */
 //TODO remove all logs by proguard
 //TODO |self| configuration of ProGuard
+//TODO |self| refactor request into API
+//TODO |self| unit&instrumental tests
 public class App extends Application {
 
     final private Map<String, Object> mServices = new HashMap<String, Object>() {
