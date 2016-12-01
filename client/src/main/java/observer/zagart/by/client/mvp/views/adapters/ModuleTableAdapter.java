@@ -29,7 +29,10 @@ public class ModuleTableAdapter extends RecyclerView.Adapter<ModuleTableAdapter.
     public RowHolder onCreateViewHolder(final ViewGroup pParent, final int pViewType) {
         final Context context = pParent.getContext();
         final LayoutInflater inflater = LayoutInflater.from(context);
-        final View moduleRowView = inflater.inflate(R.layout.view_module_adapter_row, pParent, false);
+        final View moduleRowView = inflater.inflate(
+                R.layout.view_module_adapter_row,
+                pParent,
+                false);
         return new RowHolder(moduleRowView);
     }
 
