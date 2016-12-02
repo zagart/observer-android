@@ -9,9 +9,7 @@ import android.widget.TextView;
 
 import java.util.List;
 
-import observer.zagart.by.client.App;
 import observer.zagart.by.client.R;
-import observer.zagart.by.client.application.utils.IOUtil;
 import observer.zagart.by.client.mvp.models.repository.entities.Stand;
 
 /**
@@ -32,7 +30,6 @@ public class StandTableAdapter extends RecyclerView.Adapter<StandTableAdapter.Ro
         final Context context = pParent.getContext();
         final LayoutInflater inflater = LayoutInflater.from(context);
         final View standRowView = inflater.inflate(R.layout.view_stand_adapter_row, pParent, false);
-        standRowView.setOnClickListener(new StandRowListener());
         return new RowHolder(standRowView);
     }
 
@@ -60,14 +57,6 @@ public class StandTableAdapter extends RecyclerView.Adapter<StandTableAdapter.Ro
             mIdView = (TextView) pItemView.findViewById(R.id.stand_id);
             mNumberView = (TextView) pItemView.findViewById(R.id.stand_number);
             mDescriptionView = (TextView) pItemView.findViewById(R.id.stand_description);
-        }
-    }
-
-    private static class StandRowListener implements View.OnClickListener {
-
-        @Override
-        public void onClick(final View pView) {
-            IOUtil.showToast(App.getContext(), pView.toString());
         }
     }
 }

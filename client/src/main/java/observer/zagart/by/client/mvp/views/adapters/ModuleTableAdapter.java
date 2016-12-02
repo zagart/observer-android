@@ -9,7 +9,9 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import observer.zagart.by.client.App;
 import observer.zagart.by.client.R;
+import observer.zagart.by.client.application.utils.IOUtil;
 import observer.zagart.by.client.mvp.models.repository.entities.Module;
 
 /**
@@ -45,6 +47,13 @@ public class ModuleTableAdapter extends RecyclerView.Adapter<ModuleTableAdapter.
         pHolder.mValue.setText(module.getValue());
         pHolder.mStatusChangeDate.setText(module.getStatusChangeDate().toString());
         pHolder.mStandId.setText(String.valueOf(module.getStandId()));
+        pHolder.mContainer.setTag(pPosition);
+        pHolder.mContainer.setOnClickListener((pView) -> {
+            final Module moduleUnderClick = mModules.get((Integer) pView.getTag());
+            IOUtil.showToast(
+                    App.getContext(),
+                    String.valueOf(moduleUnderClick.getStatusChangeDate()));
+        });
     }
 
     @Override
@@ -53,6 +62,8 @@ public class ModuleTableAdapter extends RecyclerView.Adapter<ModuleTableAdapter.
     }
 
     static class RowHolder extends RecyclerView.ViewHolder {
+
+        final private View mContainer;
 
         final private TextView mId;
         final private TextView mName;
@@ -63,6 +74,7 @@ public class ModuleTableAdapter extends RecyclerView.Adapter<ModuleTableAdapter.
 
         private RowHolder(final View pItemView) {
             super(pItemView);
+            mContainer = pItemView.findViewById(R.id.module_model_item);
             mId = (TextView) pItemView.findViewById(R.id.module_id);
             mName = (TextView) pItemView.findViewById(R.id.module_name);
             mStatus = (TextView) pItemView.findViewById(R.id.module_status);
