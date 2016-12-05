@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout android:id="@+id/clear_reload_template"
               xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:gravity="end"
               android:orientation="horizontal">
 
-    <Button
+    <ImageButton
         android:id="@+id/stands_clear_button"
-        style="@style/ReloadButton"
+        style="@style/PanelButton"
         android:onClick="onClearClick"
-        android:text="@string/clear"/>
+        app:srcCompat="@drawable/ic_clear_black_24dp"/>
 
-    <Button
+    <ImageButton
         android:id="@+id/stands_reload_button"
-        style="@style/ReloadButton"
+        style="@style/PanelButton"
         android:onClick="onReloadClick"
-        android:text="@string/reload"/>
-
+        app:srcCompat="@drawable/ic_reload_black_24dp"/>
 </LinearLayout>

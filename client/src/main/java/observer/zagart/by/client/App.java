@@ -13,6 +13,7 @@ import observer.zagart.by.client.application.managers.ThreadManager;
 import observer.zagart.by.client.application.singletons.AccountHolder;
 import observer.zagart.by.client.application.singletons.ContextHolder;
 import observer.zagart.by.client.application.utils.AccountUtil;
+import observer.zagart.by.client.application.utils.IOUtil;
 
 /**
  * Observer main application file.

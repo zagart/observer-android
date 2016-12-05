@@ -8,6 +8,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import observer.zagart.by.client.R;
@@ -29,7 +30,9 @@ public class AuthenticationActivity
     private TextView mPasswordView;
 
     public void onGuestClick(View view) {
-        //TODO guest log in
+        final ArrayList<ObserverAccount> accounts = new ArrayList<>();
+        accounts.add(ObserverAccount.getGuestAccount());
+        onDataChanged(accounts);
     }
 
     public void onLogInClick(View view) {
@@ -50,7 +53,7 @@ public class AuthenticationActivity
 
     @Override
     public void onDataChanged(final List<ObserverAccount> pAccounts) {
-        mPresenter.persistAccount(pAccounts.get(ACTIVE_ACCOUNT));
+        mPresenter.persistAccount(pAccounts.get(AUTHENTICATED_ACCOUNT));
         final Intent intent = new Intent(this, MyAccountActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_NO_HISTORY);
         startActivity(intent);

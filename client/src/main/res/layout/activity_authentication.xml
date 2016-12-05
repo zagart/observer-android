@@ -56,6 +56,9 @@
         <Button
             android:id="@+id/btn_sign_up"
             style="@style/LoginLayout.Button"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
             android:onClick="onSignUpClick"
             android:text="@string/sign_up"
             app:layout_heightPercent="@fraction/login_button_height"

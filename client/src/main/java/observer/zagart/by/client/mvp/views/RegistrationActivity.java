@@ -42,7 +42,7 @@ public class RegistrationActivity extends BaseView implements IMvp
 
     @Override
     public void onDataChanged(final List<ObserverAccount> pParameters) {
-        mPresenter.persistAccount(pParameters.get(ACTIVE_ACCOUNT));
+        mPresenter.persistAccount(pParameters.get(AUTHENTICATED_ACCOUNT));
         final Intent intent = new Intent(this, MyAccountActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_NO_HISTORY);
         startActivity(intent);

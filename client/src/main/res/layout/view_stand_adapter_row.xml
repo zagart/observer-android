@@ -6,20 +6,12 @@
               android:orientation="horizontal">
 
     <TextView
-        android:id="@+id/stand_id"
-        style="@style/RecyclerViewTableCell"
-        android:maxWidth="50dp"
-        android:minWidth="50dp"/>
-
-    <TextView
         android:id="@+id/stand_number"
         style="@style/RecyclerViewTableCell"
-        android:maxWidth="50dp"
-        android:minWidth="50dp"/>
+        android:layout_width="100dp"/>
 
     <TextView
         android:id="@+id/stand_description"
         style="@style/RecyclerViewTableCell"
-        android:maxWidth="260dp"
-        android:minWidth="260dp"/>
+        android:layout_width="260dp"/>
 </LinearLayout>

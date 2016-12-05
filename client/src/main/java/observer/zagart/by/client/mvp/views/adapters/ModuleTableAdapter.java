@@ -6,7 +6,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 
 import observer.zagart.by.client.App;
 import observer.zagart.by.client.R;
@@ -23,7 +26,9 @@ public class ModuleTableAdapter extends RecyclerView.Adapter<ModuleTableAdapter.
     final private List<Module> mModules;
 
     public ModuleTableAdapter(final List<Module> pModules) {
-        mModules = pModules;
+        Set<Module> modules = new TreeSet<>(pModules);
+        mModules = new ArrayList<>();
+        mModules.addAll(modules);
     }
 
     @Override
@@ -36,12 +41,7 @@ public class ModuleTableAdapter extends RecyclerView.Adapter<ModuleTableAdapter.
     @Override
     public void onBindViewHolder(final RowHolder pHolder, final int pPosition) {
         final Module module = mModules.get(pPosition);
-        pHolder.mId.setText(String.valueOf(module.getId()));
         pHolder.mName.setText(module.getName());
-        pHolder.mStatus.setText(module.getStatus());
-        pHolder.mValue.setText(module.getValue());
-        pHolder.mStatusChangeDate.setText(module.getStatusChangeDate().toString());
-        pHolder.mStandId.setText(String.valueOf(module.getStandId()));
         pHolder.mContainer.setTag(pPosition);
         pHolder.mContainer.setOnClickListener((pView) -> {
             final Module moduleUnderClick = mModules.get((Integer) pView.getTag());
@@ -59,23 +59,12 @@ public class ModuleTableAdapter extends RecyclerView.Adapter<ModuleTableAdapter.
     static class RowHolder extends RecyclerView.ViewHolder {
 
         final private View mContainer;
-
-        final private TextView mId;
         final private TextView mName;
-        final private TextView mStatus;
-        final private TextView mValue;
-        final private TextView mStatusChangeDate;
-        final private TextView mStandId;
 
         private RowHolder(final View pItemView) {
             super(pItemView);
             mContainer = pItemView.findViewById(R.id.module_model_item);
-            mId = (TextView) pItemView.findViewById(R.id.module_id);
             mName = (TextView) pItemView.findViewById(R.id.module_name);
-            mStatus = (TextView) pItemView.findViewById(R.id.module_status);
-            mValue = (TextView) pItemView.findViewById(R.id.module_value);
-            mStatusChangeDate = (TextView) pItemView.findViewById(R.id.module_status_change_date);
-            mStandId = (TextView) pItemView.findViewById(R.id.module_stand_id);
         }
     }
 }

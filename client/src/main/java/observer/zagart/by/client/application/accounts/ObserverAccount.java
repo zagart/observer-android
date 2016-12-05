@@ -20,14 +20,19 @@ public class ObserverAccount
     public static final String TYPE = "by.zagart.observer";
     public static final String NAME = "by.zagart.observer.NAME";
     public static final String PASSWORD = "by.zagart.observer.PASSWORD";
-    public static final String TOKEN = "by.zagart.observer.JWT";
+    static final String TOKEN = "by.zagart.observer.JWT";
     static final String EXTRA_TOKEN_TYPE = "by.zagart.observer.EXTRA_TOKEN_TYPE";
+    private static final String GUEST_LOGIN = "guest";
     private static final String GUEST = "guest";
     private String mPassword;
     private String mToken;
 
     public ObserverAccount(final String name) {
         super(name, TYPE);
+    }
+
+    public static ObserverAccount getGuestAccount() {
+        return new ObserverAccount(GUEST_LOGIN);
     }
 
     public String getPassword() {
@@ -50,7 +55,7 @@ public class ObserverAccount
 
     @Override
     public ObserverAccount getNewEntity() {
-        return new ObserverAccount(GUEST);
+        return new ObserverAccount(GUEST_LOGIN);
     }
 
     @Override

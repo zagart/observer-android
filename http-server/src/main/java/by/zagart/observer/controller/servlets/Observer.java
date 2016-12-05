@@ -2,6 +2,8 @@ package by.zagart.observer.controller.servlets;
 
 import by.zagart.observer.controller.Handler;
 import by.zagart.observer.controller.Logger;
+import by.zagart.observer.model.entities.Module;
+import by.zagart.observer.model.entities.Stand;
 import by.zagart.observer.model.services.impl.ModuleServiceImpl;
 import by.zagart.observer.model.services.impl.StandServiceImpl;
 import by.zagart.observer.utils.DataUtil;
@@ -37,9 +39,17 @@ public class Observer extends HttpServlet {
         final StandServiceImpl standService = new StandServiceImpl();
         final ModuleServiceImpl moduleService = new ModuleServiceImpl();
         for (int i = 0; i < DATABASE_INITIAL_FILL_VALUE; i++) {
+            final Stand newStand = DataUtil.getNewStand();
+            final Module newModule = DataUtil.getNewModule();
             DataUtil.persistPairStandModule(
-                    DataUtil.getNewStand(),
-                    DataUtil.getNewModule(),
+                    newStand,
+                    newModule,
+                    standService,
+                    moduleService
+            );
+            DataUtil.persistPairStandModule(
+                    newStand,
+                    newModule,
                     standService,
                     moduleService
             );

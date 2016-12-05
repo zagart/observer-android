@@ -34,7 +34,6 @@ public class StandTableAdapter extends RecyclerView.Adapter<StandTableAdapter.Ro
     @Override
     public void onBindViewHolder(final StandTableAdapter.RowHolder pHolder, final int pPosition) {
         final Stand stand = mStands.get(pPosition);
-        pHolder.mIdView.setText(String.valueOf(stand.getId()));
         pHolder.mNumberView.setText(stand.getNumber());
         pHolder.mDescriptionView.setText(stand.getDescription());
     }
@@ -46,13 +45,11 @@ public class StandTableAdapter extends RecyclerView.Adapter<StandTableAdapter.Ro
 
     static class RowHolder extends RecyclerView.ViewHolder {
 
-        final private TextView mIdView;
         final private TextView mNumberView;
         final private TextView mDescriptionView;
 
         private RowHolder(final View pItemView) {
             super(pItemView);
-            mIdView = (TextView) pItemView.findViewById(R.id.stand_id);
             mNumberView = (TextView) pItemView.findViewById(R.id.stand_number);
             mDescriptionView = (TextView) pItemView.findViewById(R.id.stand_description);
         }

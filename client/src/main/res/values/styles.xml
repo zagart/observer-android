@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="ObserverDefault" parent="Theme.AppCompat"></style>
+    <style name="ObserverDefault" parent="Theme.AppCompat"/>
 
     <style name="Main">
         <item name="android:layout_height">match_parent</item>
@@ -20,15 +20,13 @@
     </style>
 
     <style name="Main.Title">
-        <!--<item name="android:background">@drawable/steel</item>-->
-        <!--<item name="android:scaleType">centerCrop</item>-->
-        <item name="android:layout_width">@dimen/main_title_width</item>
-        <item name="android:layout_height">@dimen/main_title_height</item>
+        <item name="android:layout_width">@dimen/activity_main_title_width</item>
+        <item name="android:layout_height">@dimen/activity_main_title_height</item>
         <item name="android:layout_gravity">center_horizontal</item>
         <item name="android:gravity">center</item>
-        <item name="android:layout_marginTop">@dimen/main_title_margin_top</item>
+        <item name="android:layout_marginTop">@dimen/activity_main_title_margin_top</item>
         <item name="android:padding">@dimen/default_padding</item>
-        <item name="android:textSize">@dimen/main_title_text_size</item>
+        <item name="android:textSize">@dimen/activity_main_title_text_size</item>
     </style>
 
     <style name="LoginLayout">
@@ -59,7 +57,7 @@
         <item name="android:text">Authentication</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_width">wrap_content</item>
-        <item name="android:textSize">@dimen/login_title_text_size</item>
+        <item name="android:textSize">@dimen/activity_login_title_text_size</item>
     </style>
 
     <style name="LoginLayout.Login">
@@ -78,7 +76,7 @@
 
     <style name="LoginLayout.Title.Login">
         <item name="android:text">@string/login</item>
-        <item name="android:textSize">@dimen/login_form_title_text_size</item>
+        <item name="android:textSize">@dimen/activity_login_form_title_text_size</item>
         <item name="android:layout_margin">@dimen/zero_dp</item>
         <item name="android:padding">@dimen/zero_dp</item>
     </style>
@@ -90,8 +88,8 @@
     <style name="LoginLayout.Form">
         <item name="android:orientation">vertical</item>
         <item name="android:gravity">center</item>
-        <item name="android:layout_marginTop">@dimen/login_form_margin_top</item>
-        <item name="android:layout_marginBottom">@dimen/login_form_margin_bottom</item>
+        <item name="android:layout_marginTop">@dimen/activity_login_form_margin_top</item>
+        <item name="android:layout_marginBottom">@dimen/activity_login_form_margin_bottom</item>
         <item name="android:layout_gravity">center_horizontal|bottom</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
@@ -114,7 +112,7 @@
     <style name="StandardTextView">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_marginTop">@dimen/my_activity_user_status_margin_top</item>
+        <item name="android:layout_marginTop">@dimen/activity_my_user_status_margin_top</item>
         <item name="android:gravity">center</item>
         <item name="android:minHeight">@dimen/standard_label_height</item>
         <item name="android:minWidth">@dimen/standard_label_width</item>
@@ -130,13 +128,12 @@
         <item name="android:textSize">@dimen/default_button_text_size</item>
     </style>
 
-    <style name="ReloadButton">
+    <style name="PanelButton">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@null</item>
+        <item name="android:layout_margin">10dp</item>
+        <item name="android:tint">@android:color/white</item>
     </style>
 
-    <style name="RecyclerViewTableCell.Module">
-        <item name="android:maxWidth">65dp</item>
-        <item name="android:minWidth">65dp</item>
-    </style>
 </resources>

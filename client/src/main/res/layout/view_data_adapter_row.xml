@@ -7,11 +7,11 @@
 
     <TextView
         android:id="@+id/data_status"
-        android:layout_weight="0.7"
-        style="@style/RecyclerViewTableCell"/>
+        style="@style/RecyclerViewTableCell"
+        android:layout_width="300dp"/>
 
     <TextView
         android:id="@+id/data_value"
-        android:layout_weight="0.3"
-        style="@style/RecyclerViewTableCell"/>
+        style="@style/RecyclerViewTableCell"
+        android:layout_width="60dp"/>
 </LinearLayout>

@@ -2,6 +2,7 @@ package observer.zagart.by.client.mvp.models.repository.entities;
 
 import android.content.ContentValues;
 import android.database.Cursor;
+import android.support.annotation.NonNull;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -14,7 +15,7 @@ import observer.zagart.by.client.mvp.models.repository.contracts.ModuleContract;
 /**
  * Model for module.
  */
-public class Module implements IEntity<Module, ContentValues, Long> {
+public class Module implements IEntity<Module, ContentValues, Long>, Comparable<Module> {
 
     private Long mId;
     private String mName;
@@ -114,5 +115,10 @@ public class Module implements IEntity<Module, ContentValues, Long> {
     public Module setValue(final String value) {
         mValue = value;
         return this;
+    }
+
+    @Override
+    public int compareTo(@NonNull final Module pModule) {
+        return mName.compareTo(pModule.getName());
     }
 }
