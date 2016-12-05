@@ -18,6 +18,13 @@
             android:text="@string/my_account"/>
 
         <Button
+            android:id="@+id/main_menu_btn_data"
+            style="@style/Main.Button"
+            android:onClick="onDataClick"
+            android:text="@string/data"
+            android:visibility="gone"/>
+
+        <Button
             android:id="@+id/main_menu_btn_modules"
             style="@style/Main.Button"
             android:onClick="onModulesClick"

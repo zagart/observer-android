@@ -1,6 +1,5 @@
 package observer.zagart.by.client.mvp.views.adapters;
 
-import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,10 +26,9 @@ public class StandTableAdapter extends RecyclerView.Adapter<StandTableAdapter.Ro
     public StandTableAdapter.RowHolder onCreateViewHolder(
             final ViewGroup pParent,
             final int pViewType) {
-        final Context context = pParent.getContext();
-        final LayoutInflater inflater = LayoutInflater.from(context);
-        final View standRowView = inflater.inflate(R.layout.view_stand_adapter_row, pParent, false);
-        return new RowHolder(standRowView);
+        final LayoutInflater inflater = LayoutInflater.from(pParent.getContext());
+        final View row = inflater.inflate(R.layout.view_stand_adapter_row, pParent, false);
+        return new RowHolder(row);
     }
 
     @Override

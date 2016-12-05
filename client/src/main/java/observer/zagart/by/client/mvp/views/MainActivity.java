@@ -21,29 +21,36 @@ import observer.zagart.by.client.mvp.views.base.BaseView;
  */
 public class MainActivity extends BaseView implements IMvp.IViewOperations<ObserverAccount> {
 
+    private Button mDataButton;
     private Button mModulesButton;
     private Button mStandsButton;
 
-    public void onModulesClick(View view) {
+    public void onModulesClick(final View pView) {
         startActivity(new Intent(this, ModulesActivity.class));
     }
 
-    public void onMyAccountClick(View view) {
+    public void onDataClick(final View pView) {
+        startActivity(new Intent(this, DataActivity.class));
+    }
+
+    public void onMyAccountClick(final View pView) {
         final Intent intent = new Intent(this, MyAccountActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_NO_HISTORY);
         startActivity(intent);
     }
 
-    public void onStandsClick(View view) {
+    public void onStandsClick(final View pView) {
         startActivity(new Intent(this, StandsActivity.class));
     }
 
     @Override
     public void onAccountCheck() {
         if (App.getAccount() != null) {
+            mDataButton.setVisibility(View.VISIBLE);
             mModulesButton.setVisibility(View.VISIBLE);
             mStandsButton.setVisibility(View.VISIBLE);
         } else {
+            mDataButton.setVisibility(View.GONE);
             mModulesButton.setVisibility(View.GONE);
             mStandsButton.setVisibility(View.GONE);
         }
@@ -66,13 +73,14 @@ public class MainActivity extends BaseView implements IMvp.IViewOperations<Obser
     }
 
     @Override
-    protected void onCreate(@Nullable final Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    protected void onCreate(@Nullable final Bundle pSavedInstanceState) {
+        super.onCreate(pSavedInstanceState);
         final ActionBar bar = getSupportActionBar();
         if (bar != null) {
             bar.hide();
         }
         setContentView(R.layout.activity_main);
+        mDataButton = (Button) findViewById(R.id.main_menu_btn_data);
         mModulesButton = (Button) findViewById(R.id.main_menu_btn_modules);
         mStandsButton = (Button) findViewById(R.id.main_menu_btn_stands);
     }

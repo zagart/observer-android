@@ -37,4 +37,5 @@
     <string name="modules">Modules</string>
     <string name="reload">Reload</string>
     <string name="clear">Clear</string>
+    <string name="data">Data</string>
 </resources>

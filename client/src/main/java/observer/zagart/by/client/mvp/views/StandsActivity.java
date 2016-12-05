@@ -56,6 +56,7 @@ public class StandsActivity extends BaseView implements IMvp.IViewOperations<Sta
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stands);
         mRecyclerViewStands = (RecyclerView) findViewById(R.id.stands_recycler_view);
+        setAdapter(new ArrayList<>());
         mPresenter.startDataReload();
     }
 
