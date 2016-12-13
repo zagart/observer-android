@@ -40,22 +40,6 @@
             android:launchMode="singleTop"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".mvp.views.StandsActivity"
-            android:launchMode="singleTop"
-            android:screenOrientation="portrait"/>
-        <activity
-            android:name=".mvp.views.ModulesActivity"
-            android:launchMode="singleTop"
-            android:screenOrientation="portrait"/>
-        <activity
-            android:name=".mvp.views.DataActivity"
-            android:launchMode="singleTop"
-            android:screenOrientation="portrait"/>
-        <activity
-            android:name=".mvp.views.MyAccountActivity"
-            android:launchMode="singleTop"
-            android:screenOrientation="portrait"/>
-        <activity
             android:name=".mvp.views.RegistrationActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"/>

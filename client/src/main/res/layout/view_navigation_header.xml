@@ -16,6 +16,8 @@
         android:id="@+id/header_subtitle"
         android:layout_width="match_parent"
         android:layout_height="@dimen/subtitle_height"
-        android:text="@string/user_login"
-        android:background="#FED"/>
+        android:background="#FED"
+        android:gravity="center_vertical"
+        android:padding="@dimen/drawer_side_margin"
+        android:text="@string/user_login"/>
 </android.support.v7.widget.LinearLayoutCompat>

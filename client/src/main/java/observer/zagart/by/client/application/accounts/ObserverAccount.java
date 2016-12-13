@@ -17,6 +17,7 @@ import observer.zagart.by.client.mvp.models.repository.entities.IEntity;
 public class ObserverAccount
         extends Account implements IEntity<ObserverAccount, ContentValues, Long> {
 
+    public static final int AUTHENTICATED_ACCOUNT_INDEX = 0;
     public static final String TYPE = "by.zagart.observer";
     public static final String NAME = "by.zagart.observer.NAME";
     public static final String PASSWORD = "by.zagart.observer.PASSWORD";

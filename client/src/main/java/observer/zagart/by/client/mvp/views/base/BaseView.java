@@ -1,38 +1,37 @@
 package observer.zagart.by.client.mvp.views.base;
 
+import android.app.Activity;
+import android.app.Fragment;
 import android.content.Context;
-import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageButton;
 
 import observer.zagart.by.client.App;
+import observer.zagart.by.client.R;
 import observer.zagart.by.client.mvp.presenters.base.BasePresenter;
-import observer.zagart.by.client.mvp.views.MainActivity;
+import observer.zagart.by.client.mvp.views.fragments.MainFragment;
 
 /**
  * Base activity of application.
  *
  * @author zagart
  */
-abstract public class BaseView extends AppCompatActivity {
-
-    protected static final int AUTHENTICATED_ACCOUNT = 0;
+abstract public class BaseView extends Fragment {
 
     public void onAccountCheck() {
         if (App.getAccount() == null) {
-            final Intent intent = new Intent(this, MainActivity.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            startActivity(intent);
+            changeMainFragment(getActivity(), new MainFragment());
         }
     }
 
     public Context getViewContext() {
-        return this;
+        return getActivity();
     }
 
-    abstract protected BasePresenter getPresenter();
-
     @Override
-    protected void onResume() {
+    public void onResume() {
         super.onResume();
         final BasePresenter presenter = getPresenter();
         if (presenter != null) {
@@ -41,11 +40,34 @@ abstract public class BaseView extends AppCompatActivity {
     }
 
     @Override
-    protected void onPause() {
+    public void onPause() {
         super.onPause();
         final BasePresenter presenter = getPresenter();
         if (presenter != null) {
             getPresenter().unregisterObserver();
         }
     }
+
+    public void changeMainFragment(final Activity pActivity, final Fragment pFragment) {
+        pActivity.getFragmentManager()
+                .beginTransaction()
+                .replace(R.id.drawer_container, pFragment)
+                .addToBackStack(null)
+                .commit();
+    }
+
+    protected View getLayoutWithPanel(final LayoutInflater pInflater,
+                                      final ViewGroup pContainer,
+                                      final int pResId,
+                                      final View.OnClickListener pClearListener,
+                                      final View.OnClickListener pReloadListener) {
+        final View layout = pInflater.inflate(pResId, pContainer, false);
+        final ImageButton clearButton = (ImageButton) layout.findViewById(R.id.top_panel_clear);
+        clearButton.setOnClickListener(pClearListener);
+        final ImageButton reloadButton = (ImageButton) layout.findViewById(R.id.top_panel_reload);
+        reloadButton.setOnClickListener(pReloadListener);
+        return layout;
+    }
+
+    abstract protected BasePresenter getPresenter();
 }

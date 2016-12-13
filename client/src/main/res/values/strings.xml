@@ -51,4 +51,6 @@
     <string name="header">Header</string>
     <string name="body">Body</string>
     <string name="user_login">UserLoginHere</string>
+    <string name="button_for_clean_up">Button for clean up</string>
+    <string name="button_for_reload">Button for reload</string>
 </resources>

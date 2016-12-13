@@ -1,8 +1,10 @@
 package observer.zagart.by.client.mvp.views;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
@@ -14,8 +16,6 @@ import observer.zagart.by.client.application.accounts.ObserverAccount;
 import observer.zagart.by.client.application.utils.IOUtil;
 import observer.zagart.by.client.mvp.IMvp;
 import observer.zagart.by.client.mvp.presenters.AccountPresenter;
-import observer.zagart.by.client.mvp.presenters.base.BasePresenter;
-import observer.zagart.by.client.mvp.views.base.BaseView;
 
 /**
  * Activity with UI for executing process of registration
@@ -23,8 +23,8 @@ import observer.zagart.by.client.mvp.views.base.BaseView;
  *
  * @author zagart
  */
-public class RegistrationActivity extends BaseView implements IMvp
-        .IViewOperations<ObserverAccount> {
+public class RegistrationActivity
+        extends AppCompatActivity implements IMvp.IViewOperations<ObserverAccount> {
 
     private AccountPresenter mPresenter = new AccountPresenter(this);
     private EditText mPasswordView;
@@ -41,9 +41,14 @@ public class RegistrationActivity extends BaseView implements IMvp
     }
 
     @Override
+    public Context getViewContext() {
+        return this;
+    }
+
+    @Override
     public void onDataChanged(final List<ObserverAccount> pParameters) {
-        mPresenter.persistAccount(pParameters.get(AUTHENTICATED_ACCOUNT));
-        final Intent intent = new Intent(this, MyAccountActivity.class);
+        mPresenter.persistAccount(pParameters.get(ObserverAccount.AUTHENTICATED_ACCOUNT_INDEX));
+        final Intent intent = new Intent(this, MainActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_NO_HISTORY);
         startActivity(intent);
     }
@@ -54,10 +59,5 @@ public class RegistrationActivity extends BaseView implements IMvp
         setContentView(R.layout.activity_registration);
         mLoginView = (EditText) findViewById(R.id.registration_login);
         mPasswordView = (EditText) findViewById(R.id.registration_password);
-    }
-
-    @Override
-    protected BasePresenter getPresenter() {
-        return mPresenter;
     }
 }

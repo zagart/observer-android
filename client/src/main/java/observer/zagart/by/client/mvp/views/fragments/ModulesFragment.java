@@ -1,16 +1,15 @@
-package observer.zagart.by.client.mvp.views;
+package observer.zagart.by.client.mvp.views.fragments;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
-
-import org.json.JSONException;
+import android.view.ViewGroup;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ExecutionException;
 
 import observer.zagart.by.client.R;
 import observer.zagart.by.client.mvp.IMvp;
@@ -21,24 +20,15 @@ import observer.zagart.by.client.mvp.views.adapters.ModuleTableAdapter;
 import observer.zagart.by.client.mvp.views.base.BaseView;
 
 /**
- * Activity for showing cached module objects.
+ * Fragment for showing cached module objects.
  *
  * @author zagart
  */
-public class ModulesActivity extends BaseView implements IMvp.IViewOperations<Module> {
+
+public class ModulesFragment extends BaseView implements IMvp.IViewOperations<Module> {
 
     private ModulePresenter mPresenter = new ModulePresenter(this);
     private RecyclerView mRecyclerView;
-
-    public void onClearClick(View pView) {
-        mPresenter.clearModel();
-        onDataChanged(new ArrayList<>());
-    }
-
-    public void onReloadClick(View pView)
-            throws InterruptedException, ExecutionException, JSONException {
-        mPresenter.synchronizeModel(null);
-    }
 
     @Override
     public void onDataChanged(final List<Module> pModules) {
@@ -46,18 +36,34 @@ public class ModulesActivity extends BaseView implements IMvp.IViewOperations<Mo
     }
 
     @Override
-    protected void onStart() {
+    public void onStart() {
         super.onStart();
         super.onAccountCheck();
     }
 
     @Override
-    protected void onCreate(@Nullable final Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_modules);
-        mRecyclerView = (RecyclerView) findViewById(R.id.modules_recycler_view);
+    public void onActivityCreated(final Bundle pSavedInstanceState) {
+        super.onActivityCreated(pSavedInstanceState);
+        mRecyclerView = (RecyclerView) getActivity().findViewById(R.id.modules_recycler_view);
         setAdapter(new ArrayList<>());
         mPresenter.startDataReload();
+    }
+
+    @Nullable
+    @Override
+    public View onCreateView(final LayoutInflater pInflater,
+                             final ViewGroup pContainer,
+                             final Bundle savedInstanceState) {
+        return getLayoutWithPanel(
+                pInflater,
+                pContainer,
+                R.layout.activity_modules,
+                (pView -> {
+                    mPresenter.clearModel();
+                    onDataChanged(new ArrayList<>());
+                }),
+                (pView) -> mPresenter.synchronizeModel(null)
+        );
     }
 
     @Override
@@ -66,10 +72,11 @@ public class ModulesActivity extends BaseView implements IMvp.IViewOperations<Mo
     }
 
     private void setAdapter(final List<Module> pModules) {
-        if (pModules != null) {
+        final View view = getView();
+        if (pModules != null && view != null) {
             final ModuleTableAdapter adapter = new ModuleTableAdapter(pModules);
             mRecyclerView.setAdapter(adapter);
-            mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+            mRecyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
         }
     }
 }

@@ -1,8 +1,10 @@
 package observer.zagart.by.client.mvp.views;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
@@ -15,14 +17,12 @@ import observer.zagart.by.client.application.accounts.ObserverAccount;
 import observer.zagart.by.client.application.utils.IOUtil;
 import observer.zagart.by.client.mvp.IMvp;
 import observer.zagart.by.client.mvp.presenters.AccountPresenter;
-import observer.zagart.by.client.mvp.presenters.base.BasePresenter;
-import observer.zagart.by.client.mvp.views.base.BaseView;
 
 /**
  * Activity that provides UI for user authorization.
  */
 public class AuthenticationActivity
-        extends BaseView implements IMvp.IViewOperations<ObserverAccount> {
+        extends AppCompatActivity implements IMvp.IViewOperations<ObserverAccount> {
 
     private AccountPresenter mPresenter = new AccountPresenter(this);
     private TextView mLoginView;
@@ -51,9 +51,14 @@ public class AuthenticationActivity
     }
 
     @Override
+    public Context getViewContext() {
+        return this;
+    }
+
+    @Override
     public void onDataChanged(final List<ObserverAccount> pAccounts) {
-        mPresenter.persistAccount(pAccounts.get(AUTHENTICATED_ACCOUNT));
-        final Intent intent = new Intent(this, MyAccountActivity.class);
+        mPresenter.persistAccount(pAccounts.get(ObserverAccount.AUTHENTICATED_ACCOUNT_INDEX));
+        final Intent intent = new Intent(this, MainActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_NO_HISTORY);
         startActivity(intent);
     }
@@ -64,10 +69,5 @@ public class AuthenticationActivity
         setContentView(R.layout.activity_authentication);
         mLoginView = (TextView) findViewById(R.id.login_login);
         mPasswordView = (TextView) findViewById(R.id.login_password);
-    }
-
-    @Override
-    protected BasePresenter getPresenter() {
-        return mPresenter;
     }
 }
