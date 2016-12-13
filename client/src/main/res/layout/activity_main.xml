@@ -12,27 +12,27 @@
         style="@style/Main.Menu">
 
         <Button
-            android:id="@+id/btn_my_account"
+            android:id="@+id/menu_item_my_account"
             style="@style/Main.Button"
             android:onClick="onMyAccountClick"
             android:text="@string/my_account"/>
 
         <Button
-            android:id="@+id/main_menu_btn_data"
+            android:id="@+id/menu_item_data"
             style="@style/Main.Button"
             android:onClick="onDataClick"
             android:text="@string/data"
             android:visibility="gone"/>
 
         <Button
-            android:id="@+id/main_menu_btn_modules"
+            android:id="@+id/menu_item_modules"
             style="@style/Main.Button"
             android:onClick="onModulesClick"
             android:text="@string/modules"
             android:visibility="gone"/>
 
         <Button
-            android:id="@+id/main_menu_btn_stands"
+            android:id="@+id/menu_item_stands"
             style="@style/Main.Button"
             android:onClick="onStandsClick"
             android:text="@string/stands"

@@ -1,5 +1,6 @@
 package observer.zagart.by.client.mvp.views;
 
+import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -8,7 +9,6 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 
 import java.util.List;
 
@@ -17,6 +17,8 @@ import observer.zagart.by.client.application.accounts.ObserverAccount;
 import observer.zagart.by.client.mvp.IMvp;
 import observer.zagart.by.client.mvp.presenters.base.BasePresenter;
 import observer.zagart.by.client.mvp.views.base.BaseView;
+import observer.zagart.by.client.mvp.views.fragments.MainFragment;
+import observer.zagart.by.client.mvp.views.fragments.SettingsFragment;
 
 /**
  * Application main activity.
@@ -24,15 +26,10 @@ import observer.zagart.by.client.mvp.views.base.BaseView;
 public class MainActivity extends BaseView
         implements IMvp.IViewOperations<ObserverAccount> {
 
-    private Button mDataButton;
-    private Button mModulesButton;
-    private Button mStandsButton;
+    private DrawerLayout mDrawerLayout;
 
     public void onModulesClick(final View pView) {
         startActivity(new Intent(this, ModulesActivity.class));
-    }
-
-    public void onNavigationClick(final View pView) {
     }
 
     public void onDataClick(final View pView) {
@@ -68,20 +65,25 @@ public class MainActivity extends BaseView
         onAccountCheck();
     }
 
-    public void onMyAccountItemClick(MenuItem pItem) {
-        onMyAccountClick(null);
-    }
-
-    public void onDataItemClick(MenuItem pItem) {
-        onDataClick(null);
-    }
-
-    public void onModulesItemClick(MenuItem pItem) {
-        onModulesClick(null);
-    }
-
-    public void onStandsItemClick(MenuItem pItem) {
-        onStandsClick(null);
+    public void onMenuItemClick(MenuItem pItem) {
+        switch (pItem.getItemId()) {
+            case R.id.menu_item_my_account:
+                onMyAccountClick(null);
+                break;
+            case R.id.menu_item_settings:
+                changeMainFragment(new SettingsFragment());
+                break;
+            case R.id.menu_item_data:
+                onDataClick(null);
+                break;
+            case R.id.menu_item_modules:
+                onModulesClick(null);
+                break;
+            case R.id.menu_item_stands:
+                onStandsClick(null);
+                break;
+        }
+        mDrawerLayout.closeDrawers();
     }
 
     @Override
@@ -98,19 +100,25 @@ public class MainActivity extends BaseView
     @Override
     protected void onCreate(@Nullable final Bundle pSavedInstanceState) {
         super.onCreate(pSavedInstanceState);
-        setContentView(R.layout.navigation_container);
-        mDataButton = (Button) findViewById(R.id.main_menu_btn_data);
-        mModulesButton = (Button) findViewById(R.id.main_menu_btn_modules);
-        mStandsButton = (Button) findViewById(R.id.main_menu_btn_stands);
-        final DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.main_drawer_layout);
+        setContentView(R.layout.activity_navigation);
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.main_drawer_layout);
         final Toolbar toolbar = (Toolbar) findViewById(R.id.main_toolbar);
         final ActionBarDrawerToggle drawerToggle = new ActionBarDrawerToggle(
                 this,
-                drawerLayout,
+                mDrawerLayout,
                 toolbar,
                 R.string.drawer_opened,
                 R.string.drawer_closed);
-        drawerLayout.addDrawerListener(drawerToggle);
+        mDrawerLayout.addDrawerListener(drawerToggle);
         drawerToggle.setDrawerIndicatorEnabled(true);
+        changeMainFragment(new MainFragment());
+    }
+
+    private void changeMainFragment(Fragment pFragment) {
+        getFragmentManager()
+                .beginTransaction()
+                .replace(R.id.drawer_container, pFragment)
+                .addToBackStack(null)
+                .commit();
     }
 }

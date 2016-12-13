@@ -141,7 +141,7 @@ public class ReflectionUtil {
     }
 
     private static String getTableCreateTemplate(final String pName, final StringBuilder pBuilder) {
-        return String.format(
+        return  String.format(
                 Locale.US,
                 new QueryBuilder(null).createTable(),
                 pName,
