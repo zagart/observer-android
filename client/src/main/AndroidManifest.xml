@@ -20,6 +20,7 @@
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
+
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
             <intent-filter>
@@ -28,7 +29,9 @@
                     android:path="/observer_folder"
                     android:port="200"
                     android:scheme="content"/>
+
                 <action android:name="android.intent.action.VIEW"/>
+
                 <category android:name="android.intent.category.BROWSABLE"/>
             </intent-filter>
         </activity>
@@ -63,13 +66,17 @@
             <intent-filter>
                 <action android:name="android.accounts.AccountAuthenticator"/>
             </intent-filter>
+
             <meta-data
                 android:name="android.accounts.AccountAuthenticator"
                 android:resource="@xml/observer_authenticator"/>
         </service>
+
         <provider
             android:name=".mvp.models.repository.ObserverContentProvider"
             android:authorities="observer.zagart.by.client.mvp.models.repository.ObserverContentProvider"
             android:exported="false"/>
+
     </application>
+
 </manifest>

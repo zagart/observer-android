@@ -1,6 +1,5 @@
 package observer.zagart.by.client.mvp.views;
 
-import android.app.ActionBar;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -62,10 +61,6 @@ public class AuthenticationActivity
     @Override
     protected void onCreate(@Nullable final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        final ActionBar bar = getActionBar();
-        if (bar != null) {
-            bar.hide();
-        }
         setContentView(R.layout.activity_authentication);
         mLoginView = (TextView) findViewById(R.id.login_login);
         mPasswordView = (TextView) findViewById(R.id.login_password);

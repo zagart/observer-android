@@ -41,6 +41,16 @@ public class IOUtil {
         }
     }
 
+    public static void showToast(final String pMessage) {
+        final Context context = App.getContext();
+        if (Looper.getMainLooper().getThread() == Thread.currentThread()) {
+            showNotNullMessage(context, pMessage);
+        } else {
+            sThreadManager.post(
+                    () -> showNotNullMessage(context, pMessage));
+        }
+    }
+
     public static void showToast(final Context pContext, final String pMessage) {
         if (Looper.getMainLooper().getThread() == Thread.currentThread()) {
             showNotNullMessage(pContext, pMessage);

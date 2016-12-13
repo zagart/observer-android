@@ -13,7 +13,6 @@ import observer.zagart.by.client.application.managers.ThreadManager;
 import observer.zagart.by.client.application.singletons.AccountHolder;
 import observer.zagart.by.client.application.singletons.ContextHolder;
 import observer.zagart.by.client.application.utils.AccountUtil;
-import observer.zagart.by.client.application.utils.IOUtil;
 
 /**
  * Observer main application file.
@@ -23,7 +22,8 @@ import observer.zagart.by.client.application.utils.IOUtil;
 //TODO remove all logs by proguard
 //TODO |self| configuration of ProGuard
 //TODO |self| refactor request into API
-//TODO |self| unit&instrumental tests
+//TODO |self| unit&instrumental test
+//TODO delete all support bar uses
 public class App extends Application {
 
     final private Map<String, Object> mServices = new HashMap<String, Object>() {
@@ -56,13 +56,11 @@ public class App extends Application {
     @SuppressWarnings("WrongConstant")
     @Override
     public Object getSystemService(final String pName) {
-        switch (pName) {
-            case Services.DATABASE_MANAGER:
-                return mServices.get(Services.DATABASE_MANAGER);
-            case Services.THREAD_MANAGER:
-                return mServices.get(Services.THREAD_MANAGER);
-            default:
-                return super.getSystemService(pName);
+        final Object customService = mServices.get(pName);
+        if (customService != null) {
+            return customService;
+        } else {
+            return super.getSystemService(pName);
         }
     }
 }

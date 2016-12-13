@@ -3,7 +3,6 @@ package observer.zagart.by.client.mvp.views;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.app.ActionBar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -79,10 +78,6 @@ public class MyAccountActivity extends BaseView implements IMvp.IViewOperations<
     @Override
     protected void onCreate(@Nullable final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        final ActionBar bar = getSupportActionBar();
-        if (bar != null) {
-            bar.hide();
-        }
         setContentView(R.layout.activity_my_account);
         mLogInView = (Button) findViewById(R.id.my_account_btn_log_in);
         mLogOutView = (Button) findViewById(R.id.my_account_btn_log_out);

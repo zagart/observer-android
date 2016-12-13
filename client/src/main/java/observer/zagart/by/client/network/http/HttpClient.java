@@ -9,7 +9,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import observer.zagart.by.client.application.constants.ApplicationConstants;
 import observer.zagart.by.client.application.utils.IOUtil;
 import observer.zagart.by.client.network.http.interfaces.IHttpClient;
 

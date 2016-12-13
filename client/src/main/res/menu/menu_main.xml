@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/btn_my_account"
+        android:icon="@drawable/ic_account_24dp"
+        android:onClick="onMyAccountItemClick"
+        android:title="@string/my_account"/>
+
+    <item android:title="@string/data">
+        <menu>
+            <group android:checkableBehavior="single">
+                <item
+                    android:id="@+id/main_menu_btn_data"
+                    android:icon="@drawable/ic_data_24dp"
+                    android:onClick="onDataItemClick"
+                    android:title="@string/data"/>
+                <item
+                    android:id="@+id/main_menu_btn_modules"
+                    android:icon="@drawable/ic_module_24dp"
+                    android:onClick="onModulesItemClick"
+                    android:title="@string/modules"/>
+                <item
+                    android:id="@+id/main_menu_btn_stands"
+                    android:icon="@drawable/ic_stand_24dp"
+                    android:onClick="onStandsItemClick"
+                    android:title="@string/stands"/>
+            </group>
+        </menu>
+    </item>
+
+</menu>
