@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import observer.zagart.by.client.R;
 import observer.zagart.by.client.application.utils.TestUtil;
 
 /**
@@ -20,11 +21,18 @@ public class SettingsFragment extends Fragment {
     private static final String HEADER = "Settings";
     private static final String BODY = "No settings body.";
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        getActivity().setTitle(R.string.settings);
+    }
+
     @Nullable
     @Override
     public View onCreateView(final LayoutInflater pInflater,
                              final ViewGroup pContainer,
                              final Bundle pSavedInstanceState) {
+        super.onCreateView(pInflater, pContainer, pSavedInstanceState);
         return TestUtil.getDummyLayout(this, HEADER, BODY);
     }
 }

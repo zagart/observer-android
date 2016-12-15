@@ -1,17 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout android:id="@+id/data_model_item"
-              xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:orientation="horizontal">
+              style="@style/RecyclerViewLayout"
+              xmlns:android="http://schemas.android.com/apk/res/android">
 
     <TextView
         android:id="@+id/data_status"
         style="@style/RecyclerViewTableCell"
-        android:layout_width="300dp"/>
+        android:layout_width="@dimen/data_first_column_width"/>
 
     <TextView
         android:id="@+id/data_value"
         style="@style/RecyclerViewTableCell"
-        android:layout_width="60dp"/>
+        android:layout_width="@dimen/data_second_column_width"/>
 </LinearLayout>

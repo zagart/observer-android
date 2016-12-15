@@ -3,6 +3,8 @@ package observer.zagart.by.client.mvp.views.base;
 import android.app.Activity;
 import android.app.Fragment;
 import android.content.Context;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +12,7 @@ import android.widget.ImageButton;
 
 import observer.zagart.by.client.App;
 import observer.zagart.by.client.R;
+import observer.zagart.by.client.application.utils.IOUtil;
 import observer.zagart.by.client.mvp.presenters.base.BasePresenter;
 import observer.zagart.by.client.mvp.views.fragments.MainFragment;
 
@@ -20,9 +23,19 @@ import observer.zagart.by.client.mvp.views.fragments.MainFragment;
  */
 abstract public class BaseView extends Fragment {
 
+    public static Fragment setUpContainer(final Activity pActivity) {
+        final MainFragment fragment = new MainFragment();
+        pActivity.getFragmentManager()
+                .beginTransaction()
+                .replace(R.id.drawer_container, fragment)
+                .commit();
+        return fragment;
+    }
+
     public void onAccountCheck() {
         if (App.getAccount() == null) {
-            changeMainFragment(getActivity(), new MainFragment());
+            changeFragment(getActivity(), new MainFragment());
+            IOUtil.showToast(getString(R.string.msg_fragment_redirection));
         }
     }
 
@@ -48,12 +61,21 @@ abstract public class BaseView extends Fragment {
         }
     }
 
-    public void changeMainFragment(final Activity pActivity, final Fragment pFragment) {
+    public void changeFragment(final Activity pActivity, final Fragment pFragment) {
         pActivity.getFragmentManager()
                 .beginTransaction()
                 .replace(R.id.drawer_container, pFragment)
                 .addToBackStack(null)
                 .commit();
+    }
+
+    @Nullable
+    @Override
+    public View onCreateView(final LayoutInflater pInflater,
+                             final ViewGroup pContainer,
+                             final Bundle pSavedInstanceState) {
+        setHasOptionsMenu(true);
+        return super.onCreateView(pInflater, pContainer, pSavedInstanceState);
     }
 
     protected View getLayoutWithPanel(final LayoutInflater pInflater,

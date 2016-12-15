@@ -11,4 +11,5 @@ public interface ApplicationConstants {
     String SPACE_STRING = " ";
     String CURRENT_ACCOUNT_NAME = "current_account_name";
     String PREF_FILE = "SharedFile";
+    int MENU_DATA_ITEM_INDEX = 2;
 }

@@ -39,6 +39,7 @@ public class DataFragment extends BaseView implements IMvp.IViewOperations<Modul
     public void onStart() {
         super.onStart();
         super.onAccountCheck();
+        getActivity().setTitle(R.string.data);
     }
 
     @Nullable
@@ -46,6 +47,7 @@ public class DataFragment extends BaseView implements IMvp.IViewOperations<Modul
     public View onCreateView(final LayoutInflater pInflater,
                              final ViewGroup pContainer,
                              final Bundle pSavedInstanceState) {
+        super.onCreateView(pInflater, pContainer, pSavedInstanceState);
         return getLayoutWithPanel(
                 pInflater,
                 pContainer,

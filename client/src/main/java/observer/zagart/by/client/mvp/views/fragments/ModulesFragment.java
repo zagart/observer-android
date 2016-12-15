@@ -39,6 +39,7 @@ public class ModulesFragment extends BaseView implements IMvp.IViewOperations<Mo
     public void onStart() {
         super.onStart();
         super.onAccountCheck();
+        getActivity().setTitle(R.string.modules);
     }
 
     @Override
@@ -53,7 +54,8 @@ public class ModulesFragment extends BaseView implements IMvp.IViewOperations<Mo
     @Override
     public View onCreateView(final LayoutInflater pInflater,
                              final ViewGroup pContainer,
-                             final Bundle savedInstanceState) {
+                             final Bundle pSavedInstanceState) {
+        super.onCreateView(pInflater, pContainer, pSavedInstanceState);
         return getLayoutWithPanel(
                 pInflater,
                 pContainer,

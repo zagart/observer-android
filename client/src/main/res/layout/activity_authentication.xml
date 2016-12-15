@@ -1,33 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.percent.PercentFrameLayout style="@style/LoginLayout"
+<android.support.percent.PercentFrameLayout style="@style/Layout"
                                             xmlns:android="http://schemas.android.com/apk/res/android"
                                             xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <TextView
         android:id="@+id/login_title"
-        style="@style/LoginLayout.Title"/>
+        style="@style/AuthenticationTitle"/>
 
     <LinearLayout
         android:id="@+id/login_form"
-        style="@style/LoginLayout.Form"
+        style="@style/Form"
         app:layout_marginBottomPercent="@fraction/login_form_margin_bottom">
 
         <TextView
             android:id="@+id/login_log_in_title"
-            style="@style/LoginLayout.Title.Login"/>
+            style="@style/LoginLabel"/>
 
         <EditText
             android:id="@+id/login_login"
-            style="@style/LoginLayout.Login"
+            style="@style/LoginView"
             android:layout_marginBottom="@dimen/default_margin"/>
 
         <TextView
             android:id="@+id/login_password_title"
-            style="@style/LoginLayout.Title.Password"/>
+            style="@style/PasswordLabel"/>
 
         <EditText
             android:id="@+id/login_password"
-            style="@style/LoginLayout.Password"/>
+            style="@style/PasswordView"/>
     </LinearLayout>
 
     <android.support.percent.PercentRelativeLayout
@@ -38,7 +38,7 @@
 
         <Button
             android:id="@+id/btn_guest"
-            style="@style/LoginLayout.Button"
+            style="@style/Button"
             android:onClick="onGuestClick"
             android:text="@string/as_guest"
             app:layout_heightPercent="@fraction/login_button_height"
@@ -46,7 +46,7 @@
 
         <Button
             android:id="@+id/btn_log_in"
-            style="@style/RegistrationLayout.Button"
+            style="@style/Button"
             android:layout_centerInParent="true"
             android:onClick="onLogInClick"
             android:text="@string/log_in"
@@ -55,7 +55,7 @@
 
         <Button
             android:id="@+id/btn_sign_up"
-            style="@style/LoginLayout.Button"
+            style="@style/Button"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
             android:layout_alignParentTop="true"

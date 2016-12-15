@@ -38,6 +38,7 @@ public class StandsFragment extends BaseView implements IMvp.IViewOperations<Sta
     public void onStart() {
         super.onStart();
         super.onAccountCheck();
+        getActivity().setTitle(R.string.stands);
     }
 
     @Override
@@ -52,7 +53,8 @@ public class StandsFragment extends BaseView implements IMvp.IViewOperations<Sta
     @Override
     public View onCreateView(final LayoutInflater pInflater,
                              final ViewGroup pContainer,
-                             final Bundle savedInstanceState) {
+                             final Bundle pSavedInstanceState) {
+        super.onCreateView(pInflater, pContainer, pSavedInstanceState);
         return getLayoutWithPanel(
                 pInflater,
                 pContainer,

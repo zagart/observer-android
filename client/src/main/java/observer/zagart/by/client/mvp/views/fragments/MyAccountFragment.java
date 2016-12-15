@@ -18,6 +18,7 @@ import observer.zagart.by.client.application.utils.AccountUtil;
 import observer.zagart.by.client.mvp.IMvp;
 import observer.zagart.by.client.mvp.presenters.base.BasePresenter;
 import observer.zagart.by.client.mvp.views.AuthenticationActivity;
+import observer.zagart.by.client.mvp.views.MainActivity;
 import observer.zagart.by.client.mvp.views.base.BaseView;
 
 import static observer.zagart.by.client.application.constants.ApplicationConstants.EMPTY_STRING;
@@ -47,13 +48,16 @@ public class MyAccountFragment extends BaseView implements IMvp.IViewOperations<
 
     @Override
     public void onAccountCheck() {
+        final MainActivity activity = (MainActivity) getActivity();
         if (App.getAccount() != null) {
+            activity.updateMenuItemsVisibility(null, true);
             mLogInView.setVisibility(View.GONE);
             mLogOutView.setVisibility(View.VISIBLE);
             mUserLabel.setVisibility(View.VISIBLE);
             mUserLogin.setVisibility(View.VISIBLE);
             mUserLogin.setText(App.getAccount().name);
         } else {
+            activity.updateMenuItemsVisibility(null, false);
             mLogInView.setVisibility(View.VISIBLE);
             mLogOutView.setVisibility(View.GONE);
             mUserLabel.setVisibility(View.GONE);
@@ -71,6 +75,7 @@ public class MyAccountFragment extends BaseView implements IMvp.IViewOperations<
     public void onStart() {
         super.onStart();
         onAccountCheck();
+        getActivity().setTitle(R.string.my_account);
     }
 
     @Override
@@ -88,7 +93,8 @@ public class MyAccountFragment extends BaseView implements IMvp.IViewOperations<
     @Override
     public View onCreateView(final LayoutInflater pInflater,
                              final ViewGroup pContainer,
-                             final Bundle savedInstanceState) {
+                             final Bundle pSavedInstanceState) {
+        super.onCreateView(pInflater, pContainer, pSavedInstanceState);
         return pInflater.inflate(R.layout.activity_my_account, pContainer, false);
     }
 

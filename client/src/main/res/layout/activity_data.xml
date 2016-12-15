@@ -1,16 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout
+    style="@style/Layout"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
     android:orientation="vertical">
-
-    <TextView
-        style="@style/Main.Title"
-        android:layout_marginTop="@dimen/activity_title_margin_top"
-        android:text="@string/data"
-        android:textSize="@dimen/activity_guest_form_title_text_size"/>
-
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/data_recycler_view"

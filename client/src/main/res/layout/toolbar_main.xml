@@ -2,7 +2,11 @@
 
 <android.support.v7.widget.Toolbar
     android:id="@+id/main_toolbar"
-    android:fitsSystemWindows="true"
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"/>
+    android:layout_height="?attr/actionBarSize"
+    android:background="@color/soft_green"
+    android:fitsSystemWindows="true"
+    android:theme="@style/CustomToolbarStyle"
+    app:popupTheme="@style/ObserverDefault"/>

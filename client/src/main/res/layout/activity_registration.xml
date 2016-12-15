@@ -1,38 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.percent.PercentFrameLayout style="@style/RegistrationLayout"
-                                            xmlns:android="http://schemas.android.com/apk/res/android"
-                                            xmlns:app="http://schemas.android.com/apk/res-auto">
+<android.support.percent.PercentFrameLayout
+    style="@style/Layout"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <TextView
         android:id="@+id/login_title"
-        style="@style/RegistrationLayout.Title"/>
+        style="@style/RegistrationTitle"/>
 
     <LinearLayout
         android:id="@+id/login_form"
-        style="@style/RegistrationLayout.Form"
+        style="@style/Form"
         app:layout_marginBottomPercent="@fraction/login_form_margin_bottom">
 
         <TextView
             android:id="@+id/registration_login_title"
-            style="@style/RegistrationLayout.Title.Login"/>
+            style="@style/LoginLabel"/>
 
         <EditText
             android:id="@+id/registration_login"
-            style="@style/RegistrationLayout.Login"
+            style="@style/LoginView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/default_margin"/>
 
         <TextView
             android:id="@+id/registration_password_title"
-            style="@style/RegistrationLayout.Title.Password"/>
+            style="@style/PasswordLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
 
         <EditText
             android:id="@+id/registration_password"
-            style="@style/RegistrationLayout.Password"/>
+            style="@style/PasswordView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
     </LinearLayout>
 
     <Button
         android:id="@+id/registration_btn_confirm"
-        style="@style/RegistrationLayout.Button"
+        style="@style/Button"
         android:layout_gravity="center_horizontal|bottom"
         android:onClick="onConfirmClick"
         android:text="@string/confirm"

@@ -23,7 +23,7 @@
     <string name="load_avatar">Load avatar</string>
     <string name="confirm">Confirm</string>
     <string name="sign_up">Sign up</string>
-    <string name="str_observer">Observer</string>
+    <string name="observer">Observer</string>
     <string name="str_synchronization">Synchronization</string>
     <string name="not_enabled">Not enabled</string>
     <string name="err_registration_failed">Registration failed! Maybe user with such login already exists? Try again with new login.</string>

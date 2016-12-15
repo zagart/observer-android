@@ -3,4 +3,5 @@
     <color name="white">#FFF</color>
     <color name="black">#000</color>
     <color name="red">#F00</color>
+    <color name="soft_green">#00b33c</color>
 </resources>

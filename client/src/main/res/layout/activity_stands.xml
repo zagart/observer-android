@@ -1,12 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout style="@style/Main"
+<FrameLayout style="@style/Layout"
              xmlns:android="http://schemas.android.com/apk/res/android">
-
-    <TextView
-        style="@style/Main.Title"
-        android:layout_marginTop="@dimen/activity_title_margin_top"
-        android:text="@string/stands"
-        android:textSize="@dimen/activity_guest_form_title_text_size"/>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/stands_recycler_view"
