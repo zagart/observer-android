@@ -50,7 +50,8 @@
     <string name="drawer_closed">Closed drawer</string>
     <string name="header">Header</string>
     <string name="body">Body</string>
-    <string name="user_login">UserLoginHere</string>
+    <string name="user_login_default">No current user</string>
     <string name="button_for_clean_up">Button for clean up</string>
     <string name="button_for_reload">Button for reload</string>
+    <string name="user_avatar_desc">User avatar icon</string>
 </resources>

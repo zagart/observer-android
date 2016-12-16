@@ -4,4 +4,6 @@
     <color name="black">#000</color>
     <color name="red">#F00</color>
     <color name="soft_green">#00b33c</color>
+    <color name="light_green">#090</color>
+    <color name="pressure_color">#890</color>
 </resources>

@@ -1,5 +1,6 @@
 package observer.zagart.by.client.mvp.views.fragments;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -64,6 +65,7 @@ public class MyAccountFragment extends BaseView implements IMvp.IViewOperations<
             mUserLogin.setVisibility(View.GONE);
             mUserLogin.setText(EMPTY_STRING);
         }
+        activity.invalidateOptionsMenu();
     }
 
     @Override
@@ -81,12 +83,13 @@ public class MyAccountFragment extends BaseView implements IMvp.IViewOperations<
     @Override
     public void onActivityCreated(final Bundle pSavedInstanceState) {
         super.onActivityCreated(pSavedInstanceState);
-        mLogInView = (Button) getActivity().findViewById(R.id.my_account_btn_log_in);
+        final Activity activity = getActivity();
+        mLogInView = (Button) activity.findViewById(R.id.my_account_btn_log_in);
         mLogInView.setOnClickListener(pView -> onLogInClick());
-        mLogOutView = (Button) getActivity().findViewById(R.id.my_account_btn_log_out);
+        mLogOutView = (Button) activity.findViewById(R.id.my_account_btn_log_out);
         mLogOutView.setOnClickListener(pView -> onLogoutClick());
-        mUserLabel = (TextView) getActivity().findViewById(R.id.my_account_login_label);
-        mUserLogin = (TextView) getActivity().findViewById(R.id.my_account_login);
+        mUserLabel = (TextView) activity.findViewById(R.id.my_account_login_label);
+        mUserLogin = (TextView) activity.findViewById(R.id.my_account_login);
     }
 
     @Nullable

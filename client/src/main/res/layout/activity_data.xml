@@ -8,8 +8,6 @@
         android:id="@+id/data_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="@dimen/activity_login_form_margin_top"
-        android:background="@android:color/darker_gray"
         android:scrollbars="vertical"/>
 
     <include layout="@layout/view_clear_reload_template"/>

@@ -2,22 +2,28 @@
 <android.support.v7.widget.LinearLayoutCompat
     android:id="@+id/navigation_header"
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
-    <TextView
+    <ImageView
         android:id="@+id/header_title"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="@dimen/title_height"
-        android:background="#FDA"/>
+        android:layout_gravity="start"
+        android:layout_margin="@dimen/drawer_side_margin"
+        android:contentDescription="@string/user_avatar_desc"
+        app:srcCompat="@drawable/circle_background"/>
 
     <TextView
         android:id="@+id/header_subtitle"
         android:layout_width="match_parent"
         android:layout_height="@dimen/subtitle_height"
-        android:background="#FED"
-        android:gravity="center_vertical"
+        android:background="@color/soft_green"
+        android:gravity="center"
         android:padding="@dimen/drawer_side_margin"
-        android:text="@string/user_login"/>
+        android:text="@string/user_login_default"
+        android:textColor="@color/white"
+        android:textSize="@dimen/subtitle_text_size"/>
 </android.support.v7.widget.LinearLayoutCompat>

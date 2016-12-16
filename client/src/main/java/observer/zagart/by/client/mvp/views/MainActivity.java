@@ -12,6 +12,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 import java.util.List;
 
@@ -22,7 +23,6 @@ import observer.zagart.by.client.application.constants.ApplicationConstants;
 import observer.zagart.by.client.mvp.IMvp;
 import observer.zagart.by.client.mvp.views.base.BaseView;
 import observer.zagart.by.client.mvp.views.fragments.DataFragment;
-import observer.zagart.by.client.mvp.views.fragments.MainFragment;
 import observer.zagart.by.client.mvp.views.fragments.ModulesFragment;
 import observer.zagart.by.client.mvp.views.fragments.MyAccountFragment;
 import observer.zagart.by.client.mvp.views.fragments.SettingsFragment;
@@ -35,8 +35,9 @@ public class MainActivity
         extends AppCompatActivity implements IMvp.IViewOperations<ObserverAccount> {
 
     private DrawerLayout mDrawerLayout;
-    private MainFragment mFragmentContainer;
+    private MyAccountFragment mFragmentContainer;
     private Menu mMenu;
+    private ActionBarDrawerToggle mDrawerToggle;
 
     @Override
     public Context getViewContext() {
@@ -72,11 +73,17 @@ public class MainActivity
     @Override
     public boolean onPrepareOptionsMenu(final Menu pMenu) {
         super.onPrepareOptionsMenu(pMenu);
+        final NavigationView navigationView = (NavigationView) findViewById(R.id.navigation_view);
+        final TextView navSubtitle = (TextView) navigationView
+                .getHeaderView(0)
+                .findViewById(R.id.header_subtitle);
         if (pMenu != null && pMenu.size() > 0) {
-            if (App.getAccount() == null) {
-                updateMenuItemsVisibility(pMenu, false);
-            } else {
+            if (App.getAccount() != null) {
+                navSubtitle.setText(App.getAccount().name);
                 updateMenuItemsVisibility(pMenu, true);
+            } else {
+                navSubtitle.setText(R.string.user_login_default);
+                updateMenuItemsVisibility(pMenu, false);
             }
         }
         return true;
@@ -103,16 +110,22 @@ public class MainActivity
         mDrawerLayout = (DrawerLayout) findViewById(R.id.main_drawer_layout);
         final Toolbar toolbar = (Toolbar) findViewById(R.id.main_toolbar);
         setSupportActionBar(toolbar);
-        final ActionBarDrawerToggle drawerToggle = getDrawerToggle(toolbar);
-        drawerToggle.setDrawerIndicatorEnabled(true);
+        mDrawerToggle = getDrawerToggle(toolbar);
+        mDrawerToggle.setDrawerIndicatorEnabled(true);
         final ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
-        mDrawerLayout.addDrawerListener(drawerToggle);
-        NavigationView navigationView = (NavigationView) findViewById(R.id.navigation_view);
+        mDrawerLayout.addDrawerListener(mDrawerToggle);
+        final NavigationView navigationView = (NavigationView) findViewById(R.id.navigation_view);
         mMenu = navigationView.getMenu();
-        mFragmentContainer = (MainFragment) BaseView.setUpContainer(this);
+        mFragmentContainer = (MyAccountFragment) BaseView.setUpContainer(this);
+    }
+
+    @Override
+    protected void onPostCreate(@Nullable final Bundle pSavedInstanceState) {
+        super.onPostCreate(pSavedInstanceState);
+        mDrawerToggle.syncState();
     }
 
     @NonNull

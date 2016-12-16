@@ -2,6 +2,7 @@ package observer.zagart.by.client.mvp.views.base;
 
 import android.app.Activity;
 import android.app.Fragment;
+import android.app.FragmentManager;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -14,7 +15,7 @@ import observer.zagart.by.client.App;
 import observer.zagart.by.client.R;
 import observer.zagart.by.client.application.utils.IOUtil;
 import observer.zagart.by.client.mvp.presenters.base.BasePresenter;
-import observer.zagart.by.client.mvp.views.fragments.MainFragment;
+import observer.zagart.by.client.mvp.views.fragments.MyAccountFragment;
 
 /**
  * Base activity of application.
@@ -24,7 +25,7 @@ import observer.zagart.by.client.mvp.views.fragments.MainFragment;
 abstract public class BaseView extends Fragment {
 
     public static Fragment setUpContainer(final Activity pActivity) {
-        final MainFragment fragment = new MainFragment();
+        final MyAccountFragment fragment = new MyAccountFragment();
         pActivity.getFragmentManager()
                 .beginTransaction()
                 .replace(R.id.drawer_container, fragment)
@@ -34,7 +35,7 @@ abstract public class BaseView extends Fragment {
 
     public void onAccountCheck() {
         if (App.getAccount() == null) {
-            changeFragment(getActivity(), new MainFragment());
+            changeFragment(getActivity(), new MyAccountFragment());
             IOUtil.showToast(getString(R.string.msg_fragment_redirection));
         }
     }
@@ -62,10 +63,12 @@ abstract public class BaseView extends Fragment {
     }
 
     public void changeFragment(final Activity pActivity, final Fragment pFragment) {
-        pActivity.getFragmentManager()
+        final String fragmentName = pFragment.getClass().getSimpleName();
+        final FragmentManager manager = pActivity.getFragmentManager();
+        manager
                 .beginTransaction()
                 .replace(R.id.drawer_container, pFragment)
-                .addToBackStack(null)
+                .addToBackStack(fragmentName)
                 .commit();
     }
 
