@@ -41,7 +41,7 @@ public class SharedPreferencesUtil {
         }
     }
 
-    static String retrieveStringValue(Context pContext, String pName) {
+    public static String retrieveStringValue(Context pContext, String pName) {
         final String valueRetrieved = pContext
                 .getSharedPreferences(PREF_FILE, Context.MODE_PRIVATE).getString(pName, null);
         if (BuildConfig.DEBUG) {

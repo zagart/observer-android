@@ -6,7 +6,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="?attr/actionBarSize"
-    android:background="@color/soft_green"
+    android:background="@color/colorPrimaryDark"
     android:fitsSystemWindows="true"
     android:theme="@style/CustomToolbarStyle"
     app:popupTheme="@style/ObserverDefault"/>

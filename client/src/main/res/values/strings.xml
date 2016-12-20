@@ -54,4 +54,7 @@
     <string name="button_for_clean_up">Button for clean up</string>
     <string name="button_for_reload">Button for reload</string>
     <string name="user_avatar_desc">User avatar icon</string>
+    <string name="status">Status</string>
+    <string name="value">Value</string>
+    <string name="data_status">Description of modules\' event</string>
 </resources>

@@ -7,6 +7,7 @@
         android:id="@+id/login_title"
         style="@style/AuthenticationTitle"/>
 
+
     <LinearLayout
         android:id="@+id/login_form"
         style="@style/Form"
@@ -30,7 +31,7 @@
             style="@style/PasswordView"/>
     </LinearLayout>
 
-    <android.support.percent.PercentRelativeLayout
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
@@ -39,30 +40,22 @@
         <Button
             android:id="@+id/btn_guest"
             style="@style/Button"
+            android:layout_gravity="start"
             android:onClick="onGuestClick"
-            android:text="@string/as_guest"
-            app:layout_heightPercent="@fraction/login_button_height"
-            app:layout_widthPercent="@fraction/login_button_width"/>
+            android:text="@string/as_guest"/>
 
         <Button
             android:id="@+id/btn_log_in"
             style="@style/Button"
-            android:layout_centerInParent="true"
+            android:layout_gravity="center"
             android:onClick="onLogInClick"
-            android:text="@string/log_in"
-            app:layout_heightPercent="@fraction/login_sign_in_button_height"
-            app:layout_widthPercent="@fraction/login_sign_in_button_width"/>
+            android:text="@string/log_in"/>
 
         <Button
             android:id="@+id/btn_sign_up"
             style="@style/Button"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentTop="true"
+            android:layout_gravity="end"
             android:onClick="onSignUpClick"
-            android:text="@string/sign_up"
-            app:layout_heightPercent="@fraction/login_button_height"
-            app:layout_marginStartPercent="@fraction/login_btn_login_margin_left"
-            app:layout_widthPercent="@fraction/login_button_width"/>
-    </android.support.percent.PercentRelativeLayout>
+            android:text="@string/sign_up"/>
+    </FrameLayout>
 </android.support.percent.PercentFrameLayout>

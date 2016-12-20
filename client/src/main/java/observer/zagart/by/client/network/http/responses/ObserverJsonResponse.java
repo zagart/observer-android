@@ -2,7 +2,6 @@ package observer.zagart.by.client.network.http.responses;
 
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.util.Log;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -31,20 +30,15 @@ public class ObserverJsonResponse {
     }
 
     @Nullable
-    public String extractToken() {
+    public String extractToken() throws JSONException {
         if (mResponse == null) {
             return null;
         }
-        try {
-            JSONObject jsonResponse = new JSONObject(mResponse);
-            if (jsonResponse.has(JSONConstants.TOKEN)) {
-                return jsonResponse.getString(JSONConstants.TOKEN);
-            }
-            return null;
-        } catch (JSONException pEx) {
-            Log.e(ObserverJsonResponse.class.getSimpleName(), pEx.getMessage(), pEx);
-            return null;
+        JSONObject jsonResponse = new JSONObject(mResponse);
+        if (jsonResponse.has(JSONConstants.TOKEN)) {
+            return jsonResponse.getString(JSONConstants.TOKEN);
         }
+        return null;
     }
 
     @SuppressWarnings("unchecked")
@@ -69,8 +63,7 @@ public class ObserverJsonResponse {
     }
 
     @NonNull
-    private List<Module> parseModulesResponse(final JSONObject pJSONObject)
-            throws JSONException {
+    private List<Module> parseModulesResponse(final JSONObject pJSONObject) throws JSONException {
         final List<Module> moduleList = new ArrayList<>();
         if (pJSONObject.has(JSONConstants.MODULES_KEY)) {
             final JSONArray modules = pJSONObject.getJSONArray(JSONConstants.MODULES_KEY);
@@ -83,8 +76,7 @@ public class ObserverJsonResponse {
     }
 
     @NonNull
-    private List<Stand> parseStandsResponse(final JSONObject pJSONObject)
-            throws JSONException {
+    private List<Stand> parseStandsResponse(final JSONObject pJSONObject) throws JSONException {
         final List<Stand> standList = new ArrayList<>();
         if (pJSONObject.has(JSONConstants.STANDS_KEY)) {
             final JSONArray stands = pJSONObject.getJSONArray(JSONConstants.STANDS_KEY);

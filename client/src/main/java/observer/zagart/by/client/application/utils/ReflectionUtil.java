@@ -48,7 +48,10 @@ public class ReflectionUtil {
     }
 
     @Nullable
-    public static String getTableName(Class<?> pClass) {
+    public static String getTableName(final Class<?> pClass) {
+        if (pClass == null) {
+            return null;
+        }
         final Table table = pClass.getAnnotation(Table.class);
         if (table != null) {
             return table.name();
@@ -92,10 +95,11 @@ public class ReflectionUtil {
     }
 
     @SuppressWarnings("unchecked")
-    public static <Entity> Entity getGenericObject(Object pTarget, int parameterPosition) {
+    public static <Entity> Entity getGenericObject(final Object pTarget,
+                                                   final int pParameterPosition) {
         ParameterizedType parameterizedType = (ParameterizedType) pTarget.getClass()
                 .getGenericSuperclass();
-        Class<?> clazz = (Class<?>) parameterizedType.getActualTypeArguments()[parameterPosition];
+        Class<?> clazz = (Class<?>) parameterizedType.getActualTypeArguments()[pParameterPosition];
         Constructor<?> constructor = clazz.getConstructors()[0];
         Object object;
         if (Build.VERSION.SDK_INT >= 19) {
@@ -141,7 +145,7 @@ public class ReflectionUtil {
     }
 
     private static String getTableCreateTemplate(final String pName, final StringBuilder pBuilder) {
-        return  String.format(
+        return String.format(
                 Locale.US,
                 new QueryBuilder(null).createTable(),
                 pName,

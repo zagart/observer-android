@@ -10,8 +10,7 @@ import observer.zagart.by.client.network.http.interfaces.IHttpClient;
 import observer.zagart.by.client.network.http.requests.observer.GetModulesRequest;
 
 /**
- * Presenter implementation for {@link observer.zagart.by.client.mvp.views.ModulesActivity} view
- * that uses {@link ModuleModel} model.
+ * Presenter implementation that uses {@link ModuleModel} model.
  *
  * @author zagart
  */

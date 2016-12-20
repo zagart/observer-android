@@ -2,7 +2,7 @@
 <FrameLayout android:id="@+id/my_account_root"
              style="@style/Layout"
              xmlns:android="http://schemas.android.com/apk/res/android"
-    >
+             android:background="@color/colorPrimary">
 
     <LinearLayout
         android:id="@+id/my_account_header"
@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="@dimen/activity_title_margin_top"
-        android:background="@color/light_green"
+        android:background="@color/colorPrimary"
         android:gravity="center_horizontal"
         android:orientation="horizontal"
         android:padding="@dimen/default_margin">
@@ -27,7 +27,7 @@
 
     <LinearLayout
         android:id="@+id/my_account"
-        style="@style/Layout"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|center_horizontal">
 

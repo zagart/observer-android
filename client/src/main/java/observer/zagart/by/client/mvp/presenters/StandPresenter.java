@@ -10,8 +10,7 @@ import observer.zagart.by.client.network.http.interfaces.IHttpClient;
 import observer.zagart.by.client.network.http.requests.observer.GetStandsRequest;
 
 /**
- * Presenter implementation for {@link observer.zagart.by.client.mvp.views.StandsActivity} view
- * that uses {@link StandModel} model.
+ * Presenter implementation that uses {@link StandModel} model.
  *
  * @author zagart
  */

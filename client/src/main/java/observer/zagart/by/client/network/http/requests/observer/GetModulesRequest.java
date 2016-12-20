@@ -28,4 +28,12 @@ public class GetModulesRequest extends BaseObserverRequest {
                 IHttpClient.IHttpData.Header.CRITERIA,
                 Criteria.getModulesCriteria());
     }
+
+    @Override
+    public void onTimeoutException(final String... pParameters) {
+    }
+
+    @Override
+    public void onIOException(final String... pParameters) {
+    }
 }

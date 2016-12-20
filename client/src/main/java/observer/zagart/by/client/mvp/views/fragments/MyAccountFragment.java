@@ -15,7 +15,6 @@ import java.util.List;
 import observer.zagart.by.client.App;
 import observer.zagart.by.client.R;
 import observer.zagart.by.client.application.accounts.ObserverAccount;
-import observer.zagart.by.client.application.utils.AccountUtil;
 import observer.zagart.by.client.mvp.IMvp;
 import observer.zagart.by.client.mvp.presenters.base.BasePresenter;
 import observer.zagart.by.client.mvp.views.AuthenticationActivity;
@@ -43,7 +42,7 @@ public class MyAccountFragment extends BaseView implements IMvp.IViewOperations<
     }
 
     public void onLogoutClick() {
-        AccountUtil.setCurrentAccount(null);
+        App.setAccount(null);
         onAccountCheck();
     }
 
@@ -65,6 +64,7 @@ public class MyAccountFragment extends BaseView implements IMvp.IViewOperations<
             mUserLogin.setVisibility(View.GONE);
             mUserLogin.setText(EMPTY_STRING);
         }
+        activity.onAccountChanged(App.getAccount());
         activity.invalidateOptionsMenu();
     }
 
@@ -74,9 +74,10 @@ public class MyAccountFragment extends BaseView implements IMvp.IViewOperations<
     }
 
     @Override
-    public void onStart() {
-        super.onStart();
+    public void onResume() {
+        super.onResume();
         onAccountCheck();
+        //TODO find reason of collision of titles
         getActivity().setTitle(R.string.my_account);
     }
 

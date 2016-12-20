@@ -5,14 +5,17 @@ import android.accounts.Account;
 import android.accounts.AccountAuthenticatorResponse;
 import android.accounts.AccountManager;
 import android.accounts.NetworkErrorException;
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 
+import org.json.JSONException;
+
 import java.io.IOException;
 
-import observer.zagart.by.client.application.utils.AccountUtil;
+import observer.zagart.by.client.App;
 import observer.zagart.by.client.mvp.views.AuthenticationActivity;
 import observer.zagart.by.client.network.http.HttpFactory;
 import observer.zagart.by.client.network.http.requests.observer.AuthenticationRequest;
@@ -80,7 +83,7 @@ class ObserverAuthenticator extends AbstractAccountAuthenticator {
                             new AuthenticationRequest(pAccount.name, password)
                     );
                     authToken = new ObserverJsonResponse(response).extractToken();
-                } catch (IOException pE) {
+                } catch (IOException | JSONException pEx) {
                     authToken = null;
                 }
             }
@@ -124,11 +127,13 @@ class ObserverAuthenticator extends AbstractAccountAuthenticator {
         return null;
     }
 
+    @SuppressLint("ServiceCast")
+    @SuppressWarnings("WrongConstant")
     @Override
     public Bundle getAccountRemovalAllowed(
             final AccountAuthenticatorResponse response,
             final Account account) throws NetworkErrorException {
-        AccountUtil.setCurrentAccount(null);
+        App.setAccount(null);
         return super.getAccountRemovalAllowed(response, account);
     }
 }

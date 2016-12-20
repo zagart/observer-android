@@ -24,15 +24,6 @@ import observer.zagart.by.client.mvp.views.fragments.MyAccountFragment;
  */
 abstract public class BaseView extends Fragment {
 
-    public static Fragment setUpContainer(final Activity pActivity) {
-        final MyAccountFragment fragment = new MyAccountFragment();
-        pActivity.getFragmentManager()
-                .beginTransaction()
-                .replace(R.id.drawer_container, fragment)
-                .commit();
-        return fragment;
-    }
-
     public void onAccountCheck() {
         if (App.getAccount() == null) {
             changeFragment(getActivity(), new MyAccountFragment());
@@ -63,12 +54,11 @@ abstract public class BaseView extends Fragment {
     }
 
     public void changeFragment(final Activity pActivity, final Fragment pFragment) {
-        final String fragmentName = pFragment.getClass().getSimpleName();
         final FragmentManager manager = pActivity.getFragmentManager();
         manager
                 .beginTransaction()
                 .replace(R.id.drawer_container, pFragment)
-                .addToBackStack(fragmentName)
+                .addToBackStack(null)
                 .commit();
     }
 

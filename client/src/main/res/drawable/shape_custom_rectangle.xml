@@ -7,8 +7,6 @@
         android:left="@dimen/zero_dp"
         android:right="@dimen/zero_dp"
         android:top="@dimen/zero_dp"/>
-    <solid android:color="@color/soft_green"/>
-    <size
-        android:width="@dimen/panel_width"
-        android:height="@dimen/item_height"/>
+    <solid android:color="@color/colorPrimaryDark"/>
+
 </shape>

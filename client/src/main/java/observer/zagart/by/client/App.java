@@ -1,6 +1,7 @@
 package observer.zagart.by.client;
 
 import android.accounts.Account;
+import android.annotation.SuppressLint;
 import android.app.Application;
 import android.content.Context;
 
@@ -8,22 +9,23 @@ import java.util.HashMap;
 import java.util.Map;
 
 import observer.zagart.by.client.application.constants.Services;
+import observer.zagart.by.client.application.managers.AccountService;
 import observer.zagart.by.client.application.managers.DatabaseManager;
 import observer.zagart.by.client.application.managers.ThreadManager;
-import observer.zagart.by.client.application.singletons.AccountHolder;
 import observer.zagart.by.client.application.singletons.ContextHolder;
-import observer.zagart.by.client.application.utils.AccountUtil;
 
 /**
  * Observer main application file.
  *
  * @author zagart
  */
-//TODO remove all logs by proguard
-//TODO |self| configuration of ProGuard
-//TODO |self| refactor request into API
-//TODO |self| unit&instrumental test
-//TODO delete all support bar uses
+//TODO use progress bars
+//TODO configuration of ProGuard
+//TODO unit&instrumental test
+//TODO connection timeout handling
+//TODO input/output exceptions handling
+@SuppressWarnings("WrongConstant")
+@SuppressLint("ServiceCast")
 public class App extends Application {
 
     final private Map<String, Object> mServices = new HashMap<String, Object>() {
@@ -31,15 +33,20 @@ public class App extends Application {
         {
             put(Services.DATABASE_MANAGER, new DatabaseManager(ContextHolder.get()));
             put(Services.THREAD_MANAGER, new ThreadManager<>());
+            put(Services.ACCOUNT_SERVICE, new AccountService());
         }
     };
 
     public static Account getAccount() {
-        return AccountHolder.get();
+        final AccountService accountService = (AccountService) getContext()
+                .getSystemService(Services.ACCOUNT_SERVICE);
+        return accountService.getAccount();
     }
 
     public static void setAccount(final Account pAccount) {
-        AccountHolder.set(pAccount);
+        final AccountService accountService = (AccountService) getContext()
+                .getSystemService(Services.ACCOUNT_SERVICE);
+        accountService.setAccount(pAccount);
     }
 
     public static Context getContext() {
@@ -50,7 +57,7 @@ public class App extends Application {
     public void onCreate() {
         super.onCreate();
         ContextHolder.set(this);
-        setAccount(AccountUtil.getPersistedAccount());
+        setAccount(AccountService.findPersistedAccount());
     }
 
     @SuppressWarnings("WrongConstant")

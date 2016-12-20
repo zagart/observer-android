@@ -73,4 +73,21 @@ public class Stand implements IEntity<Stand, ContentValues, Long> {
         mNumber = number;
         return this;
     }
+
+    @Override
+    public boolean equals(final Object pO) {
+        if (this == pO) {
+            return true;
+        }
+        if (pO == null || getClass() != pO.getClass()) {
+            return false;
+        }
+        final Stand stand = (Stand) pO;
+        return mId.equals(stand.mId);
+    }
+
+    @Override
+    public int hashCode() {
+        return mId.hashCode();
+    }
 }

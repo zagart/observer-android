@@ -20,7 +20,7 @@
         android:id="@+id/header_subtitle"
         android:layout_width="match_parent"
         android:layout_height="@dimen/subtitle_height"
-        android:background="@color/soft_green"
+        android:background="@color/colorPrimaryDark"
         android:gravity="center"
         android:padding="@dimen/drawer_side_margin"
         android:text="@string/user_login_default"

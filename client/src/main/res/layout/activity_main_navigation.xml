@@ -14,8 +14,9 @@
 
         <include layout="@layout/toolbar_main"/>
 
-        <FrameLayout
+        <fragment
             android:id="@+id/drawer_container"
+            class="observer.zagart.by.client.mvp.views.fragments.MyAccountFragment"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
 

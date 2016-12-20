@@ -1,15 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout android:id="@+id/data_model_item"
-              style="@style/RecyclerViewLayout"
-              xmlns:android="http://schemas.android.com/apk/res/android">
+<android.support.percent.PercentFrameLayout android:id="@+id/data_model_item"
+                                            style="@style/RecyclerViewLayout"
+                                            xmlns:android="http://schemas.android.com/apk/res/android"
+                                            xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <TextView
         android:id="@+id/data_status"
         style="@style/RecyclerViewTableCell"
-        android:layout_width="@dimen/data_first_column_width"/>
+        app:layout_widthPercent="65%"/>
 
     <TextView
         android:id="@+id/data_value"
         style="@style/RecyclerViewTableCell"
-        android:layout_width="@dimen/data_second_column_width"/>
-</LinearLayout>
+        android:layout_gravity="end"
+        app:layout_widthPercent="30%"/>
+</android.support.percent.PercentFrameLayout>

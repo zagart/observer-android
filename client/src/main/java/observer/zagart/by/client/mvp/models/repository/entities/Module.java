@@ -121,4 +121,21 @@ public class Module implements IEntity<Module, ContentValues, Long>, Comparable<
     public int compareTo(@NonNull final Module pModule) {
         return mName.compareTo(pModule.getName());
     }
+
+    @Override
+    public boolean equals(final Object pO) {
+        if (this == pO) {
+            return true;
+        }
+        if (pO == null || getClass() != pO.getClass()) {
+            return false;
+        }
+        final Module module = (Module) pO;
+        return mId.equals(module.mId);
+    }
+
+    @Override
+    public int hashCode() {
+        return mId.hashCode();
+    }
 }

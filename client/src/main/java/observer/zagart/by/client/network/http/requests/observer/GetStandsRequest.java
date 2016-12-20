@@ -28,4 +28,12 @@ public class GetStandsRequest extends BaseObserverRequest {
                 IHttpClient.IHttpData.Header.CRITERIA,
                 Criteria.getStandsCriteria());
     }
+
+    @Override
+    public void onTimeoutException(final String... pParameters) {
+    }
+
+    @Override
+    public void onIOException(final String... pParameters) {
+    }
 }

@@ -3,7 +3,9 @@
     <color name="white">#FFF</color>
     <color name="black">#000</color>
     <color name="red">#F00</color>
-    <color name="soft_green">#00b33c</color>
-    <color name="light_green">#090</color>
-    <color name="pressure_color">#890</color>
+    <color name="colorPrimaryDark">#00261C</color>
+    <color name="colorPrimary">#45BF55</color>
+    <color name="colorAccent">#B9121B</color>
+    <color name="primaryTextColor">#FFF</color>
+    <color name="secondaryTextColor">#000</color>
 </resources>

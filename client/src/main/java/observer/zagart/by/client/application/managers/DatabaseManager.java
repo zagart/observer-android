@@ -7,7 +7,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
-import observer.zagart.by.client.App;
 import observer.zagart.by.client.BuildConfig;
 import observer.zagart.by.client.application.constants.DatabaseConstants;
 import observer.zagart.by.client.application.interfaces.IDatabaseOperations;
@@ -28,11 +27,6 @@ public class DatabaseManager extends SQLiteOpenHelper implements IDatabaseOperat
 
     public DatabaseManager(final Context pContext) {
         super(pContext, DATABASE_FILE_NAME, null, DATABASE_VERSION);
-    }
-
-    @SuppressWarnings("unused")
-    public static DatabaseManager getDefaultInstance() {
-        return SingletonHolder.DB_HELPER_INSTANCE;
     }
 
     @Override
@@ -124,11 +118,5 @@ public class DatabaseManager extends SQLiteOpenHelper implements IDatabaseOperat
             final SQLiteDatabase pDatabase,
             final int pOldVersion,
             final int pNewVersion) {
-    }
-
-    private static class SingletonHolder {
-
-        private static final DatabaseManager DB_HELPER_INSTANCE = new DatabaseManager(
-                App.getContext());
     }
 }

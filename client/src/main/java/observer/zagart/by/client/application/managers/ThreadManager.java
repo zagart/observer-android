@@ -18,7 +18,6 @@ import observer.zagart.by.client.application.interfaces.ICallback;
 /**
  * My class for asynchronous background tasks.
  */
-@SuppressWarnings("unused")
 public class ThreadManager<Result> {
 
     private static final String TAG = ThreadManager.class.getSimpleName();
@@ -39,10 +38,6 @@ public class ThreadManager<Result> {
         mName = pName;
         mPool = Executors.newFixedThreadPool(MAX_THREADS_NUMBER);
         mHandler = new Handler(Looper.getMainLooper());
-    }
-
-    public static ThreadManager getDefaultInstance() {
-        return SingletonHolder.WORKER_INSTANCE;
     }
 
     /**
@@ -126,10 +121,5 @@ public class ThreadManager<Result> {
     public <CR> CR submit(Callable<CR> pCallable) throws ExecutionException, InterruptedException {
         final Future<CR> result = mPool.submit(pCallable);
         return result.get();
-    }
-
-    private static class SingletonHolder {
-
-        private static final ThreadManager WORKER_INSTANCE = new ThreadManager(TAG);
     }
 }

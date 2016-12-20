@@ -1,6 +1,9 @@
 package observer.zagart.by.client.mvp.presenters;
 
+import android.annotation.SuppressLint;
 import android.text.TextUtils;
+
+import org.json.JSONException;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -11,7 +14,6 @@ import observer.zagart.by.client.R;
 import observer.zagart.by.client.application.accounts.ObserverAccount;
 import observer.zagart.by.client.application.constants.Services;
 import observer.zagart.by.client.application.managers.ThreadManager;
-import observer.zagart.by.client.application.utils.AccountUtil;
 import observer.zagart.by.client.application.utils.IOUtil;
 import observer.zagart.by.client.application.utils.URIUtil;
 import observer.zagart.by.client.mvp.IMvp;
@@ -29,7 +31,8 @@ import observer.zagart.by.client.network.http.responses.ObserverJsonResponse;
  *
  * @author zagart
  */
-
+@SuppressWarnings("WrongConstant")
+@SuppressLint("ServiceCast")
 public class AccountPresenter extends BasePresenter<ObserverAccount> {
 
     final private ThreadManager mThreadManager;
@@ -44,7 +47,7 @@ public class AccountPresenter extends BasePresenter<ObserverAccount> {
 
     public void persistAccount(final ObserverAccount pAccount) {
         getModel().persist(pAccount);
-        AccountUtil.setCurrentAccount(pAccount);
+        App.setAccount(pAccount);
     }
 
     public void executeRegistration(final CharSequence pLogin, final CharSequence pPassword) {
@@ -95,7 +98,7 @@ public class AccountPresenter extends BasePresenter<ObserverAccount> {
                     try {
                         final String response = mHttpClient.executeRequest(pRequest);
                         token = new ObserverJsonResponse(response).extractToken();
-                    } catch (IOException pEx) {
+                    } catch (IOException | JSONException pEx) {
                         token = null;
                     }
                     if (!TextUtils.isEmpty(token)) {

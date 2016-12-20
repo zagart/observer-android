@@ -1,5 +1,6 @@
 package observer.zagart.by.client.mvp.views;
 
+import android.accounts.Account;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -21,7 +22,6 @@ import observer.zagart.by.client.R;
 import observer.zagart.by.client.application.accounts.ObserverAccount;
 import observer.zagart.by.client.application.constants.ApplicationConstants;
 import observer.zagart.by.client.mvp.IMvp;
-import observer.zagart.by.client.mvp.views.base.BaseView;
 import observer.zagart.by.client.mvp.views.fragments.DataFragment;
 import observer.zagart.by.client.mvp.views.fragments.ModulesFragment;
 import observer.zagart.by.client.mvp.views.fragments.MyAccountFragment;
@@ -34,10 +34,12 @@ import observer.zagart.by.client.mvp.views.fragments.StandsFragment;
 public class MainActivity
         extends AppCompatActivity implements IMvp.IViewOperations<ObserverAccount> {
 
+    private static final int HEADER_SUBTITLE_INDEX = 0;
     private DrawerLayout mDrawerLayout;
     private MyAccountFragment mFragmentContainer;
     private Menu mMenu;
     private ActionBarDrawerToggle mDrawerToggle;
+    private TextView mUserNameView;
 
     @Override
     public Context getViewContext() {
@@ -73,16 +75,10 @@ public class MainActivity
     @Override
     public boolean onPrepareOptionsMenu(final Menu pMenu) {
         super.onPrepareOptionsMenu(pMenu);
-        final NavigationView navigationView = (NavigationView) findViewById(R.id.navigation_view);
-        final TextView navSubtitle = (TextView) navigationView
-                .getHeaderView(0)
-                .findViewById(R.id.header_subtitle);
         if (pMenu != null && pMenu.size() > 0) {
             if (App.getAccount() != null) {
-                navSubtitle.setText(App.getAccount().name);
                 updateMenuItemsVisibility(pMenu, true);
             } else {
-                navSubtitle.setText(R.string.user_login_default);
                 updateMenuItemsVisibility(pMenu, false);
             }
         }
@@ -94,6 +90,14 @@ public class MainActivity
             mMenu.getItem(ApplicationConstants.MENU_DATA_ITEM_INDEX).setVisible(pIsVisible);
         } else {
             pMenu.getItem(ApplicationConstants.MENU_DATA_ITEM_INDEX).setVisible(pIsVisible);
+        }
+    }
+
+    public void onAccountChanged(final Account pAccount) {
+        if (pAccount != null) {
+            mUserNameView.setText(pAccount.name);
+        } else {
+            mUserNameView.setText(getString(R.string.user_login_default));
         }
     }
 
@@ -118,8 +122,12 @@ public class MainActivity
         }
         mDrawerLayout.addDrawerListener(mDrawerToggle);
         final NavigationView navigationView = (NavigationView) findViewById(R.id.navigation_view);
+        mUserNameView = (TextView) navigationView
+                .getHeaderView(HEADER_SUBTITLE_INDEX)
+                .findViewById(R.id.header_subtitle);
         mMenu = navigationView.getMenu();
-        mFragmentContainer = (MyAccountFragment) BaseView.setUpContainer(this);
+        mFragmentContainer = (MyAccountFragment) getFragmentManager()
+                .findFragmentById(R.id.drawer_container);
     }
 
     @Override

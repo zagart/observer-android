@@ -27,6 +27,7 @@ public class ModelContentObserver extends ContentObserver {
         mView = new WeakReference<>(pView);
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public void onChange(final boolean pSelfChange, final Uri pUri) {
         Log.i(ModelContentObserver.class.getSimpleName(), LOG_MESSAGE);

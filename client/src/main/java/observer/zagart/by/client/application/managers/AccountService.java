@@ -1,20 +1,26 @@
-package observer.zagart.by.client.application.utils;
+package observer.zagart.by.client.application.managers;
 
 import android.accounts.Account;
 import android.accounts.AccountManager;
 
 import observer.zagart.by.client.App;
+import observer.zagart.by.client.application.accounts.ObserverAccount;
 import observer.zagart.by.client.application.constants.ApplicationConstants;
+import observer.zagart.by.client.application.utils.SharedPreferencesUtil;
 
 /**
- * Utility class with methods for work with accounts.
+ * Service for managing application accounts.
  *
  * @author zagart
+ * @see ObserverAccount
  */
-public class AccountUtil {
+
+public class AccountService {
+
+    private Account mAccount;
 
     @SuppressWarnings("MissingPermission")
-    public static Account getPersistedAccount() {
+    public static Account findPersistedAccount() {
         final String accountName = SharedPreferencesUtil.retrieveStringValue(
                 App.getContext(),
                 ApplicationConstants.CURRENT_ACCOUNT_NAME);
@@ -27,19 +33,22 @@ public class AccountUtil {
         return null;
     }
 
-    public static void setCurrentAccount(final Account pAccount) {
+    public Account getAccount() {
+        return mAccount;
+    }
+
+    public void setAccount(final Account pAccount) {
         if (pAccount != null) {
             SharedPreferencesUtil.persistStringValue(
                     App.getContext(),
                     ApplicationConstants.CURRENT_ACCOUNT_NAME,
                     pAccount.name);
-            App.setAccount(pAccount);
         } else {
             SharedPreferencesUtil.persistStringValue(
                     App.getContext(),
                     ApplicationConstants.CURRENT_ACCOUNT_NAME,
                     null);
-            App.setAccount(null);
         }
+        mAccount = pAccount;
     }
 }

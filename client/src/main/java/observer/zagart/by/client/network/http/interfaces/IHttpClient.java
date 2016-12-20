@@ -31,9 +31,11 @@ public interface IHttpClient {
                 InputStream pInputStream
         ) throws IOException;
 
-        Result onStandardStream(InputStream pInputStream);
+        Result onStandardStream(InputStream pInputStream) throws IOException;
 
-        void onTimeoutException();
+        void onTimeoutException(final String... pParameters);
+
+        void onIOException(final String... pParameters);
     }
 
     //TODO refactor constants

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout android:id="@+id/data_edit_template"
+             xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:app="http://schemas.android.com/apk/res-auto"
+             android:layout_width="@dimen/panel_width"
+             android:layout_height="wrap_content"
+             android:layout_gravity="bottom|center"
+             android:layout_margin="@dimen/panel_margin"
+             android:background="@drawable/shape_custom_rectangle"
+             android:orientation="horizontal"
+             android:paddingEnd="@dimen/panel_padding"
+             android:paddingStart="@dimen/panel_padding">
+
+    <ImageButton
+        android:id="@+id/top_panel_clear"
+        style="@style/PanelButton"
+        android:layout_gravity="start"
+        android:contentDescription="@string/button_for_clean_up"
+        app:srcCompat="@drawable/ic_clear_black_24dp"/>
+
+    <ImageButton
+        android:id="@+id/top_panel_reload"
+        style="@style/PanelButton"
+        android:layout_gravity="end"
+        android:contentDescription="@string/button_for_reload"
+        app:srcCompat="@drawable/ic_reload_black_24dp"/>
+</FrameLayout>

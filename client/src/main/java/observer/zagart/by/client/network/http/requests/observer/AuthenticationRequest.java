@@ -38,4 +38,12 @@ public class AuthenticationRequest extends BaseObserverRequest {
                 IHttpClient.IHttpData.Header.PASSWORD,
                 mPassword);
     }
+
+    @Override
+    public void onTimeoutException(final String... pParameters) {
+    }
+
+    @Override
+    public void onIOException(final String... pParameters) {
+    }
 }

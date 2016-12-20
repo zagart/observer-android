@@ -70,7 +70,10 @@ public class DownloadBytesRequest implements IHttpClient.IRequest<ByteArrayOutpu
     }
 
     @Override
-    public void onTimeoutException() {
-        //TODO connection timeout handling
+    public void onTimeoutException(final String... pParameters) {
+    }
+
+    @Override
+    public void onIOException(final String... pParameters) {
     }
 }
