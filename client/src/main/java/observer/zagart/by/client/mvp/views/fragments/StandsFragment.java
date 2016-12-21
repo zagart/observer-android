@@ -11,7 +11,6 @@ import android.view.ViewGroup;
 import java.util.ArrayList;
 import java.util.List;
 
-import observer.zagart.by.client.App;
 import observer.zagart.by.client.R;
 import observer.zagart.by.client.mvp.IMvp;
 import observer.zagart.by.client.mvp.models.repository.entities.Stand;
@@ -36,22 +35,11 @@ public class StandsFragment extends BaseView implements IMvp.IViewOperations<Sta
     }
 
     @Override
-    public void onStart() {
-        super.onStart();
-        super.onAccountCheck();
-    }
-
-    @Override
     public void onActivityCreated(final Bundle pSavedInstanceState) {
         super.onActivityCreated(pSavedInstanceState);
         mRecyclerViewStands = (RecyclerView) getActivity().findViewById(R.id.stands_recycler_view);
         setAdapter(new ArrayList<>());
         mPresenter.startDataReload();
-    }
-
-    @Override
-    public String getTitle() {
-        return App.getContext().getString(R.string.stands);
     }
 
     @Nullable

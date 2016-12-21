@@ -41,6 +41,11 @@
             android:parentActivityName=".mvp.views.MainActivity"
             android:screenOrientation="portrait"/>
         <activity
+            android:name=".mvp.views.SettingsActivity"
+            android:launchMode="singleTop"
+            android:parentActivityName=".mvp.views.MainActivity"
+            android:screenOrientation="portrait"/>
+        <activity
             android:name=".mvp.views.AuthenticationActivity"
             android:launchMode="singleTop"
             android:parentActivityName=".mvp.views.MainActivity"

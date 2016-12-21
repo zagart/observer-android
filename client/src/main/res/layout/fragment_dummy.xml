@@ -5,11 +5,13 @@
               android:layout_height="match_parent"
               android:orientation="vertical">
 
+    <include layout="@layout/toolbar_main"/>
+
     <TextView
         android:id="@+id/dummy_header"
         android:layout_width="match_parent"
         android:layout_height="100dp"
-        android:background="#BCA"
+        android:background="@color/colorPrimaryAverage"
         android:gravity="center"
         android:text="@string/header"
         android:textSize="40sp"/>
@@ -18,7 +20,7 @@
         android:id="@+id/dummy_body"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#ABC"
+        android:background="@color/colorPrimary"
         android:gravity="center"
         android:text="@string/body"
         android:textSize="60sp"/>

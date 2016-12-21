@@ -1,7 +1,7 @@
 package observer.zagart.by.client.application.constants;
 
 /**
- * Class that contains common constants.
+ * Class that contains common constants of application.
  *
  * @author zagart
  */
@@ -9,7 +9,7 @@ public interface ApplicationConstants {
 
     String EMPTY_STRING = "";
     String SPACE_STRING = " ";
-    String CURRENT_ACCOUNT_NAME = "current_account_name";
+    String CURRENT_ACCOUNT_NAME = "Current account name";
     String PREF_FILE = "SharedFile";
-    int MENU_DATA_ITEM_INDEX = 2;
+    int MENU_CONTENT_ITEM_INDEX = 1;
 }

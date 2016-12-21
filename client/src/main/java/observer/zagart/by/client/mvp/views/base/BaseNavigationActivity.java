@@ -33,10 +33,11 @@ public class BaseNavigationActivity extends AppCompatActivity {
     private Toolbar mToolbar;
     private Menu mMenu;
 
-    public void onAccountChanged(final Account pAccount) {
+    public void onAccountChanged() {
+        final Account account = App.getAccount();
         if (mMenu != null) {
-            if (pAccount != null) {
-                mAccountName.setText(pAccount.name);
+            if (account != null) {
+                mAccountName.setText(account.name);
                 updateMenuItemsVisibility(mMenu, true);
             } else {
                 mAccountName.setText(getString(R.string.user_login_default));
@@ -100,9 +101,9 @@ public class BaseNavigationActivity extends AppCompatActivity {
 
     private void updateMenuItemsVisibility(final Menu pMenu, final boolean pIsVisible) {
         if (mMenu != null) {
-            mMenu.getItem(ApplicationConstants.MENU_DATA_ITEM_INDEX).setVisible(pIsVisible);
+            mMenu.getItem(ApplicationConstants.MENU_CONTENT_ITEM_INDEX).setVisible(pIsVisible);
         } else if (pMenu != null) {
-            pMenu.getItem(ApplicationConstants.MENU_DATA_ITEM_INDEX).setVisible(pIsVisible);
+            pMenu.getItem(ApplicationConstants.MENU_CONTENT_ITEM_INDEX).setVisible(pIsVisible);
         }
     }
 

@@ -2,22 +2,19 @@ package observer.zagart.by.client.application.utils;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 
 import java.util.List;
-
-import observer.zagart.by.client.R;
-import observer.zagart.by.client.mvp.views.fragments.MyAccountFragment;
 
 /**
  * Utility class with methods for serving fragments.
  *
  * @author zagart
  */
-
+@SuppressWarnings({"unused", "WeakerAccess"})
 public class FragmentUtil {
 
+    public static final int CONTAINER_RES_ID = 0;
     private static final int NAME_POSITION = 0;
 
     public static void printBackStack(final FragmentManager pFragmentManager) {
@@ -40,12 +37,12 @@ public class FragmentUtil {
                 name = pTransactionName[NAME_POSITION];
             }
             pFragmentManager.beginTransaction()
-                    .replace(R.id.fragment_container, pFragment)
+                    .replace(CONTAINER_RES_ID, pFragment)
                     .addToBackStack(name)
                     .commit();
         } else {
             pFragmentManager.beginTransaction()
-                    .replace(R.id.fragment_container, pFragment)
+                    .replace(CONTAINER_RES_ID, pFragment)
                     .commit();
         }
     }
@@ -60,26 +57,13 @@ public class FragmentUtil {
                 name = pTransactionName[NAME_POSITION];
             }
             pFragmentManager.beginTransaction()
-                    .add(R.id.fragment_container, pFragment)
+                    .add(CONTAINER_RES_ID, pFragment)
                     .addToBackStack(name)
                     .commit();
         } else {
             pFragmentManager.beginTransaction()
-                    .add(R.id.fragment_container, pFragment)
+                    .add(CONTAINER_RES_ID, pFragment)
                     .commit();
-        }
-    }
-
-    public static void updateBackStack(final FragmentManager pFragmentManager,
-                                       final Fragment... pTopLevelFragments) {
-        pFragmentManager.popBackStackImmediate();
-        replaceFragment(pFragmentManager, new MyAccountFragment(), true);
-        if (pTopLevelFragments.length > 0) {
-            final FragmentTransaction transaction = pFragmentManager.beginTransaction();
-            for (final Fragment fragment : pTopLevelFragments) {
-                transaction.replace(R.id.fragment_container, fragment);
-            }
-            transaction.commit();
         }
     }
 }

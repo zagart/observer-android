@@ -2,7 +2,6 @@ package observer.zagart.by.client.application.utils;
 
 import android.app.Activity;
 import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,10 +17,10 @@ import observer.zagart.by.client.R;
 
 public class TestUtil {
 
-    public static View getDummyLayout(final Fragment pView,
+    public static View getDummyLayout(final Activity pActivity,
                                       final String pHeader,
                                       final String pBody) {
-        return getView(pHeader, pBody, pView.getActivity());
+        return getView(pHeader, pBody, pActivity);
     }
 
     @NonNull

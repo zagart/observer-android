@@ -11,6 +11,7 @@ import android.widget.EditText;
 
 import java.util.List;
 
+import observer.zagart.by.client.App;
 import observer.zagart.by.client.R;
 import observer.zagart.by.client.application.accounts.ObserverAccount;
 import observer.zagart.by.client.application.utils.IOUtil;
@@ -47,7 +48,10 @@ public class RegistrationActivity
 
     @Override
     public void onDataChanged(final List<ObserverAccount> pParameters) {
-        mPresenter.persistAccount(pParameters.get(ObserverAccount.AUTHENTICATED_ACCOUNT_INDEX));
+        final ObserverAccount account = pParameters
+                .get(ObserverAccount.AUTHENTICATED_ACCOUNT_INDEX);
+        mPresenter.persistAccount(account);
+        App.setAccount(account);
         final Intent intent = new Intent(this, MainActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_NO_HISTORY);
         startActivity(intent);

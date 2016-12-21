@@ -12,6 +12,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
+import observer.zagart.by.client.App;
 import observer.zagart.by.client.R;
 import observer.zagart.by.client.application.accounts.ObserverAccount;
 import observer.zagart.by.client.application.utils.IOUtil;
@@ -28,13 +29,14 @@ public class AuthenticationActivity
     private TextView mLoginView;
     private TextView mPasswordView;
 
-    public void onGuestClick(View view) {
+    public void onGuestClick(final View pView) {
         final ArrayList<ObserverAccount> accounts = new ArrayList<>();
-        accounts.add(ObserverAccount.getGuestAccount());
+        final ObserverAccount guestAccount = ObserverAccount.getGuestAccount();
+        accounts.add(guestAccount);
         onDataChanged(accounts);
     }
 
-    public void onLogInClick(View view) {
+    public void onLogInClick(final View pView) {
         final CharSequence charLogin = mLoginView.getText();
         final CharSequence charPassword = mPasswordView.getText();
         if (TextUtils.isEmpty(charLogin) || TextUtils.isEmpty(charPassword)) {
@@ -44,7 +46,7 @@ public class AuthenticationActivity
         }
     }
 
-    public void onSignUpClick(View pView) {
+    public void onSignUpClick(final View pView) {
         Intent intent = new Intent(this, RegistrationActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
         startActivity(intent);
@@ -57,7 +59,9 @@ public class AuthenticationActivity
 
     @Override
     public void onDataChanged(final List<ObserverAccount> pAccounts) {
-        mPresenter.persistAccount(pAccounts.get(ObserverAccount.AUTHENTICATED_ACCOUNT_INDEX));
+        final ObserverAccount account = pAccounts.get(ObserverAccount.AUTHENTICATED_ACCOUNT_INDEX);
+        mPresenter.persistAccount(account);
+        App.setAccount(account);
         final Intent intent = new Intent(this, MainActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_NO_HISTORY);
         startActivity(intent);

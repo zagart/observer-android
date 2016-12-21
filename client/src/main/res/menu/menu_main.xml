@@ -5,38 +5,14 @@
         android:icon="@drawable/ic_account_24dp"
         android:onClick="onMenuItemClick"
         android:title="@string/my_account"/>
-
+    <item
+        android:id="@+id/menu_item_content"
+        android:icon="@drawable/ic_content_24dp"
+        android:onClick="onMenuItemClick"
+        android:title="@string/content"/>
     <item
         android:id="@+id/menu_item_settings"
         android:icon="@drawable/ic_settings_24dp"
         android:onClick="onMenuItemClick"
         android:title="@string/settings"/>
-    <item android:title="@string/content">
-        <menu>
-            <group
-                android:checkableBehavior="single">
-                <item
-                    android:id="@+id/menu_item_content"
-                    android:icon="@drawable/ic_content_24dp"
-                    android:onClick="onMenuItemClick"
-                    android:title="@string/content"/>
-                <item
-                    android:id="@+id/menu_item_data"
-                    android:icon="@drawable/ic_data_24dp"
-                    android:onClick="onMenuItemClick"
-                    android:title="@string/data"/>
-                <item
-                    android:id="@+id/menu_item_modules"
-                    android:icon="@drawable/ic_module_24dp"
-                    android:onClick="onMenuItemClick"
-                    android:title="@string/modules"/>
-                <item
-                    android:id="@+id/menu_item_stands"
-                    android:icon="@drawable/ic_stand_24dp"
-                    android:onClick="onMenuItemClick"
-                    android:title="@string/stands"/>
-            </group>
-        </menu>
-    </item>
-
 </menu>

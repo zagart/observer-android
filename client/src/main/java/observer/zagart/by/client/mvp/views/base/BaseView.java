@@ -4,20 +4,13 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v7.app.ActionBar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 
-import observer.zagart.by.client.App;
 import observer.zagart.by.client.R;
-import observer.zagart.by.client.application.utils.FragmentUtil;
-import observer.zagart.by.client.application.utils.IOUtil;
 import observer.zagart.by.client.mvp.presenters.base.BasePresenter;
-import observer.zagart.by.client.mvp.views.MainActivity;
-import observer.zagart.by.client.mvp.views.fragments.MyAccountFragment;
 
 /**
  * Base activity of application.
@@ -25,15 +18,6 @@ import observer.zagart.by.client.mvp.views.fragments.MyAccountFragment;
  * @author zagart
  */
 abstract public class BaseView extends Fragment {
-
-    public void onAccountCheck() {
-        if (App.getAccount() == null) {
-            changeFragment((MainActivity) getActivity(), new MyAccountFragment());
-            IOUtil.showToast(getString(R.string.msg_fragment_redirection));
-        }
-    }
-
-    abstract public String getTitle();
 
     public Context getViewContext() {
         return getActivity();
@@ -55,13 +39,6 @@ abstract public class BaseView extends Fragment {
         if (presenter != null) {
             getPresenter().unregisterObserver();
         }
-    }
-
-    public void changeFragment(final MainActivity pActivity, final BaseView pFragment) {
-        final FragmentManager manager = pActivity.getSupportFragmentManager();
-        setTitle(pActivity, pFragment);
-        FragmentUtil.replaceFragment(manager, pFragment, true);
-        FragmentUtil.printBackStack(manager);
     }
 
     @Nullable
@@ -87,11 +64,4 @@ abstract public class BaseView extends Fragment {
     }
 
     abstract protected BasePresenter getPresenter();
-
-    private void setTitle(final MainActivity pActivity, final BaseView pFragment) {
-        final ActionBar actionBar = pActivity.getSupportActionBar();
-        if (actionBar != null) {
-            actionBar.setTitle(pFragment.getTitle());
-        }
-    }
 }
