@@ -57,12 +57,6 @@ abstract public class BaseView extends Fragment {
         }
     }
 
-    @Override
-    public void onViewStateRestored(@Nullable final Bundle savedInstanceState) {
-        super.onViewStateRestored(savedInstanceState);
-        setTitle((MainActivity) getActivity(), this);
-    }
-
     public void changeFragment(final MainActivity pActivity, final BaseView pFragment) {
         final FragmentManager manager = pActivity.getSupportFragmentManager();
         setTitle(pActivity, pFragment);

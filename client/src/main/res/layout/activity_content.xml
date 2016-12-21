@@ -4,10 +4,12 @@
              xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <android.support.v4.view.ViewPager
+        android:id="@+id/view_pager_content"
         style="@style/Layout"
         android:layout_marginTop="?attr/actionBarSize">
 
         <android.support.design.widget.TabLayout
+            android:id="@+id/tab_layout_content"
             style="@style/Layout"
             android:layout_height="wrap_content"
             android:layout_gravity="top"
@@ -16,16 +18,19 @@
             app:tabTextColor="@color/primaryTextColor">
 
             <android.support.design.widget.TabItem
+                android:id="@+id/tab_item_data"
                 style="@style/TabItem"
                 android:icon="@drawable/ic_data_24dp"
                 android:text="@string/data"/>
 
             <android.support.design.widget.TabItem
+                android:id="@+id/tab_item_modules"
                 style="@style/TabItem"
                 android:icon="@drawable/ic_module_24dp"
                 android:text="@string/modules"/>
 
             <android.support.design.widget.TabItem
+                android:id="@+id/tab_item_stands"
                 style="@style/TabItem"
                 android:icon="@drawable/ic_stand_24dp"
                 android:text="@string/stands"/>
