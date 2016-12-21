@@ -11,10 +11,15 @@
         android:icon="@drawable/ic_settings_24dp"
         android:onClick="onMenuItemClick"
         android:title="@string/settings"/>
-    <item android:title="@string/data">
+    <item android:title="@string/content">
         <menu>
             <group
                 android:checkableBehavior="single">
+                <item
+                    android:id="@+id/menu_item_content"
+                    android:icon="@drawable/ic_content_24dp"
+                    android:onClick="onMenuItemClick"
+                    android:title="@string/content"/>
                 <item
                     android:id="@+id/menu_item_data"
                     android:icon="@drawable/ic_data_24dp"

@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import java.util.ArrayList;
 import java.util.List;
 
+import observer.zagart.by.client.App;
 import observer.zagart.by.client.R;
 import observer.zagart.by.client.mvp.IMvp;
 import observer.zagart.by.client.mvp.models.repository.entities.Module;
@@ -39,7 +40,6 @@ public class ModulesFragment extends BaseView implements IMvp.IViewOperations<Mo
     public void onStart() {
         super.onStart();
         super.onAccountCheck();
-        getActivity().setTitle(R.string.modules);
     }
 
     @Override
@@ -48,6 +48,11 @@ public class ModulesFragment extends BaseView implements IMvp.IViewOperations<Mo
         mRecyclerView = (RecyclerView) getActivity().findViewById(R.id.modules_recycler_view);
         setAdapter(new ArrayList<>());
         mPresenter.startDataReload();
+    }
+
+    @Override
+    public String getTitle() {
+        return App.getContext().getString(R.string.modules);
     }
 
     @Nullable
@@ -59,7 +64,7 @@ public class ModulesFragment extends BaseView implements IMvp.IViewOperations<Mo
         return getLayoutWithPanel(
                 pInflater,
                 pContainer,
-                R.layout.activity_modules,
+                R.layout.fragment_modules,
                 (pView -> {
                     mPresenter.clearModel();
                     onDataChanged(new ArrayList<>());

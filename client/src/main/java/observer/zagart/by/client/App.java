@@ -4,9 +4,12 @@ import android.accounts.Account;
 import android.annotation.SuppressLint;
 import android.app.Application;
 import android.content.Context;
+import android.util.Log;
 
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
+import java.util.Random;
 
 import observer.zagart.by.client.application.constants.Services;
 import observer.zagart.by.client.application.managers.AccountService;
@@ -28,6 +31,7 @@ import observer.zagart.by.client.application.singletons.ContextHolder;
 @SuppressLint("ServiceCast")
 public class App extends Application {
 
+    public static final String APP_PATH = "blabla";
     final private Map<String, Object> mServices = new HashMap<String, Object>() {
 
         {
@@ -70,4 +74,5 @@ public class App extends Application {
             return super.getSystemService(pName);
         }
     }
+
 }

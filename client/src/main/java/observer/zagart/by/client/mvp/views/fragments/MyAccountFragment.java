@@ -1,5 +1,6 @@
 package observer.zagart.by.client.mvp.views.fragments;
 
+import android.accounts.Account;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -49,23 +50,26 @@ public class MyAccountFragment extends BaseView implements IMvp.IViewOperations<
     @Override
     public void onAccountCheck() {
         final MainActivity activity = (MainActivity) getActivity();
-        if (App.getAccount() != null) {
-            activity.updateMenuItemsVisibility(null, true);
+        final Account account = App.getAccount();
+        if (account != null) {
             mLogInView.setVisibility(View.GONE);
             mLogOutView.setVisibility(View.VISIBLE);
             mUserLabel.setVisibility(View.VISIBLE);
             mUserLogin.setVisibility(View.VISIBLE);
-            mUserLogin.setText(App.getAccount().name);
+            mUserLogin.setText(account.name);
         } else {
-            activity.updateMenuItemsVisibility(null, false);
             mLogInView.setVisibility(View.VISIBLE);
             mLogOutView.setVisibility(View.GONE);
             mUserLabel.setVisibility(View.GONE);
             mUserLogin.setVisibility(View.GONE);
             mUserLogin.setText(EMPTY_STRING);
         }
-        activity.onAccountChanged(App.getAccount());
-        activity.invalidateOptionsMenu();
+        activity.onAccountChanged(account);
+    }
+
+    @Override
+    public String getTitle() {
+        return App.getContext().getString(R.string.my_account);
     }
 
     @Override
@@ -77,8 +81,6 @@ public class MyAccountFragment extends BaseView implements IMvp.IViewOperations<
     public void onResume() {
         super.onResume();
         onAccountCheck();
-        //TODO find reason of collision of titles
-        getActivity().setTitle(R.string.my_account);
     }
 
     @Override
@@ -99,7 +101,7 @@ public class MyAccountFragment extends BaseView implements IMvp.IViewOperations<
                              final ViewGroup pContainer,
                              final Bundle pSavedInstanceState) {
         super.onCreateView(pInflater, pContainer, pSavedInstanceState);
-        return pInflater.inflate(R.layout.activity_my_account, pContainer, false);
+        return pInflater.inflate(R.layout.fragment_my_account, pContainer, false);
     }
 
     @Override

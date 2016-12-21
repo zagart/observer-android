@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.NavigationView
+    android:id="@+id/navigation_view"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="start"
+    android:layout_marginEnd="@dimen/drawer_side_margin"
+    android:layout_marginLeft="@dimen/drawer_side_margin"
+    android:layout_marginRight="@dimen/drawer_side_margin"
+    android:layout_marginStart="@dimen/drawer_side_margin"
+    android:background="@color/white"
+    android:choiceMode="singleChoice"
+    android:divider="@android:color/transparent"
+    android:dividerHeight="0dp"
+    android:maxWidth="@dimen/mobile_max_width"
+    app:headerLayout="@layout/view_navigation_header"
+    app:menu="@menu/menu_main">
+</android.support.design.widget.NavigationView>

@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import java.util.ArrayList;
 import java.util.List;
 
+import observer.zagart.by.client.App;
 import observer.zagart.by.client.R;
 import observer.zagart.by.client.mvp.IMvp;
 import observer.zagart.by.client.mvp.models.repository.entities.Module;
@@ -32,14 +33,18 @@ public class DataFragment extends BaseView implements IMvp.IViewOperations<Modul
 
     @Override
     public void onDataChanged(final List<Module> pModules) {
-        setAdapter(pModules);
+        setAdapter(mRecyclerView, pModules);
     }
 
     @Override
     public void onStart() {
         super.onStart();
         super.onAccountCheck();
-        getActivity().setTitle(R.string.data);
+    }
+
+    @Override
+    public String getTitle() {
+        return App.getContext().getString(R.string.data);
     }
 
     @Nullable
@@ -51,7 +56,7 @@ public class DataFragment extends BaseView implements IMvp.IViewOperations<Modul
         return getLayoutWithPanel(
                 pInflater,
                 pContainer,
-                R.layout.activity_data,
+                R.layout.fragment_data,
                 (pView -> {
                     mPresenter.clearModel();
                     onDataChanged(new ArrayList<>());
@@ -63,7 +68,7 @@ public class DataFragment extends BaseView implements IMvp.IViewOperations<Modul
     public void onActivityCreated(final Bundle pSavedInstanceState) {
         super.onActivityCreated(pSavedInstanceState);
         mRecyclerView = (RecyclerView) getActivity().findViewById(R.id.data_recycler_view);
-        setAdapter(new ArrayList<>());
+        setAdapter(mRecyclerView, new ArrayList<>());
         mPresenter.startDataReload();
     }
 
@@ -72,12 +77,12 @@ public class DataFragment extends BaseView implements IMvp.IViewOperations<Modul
         return mPresenter;
     }
 
-    private void setAdapter(final List<Module> pModels) {
+    private void setAdapter(final RecyclerView pRecyclerView, final List<Module> pModels) {
         final View view = getView();
-        if (pModels != null && view != null) {
+        if (pModels != null && view != null && pRecyclerView != null) {
             final DataTableAdapter adapter = new DataTableAdapter(pModels);
-            mRecyclerView.setAdapter(adapter);
-            mRecyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
+            pRecyclerView.setAdapter(adapter);
+            pRecyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
         }
     }
 }
