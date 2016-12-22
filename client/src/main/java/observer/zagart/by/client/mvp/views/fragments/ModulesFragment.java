@@ -66,6 +66,11 @@ public class ModulesFragment extends BaseView implements IMvp.IViewOperations<Mo
         return mPresenter;
     }
 
+    @Override
+    protected int getProgressBarResId() {
+        return R.id.progress_bar_modules;
+    }
+
     private void setAdapter(final List<Module> pModules) {
         final View view = getView();
         if (pModules != null && view != null) {

@@ -65,6 +65,11 @@ public class StandsFragment extends BaseView implements IMvp.IViewOperations<Sta
         return mPresenter;
     }
 
+    @Override
+    protected int getProgressBarResId() {
+        return R.id.progress_bar_stands;
+    }
+
     private void setAdapter(final List<Stand> pStands) {
         final View view = getView();
         if (pStands != null && view != null) {

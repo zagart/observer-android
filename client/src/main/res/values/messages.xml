@@ -12,4 +12,5 @@
     <string name="msg_failed_parse_stands">Failed to parse requested entities</string>
     <string name="msg_no_server_response">No server response or no parsed entities</string>
     <string name="msg_fragment_redirection">You have been redirected to main menu.</string>
+    <string name="waiting_server_response">Waiting server response...</string>
 </resources>

@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
@@ -17,6 +16,7 @@ import observer.zagart.by.client.application.accounts.ObserverAccount;
 import observer.zagart.by.client.application.utils.IOUtil;
 import observer.zagart.by.client.mvp.IMvp;
 import observer.zagart.by.client.mvp.presenters.AccountPresenter;
+import observer.zagart.by.client.mvp.views.base.BaseAccountActivity;
 
 /**
  * Activity with UI for executing process of registration
@@ -25,7 +25,7 @@ import observer.zagart.by.client.mvp.presenters.AccountPresenter;
  * @author zagart
  */
 public class RegistrationActivity
-        extends AppCompatActivity implements IMvp.IViewOperations<ObserverAccount> {
+        extends BaseAccountActivity implements IMvp.IViewOperations<ObserverAccount> {
 
     private AccountPresenter mPresenter = new AccountPresenter(this);
     private EditText mPasswordView;

@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.percent.PercentFrameLayout style="@style/Layout"
-                                            xmlns:android="http://schemas.android.com/apk/res/android"
-                                            xmlns:app="http://schemas.android.com/apk/res-auto">
+                                            xmlns:android="http://schemas.android.com/apk/res/android">
 
     <TextView
         android:id="@+id/login_title"
@@ -10,8 +9,7 @@
 
     <LinearLayout
         android:id="@+id/login_form"
-        style="@style/Form"
-        app:layout_marginBottomPercent="@fraction/login_form_margin_bottom">
+        style="@style/Form">
 
         <TextView
             android:id="@+id/login_log_in_title"
@@ -32,10 +30,7 @@
     </LinearLayout>
 
     <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:orientation="horizontal">
+        style="@style/FormBottomPanel">
 
         <Button
             android:id="@+id/btn_guest"

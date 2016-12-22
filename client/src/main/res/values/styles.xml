@@ -4,12 +4,16 @@
     <!-- application defaults -->
     <style name="ObserverDefault" id="observer_theme" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="android:textColor">@color/primaryTextColor</item>
+        <item name="android:textColorSecondary">@color/secondaryTextColor</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorStatusBar</item>
     </style>
 
     <style name="CustomToolbarStyle" parent="Base.Widget.AppCompat.DrawerArrowToggle">
         <!-- action bar title color -->
         <item name="android:textColorPrimary">@color/primaryTextColor</item>
-        <!-- icon color -->
+        <!-- hamburger/arrow color -->
         <item name="android:textColorSecondary">@color/primaryTextColor</item>
         <item name="actionMenuTextColor">@color/secondaryTextColor</item>
     </style>
@@ -23,6 +27,7 @@
     </style>
 
     <style name="RecyclerViewLayout">
+        <item name="android:padding">@dimen/cell_margin</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:background">@color/colorPrimaryDark</item>
@@ -36,18 +41,29 @@
         <item name="android:layout_gravity">center_horizontal</item>
         <item name="android:gravity">center</item>
         <item name="android:layout_marginTop">@dimen/activity_main_title_margin_top</item>
+        <item name="android:background">@drawable/oval_rectangle_primary_dark</item>
         <item name="android:padding">@dimen/default_padding</item>
         <item name="android:textSize">@dimen/activity_main_title_text_size</item>
     </style>
 
     <style name="Form">
         <item name="android:orientation">vertical</item>
+        <item name="android:background">@drawable/oval_rectangle_primary_dark</item>
+        <item name="android:padding">@dimen/default_padding</item>
+        <item name="android:paddingTop">@dimen/zero_dp</item>
         <item name="android:gravity">center</item>
-        <item name="android:layout_marginTop">@dimen/activity_login_form_margin_top</item>
-        <item name="android:layout_marginBottom">@dimen/activity_login_form_margin_bottom</item>
+        <item name="android:layout_marginTop">@dimen/form_margin_top</item>
+        <item name="android:layout_marginBottom">@dimen/form_margin_bottom</item>
         <item name="android:layout_gravity">center_horizontal|bottom</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="FormBottomPanel">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_gravity">bottom</item>
+        <item name="android:orientation">horizontal</item>
     </style>
 
     <style name="Footer">
@@ -73,7 +89,7 @@
         <item name="android:textSize">@dimen/default_button_text_size</item>
         <item name="android:layout_height">@dimen/default_button_height</item>
         <item name="android:layout_width">@dimen/default_button_width</item>
-        <item name="android:background">@drawable/shape_custom_rectangle</item>
+        <item name="android:background">@drawable/oval_rectangle_primary_dark</item>
         <item name="android:textColor">@color/primaryTextColor</item>
     </style>
 
@@ -91,7 +107,8 @@
     </style>
 
     <style name="LoginView">
-        <item name="android:background">@color/white</item>
+        <item name="android:layout_marginTop">@dimen/panel_margin</item>
+        <item name="android:background">@drawable/oval_rectangle_white</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:ems">10</item>
@@ -116,30 +133,12 @@
 
     <style name="LoginLabel" parent="Label">
         <item name="android:text">@string/login</item>
-        <item name="android:textSize">@dimen/activity_login_form_title_text_size</item>
+        <item name="android:layout_margin">@dimen/zero_dp</item>
+        <item name="android:textSize">@dimen/form_title_text_size</item>
     </style>
 
     <style name="PasswordLabel" parent="LoginLabel">
         <item name="android:text">@string/password</item>
-    </style>
-
-    <!-- custom views -->
-    <style name="RecyclerViewTableCell">
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">50dp</item>
-        <item name="android:layout_margin">5dp</item>
-        <item name="android:background">@color/colorPrimary</item>
-        <item name="android:gravity">center</item>
-        <item name="android:textColor">@color/primaryTextColor</item>
-        <item name="android:textSize">20sp</item>
-    </style>
-
-    <style name="PanelButton">
-        <item name="android:tint">@color/white</item>
-        <item name="android:layout_width">@dimen/item_width</item>
-        <item name="android:layout_height">@dimen/item_height</item>
-        <item name="android:background">@null</item>
-        <item name="android:layout_margin">@dimen/corner_radius</item>
     </style>
 
     <style name="NavigationDrawerListItem">
@@ -150,5 +149,40 @@
         <item name="android:layout_height">match_parent</item>
         <item name="android:layout_width">match_parent</item>
     </style>
+
+    <style name="ProgressBar" parent="Widget.AppCompat.ProgressBar">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:visibility">invisible</item>
+    </style>
+
+    <style name="Layout.ContentTabLayout">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_gravity">top</item>
+    </style>
+
+    <!-- custom views -->
+    <style name="RecyclerViewTableCell">
+        <item name="android:padding">@dimen/cell_padding</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">@dimen/cell_height</item>
+        <item name="android:layout_marginTop">@dimen/cell_margin</item>
+        <item name="android:layout_marginLeft">@dimen/cell_margin</item>
+        <item name="android:layout_marginRight">@dimen/cell_margin</item>
+        <item name="android:background">@color/colorPrimary</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">@color/primaryTextColor</item>
+        <item name="android:textSize">@dimen/cell_text_size</item>
+    </style>
+
+    <style name="PanelButton">
+        <item name="android:tint">@color/white</item>
+        <item name="android:layout_width">@dimen/item_width</item>
+        <item name="android:layout_height">@dimen/item_height</item>
+        <item name="android:background">@null</item>
+        <item name="android:layout_margin">@dimen/corner_radius</item>
+    </style>
+
 
 </resources>

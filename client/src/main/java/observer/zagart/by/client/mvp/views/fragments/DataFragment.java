@@ -61,6 +61,11 @@ public class DataFragment extends BaseView implements IMvp.IViewOperations<Modul
     }
 
     @Override
+    protected int getProgressBarResId() {
+        return R.id.progress_bar_data;
+    }
+
+    @Override
     protected BasePresenter getPresenter() {
         return mPresenter;
     }

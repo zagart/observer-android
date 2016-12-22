@@ -6,7 +6,7 @@
              android:layout_height="wrap_content"
              android:layout_gravity="bottom|center"
              android:layout_margin="@dimen/panel_margin"
-             android:background="@drawable/shape_custom_rectangle"
+             android:background="@drawable/oval_rectangle_primary_dark"
              android:orientation="horizontal"
              android:paddingEnd="@dimen/panel_padding"
              android:paddingStart="@dimen/panel_padding">

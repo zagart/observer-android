@@ -12,13 +12,13 @@
     <dimen name="activity_main_title_text_size">50sp</dimen>
     <dimen name="activity_main_title_width">280dp</dimen>
     <dimen name="activity_main_title_height">120dp</dimen>
-    <dimen name="activity_login_title_margin_top">30dp</dimen>
-    <dimen name="activity_login_title_text_size">30sp</dimen>
-    <dimen name="activity_login_form_margin_top">120dp</dimen>
-    <dimen name="activity_login_form_margin_bottom">20dp</dimen>
-    <dimen name="activity_login_form_title_text_size">20sp</dimen>
     <dimen name="activity_guest_form_title_text_size">30sp</dimen>
     <dimen name="activity_my_user_status_margin_top">100dp</dimen>
+    <dimen name="activity_login_title_margin_top">30dp</dimen>
+    <dimen name="activity_login_title_text_size">30sp</dimen>
+    <dimen name="form_title_text_size">20sp</dimen>
+    <dimen name="form_margin_top">120dp</dimen>
+    <dimen name="form_margin_bottom">120dp</dimen>
 
     <!-- recycler view -->
     <dimen name="activity_title_margin_top">40dp</dimen>
@@ -26,6 +26,11 @@
     <dimen name="data_second_column_width">60dp</dimen>
     <dimen name="stands_first_column_width">100dp</dimen>
     <dimen name="stands_second_column_width">260dp</dimen>
+    <dimen name="cell_padding">8dp</dimen>
+    <dimen name="cell_margin">4dp</dimen>
+    <dimen name="cell_height">64dp</dimen>
+    <dimen name="cell_width">100dp</dimen>
+    <dimen name="cell_text_size">20sp</dimen>
 
     <!-- views -->
     <dimen name="zero_dp">0dp</dimen>
@@ -50,5 +55,5 @@
 
     <!-- shapes -->
     <dimen name="shape_padding">8dp</dimen>
-    
+
 </resources>

@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.ProgressBar;
 
 import observer.zagart.by.client.R;
 import observer.zagart.by.client.mvp.presenters.base.BasePresenter;
@@ -18,6 +19,8 @@ import observer.zagart.by.client.mvp.presenters.base.BasePresenter;
  * @author zagart
  */
 abstract public class BaseView extends Fragment {
+
+    private ProgressBar mProgressBar;
 
     public Context getViewContext() {
         return getActivity();
@@ -30,6 +33,12 @@ abstract public class BaseView extends Fragment {
         if (presenter != null) {
             presenter.registerObserver();
         }
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable final Bundle pSavedInstanceState) {
+        super.onActivityCreated(pSavedInstanceState);
+        mProgressBar = (ProgressBar) getActivity().findViewById(getProgressBarResId());
     }
 
     @Override
@@ -50,6 +59,18 @@ abstract public class BaseView extends Fragment {
         return super.onCreateView(pInflater, pContainer, pSavedInstanceState);
     }
 
+    public void showProgressBar() {
+        if (mProgressBar != null) {
+            mProgressBar.setVisibility(View.VISIBLE);
+        }
+    }
+
+    public void hideProgressBar() {
+        if (mProgressBar != null) {
+            mProgressBar.setVisibility(View.INVISIBLE);
+        }
+    }
+
     protected View getLayoutWithPanel(final LayoutInflater pInflater,
                                       final ViewGroup pContainer,
                                       final int pResId,
@@ -64,4 +85,6 @@ abstract public class BaseView extends Fragment {
     }
 
     abstract protected BasePresenter getPresenter();
+
+    abstract protected int getProgressBarResId();
 }

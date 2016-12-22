@@ -19,8 +19,6 @@ import observer.zagart.by.client.application.singletons.ContextHolder;
  *
  * @author zagart
  */
-//TODO add account check to fragments
-//TODO use progress bars
 //TODO configuration of ProGuard
 //TODO unit&instrumental test
 //TODO connection timeout handling

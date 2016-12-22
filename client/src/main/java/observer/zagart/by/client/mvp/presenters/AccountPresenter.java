@@ -19,6 +19,7 @@ import observer.zagart.by.client.application.utils.URIUtil;
 import observer.zagart.by.client.mvp.IMvp;
 import observer.zagart.by.client.mvp.models.AccountModel;
 import observer.zagart.by.client.mvp.presenters.base.BasePresenter;
+import observer.zagart.by.client.mvp.views.base.BaseAccountActivity;
 import observer.zagart.by.client.network.http.HttpFactory;
 import observer.zagart.by.client.network.http.interfaces.IHttpClient;
 import observer.zagart.by.client.network.http.requests.observer.AuthenticationRequest;
@@ -92,6 +93,8 @@ public class AccountPresenter extends BasePresenter<ObserverAccount> {
                                     final int pErrorMessageResId) {
         mThreadManager.execute(
                 () -> {
+                    mThreadManager.post(() -> ((BaseAccountActivity) getView().get())
+                            .showProgressDialog(R.string.waiting_server_response));
                     final String login = pLogin.toString();
                     final String password = pPassword.toString();
                     String token;
@@ -100,6 +103,9 @@ public class AccountPresenter extends BasePresenter<ObserverAccount> {
                         token = new ObserverJsonResponse(response).extractToken();
                     } catch (IOException | JSONException pEx) {
                         token = null;
+                    } finally {
+                        mThreadManager.post(() -> ((BaseAccountActivity) getView().get())
+                                .dismissProgressDialog());
                     }
                     if (!TextUtils.isEmpty(token)) {
                         final ObserverAccount account = new ObserverAccount(login);

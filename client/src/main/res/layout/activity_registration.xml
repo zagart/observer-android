@@ -10,8 +10,7 @@
 
     <LinearLayout
         android:id="@+id/login_form"
-        style="@style/Form"
-        app:layout_marginBottomPercent="@fraction/login_form_margin_bottom">
+        style="@style/Form">
 
         <TextView
             android:id="@+id/registration_login_title"
