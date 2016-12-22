@@ -8,5 +8,5 @@
         android:layout_height="match_parent"
         android:scrollbars="vertical"/>
 
-    <include layout="@layout/view_data_edit_template"/>
+    <include layout="@layout/view_fixed_panel"/>
 </FrameLayout>

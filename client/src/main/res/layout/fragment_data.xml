@@ -9,10 +9,7 @@
         android:id="@+id/data_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="80dp"
         android:scrollbars="vertical"/>
 
-    <include layout="@layout/view_top_unmovable_panel"/>
-
-    <include layout="@layout/view_data_edit_template"/>
+    <include layout="@layout/view_fixed_panel"/>
 </FrameLayout>

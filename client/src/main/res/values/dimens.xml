@@ -2,19 +2,19 @@
 <resources>
     <!-- defaults -->
     <dimen name="default_margin">20dp</dimen>
-    <dimen name="default_button_text_size">20sp</dimen>
+    <dimen name="default_button_text_size">16sp</dimen>
     <dimen name="default_button_height">48dp</dimen>
-    <dimen name="default_button_width">120dp</dimen>
+    <dimen name="default_button_width">100dp</dimen>
     <dimen name="default_padding">20dp</dimen>
 
     <!-- activities -->
-    <dimen name="activity_main_title_margin_top">30dp</dimen>
+    <dimen name="activity_main_title_margin_top">10dp</dimen>
     <dimen name="activity_main_title_text_size">50sp</dimen>
     <dimen name="activity_main_title_width">280dp</dimen>
     <dimen name="activity_main_title_height">120dp</dimen>
     <dimen name="activity_login_title_margin_top">30dp</dimen>
     <dimen name="activity_login_title_text_size">30sp</dimen>
-    <dimen name="activity_login_form_margin_top">160dp</dimen>
+    <dimen name="activity_login_form_margin_top">120dp</dimen>
     <dimen name="activity_login_form_margin_bottom">20dp</dimen>
     <dimen name="activity_login_form_title_text_size">20sp</dimen>
     <dimen name="activity_guest_form_title_text_size">30sp</dimen>

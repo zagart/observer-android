@@ -23,11 +23,16 @@ public class ContentActivity extends BaseNavigationActivity {
         super.onCreate(pSavedInstanceState);
         setContentView(R.layout.activity_content);
         addToolbar();
-        setTitle(R.string.content);
         final ViewPager contentViewPager = (ViewPager) findViewById(R.id.view_pager_content);
         contentViewPager.setAdapter(new ContentPagerAdapter(getSupportFragmentManager()));
         final TabLayout contentTabLayout = (TabLayout) findViewById(R.id.tab_layout_content);
         setUpContentTabLayout(contentTabLayout, contentViewPager);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        setTitle(R.string.content);
     }
 
     @SuppressWarnings("ConstantConditions")

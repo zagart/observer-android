@@ -10,7 +10,7 @@ import android.widget.TextView;
 import observer.zagart.by.client.R;
 
 /**
- * Utility class with methods for with temporary classes and views.
+ * Utility class with methods for temporary classes and views.
  *
  * @author zagart
  */

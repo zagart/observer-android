@@ -15,10 +15,9 @@ import java.util.List;
 import observer.zagart.by.client.App;
 import observer.zagart.by.client.R;
 import observer.zagart.by.client.application.accounts.ObserverAccount;
+import observer.zagart.by.client.application.utils.AnimationUtil;
 import observer.zagart.by.client.mvp.IMvp;
 import observer.zagart.by.client.mvp.views.base.BaseNavigationActivity;
-
-import static observer.zagart.by.client.application.constants.ApplicationConstants.EMPTY_STRING;
 
 /**
  * Application main activity.
@@ -56,29 +55,44 @@ public class MainActivity
         closeDrawers();
     }
 
+    public void onLogInClick(final View pView) {
+        final Intent intent = new Intent(this, AuthenticationActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_NO_HISTORY);
+        startActivity(intent);
+    }
+
     @Override
     public void onAccountChanged() {
         super.onAccountChanged();
         final Account account = App.getAccount();
         if (account != null) {
+            mUserLogin.setText(account.name);
             mLogInButton.setVisibility(View.GONE);
             mLogOutButton.setVisibility(View.VISIBLE);
             mUserLabel.setVisibility(View.VISIBLE);
             mUserLogin.setVisibility(View.VISIBLE);
-            mUserLogin.setText(account.name);
         } else {
-            mLogInButton.setVisibility(View.VISIBLE);
+            mUserLogin.setText(getString(R.string.user_login_default));
+            AnimationUtil.fadeOut(mLogOutButton);
             mLogOutButton.setVisibility(View.GONE);
-            mUserLabel.setVisibility(View.GONE);
-            mUserLogin.setVisibility(View.GONE);
-            mUserLogin.setText(EMPTY_STRING);
+            AnimationUtil.makeOut(false, mUserLabel);
+            mUserLabel.setVisibility(View.INVISIBLE);
+            AnimationUtil.makeOut(true, mUserLogin);
+            mUserLogin.setVisibility(View.INVISIBLE);
+            mLogInButton.setVisibility(View.VISIBLE);
         }
+    }
+
+    public void onLogOutClick(final View pView) {
+        App.setAccount(null);
+        onAccountChanged();
     }
 
     @Override
     protected void onStart() {
         super.onStart();
         onAccountChanged();
+        setTitle(R.string.my_account);
     }
 
     @Override
@@ -88,21 +102,8 @@ public class MainActivity
         addToolbar();
         addNavigationMenu();
         mLogInButton = (Button) findViewById(R.id.button_log_in);
-        mLogInButton.setOnClickListener(pView -> onLogInClick());
         mLogOutButton = (Button) findViewById(R.id.button_log_out);
-        mLogOutButton.setOnClickListener(pView -> onLogoutClick());
         mUserLabel = (TextView) findViewById(R.id.textview_my_account_user_label);
         mUserLogin = (TextView) findViewById(R.id.textview_my_account_user_login);
-    }
-
-    private void onLogInClick() {
-        final Intent intent = new Intent(this, AuthenticationActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_NO_HISTORY);
-        startActivity(intent);
-    }
-
-    private void onLogoutClick() {
-        App.setAccount(null);
-        onAccountChanged();
     }
 }

@@ -48,7 +48,7 @@
             android:id="@+id/btn_log_in"
             style="@style/Button"
             android:layout_gravity="center"
-            android:onClick="onLogInClick"
+            android:onClick="onLogInConfirmClick"
             android:text="@string/log_in"/>
 
         <Button

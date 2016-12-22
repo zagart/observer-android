@@ -4,13 +4,14 @@
     <!-- application defaults -->
     <style name="ObserverDefault" id="observer_theme" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="android:textColor">@color/primaryTextColor</item>
-        <item name="android:fontFamily">sans-serif-thin</item>
     </style>
 
     <style name="CustomToolbarStyle" parent="Base.Widget.AppCompat.DrawerArrowToggle">
+        <!-- action bar title color -->
         <item name="android:textColorPrimary">@color/primaryTextColor</item>
+        <!-- icon color -->
         <item name="android:textColorSecondary">@color/primaryTextColor</item>
-        <item name="actionMenuTextColor">@color/primaryTextColor</item>
+        <item name="actionMenuTextColor">@color/secondaryTextColor</item>
     </style>
 
     <style name="Layout">

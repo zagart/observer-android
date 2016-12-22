@@ -36,7 +36,7 @@ public class AuthenticationActivity
         onDataChanged(accounts);
     }
 
-    public void onLogInClick(final View pView) {
+    public void onLogInConfirmClick(final View pView) {
         final CharSequence charLogin = mLoginView.getText();
         final CharSequence charPassword = mPasswordView.getText();
         if (TextUtils.isEmpty(charLogin) || TextUtils.isEmpty(charPassword)) {
