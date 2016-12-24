@@ -26,11 +26,9 @@ public class HttpClient implements IHttpClient {
         connection = ((HttpURLConnection) reqUrl.openConnection());
         connection.setConnectTimeout(DEFAULT_TIMEOUT);
         connection.setRequestMethod(pRequest.getMethodType().name());
-        connection.setRequestProperty(
-                IHttpClient.IHttpData.Header.CONTENT_TYPE,
-                pRequest.getContentType());
-        pRequest.handleRequestConnection(connection);
+        connection.setRequestProperty(IHttpData.Header.CONTENT_TYPE, pRequest.getContentType());
         try {
+            pRequest.handleRequestConnection(connection);
             errorStream = connection.getErrorStream();
             if (errorStream == null) {
                 standardStream = connection.getInputStream();

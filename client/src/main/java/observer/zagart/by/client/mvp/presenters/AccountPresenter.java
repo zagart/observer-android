@@ -98,8 +98,9 @@ public class AccountPresenter extends BasePresenter<ObserverAccount> {
                     final String login = pLogin.toString();
                     final String password = pPassword.toString();
                     String token;
+                    String response = "No answer";
                     try {
-                        final String response = mHttpClient.executeRequest(pRequest);
+                        response = mHttpClient.executeRequest(pRequest);
                         token = new ObserverJsonResponse(response).extractToken();
                     } catch (IOException | JSONException pEx) {
                         token = null;
@@ -116,6 +117,7 @@ public class AccountPresenter extends BasePresenter<ObserverAccount> {
                         getView().get().onDataChanged(accounts);
                     } else {
                         IOUtil.showToast(getContext(), getContext().getString(pErrorMessageResId));
+                        IOUtil.showToast("Server says: " + response);
                     }
                 });
     }

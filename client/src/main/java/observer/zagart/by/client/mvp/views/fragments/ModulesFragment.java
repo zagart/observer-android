@@ -17,7 +17,7 @@ import observer.zagart.by.client.mvp.models.repository.entities.Module;
 import observer.zagart.by.client.mvp.presenters.ModulePresenter;
 import observer.zagart.by.client.mvp.presenters.base.BasePresenter;
 import observer.zagart.by.client.mvp.views.adapters.ModuleTableAdapter;
-import observer.zagart.by.client.mvp.views.base.BaseView;
+import observer.zagart.by.client.mvp.views.base.BaseFragmentView;
 
 /**
  * Fragment for showing cached module objects.
@@ -25,7 +25,7 @@ import observer.zagart.by.client.mvp.views.base.BaseView;
  * @author zagart
  */
 
-public class ModulesFragment extends BaseView implements IMvp.IViewOperations<Module> {
+public class ModulesFragment extends BaseFragmentView implements IMvp.IViewOperations<Module> {
 
     private ModulePresenter mPresenter = new ModulePresenter(this);
     private RecyclerView mRecyclerView;

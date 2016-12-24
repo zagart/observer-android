@@ -12,4 +12,6 @@ public interface ApplicationConstants {
     String CURRENT_ACCOUNT_NAME = "Current account name";
     String PREF_FILE = "SharedFile";
     int MENU_CONTENT_ITEM_INDEX = 1;
+    int PICK_IMAGE_ACTION = 100;
+    String BYTE_STREAM = "Byte stream";
 }

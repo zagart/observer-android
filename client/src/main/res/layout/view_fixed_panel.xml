@@ -15,6 +15,7 @@
         android:id="@+id/top_panel_clear"
         style="@style/PanelButton"
         android:layout_gravity="start"
+        android:background="?android:attr/selectableItemBackground"
         android:contentDescription="@string/button_for_clean_up"
         app:srcCompat="@drawable/ic_clear_black_24dp"/>
 
@@ -22,6 +23,7 @@
         android:id="@+id/top_panel_reload"
         style="@style/PanelButton"
         android:layout_gravity="end"
+        android:background="?android:attr/selectableItemBackground"
         android:contentDescription="@string/button_for_reload"
         app:srcCompat="@drawable/ic_reload_black_24dp"/>
 </FrameLayout>

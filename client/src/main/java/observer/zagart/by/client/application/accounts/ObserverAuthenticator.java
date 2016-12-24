@@ -16,7 +16,7 @@ import org.json.JSONException;
 import java.io.IOException;
 
 import observer.zagart.by.client.App;
-import observer.zagart.by.client.mvp.views.AuthenticationActivity;
+import observer.zagart.by.client.mvp.views.LoginActivity;
 import observer.zagart.by.client.network.http.HttpFactory;
 import observer.zagart.by.client.network.http.requests.observer.AuthenticationRequest;
 import observer.zagart.by.client.network.http.responses.ObserverJsonResponse;
@@ -36,18 +36,19 @@ class ObserverAuthenticator extends AbstractAccountAuthenticator {
     }
 
     @Override
-    public Bundle editProperties(AccountAuthenticatorResponse response, String accountType) {
+    public Bundle editProperties(final AccountAuthenticatorResponse response,
+                                 final String accountType) {
         return null;
     }
 
     @Override
     public Bundle addAccount(
-            AccountAuthenticatorResponse pResponse,
-            String pAccountType,
-            String pAuthTokenType,
-            String[] pRequiredFeatures,
-            Bundle pOptions) throws NetworkErrorException {
-        final Intent intent = new Intent(mContext, AuthenticationActivity.class);
+            final AccountAuthenticatorResponse pResponse,
+            final String pAccountType,
+            final String pAuthTokenType,
+            final String[] pRequiredFeatures,
+            final Bundle pOptions) throws NetworkErrorException {
+        final Intent intent = new Intent(mContext, LoginActivity.class);
         intent.putExtra(ObserverAccount.EXTRA_TOKEN_TYPE, pAccountType);
         intent.putExtra(AccountManager.KEY_ACCOUNT_AUTHENTICATOR_RESPONSE, pResponse);
         final Bundle bundle = new Bundle();
@@ -60,18 +61,18 @@ class ObserverAuthenticator extends AbstractAccountAuthenticator {
 
     @Override
     public Bundle confirmCredentials(
-            AccountAuthenticatorResponse response,
-            Account account,
-            Bundle options) throws NetworkErrorException {
+            final AccountAuthenticatorResponse response,
+            final Account account,
+            final Bundle options) throws NetworkErrorException {
         return null;
     }
 
     @Override
     public Bundle getAuthToken(
-            AccountAuthenticatorResponse pResponse,
-            Account pAccount,
-            String pAuthTokenType,
-            Bundle pOptions) throws NetworkErrorException {
+            final AccountAuthenticatorResponse pResponse,
+            final Account pAccount,
+            final String pAuthTokenType,
+            final Bundle pOptions) throws NetworkErrorException {
         final Bundle result = new Bundle();
         final AccountManager accountManager = AccountManager.get(mContext.getApplicationContext());
         String authToken = accountManager.peekAuthToken(pAccount, pAuthTokenType);
@@ -97,7 +98,7 @@ class ObserverAuthenticator extends AbstractAccountAuthenticator {
                     pAccount.type,
                     accountManager.peekAuthToken(pAccount, ObserverAccount.TOKEN)
             );
-            final Intent intent = new Intent(mContext, AuthenticationActivity.class);
+            final Intent intent = new Intent(mContext, LoginActivity.class);
             intent.putExtra(AccountManager.KEY_ACCOUNT_AUTHENTICATOR_RESPONSE, pResponse);
             intent.putExtra(ObserverAccount.EXTRA_TOKEN_TYPE, pAuthTokenType);
             final Bundle bundle = new Bundle();
@@ -107,23 +108,24 @@ class ObserverAuthenticator extends AbstractAccountAuthenticator {
     }
 
     @Override
-    public String getAuthTokenLabel(String authTokenType) {
+    public String getAuthTokenLabel(final String authTokenType) {
         return null;
     }
 
     @Override
     public Bundle updateCredentials(
-            AccountAuthenticatorResponse response,
-            Account account,
-            String authTokenType, Bundle options) throws NetworkErrorException {
+            final AccountAuthenticatorResponse response,
+            final Account account,
+            final String authTokenType,
+            final Bundle options) throws NetworkErrorException {
         return null;
     }
 
     @Override
     public Bundle hasFeatures(
-            AccountAuthenticatorResponse response,
-            Account account,
-            String[] features) throws NetworkErrorException {
+            final AccountAuthenticatorResponse response,
+            final Account account,
+            final String[] features) throws NetworkErrorException {
         return null;
     }
 

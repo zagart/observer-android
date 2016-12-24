@@ -17,7 +17,7 @@ import observer.zagart.by.client.mvp.models.repository.entities.Module;
 import observer.zagart.by.client.mvp.presenters.ModulePresenter;
 import observer.zagart.by.client.mvp.presenters.base.BasePresenter;
 import observer.zagart.by.client.mvp.views.adapters.DataTableAdapter;
-import observer.zagart.by.client.mvp.views.base.BaseView;
+import observer.zagart.by.client.mvp.views.base.BaseFragmentView;
 
 /**
  * Fragment for viewing main data (measurements from modules/sensors).
@@ -25,7 +25,7 @@ import observer.zagart.by.client.mvp.views.base.BaseView;
  * @author zagart
  */
 
-public class DataFragment extends BaseView implements IMvp.IViewOperations<Module> {
+public class DataFragment extends BaseFragmentView implements IMvp.IViewOperations<Module> {
 
     private ModulePresenter mPresenter = new ModulePresenter(this);
     private RecyclerView mRecyclerView;

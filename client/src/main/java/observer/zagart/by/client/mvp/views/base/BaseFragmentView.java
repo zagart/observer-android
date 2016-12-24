@@ -18,7 +18,7 @@ import observer.zagart.by.client.mvp.presenters.base.BasePresenter;
  *
  * @author zagart
  */
-abstract public class BaseView extends Fragment {
+abstract public class BaseFragmentView extends Fragment {
 
     private ProgressBar mProgressBar;
 

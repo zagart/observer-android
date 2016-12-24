@@ -17,14 +17,14 @@ import observer.zagart.by.client.mvp.models.repository.entities.Stand;
 import observer.zagart.by.client.mvp.presenters.StandPresenter;
 import observer.zagart.by.client.mvp.presenters.base.BasePresenter;
 import observer.zagart.by.client.mvp.views.adapters.StandTableAdapter;
-import observer.zagart.by.client.mvp.views.base.BaseView;
+import observer.zagart.by.client.mvp.views.base.BaseFragmentView;
 
 /**
  * Fragment for showing cached stand objects.
  *
  * @author zagart
  */
-public class StandsFragment extends BaseView implements IMvp.IViewOperations<Stand> {
+public class StandsFragment extends BaseFragmentView implements IMvp.IViewOperations<Stand> {
 
     private StandPresenter mPresenter = new StandPresenter(this);
     private RecyclerView mRecyclerViewStands;

@@ -58,4 +58,11 @@
     <string name="value">Value</string>
     <string name="data_status">Description of modules\' event</string>
     <string name="content">Content</string>
+    <string name="upload">Upload</string>
+    <string name="test_text">Button</string>
+    <string name="authentication">Authentication</string>
+    <string name="registration">Registration</string>
+    <string name="ok">Ok</string>
+    <string name="confirm_password">Confirm password</string>
+    <string name="error_different_passwords">Passwords must match.</string>
 </resources>

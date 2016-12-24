@@ -2,9 +2,11 @@ package observer.zagart.by.client.application.utils;
 
 import android.content.Context;
 import android.os.Looper;
+import android.support.annotation.Nullable;
 import android.util.Log;
 import android.widget.Toast;
 
+import java.io.ByteArrayOutputStream;
 import java.io.Closeable;
 import java.io.IOException;
 import java.io.InputStream;
@@ -15,16 +17,17 @@ import java.nio.charset.Charset;
 import observer.zagart.by.client.App;
 import observer.zagart.by.client.application.constants.Services;
 import observer.zagart.by.client.application.managers.ThreadManager;
+import observer.zagart.by.client.network.http.requests.DownloadBytesRequest;
 
 /**
  * Utility class for input/output related methods.
  *
  * @author zagart
  */
-@SuppressWarnings("WrongConstant")
+@SuppressWarnings({"WrongConstant", "unused"})
 public class IOUtil {
 
-    public static final short READ_BUFFER_SIZE = 4096;
+    private static final short READ_BUFFER_SIZE = 4096;
     private static final byte EOF = -1;
     private static final String FAILED_TO_EXECUTE_CLOSING = "Failed to execute closing";
     private static ThreadManager sThreadManager = (ThreadManager) App
@@ -66,9 +69,25 @@ public class IOUtil {
         }
     }
 
-    public static String readStreamUsingBuffer(final InputStream pInputStream) throws IOException {
-        final StringBuilder result = new StringBuilder();
+    @Nullable
+    public static ByteArrayOutputStream readInputIntoByteArray(final InputStream pInputStream) {
+        final ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        final byte[] buffer = new byte[IOUtil.READ_BUFFER_SIZE];
+        int bytesRead;
+        try {
+            while ((bytesRead = pInputStream.read(buffer)) > 0) {
+                outputStream.write(buffer, 0, bytesRead);
+            }
+        } catch (IOException pEx) {
+            Log.e(DownloadBytesRequest.class.getSimpleName(), pEx.getMessage(), pEx);
+            return null;
+        }
+        return outputStream;
+    }
+
+    public static String readStreamIntoString(final InputStream pInputStream) throws IOException {
         final Reader reader = new InputStreamReader(pInputStream, Charset.defaultCharset());
+        final StringBuilder result = new StringBuilder();
         final char[] buffer = new char[READ_BUFFER_SIZE];
         try {
             int bytes;

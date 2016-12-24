@@ -56,4 +56,15 @@
     <!-- shapes -->
     <dimen name="shape_padding">8dp</dimen>
 
+    <!-- login page -->
+    <dimen name="page_container_width">240dp</dimen>
+    <dimen name="page_container_height">280dp</dimen>
+    <dimen name="page_container_margin_top">180dp</dimen>
+    <dimen name="page_text_size">16sp</dimen>
+    <dimen name="page_button_width">152dp</dimen>
+    <dimen name="page_edit_margin_top">28dp</dimen>
+    <dimen name="page_edit_padding">8dp</dimen>
+    <dimen name="page_edit_width">200dp</dimen>
+    <dimen name="page_button_ok_text_size">24sp</dimen>
+
 </resources>

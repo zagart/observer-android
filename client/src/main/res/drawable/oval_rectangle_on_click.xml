@@ -7,6 +7,6 @@
         android:left="@dimen/zero_dp"
         android:right="@dimen/zero_dp"
         android:top="@dimen/zero_dp"/>
-    <solid android:color="@color/colorPrimaryAverage"/>
+    <solid android:color="@color/colorAccent"/>
 
 </shape>

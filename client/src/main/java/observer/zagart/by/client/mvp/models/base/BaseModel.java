@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import observer.zagart.by.client.App;
-import observer.zagart.by.client.application.constants.LogConstants;
+import observer.zagart.by.client.application.constants.ExceptionConstants;
 import observer.zagart.by.client.application.utils.IOUtil;
 import observer.zagart.by.client.application.utils.ReflectionUtil;
 import observer.zagart.by.client.mvp.IMvp;
@@ -92,7 +92,7 @@ public abstract class BaseModel<Entity extends IEntity<Entity, ContentValues, Lo
     }
 
     protected void notifyChange() {
-        Log.i(LogConstants.NOTIFY_MESSAGE, mEntityTableUri.toString());
+        Log.i(ExceptionConstants.NOTIFY_MESSAGE, mEntityTableUri.toString());
         App.getContext().getContentResolver().notifyChange(mEntityTableUri, null);
     }
 

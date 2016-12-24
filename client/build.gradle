@@ -11,7 +11,7 @@ android {
         vectorDrawables.useSupportLibrary = true
         jackOptions {
             enabled = true
-            additionalParameters("jack.incremental" : "true")
+            additionalParameters("jack.incremental": "true")
         }
     }
     compileOptions {
@@ -44,12 +44,13 @@ android {
 
 
 ext {
-    supportLibraryVersion = '25.0.1'
+    supportLibraryVersion = '25.1.0'
     junitVersion = '4.12'
     mockitoVersion = '1.10.19'
     robolecticVersion = '3.1.2'
     espressoVersion = '2.2.2'
     robotiumVersion = '5.6.2'
+    cloudinaryVersion = '1.5.0'
 
     dependencies {
         compile fileTree(include: ['*.jar'], dir: 'libs')
@@ -58,6 +59,7 @@ ext {
         compile "com.android.support:support-v4:$supportLibraryVersion"
         compile "com.android.support:support-vector-drawable:$supportLibraryVersion"
         compile "com.android.support:percent:$supportLibraryVersion"
+        compile "com.cloudinary:cloudinary-android:$cloudinaryVersion"
         testCompile "junit:junit:$junitVersion"
         testCompile "org.mockito:mockito-core:$mockitoVersion"
         testCompile "org.robolectric:robolectric:$robolecticVersion"

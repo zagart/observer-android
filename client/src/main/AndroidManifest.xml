@@ -7,6 +7,7 @@
     <uses-permission android:name="android.permission.AUTHENTICATE_ACCOUNTS"/>
     <uses-permission android:name="android.permission.USE_CREDENTIALS"/>
     <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
 
     <application
         android:name=".App"
@@ -36,6 +37,11 @@
             </intent-filter>
         </activity>
         <activity
+            android:name=".mvp.views.LoginActivity"
+            android:launchMode="singleTop"
+            android:parentActivityName=".mvp.views.MainActivity"
+            android:screenOrientation="portrait"/>
+        <activity
             android:name=".mvp.views.ContentActivity"
             android:launchMode="singleTop"
             android:parentActivityName=".mvp.views.MainActivity"
@@ -44,16 +50,6 @@
             android:name=".mvp.views.SettingsActivity"
             android:launchMode="singleTop"
             android:parentActivityName=".mvp.views.MainActivity"
-            android:screenOrientation="portrait"/>
-        <activity
-            android:name=".mvp.views.AuthenticationActivity"
-            android:launchMode="singleTop"
-            android:parentActivityName=".mvp.views.MainActivity"
-            android:screenOrientation="portrait"/>
-        <activity
-            android:name=".mvp.views.RegistrationActivity"
-            android:launchMode="singleTop"
-            android:parentActivityName=".mvp.views.AuthenticationActivity"
             android:screenOrientation="portrait"/>
 
         <service

@@ -12,7 +12,7 @@ import android.util.Log;
 
 import observer.zagart.by.client.App;
 import observer.zagart.by.client.BuildConfig;
-import observer.zagart.by.client.application.constants.LogConstants;
+import observer.zagart.by.client.application.constants.ExceptionConstants;
 import observer.zagart.by.client.application.constants.Services;
 import observer.zagart.by.client.application.constants.URIConstants;
 import observer.zagart.by.client.application.managers.DatabaseManager;
@@ -39,7 +39,8 @@ public class ObserverContentProvider extends ContentProvider {
             mDatabaseManager = (DatabaseManager) context.getSystemService(Services.THREAD_MANAGER);
         } else {
             if (BuildConfig.DEBUG) {
-                Log.e(ObserverContentProvider.class.getSimpleName(), LogConstants.NULL_CONTEXT);
+                Log.e(ObserverContentProvider.class.getSimpleName(), ExceptionConstants
+                        .NULL_CONTEXT);
             }
             mDatabaseManager = new DatabaseManager(getContext());
         }

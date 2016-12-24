@@ -14,12 +14,13 @@ import observer.zagart.by.client.application.constants.JSONConstants;
 import observer.zagart.by.client.mvp.models.repository.entities.Module;
 import observer.zagart.by.client.mvp.models.repository.entities.Stand;
 import observer.zagart.by.client.network.Criteria;
+import observer.zagart.by.client.network.http.requests.observer.base.BaseObserverRequest;
 
 /**
  * JSON data parser for results from Observer's server requests.
  *
  * @author zagart
- * @see observer.zagart.by.client.network.http.requests.observer.base.BaseObserverRequest
+ * @see BaseObserverRequest
  */
 public class ObserverJsonResponse {
 

@@ -1,5 +1,7 @@
 package observer.zagart.by.client.network.http.interfaces;
 
+import org.json.JSONObject;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
@@ -10,7 +12,7 @@ import java.net.HttpURLConnection;
  */
 public interface IHttpClient {
 
-    <Result> Result executeRequest(IRequest<Result> pRequest) throws IOException;
+    <Result> Result executeRequest(final IRequest<Result> pRequest) throws IOException;
 
     enum Method {
         GET, POST
@@ -24,14 +26,14 @@ public interface IHttpClient {
 
         String getUrl();
 
-        void handleRequestConnection(HttpURLConnection pConnection);
+        void handleRequestConnection(final HttpURLConnection pConnection);
 
         Result onErrorStream(
                 HttpURLConnection pConnection,
                 InputStream pInputStream
         ) throws IOException;
 
-        Result onStandardStream(InputStream pInputStream) throws IOException;
+        Result onStandardStream(final InputStream pInputStream) throws IOException;
 
         void onTimeoutException(final String... pParameters);
 

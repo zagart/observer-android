@@ -35,20 +35,19 @@
     </style>
 
     <style name="Title">
-        <item name="android:textColor">@color/primaryTextColor</item>
+        <item name="android:textColor">@color/secondaryTextColor</item>
         <item name="android:layout_width">@dimen/activity_main_title_width</item>
         <item name="android:layout_height">@dimen/activity_main_title_height</item>
         <item name="android:layout_gravity">center_horizontal</item>
         <item name="android:gravity">center</item>
         <item name="android:layout_marginTop">@dimen/activity_main_title_margin_top</item>
-        <item name="android:background">@drawable/oval_rectangle_primary_dark</item>
         <item name="android:padding">@dimen/default_padding</item>
         <item name="android:textSize">@dimen/activity_main_title_text_size</item>
     </style>
 
     <style name="Form">
         <item name="android:orientation">vertical</item>
-        <item name="android:background">@drawable/oval_rectangle_primary_dark</item>
+        <item name="android:background">@color/primaryTextColor</item>
         <item name="android:padding">@dimen/default_padding</item>
         <item name="android:paddingTop">@dimen/zero_dp</item>
         <item name="android:gravity">center</item>
@@ -89,18 +88,18 @@
         <item name="android:textSize">@dimen/default_button_text_size</item>
         <item name="android:layout_height">@dimen/default_button_height</item>
         <item name="android:layout_width">@dimen/default_button_width</item>
-        <item name="android:background">@drawable/oval_rectangle_primary_dark</item>
+        <item name="android:background">@drawable/button_background</item>
         <item name="android:textColor">@color/primaryTextColor</item>
     </style>
 
     <!-- user activity -->
     <style name="RegistrationTitle" parent="AuthenticationTitle">
-        <item name="android:text">Registration</item>
+        <item name="android:text">@string/registration</item>
     </style>
 
 
     <style name="AuthenticationTitle" parent="Title">
-        <item name="android:text">Authentication</item>
+        <item name="android:text">@string/authentication</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:textSize">@dimen/activity_login_title_text_size</item>
@@ -108,7 +107,7 @@
 
     <style name="LoginView">
         <item name="android:layout_marginTop">@dimen/panel_margin</item>
-        <item name="android:background">@drawable/oval_rectangle_white</item>
+        <item name="android:background">@color/grey</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:ems">10</item>
@@ -127,8 +126,7 @@
         <item name="android:padding">@dimen/zero_dp</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_width">wrap_content</item>
-        <item name="android:textColor">@color/primaryTextColor</item>
-
+        <item name="android:textColor">@color/secondaryTextColor</item>
     </style>
 
     <style name="LoginLabel" parent="Label">
@@ -180,8 +178,57 @@
         <item name="android:tint">@color/white</item>
         <item name="android:layout_width">@dimen/item_width</item>
         <item name="android:layout_height">@dimen/item_height</item>
-        <item name="android:background">@null</item>
+        <item name="android:background">?android:attr/selectableItemBackground</item>
         <item name="android:layout_margin">@dimen/corner_radius</item>
+    </style>
+
+    <!-- new login activity -->
+    <style name="LoginPageLayout">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:background">@color/colorSecondaryDark</item>
+    </style>
+
+    <style name="LoginPageButton">
+        <item name="android:textSize">@dimen/page_text_size</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:layout_width">@dimen/page_button_width</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@drawable/page_button_background_active</item>
+    </style>
+
+    <style name="LoginPageTitle">
+        <item name="android:layout_marginTop">100dp</item>
+        <item name="android:fontFamily">sans-serif-condensed</item>
+        <item name="android:textSize">40sp</item>
+        <item name="android:layout_gravity">center_horizontal</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="LoginPageButtonBar">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_gravity">top|center_horizontal</item>
+        <item name="android:layout_margin">12dp</item>
+    </style>
+
+    <style name="LoginPageContainer">
+        <item name="android:layout_width">@dimen/page_container_width</item>
+        <item name="android:layout_height">@dimen/page_container_height</item>
+        <item name="android:layout_gravity">center_horizontal</item>
+        <item name="android:layout_marginTop">@dimen/page_container_margin_top</item>
+    </style>
+
+    <style name="LoginPageEditText">
+        <item name="android:fontFamily">sans-serif-condensed</item>
+        <item name="android:textSize">@dimen/page_text_size</item>
+        <item name="android:layout_width">@dimen/page_edit_width</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_gravity">center_horizontal</item>
+        <item name="android:layout_marginTop">@dimen/page_edit_margin_top</item>
+        <item name="android:background">@color/white</item>
+        <item name="android:padding">@dimen/page_edit_padding</item>
     </style>
 
 
