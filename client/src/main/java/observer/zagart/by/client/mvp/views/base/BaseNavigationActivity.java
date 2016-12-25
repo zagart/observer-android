@@ -16,6 +16,7 @@ import android.widget.TextView;
 import observer.zagart.by.client.App;
 import observer.zagart.by.client.R;
 import observer.zagart.by.client.application.constants.ApplicationConstants;
+import observer.zagart.by.client.mvp.views.MainActivity;
 
 /**
  * Base activity provides access to navigation menu and action bar.
@@ -33,18 +34,23 @@ public class BaseNavigationActivity extends AppCompatActivity {
     private Toolbar mToolbar;
     private Menu mMenu;
 
-    public void onAccountChanged() {
+    public void checkAccount() {
         final Account account = App.getAccount();
-        if (mMenu != null) {
-            if (account != null) {
+        if (account != null) {
+            if (mAccountName != null) {
                 mAccountName.setText(account.name);
-                updateMenuItemsVisibility(mMenu, true);
-            } else {
-                mAccountName.setText(getString(R.string.user_login_default));
-                updateMenuItemsVisibility(mMenu, false);
             }
-            invalidateOptionsMenu();
+            updateMenuItemsVisibility(mMenu, true);
+        } else {
+            if (mAccountName != null) {
+                mAccountName.setText(getString(R.string.user_login_default));
+            }
+            updateMenuItemsVisibility(mMenu, false);
+            if (!(this instanceof MainActivity)) {
+                finish();
+            }
         }
+        invalidateOptionsMenu();
     }
 
     @Override
@@ -60,17 +66,35 @@ public class BaseNavigationActivity extends AppCompatActivity {
         return true;
     }
 
-    protected Toolbar getToolbar() {
+    public Toolbar getToolbar() {
         return mToolbar;
     }
 
-    protected void addToolbar() {
+    public void setToolbarTitle(final int pResID) {
+        mToolbar.setTitle(getString(pResID));
+    }
+
+    public BaseNavigationActivity addNavigationMenu() {
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.main_drawer_layout);
+        mDrawerToggle = getDrawerToggle(getToolbar());
+        mDrawerLayout.addDrawerListener(mDrawerToggle);
+        mDrawerToggle.setDrawerIndicatorEnabled(true);
+        final NavigationView navigationView = (NavigationView) findViewById(R.id.navigation_view);
+        mMenu = navigationView.getMenu();
+        mAccountName = (TextView) navigationView
+                .getHeaderView(HEADER_SUBTITLE_INDEX)
+                .findViewById(R.id.header_subtitle);
+        return this;
+    }
+
+    protected BaseNavigationActivity addToolbar() {
         mToolbar = (Toolbar) findViewById(R.id.toolbar_main);
         setSupportActionBar(mToolbar);
         final ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
+        return this;
     }
 
     @Override
@@ -85,18 +109,6 @@ public class BaseNavigationActivity extends AppCompatActivity {
         if (mDrawerLayout != null) {
             mDrawerLayout.closeDrawers();
         }
-    }
-
-    protected void addNavigationMenu() {
-        mDrawerLayout = (DrawerLayout) findViewById(R.id.main_drawer_layout);
-        mDrawerToggle = getDrawerToggle(getToolbar());
-        mDrawerLayout.addDrawerListener(mDrawerToggle);
-        mDrawerToggle.setDrawerIndicatorEnabled(true);
-        final NavigationView navigationView = (NavigationView) findViewById(R.id.navigation_view);
-        mMenu = navigationView.getMenu();
-        mAccountName = (TextView) navigationView
-                .getHeaderView(HEADER_SUBTITLE_INDEX)
-                .findViewById(R.id.header_subtitle);
     }
 
     private void updateMenuItemsVisibility(final Menu pMenu, final boolean pIsVisible) {

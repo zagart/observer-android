@@ -3,7 +3,6 @@ package observer.zagart.by.client.application.utils;
 import android.content.Context;
 import android.os.Looper;
 import android.support.annotation.Nullable;
-import android.util.Log;
 import android.widget.Toast;
 
 import java.io.ByteArrayOutputStream;
@@ -15,9 +14,9 @@ import java.io.Reader;
 import java.nio.charset.Charset;
 
 import observer.zagart.by.client.App;
+import observer.zagart.by.client.application.constants.ExceptionConstants;
 import observer.zagart.by.client.application.constants.Services;
 import observer.zagart.by.client.application.managers.ThreadManager;
-import observer.zagart.by.client.network.http.requests.DownloadBytesRequest;
 
 /**
  * Utility class for input/output related methods.
@@ -29,7 +28,6 @@ public class IOUtil {
 
     private static final short READ_BUFFER_SIZE = 4096;
     private static final byte EOF = -1;
-    private static final String FAILED_TO_EXECUTE_CLOSING = "Failed to execute closing";
     private static ThreadManager sThreadManager = (ThreadManager) App
             .getContext()
             .getSystemService(Services.THREAD_MANAGER);
@@ -39,7 +37,7 @@ public class IOUtil {
             try {
                 pCloseable.close();
             } catch (IOException pEx) {
-                Log.e(IOUtil.class.getSimpleName(), FAILED_TO_EXECUTE_CLOSING, pEx);
+                throw new RuntimeException(ExceptionConstants.CLOSABLE_CLOSING_EXCEPTION);
             }
         }
     }
@@ -49,8 +47,7 @@ public class IOUtil {
         if (Looper.getMainLooper().getThread() == Thread.currentThread()) {
             showNotNullMessage(context, pMessage);
         } else {
-            sThreadManager.post(
-                    () -> showNotNullMessage(context, pMessage));
+            sThreadManager.post(() -> showNotNullMessage(context, pMessage));
         }
     }
 
@@ -58,8 +55,7 @@ public class IOUtil {
         if (Looper.getMainLooper().getThread() == Thread.currentThread()) {
             showNotNullMessage(pContext, pMessage);
         } else {
-            sThreadManager.post(
-                    () -> showNotNullMessage(pContext, pMessage));
+            sThreadManager.post(() -> showNotNullMessage(pContext, pMessage));
         }
     }
 
@@ -79,8 +75,7 @@ public class IOUtil {
                 outputStream.write(buffer, 0, bytesRead);
             }
         } catch (IOException pEx) {
-            Log.e(DownloadBytesRequest.class.getSimpleName(), pEx.getMessage(), pEx);
-            return null;
+            throw new RuntimeException(ExceptionConstants.INPUT_STREAM_READING_EXCEPTION);
         }
         return outputStream;
     }

@@ -23,12 +23,6 @@ public class SettingsActivity extends BaseNavigationActivity {
                 this,
                 getString(R.string.settings),
                 ApplicationConstants.EMPTY_STRING));
-        addToolbar();
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        setTitle(R.string.settings);
+        addToolbar().setToolbarTitle(R.string.settings);
     }
 }

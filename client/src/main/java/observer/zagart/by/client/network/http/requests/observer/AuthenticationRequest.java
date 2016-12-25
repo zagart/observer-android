@@ -23,7 +23,7 @@ public class AuthenticationRequest extends BaseObserverRequest {
 
     @Override
     public IHttpClient.Method getMethodType() {
-        return IHttpClient.Method.POST;
+        return IHttpClient.Method.GET;
     }
 
     @Override

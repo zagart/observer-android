@@ -22,7 +22,7 @@ public class ContentActivity extends BaseNavigationActivity {
     protected void onCreate(@Nullable final Bundle pSavedInstanceState) {
         super.onCreate(pSavedInstanceState);
         setContentView(R.layout.activity_content);
-        addToolbar();
+        addToolbar().setToolbarTitle(R.string.content);
         final ViewPager contentViewPager = (ViewPager) findViewById(R.id.view_pager_content);
         contentViewPager.setAdapter(new ContentPagerAdapter(getSupportFragmentManager()));
         final TabLayout contentTabLayout = (TabLayout) findViewById(R.id.tab_layout_content);
@@ -32,7 +32,7 @@ public class ContentActivity extends BaseNavigationActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        setTitle(R.string.content);
+        checkAccount();
     }
 
     @SuppressWarnings("ConstantConditions")

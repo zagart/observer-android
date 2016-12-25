@@ -3,18 +3,15 @@ package observer.zagart.by.client.network.http.requests;
 import android.graphics.Bitmap;
 import android.util.Log;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.util.HashMap;
 import java.util.Map;
 
 import observer.zagart.by.client.application.constants.NetworkConstants;
+import observer.zagart.by.client.application.utils.HttpUtil;
 import observer.zagart.by.client.application.utils.IOUtil;
 import observer.zagart.by.client.network.http.interfaces.IHttpClient;
 import observer.zagart.by.client.network.http.interfaces.IHttpClient.IRequest;
@@ -66,18 +63,10 @@ public class UploadImageRequest implements IHttpClient.IRequest<String> {
                 } else {
                     mBitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
                     put(NetworkConstants.FILE, new String(stream.toByteArray()));
-                    try {
-//            HttpUtil.setRequestBody(pConnection, body);
-                        JSONObject request = new JSONObject();
-                        request.put(NetworkConstants.UPLOAD_PRESET, NetworkConstants.PRESET_KEY);
-                        request.put(NetworkConstants.FILE, new String(stream.toByteArray()));
-                        final OutputStream outputStream = pConnection.getOutputStream();
-                    } catch (IOException | JSONException pEx) {
-                        onIOException();
-                    }
                 }
             }
         };
+        HttpUtil.setRequestBody(pConnection, body);
     }
 
     @Override

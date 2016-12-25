@@ -9,4 +9,5 @@
     android:background="@color/colorPrimaryDark"
     android:fitsSystemWindows="true"
     android:theme="@style/CustomToolbarStyle"
+    app:title="@string/observer"
     app:popupTheme="@style/ObserverDefault"/>

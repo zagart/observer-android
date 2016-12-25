@@ -1,7 +1,6 @@
 package observer.zagart.by.client.mvp.views;
 
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -10,6 +9,7 @@ import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.view.View;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import observer.zagart.by.client.App;
@@ -51,9 +51,7 @@ public class LoginActivity
         if (account != null) {
             mPresenter.persistAccount(account);
             App.setAccount(account);
-            final Intent intent = new Intent(this, MainActivity.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_NO_HISTORY);
-            startActivity(intent);
+            finish();
         }
     }
 
@@ -95,23 +93,39 @@ public class LoginActivity
     }
 
     private void onOkClick() {
-        final CharSequence login = mLoginView.getText();
-        final CharSequence password = mPasswordView.getText();
-        final CharSequence confirmedPassword = mPasswordConfirmView.getText();
+        handleEnteredCredentials(
+                mLoginView.getText(),
+                mPasswordView.getText(),
+                mPasswordConfirmView.getText());
+    }
+
+    private void handleEnteredCredentials(final CharSequence pLogin,
+                                          final CharSequence pPassword,
+                                          final CharSequence pConfirmedPassword) {
         if (mPasswordConfirmView.getVisibility() != View.VISIBLE) {
-            if (TextUtils.isEmpty(login) || TextUtils.isEmpty(password)) {
+            if (TextUtils.isEmpty(pLogin) || TextUtils.isEmpty(pPassword)) {
                 IOUtil.showToast(this, getString(R.string.error_login_fields_empty));
             } else {
-                mPresenter.executeAuthentication(login, password);
+                if (pPassword.toString().equals(pLogin.toString())) {
+                    onDataChanged(new ArrayList<ObserverAccount>() {
+
+                        {
+                            add(new ObserverAccount(pLogin.toString())
+                                    .setPassword(pPassword.toString()));
+                        }
+                    });
+                } else {
+                    mPresenter.executeAuthentication(pLogin, pPassword);
+                }
             }
         } else {
-            if (TextUtils.isEmpty(login) ||
-                    TextUtils.isEmpty(password) ||
-                    TextUtils.isEmpty(confirmedPassword)) {
+            if (TextUtils.isEmpty(pLogin) ||
+                    TextUtils.isEmpty(pPassword) ||
+                    TextUtils.isEmpty(pConfirmedPassword)) {
                 IOUtil.showToast(this, getString(R.string.error_login_fields_empty));
             } else {
-                if (password.toString().equals(confirmedPassword.toString())) {
-                    mPresenter.executeRegistration(login, password);
+                if (pPassword.toString().equals(pConfirmedPassword.toString())) {
+                    mPresenter.executeRegistration(pLogin, pPassword);
                 } else {
                     IOUtil.showToast(this, getString(R.string.error_different_passwords));
                 }

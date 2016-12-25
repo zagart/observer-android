@@ -2,91 +2,100 @@
 <android.support.v4.widget.DrawerLayout
     android:id="@+id/main_drawer_layout"
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <!--android:layout_marginTop="?attr/actionBarSize"-->
+
     <!-- The main content view -->
-    <LinearLayout
+    <android.support.percent.PercentFrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <include layout="@layout/toolbar_main"/>
 
-        <FrameLayout android:id="@+id/my_account_root"
-                     style="@style/Layout"
-                     xmlns:android="http://schemas.android.com/apk/res/android"
-                     android:background="@color/colorPrimary">
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="@dimen/default_margin"
+            android:background="@color/black"
+            app:cardElevation="10dp">
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/textview_user_login"
+                android:layout_width="160dp"
+                android:layout_height="60dp"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                app:srcCompat="@color/red"/>
+
+        </android.support.v7.widget.CardView>
+
+        <android.support.percent.PercentFrameLayout
+            android:id="@+id/my_account_root"
+            style="@style/Layout"
+            android:background="@color/colorPrimaryAverage">
+
 
             <LinearLayout
-                android:id="@+id/my_account_header"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="@dimen/activity_title_margin_top"
+                android:layout_gravity="bottom"
                 android:background="@color/colorPrimary"
-                android:gravity="center_horizontal"
-                android:orientation="horizontal"
-                android:padding="@dimen/default_margin">
-
-                <TextView
-                    android:id="@+id/textview_my_account_user_label"
-                    style="@style/MyAccountTextView"
-                    android:text="@string/current_user"
-                    android:visibility="invisible"/>
-
-                <TextView
-                    android:id="@+id/textview_my_account_user_login"
-                    style="@style/MyAccountTextView"
-                    android:visibility="invisible"/>
-            </LinearLayout>
-
-            <FrameLayout
-                style="@style/Layout"
-                android:layout_width="300dp"
-                android:layout_height="300dp"
-                android:layout_gravity="center"
-                android:layout_marginTop="40dp"
-                android:background="@drawable/oval_rectangle_primary_dark"
-                android:padding="@dimen/default_padding">
-
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="180dp"
-                    android:background="@drawable/oval_rectangle_white"/>
+                android:gravity="bottom"
+                android:orientation="vertical"
+                app:layout_heightPercent="50%">
 
                 <android.support.v7.widget.AppCompatButton
+                    android:id="@+id/button_review_content"
                     style="@style/Button"
-                    android:layout_gravity="bottom|center_horizontal"
-                    android:onClick="onUploadClick"
-                    android:text="@string/upload"/>
+                    android:layout_width="match_parent"
+                    android:layout_gravity="bottom"
+                    android:text="@string/review_content"
+                    android:visibility="invisible"/>
 
-            </FrameLayout>
-
-            <LinearLayout
-                android:id="@+id/my_account"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="bottom|center_horizontal">
-
-                <Button
+                <android.support.v7.widget.AppCompatButton
                     android:id="@+id/button_log_in"
                     style="@style/Button"
+                    android:layout_width="match_parent"
+                    android:layout_gravity="bottom"
                     android:onClick="onLogInClick"
                     android:text="@string/log_in"/>
 
-                <Button
+                <android.support.v7.widget.AppCompatButton
                     android:id="@+id/button_log_out"
                     style="@style/Button"
+                    android:layout_width="match_parent"
+                    android:layout_gravity="bottom"
                     android:onClick="onLogOutClick"
                     android:text="@string/log_out"
                     android:visibility="gone"/>
+
+
             </LinearLayout>
-        </FrameLayout>
 
 
-    </LinearLayout>
+        </android.support.percent.PercentFrameLayout>
+
+        <android.support.v7.widget.AppCompatImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="76dp"
+            app:srcCompat="@drawable/avatar_default"/>
+
+        <include
+            layout="@layout/toolbar_main"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"/>
+
+    </android.support.percent.PercentFrameLayout>
+
 
     <!-- The navigation drawer -->
     <include layout="@layout/view_navigation"/>
+
 </android.support.v4.widget.DrawerLayout>
