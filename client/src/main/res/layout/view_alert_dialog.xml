@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:app="http://schemas.android.com/apk/res-auto"
+             android:layout_width="300dp"
+             android:layout_height="124dp"
+             android:background="@color/colorPrimaryDark">
+
+    <android.support.v7.widget.AppCompatTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical|end"
+        android:layout_margin="32dp"
+        android:text="Loading..."
+        android:textColor="@color/primaryTextColor"
+        android:textSize="40sp"
+        app:elevation="20dp"/>
+
+    <include
+        layout="@layout/progress_bar_dialog"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="32dp"
+        android:visibility="visible"/>
+
+</FrameLayout>

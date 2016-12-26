@@ -1,20 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout
     android:id="@+id/fragment_layout_data"
-    style="@style/Layout"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical">
+    style="@style/Layout.RecyclerViewContainer"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/data_recycler_view"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scrollbars="vertical"/>
+        style="@style/RecyclerViewLayout"/>
 
     <include
         android:id="@+id/progress_bar_data"
-        android:visibility="visible"
-        layout="@layout/progress_bar_background"/>
+        layout="@layout/progress_bar"
+        android:visibility="visible"/>
 
     <include
         layout="@layout/view_fixed_panel"/>

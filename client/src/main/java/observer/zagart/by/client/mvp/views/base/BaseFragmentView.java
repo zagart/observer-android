@@ -3,6 +3,8 @@ package observer.zagart.by.client.mvp.views.base;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,10 +22,19 @@ import observer.zagart.by.client.mvp.presenters.base.BasePresenter;
  */
 abstract public class BaseFragmentView extends Fragment {
 
+    private View mCoordinatorLayout;
     private ProgressBar mProgressBar;
 
     public Context getViewContext() {
         return getActivity();
+    }
+
+    public void onDataLoadSuccess() {
+        showSnackBar(R.string.success_load_data);
+    }
+
+    public void onDataLoadFail() {
+        showSnackBar(R.string.failed_load_data);
     }
 
     @Override
@@ -39,6 +50,7 @@ abstract public class BaseFragmentView extends Fragment {
     public void onActivityCreated(@Nullable final Bundle pSavedInstanceState) {
         super.onActivityCreated(pSavedInstanceState);
         mProgressBar = (ProgressBar) getActivity().findViewById(getProgressBarResId());
+        mCoordinatorLayout = getActivity().findViewById(R.id.activity_content);
     }
 
     @Override
@@ -87,4 +99,14 @@ abstract public class BaseFragmentView extends Fragment {
     abstract protected BasePresenter getPresenter();
 
     abstract protected int getProgressBarResId();
+
+    private void showSnackBar(final int pResID) {
+        if (mCoordinatorLayout instanceof CoordinatorLayout) {
+            final Snackbar snackBar = Snackbar.make(
+                    mCoordinatorLayout,
+                    pResID,
+                    Snackbar.LENGTH_INDEFINITE);
+            snackBar.show();
+        }
+    }
 }

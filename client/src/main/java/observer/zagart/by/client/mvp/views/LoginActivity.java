@@ -6,10 +6,10 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputEditText;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.AppCompatButton;
 import android.text.TextUtils;
 import android.view.View;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import observer.zagart.by.client.App;
@@ -35,8 +35,9 @@ public class LoginActivity
     private TextInputEditText mLoginView;
     private TextInputEditText mPasswordView;
     private TextInputEditText mPasswordConfirmView;
-    private View mAuthenticationButton;
-    private View mRegistrationButton;
+    private AppCompatButton mAuthenticationButton;
+    private AppCompatButton mRegistrationButton;
+    private AppCompatButton mOkButton;
     private Drawable mShadowed;
     private Drawable mActive;
 
@@ -59,13 +60,18 @@ public class LoginActivity
     protected void onCreate(@Nullable final Bundle pBundle) {
         super.onCreate(pBundle);
         setContentView(R.layout.activity_login);
+        findCoordinatorLayout();
         mShadowed = ContextCompat.getDrawable(this, R.drawable.page_button_background_shadowed);
         mActive = ContextCompat.getDrawable(this, R.drawable.page_button_background_active);
         mLoginView = (TextInputEditText) findViewById(R.id.login_page_login);
         mPasswordView = (TextInputEditText) findViewById(R.id.login_page_password);
-        mPasswordConfirmView = (TextInputEditText) findViewById(R.id.login_page_password_confirm);
-        mAuthenticationButton = findViewById(R.id.button_login_page_authentication);
-        mRegistrationButton = findViewById(R.id.button_login_page_registration);
+        mPasswordConfirmView = (TextInputEditText) findViewById(R.id
+                .login_page_password_confirm);
+        mAuthenticationButton = (AppCompatButton)
+                findViewById(R.id.button_login_page_authentication);
+        mRegistrationButton = (AppCompatButton) findViewById(R.id
+                .button_login_page_registration);
+        mOkButton = (AppCompatButton) findViewById(R.id.login_page_ok);
         setUpListeners();
     }
 
@@ -73,7 +79,7 @@ public class LoginActivity
         //TODO find cause of magical animation disappearing
         mAuthenticationButton.setOnClickListener((pEvent) -> onAuthenticationClick());
         mRegistrationButton.setOnClickListener((pEvent) -> onRegistrationClick());
-        (findViewById(R.id.login_page_ok)).setOnClickListener((pEvent) -> onOkClick());
+        mOkButton.setOnClickListener((pEvent) -> onOkClick());
     }
 
     private void onRegistrationClick() {
@@ -106,17 +112,7 @@ public class LoginActivity
             if (TextUtils.isEmpty(pLogin) || TextUtils.isEmpty(pPassword)) {
                 IOUtil.showToast(this, getString(R.string.error_login_fields_empty));
             } else {
-                if (pPassword.toString().equals(pLogin.toString())) {
-                    onDataChanged(new ArrayList<ObserverAccount>() {
-
-                        {
-                            add(new ObserverAccount(pLogin.toString())
-                                    .setPassword(pPassword.toString()));
-                        }
-                    });
-                } else {
-                    mPresenter.executeAuthentication(pLogin, pPassword);
-                }
+                mPresenter.executeAuthentication(pLogin, pPassword);
             }
         } else {
             if (TextUtils.isEmpty(pLogin) ||

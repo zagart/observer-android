@@ -6,9 +6,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.AppCompatButton;
-import android.support.v7.widget.AppCompatTextView;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 
 import java.util.List;
 
@@ -16,6 +16,7 @@ import observer.zagart.by.client.App;
 import observer.zagart.by.client.R;
 import observer.zagart.by.client.application.accounts.ObserverAccount;
 import observer.zagart.by.client.application.utils.AnimationUtil;
+import observer.zagart.by.client.application.utils.IOUtil;
 import observer.zagart.by.client.mvp.IMvp;
 import observer.zagart.by.client.mvp.views.base.BaseNavigationActivity;
 
@@ -28,7 +29,7 @@ public class MainActivity
     private AppCompatButton mLogInButton;
     private AppCompatButton mLogOutButton;
     private AppCompatButton mReviewContent;
-    private AppCompatTextView mUserLogin;
+    private TextView mUserLogin;
 
     @Override
     public Context getViewContext() {
@@ -55,34 +56,36 @@ public class MainActivity
         closeDrawers();
     }
 
-    public void onLogInClick(final View pView) {
-        final Intent intent = new Intent(this, LoginActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_NO_HISTORY);
-        startActivity(intent);
+    public void onLogInClick() {
+        startActivity(new Intent(this, LoginActivity.class));
     }
 
     @Override
     public void checkAccount() {
-        super.checkAccount();
-        final Account account = App.getAccount();
-        if (account != null) {
-            mUserLogin.setText(account.name);
-            mLogInButton.setVisibility(View.GONE);
-            mLogOutButton.setVisibility(View.VISIBLE);
-            mReviewContent.setVisibility(View.VISIBLE);
-            mUserLogin.setVisibility(View.VISIBLE);
-        } else {
-            AnimationUtil.fadeOut(mLogOutButton);
-            mLogOutButton.setVisibility(View.GONE);
-            AnimationUtil.makeOut(false, mReviewContent);
-            mReviewContent.setVisibility(View.INVISIBLE);
-            AnimationUtil.makeOut(true, mUserLogin);
-            mUserLogin.setVisibility(View.INVISIBLE);
-            mLogInButton.setVisibility(View.VISIBLE);
+        try {
+            super.checkAccount();
+            final Account account = App.getAccount();
+            if (account != null) {
+                mUserLogin.setText(account.name);
+                mLogInButton.setVisibility(View.GONE);
+                mLogOutButton.setVisibility(View.VISIBLE);
+                mReviewContent.setVisibility(View.VISIBLE);
+                mUserLogin.setVisibility(View.VISIBLE);
+            } else {
+                AnimationUtil.fadeOut(mLogOutButton);
+                mLogOutButton.setVisibility(View.GONE);
+                AnimationUtil.makeOut(false, mReviewContent);
+                mReviewContent.setVisibility(View.INVISIBLE);
+                AnimationUtil.makeOut(true, mUserLogin);
+                mUserLogin.setVisibility(View.INVISIBLE);
+                mLogInButton.setVisibility(View.VISIBLE);
+            }
+        } catch (Exception pEx) {
+            IOUtil.showToast(pEx.getMessage());
         }
     }
 
-    public void onLogOutClick(final View pView) {
+    public void onLogOutClick() {
         App.setAccount(null);
         checkAccount();
     }
@@ -99,8 +102,10 @@ public class MainActivity
         setContentView(R.layout.activity_main);
         addToolbar().addNavigationMenu();
         mLogInButton = (AppCompatButton) findViewById(R.id.button_log_in);
+        mLogInButton.setOnClickListener((pEvent) -> onLogInClick());
         mLogOutButton = (AppCompatButton) findViewById(R.id.button_log_out);
-        mUserLogin = (AppCompatTextView) findViewById(R.id.textview_user_login);
+        mLogOutButton.setOnClickListener((pEvent) -> onLogOutClick());
+        mUserLogin = (TextView) findViewById(R.id.textview_user_login);
         mReviewContent = (AppCompatButton) findViewById(R.id.button_review_content);
         mReviewContent.setOnClickListener((pEvent) ->
                 startActivity(new Intent(this, ContentActivity.class)));

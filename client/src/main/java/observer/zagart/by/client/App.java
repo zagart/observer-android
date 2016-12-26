@@ -19,10 +19,9 @@ import observer.zagart.by.client.application.singletons.ContextHolder;
  *
  * @author zagart
  */
+//TODO fix backend authorization logic
 //TODO configuration of ProGuard
 //TODO unit&instrumental test
-//TODO connection timeout handling
-//TODO input/output exceptions handling
 @SuppressWarnings("WrongConstant")
 @SuppressLint("ServiceCast")
 public class App extends Application {

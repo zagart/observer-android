@@ -4,9 +4,8 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 
 import observer.zagart.by.client.R;
-import observer.zagart.by.client.application.constants.ApplicationConstants;
-import observer.zagart.by.client.application.utils.TestUtil;
 import observer.zagart.by.client.mvp.views.base.BaseNavigationActivity;
+import observer.zagart.by.client.mvp.views.fragments.SettingsFragment;
 
 /**
  * Dummy settings activity.
@@ -19,10 +18,11 @@ public class SettingsActivity extends BaseNavigationActivity {
     @Override
     protected void onCreate(@Nullable final Bundle pSavedInstanceState) {
         super.onCreate(pSavedInstanceState);
-        setContentView(TestUtil.getDummyLayout(
-                this,
-                getString(R.string.settings),
-                ApplicationConstants.EMPTY_STRING));
+        setContentView(R.layout.activity_settings_container);
         addToolbar().setToolbarTitle(R.string.settings);
+        getFragmentManager()
+                .beginTransaction()
+                .replace(R.id.settings_container, new SettingsFragment())
+                .commit();
     }
 }

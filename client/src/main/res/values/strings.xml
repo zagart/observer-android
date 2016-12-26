@@ -26,7 +26,6 @@
     <string name="observer">Observer</string>
     <string name="str_synchronization">Synchronization</string>
     <string name="not_enabled">Not enabled</string>
-    <string name="err_registration_failed">Registration failed! Maybe user with such login already exists? Try again with new login.</string>
     <string name="msg_token_invalidated">Token invalidated</string>
     <string name="msg_sp_value_retrieved">Value %s retrieved</string>
     <string name="msg_dummy">Dummy message</string>
@@ -66,4 +65,5 @@
     <string name="confirm_password">Confirm password</string>
     <string name="error_different_passwords">Passwords must match.</string>
     <string name="review_content">Review content</string>
+    <string name="success_load_data">Data loaded successfully.</string>
 </resources>

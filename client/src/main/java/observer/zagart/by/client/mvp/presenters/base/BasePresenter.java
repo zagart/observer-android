@@ -52,7 +52,9 @@ public abstract class BasePresenter<Entity extends IEntity<Entity, ContentValues
 
     @Override
     public void synchronizeModel(final IHttpClient.IRequest<String> pRequest) {
-        ((BaseFragmentView) mView.get()).showProgressBar();
+        final BaseFragmentView view = (BaseFragmentView) mView.get();
+        clearModel();
+        view.showProgressBar();
         mThreadManager.execute(
                 () -> {
                     try {
@@ -63,14 +65,19 @@ public abstract class BasePresenter<Entity extends IEntity<Entity, ContentValues
                                 .extractEntities();
                         if (entities != null && entities.size() > 0) {
                             mModel.persistAll(entities);
+                            view.onDataLoadSuccess();
                             startDataReload();
                         } else {
-                            //TODO interaction with user
-                            mThreadManager.post(() -> ((BaseFragmentView) mView.get()).hideProgressBar());
+                            mThreadManager.post(() -> {
+                                view.hideProgressBar();
+                                view.onDataLoadFail();
+                            });
                         }
                     } catch (IOException | JSONException pEx) {
-                        //TODO interaction with user
-                        mThreadManager.post(() -> ((BaseFragmentView) mView.get()).hideProgressBar());
+                        mThreadManager.post(() -> {
+                            view.hideProgressBar();
+                            view.onDataLoadFail();
+                        });
                     }
                 });
     }
@@ -93,7 +100,8 @@ public abstract class BasePresenter<Entity extends IEntity<Entity, ContentValues
                 () -> {
                     final List<Entity> entities = mModel.retrieveAll();
                     mThreadManager.post(() -> {
-                        ((BaseFragmentView) mView.get()).hideProgressBar();
+                        final BaseFragmentView view = (BaseFragmentView) mView.get();
+                        view.hideProgressBar();
                         getView().get().onDataChanged(entities);
                     });
                 }

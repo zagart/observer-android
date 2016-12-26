@@ -1,7 +1,5 @@
 package observer.zagart.by.client.network.http.interfaces;
 
-import org.json.JSONObject;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
@@ -46,7 +44,7 @@ public interface IHttpClient {
         class ContentType {
 
             public static final String APPLICATION_JSON_CHARSET_UTF_8 =
-                    "application/json; charset=utf-8";
+                    "application/json; charset=UTF-8";
         }
 
         class Header {

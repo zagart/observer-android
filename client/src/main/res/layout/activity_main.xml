@@ -6,85 +6,53 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <!--android:layout_marginTop="?attr/actionBarSize"-->
-
     <!-- The main content view -->
     <android.support.percent.PercentFrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-
-        <android.support.v7.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_margin="@dimen/default_margin"
-            android:background="@color/black"
-            app:cardElevation="10dp">
-
-            <android.support.v7.widget.AppCompatTextView
-                android:id="@+id/textview_user_login"
-                android:layout_width="160dp"
-                android:layout_height="60dp"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:textColor="@color/black"
-                android:textSize="20sp"
-                app:srcCompat="@color/red"/>
-
-        </android.support.v7.widget.CardView>
-
         <android.support.percent.PercentFrameLayout
             android:id="@+id/my_account_root"
             style="@style/Layout"
             android:background="@color/colorPrimaryAverage">
 
-
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_gravity="bottom"
-                android:background="@color/colorPrimary"
-                android:gravity="bottom"
-                android:orientation="vertical"
+                style="@style/BottomBarMain"
                 app:layout_heightPercent="50%">
 
                 <android.support.v7.widget.AppCompatButton
                     android:id="@+id/button_review_content"
-                    style="@style/Button"
-                    android:layout_width="match_parent"
-                    android:layout_gravity="bottom"
+                    style="@style/Button.Main"
                     android:text="@string/review_content"
                     android:visibility="invisible"/>
 
                 <android.support.v7.widget.AppCompatButton
                     android:id="@+id/button_log_in"
-                    style="@style/Button"
-                    android:layout_width="match_parent"
-                    android:layout_gravity="bottom"
-                    android:onClick="onLogInClick"
+                    style="@style/Button.Main"
                     android:text="@string/log_in"/>
 
                 <android.support.v7.widget.AppCompatButton
                     android:id="@+id/button_log_out"
-                    style="@style/Button"
-                    android:layout_width="match_parent"
-                    android:layout_gravity="bottom"
-                    android:onClick="onLogOutClick"
+                    style="@style/Button.Main"
                     android:text="@string/log_out"
                     android:visibility="gone"/>
-
-
             </LinearLayout>
-
 
         </android.support.percent.PercentFrameLayout>
 
+        <android.support.v7.widget.CardView
+            style="@style/LoginCardViewMain"
+            app:cardElevation="@dimen/card_view_login_elevation">
+
+            <TextView
+                android:id="@+id/textview_user_login"
+                style="@style/LoginTextViewMain"/>
+        </android.support.v7.widget.CardView>
+
+
         <android.support.v7.widget.AppCompatImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="76dp"
+            style="@style/ImageViewAvatarMain"
             app:srcCompat="@drawable/avatar_default"/>
 
         <include
@@ -93,7 +61,6 @@
             android:layout_height="?attr/actionBarSize"/>
 
     </android.support.percent.PercentFrameLayout>
-
 
     <!-- The navigation drawer -->
     <include layout="@layout/view_navigation"/>

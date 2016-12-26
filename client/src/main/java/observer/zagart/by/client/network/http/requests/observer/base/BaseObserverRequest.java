@@ -47,8 +47,6 @@ public abstract class BaseObserverRequest implements IHttpClient.IRequest<String
 
     @Override
     public String onStandardStream(final InputStream pInputStream) throws IOException {
-        final String response = IOUtil.readStreamIntoString(pInputStream);
-        Log.i(BaseObserverRequest.class.getSimpleName(), response);
-        return response;
+        return IOUtil.readStreamIntoString(pInputStream);
     }
 }

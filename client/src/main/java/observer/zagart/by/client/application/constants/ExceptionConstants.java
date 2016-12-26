@@ -14,4 +14,5 @@ public interface ExceptionConstants {
     String CLOSABLE_CLOSING_EXCEPTION = "Failed to execute closing";
     String INPUT_STREAM_READING_EXCEPTION = "Failed to read input stream";
     String SETTING_REQUEST_BODY_EXCEPTION = "Failed to set request body";
+    String REQUEST_EXCEPTION = "Error rise when handling request";
 }

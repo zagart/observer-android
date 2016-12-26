@@ -1,10 +1,14 @@
 package observer.zagart.by.client.mvp.views.base;
 
-import android.app.ProgressDialog;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.Snackbar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.view.Window;
+import android.view.View;
+
+import observer.zagart.by.client.R;
 
 /**
  * Base account activity.
@@ -14,20 +18,38 @@ import android.view.Window;
 
 public class BaseAccountActivity extends AppCompatActivity {
 
-    private ProgressDialog mProgressDialog;
+    private View mCoordinatorLayout;
 
-    public void showProgressDialog(final int pResID) {
-        final ColorDrawable drawable = new ColorDrawable(Color.BLACK);
-        mProgressDialog = new ProgressDialog(this);
-        final Window window = mProgressDialog.getWindow();
-        if (window != null) {
-            window.setBackgroundDrawable(drawable);
-            mProgressDialog.setTitle(getString(pResID));
-            mProgressDialog.show();
-        }
+    private AlertDialog mDialog;
+
+    public void showProgressDialog() {
+        mDialog.show();
     }
 
     public void dismissProgressDialog() {
-        mProgressDialog.dismiss();
+        mDialog.dismiss();
+    }
+
+    public void showSnackBar(final int pResID) {
+        if (mCoordinatorLayout instanceof CoordinatorLayout) {
+            final Snackbar snackBar = Snackbar.make(
+                    mCoordinatorLayout,
+                    pResID,
+                    Snackbar.LENGTH_INDEFINITE);
+            snackBar.show();
+        }
+    }
+
+    @Override
+    protected void onCreate(@Nullable final Bundle pSavedInstanceState) {
+        super.onCreate(pSavedInstanceState);
+        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setView(R.layout.view_alert_dialog);
+        builder.setCancelable(false);
+        mDialog = builder.create();
+    }
+
+    protected void findCoordinatorLayout() {
+        mCoordinatorLayout = findViewById(R.id.activity_login);
     }
 }
