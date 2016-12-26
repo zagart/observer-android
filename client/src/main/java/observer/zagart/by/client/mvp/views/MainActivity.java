@@ -6,8 +6,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.AppCompatButton;
+import android.support.v7.widget.AppCompatImageView;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.List;
@@ -15,8 +17,9 @@ import java.util.List;
 import observer.zagart.by.client.App;
 import observer.zagart.by.client.R;
 import observer.zagart.by.client.application.accounts.ObserverAccount;
+import observer.zagart.by.client.application.constants.ApplicationConstants;
+import observer.zagart.by.client.application.imageloader.BitmapDrawer;
 import observer.zagart.by.client.application.utils.AnimationUtil;
-import observer.zagart.by.client.application.utils.IOUtil;
 import observer.zagart.by.client.mvp.IMvp;
 import observer.zagart.by.client.mvp.views.base.BaseNavigationActivity;
 
@@ -30,6 +33,8 @@ public class MainActivity
     private AppCompatButton mLogOutButton;
     private AppCompatButton mReviewContent;
     private TextView mUserLogin;
+    private BitmapDrawer mDrawer = new BitmapDrawer();
+    private ImageView mAvatar;
 
     @Override
     public Context getViewContext() {
@@ -62,27 +67,24 @@ public class MainActivity
 
     @Override
     public void checkAccount() {
-        try {
-            super.checkAccount();
-            final Account account = App.getAccount();
-            if (account != null) {
-                mUserLogin.setText(account.name);
-                mLogInButton.setVisibility(View.GONE);
-                mLogOutButton.setVisibility(View.VISIBLE);
-                mReviewContent.setVisibility(View.VISIBLE);
-                mUserLogin.setVisibility(View.VISIBLE);
-            } else {
-                AnimationUtil.fadeOut(mLogOutButton);
-                mLogOutButton.setVisibility(View.GONE);
-                AnimationUtil.makeOut(false, mReviewContent);
-                mReviewContent.setVisibility(View.INVISIBLE);
-                AnimationUtil.makeOut(true, mUserLogin);
-                mUserLogin.setVisibility(View.INVISIBLE);
-                mLogInButton.setVisibility(View.VISIBLE);
-            }
-        } catch (Exception pEx) {
-            IOUtil.showToast(pEx.getMessage());
+        super.checkAccount();
+        final Account account = App.getAccount();
+        if (account != null) {
+            mUserLogin.setText(account.name);
+            mLogInButton.setVisibility(View.GONE);
+            mLogOutButton.setVisibility(View.VISIBLE);
+            mReviewContent.setVisibility(View.VISIBLE);
+            mUserLogin.setVisibility(View.VISIBLE);
+        } else {
+            AnimationUtil.fadeOut(mLogOutButton);
+            mLogOutButton.setVisibility(View.GONE);
+            AnimationUtil.makeOut(false, mReviewContent);
+            mReviewContent.setVisibility(View.INVISIBLE);
+            AnimationUtil.makeOut(true, mUserLogin);
+            mUserLogin.setVisibility(View.INVISIBLE);
+            mLogInButton.setVisibility(View.VISIBLE);
         }
+        changeAccountAvatar();
     }
 
     public void onLogOutClick() {
@@ -109,5 +111,14 @@ public class MainActivity
         mReviewContent = (AppCompatButton) findViewById(R.id.button_review_content);
         mReviewContent.setOnClickListener((pEvent) ->
                 startActivity(new Intent(this, ContentActivity.class)));
+        mAvatar = (AppCompatImageView) findViewById(R.id.image_view_avatar);
+    }
+
+    private void changeAccountAvatar() {
+        if (App.getAccount() != null) {
+            mDrawer.draw(mAvatar, ApplicationConstants.AVATAR_IMAGE);
+        } else {
+            mAvatar.setImageResource(R.drawable.circle_background);
+        }
     }
 }

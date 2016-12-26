@@ -12,7 +12,7 @@
     <color name="colorPrimary">#45BF55</color>
     <color name="colorSecondary">#00A388</color>
     <color name="colorAccent">#29D9C2</color>
-    <color name="primaryTextColor">#CAFCD8</color>
     <color name="primaryTextAccentColor">#FFF</color>
-    <color name="secondaryTextColor">#000</color>
+    <color name="primaryTextColor">#FCFFF5</color>
+    <color name="secondaryTextColor">#D1DBBD</color>
 </resources>

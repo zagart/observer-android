@@ -41,6 +41,11 @@
 
         </android.support.percent.PercentFrameLayout>
 
+        <android.support.v7.widget.AppCompatImageView
+            android:id="@+id/image_view_avatar"
+            style="@style/ImageViewAvatarMain"
+            app:srcCompat="@drawable/avatar_default"/>
+
         <android.support.v7.widget.CardView
             style="@style/LoginCardViewMain"
             app:cardElevation="@dimen/card_view_login_elevation">
@@ -50,10 +55,6 @@
                 style="@style/LoginTextViewMain"/>
         </android.support.v7.widget.CardView>
 
-
-        <android.support.v7.widget.AppCompatImageView
-            style="@style/ImageViewAvatarMain"
-            app:srcCompat="@drawable/avatar_default"/>
 
         <include
             layout="@layout/toolbar_main"

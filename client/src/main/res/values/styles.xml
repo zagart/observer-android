@@ -8,7 +8,9 @@
         <item name="colorAccent">@color/colorAccent</item>
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorStatusBar</item>
+        <item name="android:windowBackground">@color/colorPrimaryAverage</item>
     </style>
+
 
     <style name="CustomToolbarStyle" parent="Base.Widget.AppCompat.DrawerArrowToggle">
         <!-- action bar title color -->

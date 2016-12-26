@@ -19,7 +19,6 @@ import observer.zagart.by.client.application.singletons.ContextHolder;
  *
  * @author zagart
  */
-//TODO fix backend authorization logic
 //TODO configuration of ProGuard
 //TODO unit&instrumental test
 @SuppressWarnings("WrongConstant")

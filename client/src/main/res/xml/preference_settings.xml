@@ -8,8 +8,4 @@
         android:entryValues="@array/theme_values"
         android:summary="Select theme for application"
         android:title="Theme"/>
-    <CheckBoxPreference
-        android:defaultValue="true"
-        android:text="Agreement"/>
-
 </PreferenceScreen>

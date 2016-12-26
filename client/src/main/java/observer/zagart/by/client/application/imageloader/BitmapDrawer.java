@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.lang.ref.WeakReference;
 
 import observer.zagart.by.client.App;
+import observer.zagart.by.client.application.constants.ExceptionConstants;
 import observer.zagart.by.client.application.constants.Services;
 import observer.zagart.by.client.application.interfaces.IAction;
 import observer.zagart.by.client.application.interfaces.ICallback;
@@ -25,7 +26,6 @@ import observer.zagart.by.client.network.http.requests.DownloadBytesRequest;
  *
  * @author zagart
  */
-@SuppressWarnings("unused") //TODO thread manager behavior was changed, callbacks must be rewritten
 public class BitmapDrawer implements IDrawable<ImageView, String> {
 
     final private static float MEMORY_USE_COEFFICIENT = 0.125f; //12.5%
@@ -59,7 +59,7 @@ public class BitmapDrawer implements IDrawable<ImageView, String> {
     public void draw(final ImageView pImageView, final String pUrl) {
         final boolean isImageSet = setImageBitmap(pImageView, pUrl);
         if (!isImageSet) {
-            mThreadManager.performAction(
+            mThreadManager.imageDownloadAction(
                     new BitmapDownloadAction(),
                     new BitmapDownloadCallback(pImageView),
                     pUrl);
@@ -85,7 +85,11 @@ public class BitmapDrawer implements IDrawable<ImageView, String> {
     private boolean setImageBitmap(final ImageView pImageView, final String pUrl) {
         final Bitmap bitmap = getFromCache(pUrl);
         if (bitmap != null) {
-            pImageView.setImageBitmap(bitmap);
+            try {
+                mThreadManager.post(() -> pImageView.setImageBitmap(bitmap));
+            } catch (Exception pEx) {
+                return false;
+            }
             return true;
         }
         return false;
@@ -118,11 +122,12 @@ public class BitmapDrawer implements IDrawable<ImageView, String> {
      */
     private class BitmapDownloadCallback implements ICallback<Void, ByteArrayOutputStream> {
 
+        private static final int BITMAP_DECODE_START_INDEX = 0;
         private IHttpClient mHttpClient = HttpFactory.getDefaultClient();
         private byte[] downloaded;
         private WeakReference<ImageView> mImageView;
 
-        BitmapDownloadCallback(ImageView pImageView) {
+        BitmapDownloadCallback(final ImageView pImageView) {
             mImageView = new WeakReference<>(pImageView);
         }
 
@@ -130,25 +135,18 @@ public class BitmapDrawer implements IDrawable<ImageView, String> {
         public void onComplete(final String pParam, final ByteArrayOutputStream pBytesStream) {
             final Bitmap bitmap = BitmapFactory.decodeByteArray(
                     downloaded,
-                    0,
+                    BITMAP_DECODE_START_INDEX,
                     downloaded.length);
             downloaded = null;
             if (pParam != null && bitmap != null) {
                 putInCache(pParam, bitmap);
-                mThreadManager.post(
-                        new Runnable() {
-
-                            @Override
-                            public void run() {
-                                setImageBitmap(mImageView.get(), pParam);
-                            }
-                        });
+                setImageBitmap(mImageView.get(), pParam);
             }
         }
 
         @Override
         public void onException(final String pParam, final Exception pEx) {
-            //ignored
+            throw new RuntimeException(ExceptionConstants.IMAGE_DOWNLOAD_EXCEPTION);
         }
 
         @Override
@@ -156,7 +154,9 @@ public class BitmapDrawer implements IDrawable<ImageView, String> {
             try {
                 final ByteArrayOutputStream resultStream = mHttpClient.executeRequest(
                         new DownloadBytesRequest(pParam));
-                downloaded = resultStream.toByteArray();
+                if (resultStream != null) {
+                    downloaded = resultStream.toByteArray();
+                }
             } catch (IOException pEx) {
                 onException(pParam, pEx);
             }

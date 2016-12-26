@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="observer_url">https://observer-backend.appspot.com/controller</string>
+    <!--<string name="observer_url">http://10.0.2.2:8080/controller</string>-->
     <string name="account_type">by.zagart.observer</string>
 </resources>

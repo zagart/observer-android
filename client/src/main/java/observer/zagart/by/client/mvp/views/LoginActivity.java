@@ -42,6 +42,13 @@ public class LoginActivity
     private Drawable mActive;
 
     @Override
+    public void showSnackBar(final int pResID) {
+        if (this instanceof LoginActivity) {
+            super.showSnackBar(pResID);
+        }
+    }
+
+    @Override
     public Context getViewContext() {
         return this;
     }

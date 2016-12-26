@@ -3,6 +3,7 @@ package observer.zagart.by.client.application.managers;
 import android.os.Handler;
 import android.os.Looper;
 
+import java.io.ByteArrayOutputStream;
 import java.util.Locale;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
@@ -95,6 +96,25 @@ public class ThreadManager<Result> {
                         }
                     } catch (Exception pEx) {
                         pCallback.onException(name, pEx);
+                    }
+                }
+        );
+    }
+
+    public void imageDownloadAction(
+            final IAction<String, Void, ByteArrayOutputStream> pAction,
+            final ICallback<Void, ByteArrayOutputStream> pCallback,
+            final String pUrl) {
+        mHandler = new Handler();
+        mPool.execute(
+                () -> {
+                    try {
+                        final ByteArrayOutputStream result = pAction.process(pCallback, pUrl);
+                        if (result != null) {
+                            pCallback.onComplete(pUrl, result);
+                        }
+                    } catch (InterruptedException pEx) {
+                        pCallback.onException(mName, pEx);
                     }
                 }
         );
