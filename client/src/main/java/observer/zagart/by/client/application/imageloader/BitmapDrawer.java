@@ -44,8 +44,6 @@ public class BitmapDrawer implements IDrawable<ImageView, String> {
                 return pImage.getByteCount() / 1024;
             }
         };
-        //noinspection WrongConstant
-        mThreadManager = (ThreadManager) App.getContext().getSystemService(Services.THREAD_MANAGER);
     }
 
     /**
@@ -59,6 +57,11 @@ public class BitmapDrawer implements IDrawable<ImageView, String> {
      */
     @Override
     public void draw(final ImageView pImageView, final String pUrl, final boolean... pResize) {
+        if (mThreadManager == null) {
+            //noinspection WrongConstant
+            mThreadManager = (ThreadManager) App.getContext()
+                    .getSystemService(Services.THREAD_MANAGER);
+        }
         if (pResize != null && pResize.length > 0) {
             mResize = pResize[0];
         }

@@ -30,9 +30,7 @@
                     android:path="/observer_folder"
                     android:port="200"
                     android:scheme="content"/>
-
                 <action android:name="android.intent.action.VIEW"/>
-
                 <category android:name="android.intent.category.BROWSABLE"/>
             </intent-filter>
         </activity>

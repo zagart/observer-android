@@ -108,6 +108,7 @@ public class ThreadManager<Result> {
         mHandler = new Handler();
         mPool.execute(
                 () -> {
+
                     try {
                         final ByteArrayOutputStream result = pAction.process(pCallback, pUrl);
                         if (result != null) {

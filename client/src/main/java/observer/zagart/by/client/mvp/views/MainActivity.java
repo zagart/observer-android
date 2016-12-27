@@ -29,11 +29,11 @@ import observer.zagart.by.client.mvp.views.base.BaseNavigationActivity;
 public class MainActivity
         extends BaseNavigationActivity implements IMvp.IViewOperations<ObserverAccount> {
 
+    private BitmapDrawer mDrawer = new BitmapDrawer();
     private AppCompatButton mLogInButton;
     private AppCompatButton mLogOutButton;
     private AppCompatButton mReviewContent;
     private TextView mUserLogin;
-    private BitmapDrawer mDrawer = new BitmapDrawer();
     private ImageView mAvatar;
 
     @Override
@@ -75,6 +75,9 @@ public class MainActivity
             mLogOutButton.setVisibility(View.VISIBLE);
             mReviewContent.setVisibility(View.VISIBLE);
             mUserLogin.setVisibility(View.VISIBLE);
+            mAvatar.setImageResource(R.drawable.circle_background);
+            mDrawer.draw(mAvatar, ApplicationConstants.AVATAR_IMAGE, true);
+            mDrawer.draw(getNavAvatar(), ApplicationConstants.AVATAR_IMAGE, true);
         } else {
             AnimationUtil.fadeOut(mLogOutButton);
             mLogOutButton.setVisibility(View.GONE);
@@ -83,8 +86,9 @@ public class MainActivity
             AnimationUtil.makeOut(true, mUserLogin);
             mUserLogin.setVisibility(View.INVISIBLE);
             mLogInButton.setVisibility(View.VISIBLE);
+            mAvatar.setImageResource(R.drawable.circle_background);
+            getNavAvatar().setImageResource(R.drawable.circle_background);
         }
-        changeAccountAvatar();
     }
 
     public void onLogOutClick() {
@@ -112,15 +116,5 @@ public class MainActivity
         mReviewContent.setOnClickListener((pEvent) ->
                 startActivity(new Intent(this, ContentActivity.class)));
         mAvatar = (AppCompatImageView) findViewById(R.id.image_view_avatar);
-    }
-
-    private void changeAccountAvatar() {
-        if (App.getAccount() != null) {
-            mDrawer.draw(mAvatar, ApplicationConstants.AVATAR_IMAGE, true);
-            mDrawer.draw(getNavAvatar(), ApplicationConstants.AVATAR_IMAGE, true);
-        } else {
-            mAvatar.setImageResource(R.drawable.circle_background);
-            getNavAvatar().setImageResource(R.drawable.circle_background);
-        }
     }
 }
