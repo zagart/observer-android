@@ -8,7 +8,6 @@ import android.support.design.widget.TextInputEditText;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.AppCompatButton;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 
 import java.util.List;
@@ -105,14 +104,10 @@ public class LoginActivity
     }
 
     private void onOkClick() {
-        try {
-            handleEnteredCredentials(
-                    mLoginView.getText(),
-                    mPasswordView.getText(),
-                    mPasswordConfirmView.getText());
-        } catch (final Exception pEx) {
-            Log.i(this.getClass().getSimpleName(), pEx.getMessage());
-        }
+        handleEnteredCredentials(
+                mLoginView.getText(),
+                mPasswordView.getText(),
+                mPasswordConfirmView.getText());
     }
 
     private void handleEnteredCredentials(final CharSequence pLogin,
