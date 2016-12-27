@@ -8,6 +8,7 @@ import android.support.design.widget.TextInputEditText;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.AppCompatButton;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 
 import java.util.List;
@@ -43,9 +44,7 @@ public class LoginActivity
 
     @Override
     public void showSnackBar(final int pResID) {
-        if (this instanceof LoginActivity) {
-            super.showSnackBar(pResID);
-        }
+        super.showSnackBar(pResID);
     }
 
     @Override
@@ -106,10 +105,14 @@ public class LoginActivity
     }
 
     private void onOkClick() {
-        handleEnteredCredentials(
-                mLoginView.getText(),
-                mPasswordView.getText(),
-                mPasswordConfirmView.getText());
+        try {
+            handleEnteredCredentials(
+                    mLoginView.getText(),
+                    mPasswordView.getText(),
+                    mPasswordConfirmView.getText());
+        } catch (final Exception pEx) {
+            Log.i(this.getClass().getSimpleName(), pEx.getMessage());
+        }
     }
 
     private void handleEnteredCredentials(final CharSequence pLogin,
@@ -137,6 +140,7 @@ public class LoginActivity
     }
 
     private void clearTextFields() {
+        mLoginView.requestFocus();
         mLoginView.setText(ApplicationConstants.EMPTY_STRING);
         mPasswordView.setText(ApplicationConstants.EMPTY_STRING);
         mPasswordConfirmView.setText(ApplicationConstants.EMPTY_STRING);

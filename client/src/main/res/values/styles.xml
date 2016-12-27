@@ -144,8 +144,8 @@
     </style>
 
     <!-- custom views -->
-
     <style name="RecyclerViewTableCell">
+        <item name="android:fontFamily">sans-serif-condensed</item>
         <item name="android:padding">@dimen/cell_padding</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">@dimen/cell_height</item>

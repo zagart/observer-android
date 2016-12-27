@@ -10,4 +10,15 @@
         <item>2</item>
         <item>3</item>
     </string-array>
+
+    <string-array name="language">
+        <item>English</item>
+        <item>Russian</item>
+        <item>Belorussian</item>
+    </string-array>
+    <string-array name="language_values">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+    </string-array>
 </resources>

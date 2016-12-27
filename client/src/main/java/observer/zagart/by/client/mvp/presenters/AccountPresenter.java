@@ -93,8 +93,12 @@ public class AccountPresenter extends BasePresenter<ObserverAccount> {
                                     final int pMessageID) {
         mThreadManager.execute(
                 () -> {
-                    final LoginActivity view = (LoginActivity) getView().get();
-                    mThreadManager.post(view::showProgressDialog);
+                    final IMvp.IViewOperations<ObserverAccount> view = getView().get();
+                    mThreadManager.post(() -> {
+                        if (view instanceof LoginActivity) {
+                            ((LoginActivity) view).showProgressDialog();
+                        }
+                    });
                     final String login = pLogin.toString();
                     final String password = pPassword.toString();
                     final String token;
@@ -105,7 +109,11 @@ public class AccountPresenter extends BasePresenter<ObserverAccount> {
                     } catch (IOException | JSONException pEx) {
                         throw new RuntimeException(ExceptionConstants.REQUEST_EXCEPTION);
                     } finally {
-                        mThreadManager.post(view::dismissProgressDialog);
+                        mThreadManager.post(() -> {
+                            if (view instanceof LoginActivity) {
+                                ((LoginActivity) view).dismissProgressDialog();
+                            }
+                        });
                     }
                     if (!TextUtils.isEmpty(token)) {
                         final ObserverAccount account = new ObserverAccount(login);
@@ -115,7 +123,9 @@ public class AccountPresenter extends BasePresenter<ObserverAccount> {
                         account.setPassword(password);
                         view.onDataChanged(accounts);
                     } else {
-                        view.showSnackBar(pMessageID);
+                        if (view instanceof LoginActivity) {
+                            ((LoginActivity) view).showSnackBar(pMessageID);
+                        }
                     }
                 });
     }

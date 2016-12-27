@@ -116,9 +116,11 @@ public class MainActivity
 
     private void changeAccountAvatar() {
         if (App.getAccount() != null) {
-            mDrawer.draw(mAvatar, ApplicationConstants.AVATAR_IMAGE);
+            mDrawer.draw(mAvatar, ApplicationConstants.AVATAR_IMAGE, true);
+            mDrawer.draw(getNavAvatar(), ApplicationConstants.AVATAR_IMAGE, true);
         } else {
             mAvatar.setImageResource(R.drawable.circle_background);
+            getNavAvatar().setImageResource(R.drawable.circle_background);
         }
     }
 }

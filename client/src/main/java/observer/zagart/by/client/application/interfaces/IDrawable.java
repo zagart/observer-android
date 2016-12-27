@@ -10,5 +10,5 @@ import android.view.View;
  */
 public interface IDrawable<Canvas extends View, Source> {
 
-    void draw(Canvas pCanvas, Source pSource);
+    void draw(final Canvas pCanvas, final Source pSource, final boolean... pResize);
 }

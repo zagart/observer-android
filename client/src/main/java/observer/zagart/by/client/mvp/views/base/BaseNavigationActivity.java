@@ -11,12 +11,12 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import observer.zagart.by.client.App;
 import observer.zagart.by.client.R;
 import observer.zagart.by.client.application.constants.ApplicationConstants;
-import observer.zagart.by.client.mvp.views.MainActivity;
 
 /**
  * Base activity provides access to navigation menu and action bar.
@@ -33,6 +33,7 @@ public class BaseNavigationActivity extends AppCompatActivity {
     private TextView mAccountName;
     private Toolbar mToolbar;
     private Menu mMenu;
+    private ImageView mNavAvatar;
 
     public void checkAccount() {
         final Account account = App.getAccount();
@@ -46,9 +47,6 @@ public class BaseNavigationActivity extends AppCompatActivity {
                 mAccountName.setText(getString(R.string.user_login_default));
             }
             updateMenuItemsVisibility(mMenu, false);
-            if (!(this instanceof MainActivity)) {
-                finish();
-            }
         }
         invalidateOptionsMenu();
     }
@@ -84,7 +82,13 @@ public class BaseNavigationActivity extends AppCompatActivity {
         mAccountName = (TextView) navigationView
                 .getHeaderView(HEADER_SUBTITLE_INDEX)
                 .findViewById(R.id.header_subtitle);
+        mNavAvatar = (ImageView) navigationView
+                .getHeaderView(HEADER_SUBTITLE_INDEX).findViewById(R.id.header_title);
         return this;
+    }
+
+    public ImageView getNavAvatar() {
+        return mNavAvatar;
     }
 
     protected BaseNavigationActivity addToolbar() {

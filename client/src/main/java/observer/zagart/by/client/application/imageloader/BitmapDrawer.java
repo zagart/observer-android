@@ -16,6 +16,7 @@ import observer.zagart.by.client.application.interfaces.IAction;
 import observer.zagart.by.client.application.interfaces.ICallback;
 import observer.zagart.by.client.application.interfaces.IDrawable;
 import observer.zagart.by.client.application.managers.ThreadManager;
+import observer.zagart.by.client.application.utils.ImageUtil;
 import observer.zagart.by.client.network.http.HttpFactory;
 import observer.zagart.by.client.network.http.interfaces.IHttpClient;
 import observer.zagart.by.client.network.http.requests.DownloadBytesRequest;
@@ -30,6 +31,7 @@ public class BitmapDrawer implements IDrawable<ImageView, String> {
 
     final private static float MEMORY_USE_COEFFICIENT = 0.125f; //12.5%
     private final LruCache<String, Bitmap> mCache;
+    private boolean mResize = false;
     private ThreadManager mThreadManager;
 
     {
@@ -56,7 +58,10 @@ public class BitmapDrawer implements IDrawable<ImageView, String> {
      * @param pUrl       URL of Bitmap image
      */
     @Override
-    public void draw(final ImageView pImageView, final String pUrl) {
+    public void draw(final ImageView pImageView, final String pUrl, final boolean... pResize) {
+        if (pResize != null && pResize.length > 0) {
+            mResize = pResize[0];
+        }
         final boolean isImageSet = setImageBitmap(pImageView, pUrl);
         if (!isImageSet) {
             mThreadManager.imageDownloadAction(
@@ -86,7 +91,16 @@ public class BitmapDrawer implements IDrawable<ImageView, String> {
         final Bitmap bitmap = getFromCache(pUrl);
         if (bitmap != null) {
             try {
-                mThreadManager.post(() -> pImageView.setImageBitmap(bitmap));
+                mThreadManager.post(() -> {
+                    if (mResize) {
+                        pImageView.setImageBitmap(ImageUtil.getResizedBitmap(
+                                bitmap,
+                                pImageView.getWidth(),
+                                pImageView.getHeight()));
+                    } else {
+                        pImageView.setImageBitmap(bitmap);
+                    }
+                });
             } catch (Exception pEx) {
                 return false;
             }
